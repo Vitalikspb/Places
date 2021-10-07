@@ -15,81 +15,75 @@ protocol FirstViewDisplayLogic: AnyObject {
     func displayFetchedMarkersFromSearchView(withString: String)
 }
 
-class FirstViewControllerController: UIViewController, FirstViewDisplayLogic {
-    func displayFetchedMarkersFromSearchView(withString: String) {
-        print(#function)
-    }
+class FirstViewControllerController: UIViewController {
     
-    func displayMarkers(filter: [GMSMarker]) {
-        mapView.clear()
-        filter.forEach {
-            $0.map = mapView
-        }
-        print("museum display")
-    }
-    
-    func displayAllReleaseMarkers(filler: MapViewModel.FilterName) {
-        print(#function)
-    }
-    
-    func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel) {
-        // при нажатии на маркер на экране
-        // заполнение floating view данными из текущей модели viewModel
-        print(#function)
-        print("\(viewModel.destinationName)")
-    }
-    
+    // MARK: - Public Properties
     
     var interactor: FirstViewBussinessLogic?
+    
+    // MARK: - Private Properties
+    
+    // Наблюдатель интернета
+    private let connectivity = Connectivity.shared
+    private var internetConnection: Bool = false
     
     private var myCurrentLatitude: CLLocationDegrees = 0.0
     private var myCurrentLongitude: CLLocationDegrees = 0.0
     private var cameraLatitude: CLLocationDegrees = 0.0
     private var cameraLongitude: CLLocationDegrees = 0.0
     private let cameraZoom: Float = 12
-    private let connectivity = Connectivity.shared
-    private var internetConnection: Bool = false
     private lazy var mapView: GMSMapView = {
         let camera = GMSCameraPosition(
             latitude: myCurrentLatitude, longitude: myCurrentLongitude, zoom: cameraZoom)
         return GMSMapView(frame: .zero, camera: camera)
     }()
     
-    var observation: NSKeyValueObservation?
-    var location: CLLocation? {
+    // для определения местоположения и погоды
+    private var observation: NSKeyValueObservation?
+    private var location: CLLocation? {
         didSet {
             guard oldValue == nil, let firstLocation = location else { return }
             mapView.camera = GMSCameraPosition(target: firstLocation.coordinate, zoom: 14)
         }
     }
-    // для погоды
-    var units = "metric"
-    var unit = "°"
-    var locationManager = CLLocationManager()
+    private var locationManager = CLLocationManager()
     
-    // убираем с карты все дефолтные метки
+    // MARK: - UI Properties
     
-    var floatingView = FloatingView(frame: CGRect(x: 0,
-                                                  y: UIScreen.main.bounds.height,
-                                                  width: UIScreen.main.bounds.width,
-                                                  height: UIScreen.main.bounds.height))
+    private var floatingView = FloatingView(frame: CGRect(x: 0,
+                                                          y: UIScreen.main.bounds.height,
+                                                          width: UIScreen.main.bounds.width,
+                                                          height: UIScreen.main.bounds.height))
     private let topScrollView = ScrollViewOnMap(frame: CGRect(x: 0,
                                                               y: 65,
                                                               width: UIScreen.main.bounds.width,
                                                               height: 42))
     private let topSearchView = TopSearchView(frame: CGRect(x: 10,
                                                             y: 65,
-                                                    width: UIScreen.main.bounds.width-20,
-                                                    height: 60))
+                                                            width: UIScreen.main.bounds.width-20,
+                                                            height: 60))
     private var weatherView = WeatherView(frame: CGRect(x: 10,
                                                         y: 127,
                                                         width: 50,
                                                         height: 38))
+    
+    // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupClean()
-        
+        setupUI()
+        addDefaultMarkers()
+        setupLocationManager()
+    }
+    
+    deinit {
+        observation?.invalidate()
+    }
+    
+    // MARK: - Helper Functions
+    
+    private func setupUI() {
         topScrollView.onMapdelegate = self
         topSearchView.alpha = 0
         topSearchView.topSearchDelegate = self
@@ -102,30 +96,23 @@ class FirstViewControllerController: UIViewController, FirstViewDisplayLogic {
         mapView.settings.compassButton = true
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
-
+        mapView.frame = view.frame
         // убираем с карты все дефолтные метки загрузкой JSON в стиль карты
         mapView.mapStyle = try? GMSMapStyle(jsonString: Constants.mapStyleJSON)
-        view.addSubview(mapView)
-        mapView.frame = view.frame
-        
-        // Listen to the myLocation property of GMSMapView.
-        
-        observation = mapView.observe(\.myLocation, options: [.new]) {
-            [weak self] mapView, _ in
+
+        // Определение коректного местоположеня
+        observation = mapView.observe(\.myLocation, options: [.new]) { [weak self] mapView, _ in
             self?.location = mapView.myLocation
         }
+        
+        view.addSubview(mapView)
         view.addSubview(topScrollView)
         view.addSubview(topSearchView)
         view.addSubview(weatherView)
         view.addSubview(floatingView)
-        addDefaultMarkers()
-        setupLocationManager()
     }
     
-    deinit {
-        observation?.invalidate()
-    }
-    
+    // Настройка архитектуры Clean Swift
     private func setupClean() {
         let viewController = self
         let interactor = FirstViewControllerInteractor()
@@ -135,18 +122,21 @@ class FirstViewControllerController: UIViewController, FirstViewDisplayLogic {
         presenter.firstViewController = viewController
     }
     
-    func setupLocationManager() {
+    // Настройка locationManager
+    private func setupLocationManager() {
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
     }
     
+    // Начальная функция показа всех тестовых/реальных маркеров в зависимости от оплаты страны
     private func addDefaultMarkers() {
         let request = MapViewModel.FilterName.Alltest
         interactor?.fetchAllTestMarkers(request: request)
     }
     
+    // Сокрытие поисковой строки и отображение строки с фильтрами
     private func hideTopSearchView() {
         if topSearchView.alpha == 1 {
             DispatchQueue.main.async {
@@ -162,50 +152,17 @@ class FirstViewControllerController: UIViewController, FirstViewDisplayLogic {
                         }
                     }
                 }
-                
             }
         }
     }
     
-    func loadCurrentWeather() {
-        let url = "\(Constants.BASEURL)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&appid=\(Constants.APIKEY)&units=\(units)"
-        guard let wheatherUrl = URL(string: url) else { return }
-        URLSession.shared.dataTask(with: wheatherUrl) { data, response, error in
-            guard let data = data,
-                error == nil else {
-                print("Error fetch request of weather")
-                return
-            }
-            do {
-                let forecast = try JSONDecoder().decode(CurrentWeather.self, from: data)
-                self.loadIconFromApi(with: forecast.weather[0].icon, and: "\(Int(forecast.main.temp))\(self.unit)")
-            } catch let error {
-                print(error)
-            }
-        }.resume()
-    }
-
-    func loadIconFromApi(with iconCode: String?, and temp: String) {
-        guard let iconCode = iconCode,
-              let imageUrl: URL = URL(string: Constants.weatherIconUrl + iconCode + Constants.weatherIconUrlEnd) else { return }
-        let queue = DispatchQueue.global(qos: .userInitiated)
-        queue.async {
-            if let data = try? Data(contentsOf: imageUrl) {
-                DispatchQueue.main.async {
-                    self.weatherView.weatherViewTemperature = temp
-                    self.weatherView.weatherViewImage = UIImage(data: data)
-                }
-            }
-        }
-        
-    }
-
     func showAlert(_ message:String) {
         let alert = UIAlertController(title: "Location Error", message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Показ строки с фильтрами
     func showScrollAndWeatherView() {
         UIView.animate(withDuration: 0.5) {
             self.topScrollView.alpha = 1
@@ -214,16 +171,18 @@ class FirstViewControllerController: UIViewController, FirstViewDisplayLogic {
     }
 }
 
+// MARK: - GMSMapViewDelegate
 extension FirstViewControllerController: GMSMapViewDelegate {
     
+    // Вызывается при изменении позиции карты
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-
+        
         // определение текущего местоположения
         cameraLatitude = mapView.camera.target.latitude
         cameraLongitude = mapView.camera.target.longitude
-
     }
     
+    // Вызывается по нажатию на карту
     func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
         let alert = UIAlertController(
             title: "Location Tapped",
@@ -267,6 +226,7 @@ extension FirstViewControllerController: GMSMapViewDelegate {
         }
         
     }
+    
     // вызывается когда начинается передвижение карты
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
         hideTopSearchView()
@@ -275,7 +235,10 @@ extension FirstViewControllerController: GMSMapViewDelegate {
     }
 }
 
+// MARK: - ScrollViewOnMapDelegate
 extension FirstViewControllerController: ScrollViewOnMapDelegate {
+    
+    // Фильтрация маркеров по музею
     func chooseMuseumFilter(completion: @escaping () -> (Bool)) {
         var request: MapViewModel.FilterName
         if completion() {
@@ -288,24 +251,28 @@ extension FirstViewControllerController: ScrollViewOnMapDelegate {
         interactor?.fetchAllTestMarkers(request: request)
     }
     
+    // Фильтрация маркеров по парку
     func chooseParkFilter() {
         print("Park filter")
         let request = MapViewModel.FilterName.Park
         interactor?.fetchAllTestMarkers(request: request)
     }
     
+    // Фильтрация маркеров по достопримечательностям
     func choosePoiFilter() {
         print("Poi filter")
         let request = MapViewModel.FilterName.POI
         interactor?.fetchAllTestMarkers(request: request)
     }
     
+    // Фильтрация маркеров по пляжам
     func chooseBeachFilter() {
         print("Beach filter")
         let request = MapViewModel.FilterName.Beach
         interactor?.fetchAllTestMarkers(request: request)
     }
     
+    // Отображение поисковой строки и сокрытие строки с фильтрами
     func showSearchView() {
         UIView.animate(withDuration: 0.25) {
             self.topScrollView.frame.origin.y = -50
@@ -318,10 +285,9 @@ extension FirstViewControllerController: ScrollViewOnMapDelegate {
             }
         }
     }
-    
-    
 }
 
+// MARK: - TopSearchViewDelegate
 extension FirstViewControllerController: TopSearchViewDelegate {
     // Скрываем поисковую строку и клавиатуру при нажатии на крестик в textField
     func clearTextField() {
@@ -329,6 +295,7 @@ extension FirstViewControllerController: TopSearchViewDelegate {
     }
 }
 
+// MARK: - ConnectivityDelegate
 extension FirstViewControllerController: ConnectivityDelegate {
     func lostInternetConnection() {
         internetConnection = false
@@ -339,8 +306,8 @@ extension FirstViewControllerController: ConnectivityDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         alert.addAction(UIAlertAction(title: "Настройки", style: .default, handler: {_ in
             if let url = URL.init(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }))
         alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
         present(alert, animated: true)
@@ -349,10 +316,9 @@ extension FirstViewControllerController: ConnectivityDelegate {
     func goodInternetConnection() {
         internetConnection = true
     }
-    
-    
 }
 
+// MARK: - CLLocationManagerDelegate
 extension FirstViewControllerController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
@@ -360,11 +326,17 @@ extension FirstViewControllerController: CLLocationManagerDelegate {
             myCurrentLongitude = location.coordinate.longitude
             cameraLatitude = myCurrentLatitude
             cameraLongitude = myCurrentLongitude
-            loadCurrentWeather()
+            WeatherAPI().loadCurrentWeather(latitude: myCurrentLatitude,
+                                            longitude: myCurrentLongitude) { temp, image in
+                DispatchQueue.main.async {
+                    self.weatherView.weatherViewTemperature = temp
+                    self.weatherView.weatherViewImage = image
+                }
+            }
             manager.stopUpdatingLocation()
         }
     }
-
+    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if CLLocationManager.locationServicesEnabled() {
@@ -384,6 +356,7 @@ extension FirstViewControllerController: CLLocationManagerDelegate {
     }
 }
 
+// MARK: - FloatingViewDelegate
 extension FirstViewControllerController: FloatingViewDelegate {
     func floatingPanelIsHidden() {
         UIView.animate(withDuration: 0.35) {
@@ -392,6 +365,32 @@ extension FirstViewControllerController: FloatingViewDelegate {
         self.mapView.settings.myLocationButton = true
         showScrollAndWeatherView()
     }
+}
+
+// MARK: - FirstViewDisplayLogic
+extension FirstViewControllerController: FirstViewDisplayLogic {
     
+    // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
+    func displayFetchedMarkersFromSearchView(withString: String) {
+        print(#function)
+    }
     
+    // Отображаем маркеры при нажатии на фильтры в ScrollView
+    func displayMarkers(filter: [GMSMarker]) {
+        mapView.clear()
+        filter.forEach {
+            $0.map = mapView
+        }
+    }
+    
+    func displayAllReleaseMarkers(filler: MapViewModel.FilterName) {
+        print(#function)
+    }
+    
+    // при нажатии на маркер на экране
+    // заполнение floating view данными из текущей модели viewModel
+    func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel) {
+        print(#function)
+        print("\(viewModel.destinationName)")
+    }
 }

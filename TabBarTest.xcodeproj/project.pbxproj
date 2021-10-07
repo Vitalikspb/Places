@@ -15,6 +15,7 @@
 		53EF4D1E270E2A60008CB1B2 /* FirstViewControllerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D1D270E2A60008CB1B2 /* FirstViewControllerPresenter.swift */; };
 		53EF4D20270E2A6E008CB1B2 /* FirstViewControllerWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D1F270E2A6E008CB1B2 /* FirstViewControllerWorker.swift */; };
 		53EF4D22270E2A7B008CB1B2 /* FirstViewControllerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D21270E2A7B008CB1B2 /* FirstViewControllerModels.swift */; };
+		53EF561F270F720E00CD3786 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF561E270F720E00CD3786 /* WeatherAPI.swift */; };
 		C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25448792706ED32000B9439 /* ModelWeather.swift */; };
 		C254487C2706F52E000B9439 /* Extension+CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487B2706F52E000B9439 /* Extension+CLLocation.swift */; };
 		C254487E27070753000B9439 /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487D27070753000B9439 /* FloatingView.swift */; };
@@ -47,6 +48,7 @@
 		53EF4D1D270E2A60008CB1B2 /* FirstViewControllerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewControllerPresenter.swift; sourceTree = "<group>"; };
 		53EF4D1F270E2A6E008CB1B2 /* FirstViewControllerWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewControllerWorker.swift; sourceTree = "<group>"; };
 		53EF4D21270E2A7B008CB1B2 /* FirstViewControllerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewControllerModels.swift; sourceTree = "<group>"; };
+		53EF561E270F720E00CD3786 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
 		6FDB80F8D64C9AFF6D52A8B3 /* Pods_TabBarTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabBarTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C25448792706ED32000B9439 /* ModelWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWeather.swift; sourceTree = "<group>"; };
 		C254487B2706F52E000B9439 /* Extension+CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CLLocation.swift"; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				5396A4922706377C0044D759 /* InternetConnection.swift */,
+				53EF561E270F720E00CD3786 /* WeatherAPI.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */,
 				5396A4932706377C0044D759 /* InternetConnection.swift in Sources */,
 				C2CA35F226FE1DA800795EF6 /* FirstViewControllerController.swift in Sources */,
+				53EF561F270F720E00CD3786 /* WeatherAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
