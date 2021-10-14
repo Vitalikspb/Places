@@ -9,17 +9,17 @@ import UIKit
 import GoogleMaps
 import CoreLocation
 
-protocol FirstViewDisplayLogic: AnyObject {
+protocol MapDisplayLogic: AnyObject {
     func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel)
     func displayMarkers(filter: [GMSMarker])
     func displayFetchedMarkersFromSearchView(withString: String)
 }
 
-class FirstViewControllerController: UIViewController {
+class MapController: UIViewController {
     
     // MARK: - Public Properties
     
-    var interactor: FirstViewBussinessLogic?
+    var interactor: MapBussinessLogic?
     
     // MARK: - Private Properties
     
@@ -42,7 +42,8 @@ class FirstViewControllerController: UIViewController {
     private var observation: NSKeyValueObservation?
     private var location: CLLocation? {
         didSet {
-            guard oldValue == nil, let firstLocation = location else { return }
+            guard oldValue == nil,
+                  let firstLocation = location else { return }
             mapView.camera = GMSCameraPosition(target: firstLocation.coordinate, zoom: 14)
         }
     }
@@ -115,11 +116,11 @@ class FirstViewControllerController: UIViewController {
     // Настройка архитектуры Clean Swift
     private func setupClean() {
         let viewController = self
-        let interactor = FirstViewControllerInteractor()
-        let presenter = FirstViewControllerPresenter()
+        let interactor = MapInteractor()
+        let presenter = MapPresenter()
         viewController.interactor = interactor
         interactor.presenter = presenter
-        presenter.firstViewController = viewController
+        presenter.mapController = viewController
     }
     
     // Настройка locationManager
@@ -172,7 +173,7 @@ class FirstViewControllerController: UIViewController {
 }
 
 // MARK: - GMSMapViewDelegate
-extension FirstViewControllerController: GMSMapViewDelegate {
+extension MapController: GMSMapViewDelegate {
     
     // Вызывается при изменении позиции карты
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
@@ -236,7 +237,7 @@ extension FirstViewControllerController: GMSMapViewDelegate {
 }
 
 // MARK: - ScrollViewOnMapDelegate
-extension FirstViewControllerController: ScrollViewOnMapDelegate {
+extension MapController: ScrollViewOnMapDelegate {
     
     // Фильтрация маркеров по музею
     func chooseMuseumFilter(completion: @escaping () -> (Bool)) {
@@ -288,7 +289,7 @@ extension FirstViewControllerController: ScrollViewOnMapDelegate {
 }
 
 // MARK: - TopSearchViewDelegate
-extension FirstViewControllerController: TopSearchViewDelegate {
+extension MapController: TopSearchViewDelegate {
     // Скрываем поисковую строку и клавиатуру при нажатии на крестик в textField
     func clearTextField() {
         hideTopSearchView()
@@ -296,7 +297,7 @@ extension FirstViewControllerController: TopSearchViewDelegate {
 }
 
 // MARK: - ConnectivityDelegate
-extension FirstViewControllerController: ConnectivityDelegate {
+extension MapController: ConnectivityDelegate {
     func lostInternetConnection() {
         internetConnection = false
         let alert = UIAlertController(
@@ -319,7 +320,7 @@ extension FirstViewControllerController: ConnectivityDelegate {
 }
 
 // MARK: - CLLocationManagerDelegate
-extension FirstViewControllerController: CLLocationManagerDelegate {
+extension MapController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             myCurrentLatitude = location.coordinate.latitude
@@ -357,7 +358,7 @@ extension FirstViewControllerController: CLLocationManagerDelegate {
 }
 
 // MARK: - FloatingViewDelegate
-extension FirstViewControllerController: FloatingViewDelegate {
+extension MapController: FloatingViewDelegate {
     func floatingPanelIsHidden() {
         UIView.animate(withDuration: 0.35) {
             self.tabBarController?.tabBar.alpha = 1
@@ -368,7 +369,7 @@ extension FirstViewControllerController: FloatingViewDelegate {
 }
 
 // MARK: - FirstViewDisplayLogic
-extension FirstViewControllerController: FirstViewDisplayLogic {
+extension MapController: MapDisplayLogic {
     
     // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String) {

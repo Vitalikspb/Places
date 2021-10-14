@@ -12,6 +12,7 @@ import UIKit
 
 enum MapViewModel {
     
+    // фильтры маркеров на карте
     enum FilterName {
         case Alltest
         case AllRelease
@@ -22,7 +23,7 @@ enum MapViewModel {
     }
     
     enum ChoosenDestinationView {
-        
+
         // передаем в интерактор название маркера для последующей обработки
         struct Request {
             let marker: String

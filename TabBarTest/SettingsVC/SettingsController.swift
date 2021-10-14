@@ -1,18 +1,18 @@
 //
-//  WeatherView.swift
+//  SettingsController.swift
 //  TabBarTest
 //
-//  Created by VITALIY SVIRIDOV on 28.09.2021.
+//  Created by VITALIY SVIRIDOV on 14.10.2021.
 //
 
 import UIKit
 
-class CenterViewController: UIViewController {
+class SettingsController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
 
+        // Do any additional setup after loading the view.
     }
     
 

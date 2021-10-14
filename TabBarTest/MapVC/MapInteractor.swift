@@ -8,17 +8,17 @@
 import Foundation
 import GoogleMaps
 
-protocol FirstViewBussinessLogic {
+protocol MapBussinessLogic {
     func showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request)
     func fetchAllTestMarkers(request: MapViewModel.FilterName)
 }
 
-protocol FirstViewDataStore {
+protocol MapDataStore {
     var markers: GMSMarker? { get set }
 }
 
 
-class FirstViewControllerInteractor: FirstViewBussinessLogic {
+class MapInteractor: MapBussinessLogic {
     
     func fetchAllTestMarkers(request: MapViewModel.FilterName) {
         switch request {
@@ -78,8 +78,8 @@ class FirstViewControllerInteractor: FirstViewBussinessLogic {
         return mapMarkers
     }
     
-    var presenter: FirstViewPresentationLogic?
-    var worker = FirstViewControllerWorker()
+    var presenter: MapPresentationLogic?
+    var worker = MapWorker()
     var markers: GMSMarker?
     
     func showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request) {

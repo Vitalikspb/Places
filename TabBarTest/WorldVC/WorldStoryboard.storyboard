@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Bpd-VU-9cC">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -9,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Third View Controller-->
+        <!--World Controller-->
         <scene sceneID="y8S-AO-hvH">
             <objects>
-                <viewController id="p18-ON-aRf" customClass="ThirdViewController" customModule="TabBarTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="p18-ON-aRf" customClass="WorldController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Thd-b2-bqZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,12 +26,12 @@
             </objects>
             <point key="canvasLocation" x="1781.1594202898552" y="61.607142857142854"/>
         </scene>
-        <!--third-->
+        <!--Мир-->
         <scene sceneID="u5m-Mp-lV5">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Bpd-VU-9cC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="2" title="third" id="t6K-cG-Jhl">
-                        <imageReference key="image" image="rosette" catalog="system" symbolScale="default"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Мир" id="t6K-cG-Jhl">
+                        <imageReference key="image" image="network" catalog="system" symbolScale="default"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -49,7 +50,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="rosette" catalog="system" width="106" height="128"/>
+        <image name="network" catalog="system" width="128" height="121"/>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

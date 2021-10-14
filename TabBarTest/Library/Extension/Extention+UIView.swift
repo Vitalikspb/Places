@@ -23,7 +23,11 @@ extension UIView {
         self.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     func addConstraintsToFillView(view: UIView) {
-        self.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        self.anchor(top: view.topAnchor, left: view.leftAnchor,
+                    bottom: view.bottomAnchor, right: view.rightAnchor,
+                    paddingTop: 0, paddingLeft: 0,
+                    paddingBottom: 0, paddingRight: 0,
+                    width: 0, height: 0)
     }
     
     func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {

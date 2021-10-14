@@ -7,6 +7,6 @@
 
 import Foundation
 
-class FirstViewControllerWorker {
+class MapWorker {
     
 }
