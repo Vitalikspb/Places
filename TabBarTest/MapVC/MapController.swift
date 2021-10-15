@@ -14,7 +14,6 @@ protocol MapDisplayLogic: AnyObject {
     func displayMarkers(filter: [GMSMarker])
     func displayFetchedMarkersFromSearchView(withString: String)
 }
-
 class MapController: UIViewController {
     
     // MARK: - Public Properties
@@ -29,6 +28,7 @@ class MapController: UIViewController {
     
     private var myCurrentLatitude: CLLocationDegrees = 0.0
     private var myCurrentLongitude: CLLocationDegrees = 0.0
+    
     private var cameraLatitude: CLLocationDegrees = 0.0
     private var cameraLongitude: CLLocationDegrees = 0.0
     private let cameraZoom: Float = 12
@@ -368,7 +368,7 @@ extension MapController: FloatingViewDelegate {
     }
 }
 
-// MARK: - FirstViewDisplayLogic
+// MARK: - MapDisplayLogic
 extension MapController: MapDisplayLogic {
     
     // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)

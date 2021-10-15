@@ -25,12 +25,25 @@ class FloatingView: UIView {
     var delegate: FloatingViewDelegate?
     // MARK: - Properties UI
     
+    let mainView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
     let indicatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.layer.cornerRadius = 3
         view.alpha = 0.8
         return view
+    }()
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .clear
+        imageView.contentMode = .scaleToFill
+        imageView.image = UIImage(named: "new-york")
+        return imageView
     }()
     
     // MARK: - Init
@@ -52,22 +65,17 @@ class FloatingView: UIView {
         case .FullyExpanded, .PatriallyExpanded, .none:
             break
         case .NotExpanded:
-            animateInputView(targetPosition: self.frame.origin.y - 250) { (_) in
-                self.expansionState = .PatriallyExpanded
-            }
+            animateInputView(targetPosition: UIScreen.main.bounds.height/6*4, state: .PatriallyExpanded)
         }
     }
+    
     func hideFloatingView() {
         switch expansionState {
         case .FullyExpanded:
-            animateInputView(targetPosition: UIScreen.main.bounds.height) { (_) in
-                self.expansionState = .NotExpanded
-            }
+            animateInputView(targetPosition: UIScreen.main.bounds.height, state: .NotExpanded)
             delegate?.floatingPanelIsHidden()
         case .PatriallyExpanded:
-            animateInputView(targetPosition: self.frame.origin.y + 250) { (_) in
-                self.expansionState = .NotExpanded
-            }
+            animateInputView(targetPosition: UIScreen.main.bounds.height, state: .NotExpanded)
             delegate?.floatingPanelIsHidden()
         case .none, .NotExpanded:
             break
@@ -80,11 +88,7 @@ class FloatingView: UIView {
         case .FullyExpanded, .none, .NotExpanded:
             break
         case .PatriallyExpanded:
-            animateInputView(targetPosition: self.frame.origin.y - 410) { (_) in
-                self.expansionState = .FullyExpanded
-            }
-
-        
+            animateInputView(targetPosition: UIScreen.main.bounds.height/6*2, state: .FullyExpanded)
         }
     }
     
@@ -92,26 +96,16 @@ class FloatingView: UIView {
         switch sender.direction {
         case .up:
             if expansionState == .NotExpanded {
-                animateInputView(targetPosition: self.frame.origin.y - 250) { (_) in
-                    self.expansionState = .PatriallyExpanded
-                }
-            }
-            if expansionState == .PatriallyExpanded {
-                animateInputView(targetPosition: self.frame.origin.y - 410) { (_) in
-                    self.expansionState = .FullyExpanded
-                }
+                animateInputView(targetPosition: UIScreen.main.bounds.height/6*4, state: .PatriallyExpanded)
+            } else if expansionState == .PatriallyExpanded {
+                animateInputView(targetPosition: UIScreen.main.bounds.height/6*2,state: .FullyExpanded)
             }
             
         case .down:
             if expansionState == .FullyExpanded {
-                animateInputView(targetPosition: self.frame.origin.y + 410) { (_) in
-                    self.expansionState = .PatriallyExpanded
-                }
-            }
-            if expansionState == .PatriallyExpanded {
-                animateInputView(targetPosition: self.frame.origin.y + 250) { (_) in
-                    self.expansionState = .NotExpanded
-                }
+                animateInputView(targetPosition: UIScreen.main.bounds.height/6*4, state: .PatriallyExpanded)
+            } else if expansionState == .PatriallyExpanded {
+                animateInputView(targetPosition: UIScreen.main.bounds.height,state: .NotExpanded)
                 delegate?.floatingPanelIsHidden()
             }
             
@@ -122,23 +116,46 @@ class FloatingView: UIView {
     
     // MARK: - Helpers function
     
-    
-    
-    func animateInputView(targetPosition: CGFloat, completion: @escaping(Bool) -> ()) {
+    func animateInputView(targetPosition: CGFloat, state: ExpansionState) {
         DispatchQueue.main.async {
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.frame.origin.y = targetPosition
-            
-            
-        }, completion: completion)
+                if state == .FullyExpanded {
+                    self.imageView.frame.origin.y = -300
+                } else if state == .NotExpanded {
+                    self.imageView.frame.origin.y = UIScreen.main.bounds.height
+                } else {
+                    self.imageView.frame.origin.y = -180
+                }
+                
+            })
         }
+        self.expansionState = state
     }
     
     func configureViewComponents() {
-        backgroundColor = .white
-        addSubview(indicatorView)
-        indicatorView.anchor(top: topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 80, height: 6)
+        backgroundColor = .clear
+        addSubview(imageView)
+        addSubview(mainView)
+        mainView.addSubview(indicatorView)
+//        insertSubview(imageView, belowSubview: mainView)
+        
+        mainView.addConstraintsToFillView(view: self)
+        imageView.translatesAutoresizingMaskIntoConstraints = true
+        imageView.frame = CGRect(x: 0,
+                                 y: 0,
+                                 width: UIScreen.main.bounds.width,
+                                 height: 250)
+        indicatorView.anchor(top: topAnchor,
+                             left: nil,
+                             bottom: nil,
+                             right: nil,
+                             paddingTop: 8,
+                             paddingLeft: 0,
+                             paddingBottom: 0,
+                             paddingRight: 0,
+                             width: 80,
+                             height: 6)
         indicatorView.centerX(inView: self)
         configureGestureRecognizer()
     }

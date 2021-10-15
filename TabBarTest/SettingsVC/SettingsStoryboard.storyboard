@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Settings Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsController" id="Y6W-OH-hqX" customClass="SettingsController" customModule="TabBarTest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,7 +30,7 @@
         <scene sceneID="7W8-ak-LYO">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="53P-k4-NOz" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="настройки" image="gear" catalog="system" id="6bS-sz-GE6"/>
+                    <tabBarItem key="tabBarItem" tag="3" title="настройки" image="gear" catalog="system" id="6bS-sz-GE6"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IfN-rH-Kuj">

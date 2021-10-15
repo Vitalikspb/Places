@@ -8,8 +8,6 @@
 import UIKit
 import GoogleMaps
 
-let googleApiKey = "AIzaSyCT5aMIZxW2i19oK2D3VTekdAnxATzUCFU"
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -17,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        GMSServices.provideAPIKey(googleApiKey)
+        GMSServices.provideAPIKey(Constants.apiKey)
         connectivity.startNetworkReachabilityObserver()
         
         return true
