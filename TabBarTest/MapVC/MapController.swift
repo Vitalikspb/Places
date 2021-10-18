@@ -31,7 +31,7 @@ class MapController: UIViewController {
     
     private var cameraLatitude: CLLocationDegrees = 0.0
     private var cameraLongitude: CLLocationDegrees = 0.0
-    private let cameraZoom: Float = 12
+    private let cameraZoom: Float = 14
     private lazy var mapView: GMSMapView = {
         let camera = GMSCameraPosition(
             latitude: myCurrentLatitude, longitude: myCurrentLongitude, zoom: cameraZoom)
@@ -44,7 +44,7 @@ class MapController: UIViewController {
         didSet {
             guard oldValue == nil,
                   let firstLocation = location else { return }
-            mapView.camera = GMSCameraPosition(target: firstLocation.coordinate, zoom: 14)
+            mapView.camera = GMSCameraPosition(target: firstLocation.coordinate, zoom: cameraZoom)
         }
     }
     private var locationManager = CLLocationManager()
@@ -56,15 +56,15 @@ class MapController: UIViewController {
                                                           width: UIScreen.main.bounds.width,
                                                           height: UIScreen.main.bounds.height))
     private let topScrollView = ScrollViewOnMap(frame: CGRect(x: 0,
-                                                              y: 65,
+                                                              y: 0,
                                                               width: UIScreen.main.bounds.width,
                                                               height: 42))
-    private let topSearchView = TopSearchView(frame: CGRect(x: 10,
-                                                            y: 65,
+    private let topSearchView = TopSearchView(frame: CGRect(x: 0,
+                                                            y: 0,
                                                             width: UIScreen.main.bounds.width-20,
                                                             height: 60))
-    private var weatherView = WeatherView(frame: CGRect(x: 10,
-                                                        y: 127,
+    private var weatherView = WeatherView(frame: CGRect(x: 0,
+                                                        y: 0,
                                                         width: 50,
                                                         height: 38))
     
@@ -111,6 +111,34 @@ class MapController: UIViewController {
         view.addSubview(topSearchView)
         view.addSubview(weatherView)
         view.addSubview(floatingView)
+
+        topScrollView.anchor(top: view.layoutMarginsGuide.topAnchor,
+                             left: view.leftAnchor,
+                             bottom: nil,
+                             right: view.rightAnchor,
+                             paddingTop: 15,
+                             paddingLeft: 0,
+                             paddingBottom: 0,
+                             paddingRight: 0,
+                             width: 0, height: 65)
+        weatherView.anchor(top: topScrollView.bottomAnchor,
+                            left: view.leftAnchor,
+                            bottom: nil,
+                            right: view.rightAnchor,
+                            paddingTop: 0,
+                            paddingLeft: 15,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 50, height: 38)
+        topSearchView.anchor(top: view.layoutMarginsGuide.topAnchor,
+                             left: view.leftAnchor,
+                             bottom: nil,
+                             right: view.rightAnchor,
+                             paddingTop: 15,
+                             paddingLeft: 10,
+                             paddingBottom: 0,
+                             paddingRight: 10,
+                             width: 0, height: 60)
     }
     
     // Настройка архитектуры Clean Swift
@@ -141,13 +169,13 @@ class MapController: UIViewController {
     private func hideTopSearchView() {
         if topSearchView.alpha == 1 {
             DispatchQueue.main.async {
-                UIView.animate(withDuration: 0.45) {
+                UIView.animate(withDuration: 0.25) {
                     self.topSearchView.alpha = 0
                     self.topSearchView.inputTextField.resignFirstResponder()
                 } completion: { success in
                     if success {
-                        UIView.animate(withDuration: 0.25) {
-                            self.topScrollView.frame.origin.y = 65
+                        UIView.animate(withDuration: 0.55) {
+                            self.topScrollView.alpha = 1
                             self.weatherView.alpha = 1
                             self.topSearchView.inputTextField.text = ""
                         }
@@ -206,10 +234,19 @@ extension MapController: GMSMapViewDelegate {
                 self.topScrollView.alpha = 0
                 self.weatherView.alpha = 0
             }
-            
+
+            CATransaction.begin()
+            CATransaction.setAnimationDuration(0.75)
+            let locationMarketTappedLon = marker.position.longitude
+            let locationMarketTappedLat = marker.position.latitude - 0.0036
+            let location = CLLocationCoordinate2D(latitude: locationMarketTappedLat, longitude: locationMarketTappedLon)
+            let camera = GMSCameraPosition(target: location, zoom: self.cameraZoom + 1)
+            mapView.animate(to: camera)
+            CATransaction.commit()
         }
         return true
     }
+    
     
     // вызывается при нажатии карту
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
@@ -276,8 +313,8 @@ extension MapController: ScrollViewOnMapDelegate {
     // Отображение поисковой строки и сокрытие строки с фильтрами
     func showSearchView() {
         UIView.animate(withDuration: 0.25) {
-            self.topScrollView.frame.origin.y = -50
             self.weatherView.alpha = 0
+            self.topScrollView.alpha = 0
         } completion: { success in
             if success {
                 UIView.animate(withDuration: 0.55) {

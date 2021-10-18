@@ -49,10 +49,19 @@ class MapInteractor: MapBussinessLogic {
     
     private func returnAllTestMarkers() -> [GMSMarker] {
         var mapMarkers = [GMSMarker]()
-        let sydneyMarker = GMSMarker(
-            position: CLLocationCoordinate2D(latitude: 59.9422, longitude: 30.3945))
-        sydneyMarker.title = "New Point!"
-        sydneyMarker.icon = UIImage(systemName: "terminal")!
+
+        
+        
+        
+        let australiaMarker = GMSMarker(
+          position: CLLocationCoordinate2D(latitude: 59.9422, longitude: 30.3945))
+        australiaMarker.title = "Australia"
+        australiaMarker.appearAnimation = .pop
+        australiaMarker.isFlat = true
+        australiaMarker.isDraggable = true
+        australiaMarker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
+        australiaMarker.icon = UIImage(systemName: "gear")! //UIImage(named: "new-york")
+ 
         
         let sydneyMarker1 = GMSMarker(
             position: CLLocationCoordinate2D(latitude: 59.9122, longitude: 30.3445))
@@ -71,7 +80,7 @@ class MapInteractor: MapBussinessLogic {
         melbourneMarker1.title = "Another Point!"
         melbourneMarker1.icon = UIImage(systemName: "sunrise")!
         
-        mapMarkers.append(sydneyMarker)
+        mapMarkers.append(australiaMarker)
         mapMarkers.append(sydneyMarker1)
         mapMarkers.append(melbourneMarker)
         mapMarkers.append(melbourneMarker1)
