@@ -13,20 +13,28 @@ extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
+    
     func center(inView view: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
+    
     func centerY(inView view: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
+    
     func addConstraintsToFillView(view: UIView) {
-        self.anchor(top: view.topAnchor, left: view.leftAnchor,
-                    bottom: view.bottomAnchor, right: view.rightAnchor,
-                    paddingTop: 0, paddingLeft: 0,
-                    paddingBottom: 0, paddingRight: 0,
+        translatesAutoresizingMaskIntoConstraints = false
+        self.anchor(top: view.topAnchor,
+                    left: view.leftAnchor,
+                    bottom: view.bottomAnchor,
+                    right: view.rightAnchor,
+                    paddingTop: 0,
+                    paddingLeft: 0,
+                    paddingBottom: 0,
+                    paddingRight: 0,
                     width: 0, height: 0)
     }
     
@@ -53,7 +61,12 @@ extension UIView {
         }
     }
     
-    
+    func standartShadow(view: UIView) {
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.60
+        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+        view.layer.shadowRadius = 2
+    }
 }
 
 

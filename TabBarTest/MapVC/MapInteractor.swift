@@ -17,7 +17,6 @@ protocol MapDataStore {
     var markers: GMSMarker? { get set }
 }
 
-
 class MapInteractor: MapBussinessLogic {
     
     func fetchAllTestMarkers(request: MapViewModel.FilterName) {
@@ -50,9 +49,6 @@ class MapInteractor: MapBussinessLogic {
     private func returnAllTestMarkers() -> [GMSMarker] {
         var mapMarkers = [GMSMarker]()
 
-        
-        
-        
         let australiaMarker = GMSMarker(
           position: CLLocationCoordinate2D(latitude: 59.9422, longitude: 30.3945))
         australiaMarker.title = "Australia"
@@ -92,7 +88,13 @@ class MapInteractor: MapBussinessLogic {
     var markers: GMSMarker?
     
     func showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request) {
-        print("interator is workind and fetching data ")
-        // тут логика показа выбранного маркера выбор данных по конкретному маркеру из всех маркеров на карте
+        
+        //        здесь берем данные из базы по конкретному названию маркера из данной страны и текущего города
+        if request.marker == "Another Point!" {
+//            когда нашли нужное место с его данными - передаем в перентер
+//            изменить модель response для дальнейшего отображения
+//            для теста пока нету кор даты пока что только название
+            presenter?.presentChoosenDestinationView(response: MapViewModel.ChoosenDestinationView.Response(destinationName: CurrentMarkerInfo(name: request.marker)))
+        }
     }
 }

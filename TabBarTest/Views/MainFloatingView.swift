@@ -31,6 +31,38 @@ class MainFloatingView: UIView {
         return imageView
     }()
     
+//    cell 1
+//    let titleNameLabel
+//    let addressTopLabel
+//    let typeLabel
+//    let openLabel
+//    let whenClosedToday
+    
+//    let actionButtonsScrollView
+//    let favouriteButton
+//    let routeButton
+//    let cellButton
+//    let shareButton
+//    let siteButton
+    
+//    cell 2
+//    let additionalImagesScrollView
+    
+//    cell 3
+//    let addressTitleLabel
+//    let addressLabel
+    
+//    cell 4
+//    let contactTitlelabel
+//    let phoneLabel
+//    let siteLabel
+    
+//    cell 5
+//    let scheduleTitleLabel
+//    let scheduleLabel
+//    let scheduleButton
+//    let scheduleView
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

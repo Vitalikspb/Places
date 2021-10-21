@@ -101,7 +101,7 @@ class FloatingView: UIView {
     }
     
     // MARK: - Helpers function
-
+    
     func cornerRadii(with radii: Int) {
         let layer = CAShapeLayer()
         let cornerPath = UIBezierPath(roundedRect: self.bounds,
@@ -136,10 +136,7 @@ class FloatingView: UIView {
                         width: 0, height: 0)
         configureGestureRecognizer()
         
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.60
-        layer.shadowOffset = CGSize(width: 0, height: 1)
-        layer.shadowRadius = 2
+        self.standartShadow(view: self)
     }
     
     

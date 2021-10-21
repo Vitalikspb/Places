@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 class CustomTaBarVC: UITabBarController, UITabBarControllerDelegate {
     
@@ -22,10 +23,10 @@ class CustomTaBarVC: UITabBarController, UITabBarControllerDelegate {
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
-        case 0:
-            print("map button")
-        case 1:
-            print("country button")
+        case 0: break
+//            print("map button")
+        case 1: break
+//            print("country button")
         case 2:
             print("World button")
         case 3:

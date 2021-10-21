@@ -33,8 +33,7 @@ class MapController: UIViewController {
     private var cameraLongitude: CLLocationDegrees = 0.0
     private let cameraZoom: Float = 14
     private lazy var mapView: GMSMapView = {
-        let camera = GMSCameraPosition(
-            latitude: myCurrentLatitude, longitude: myCurrentLongitude, zoom: cameraZoom)
+        let camera = GMSCameraPosition(latitude: myCurrentLatitude, longitude: myCurrentLongitude, zoom: cameraZoom)
         return GMSMapView(frame: .zero, camera: camera)
     }()
     
@@ -48,6 +47,7 @@ class MapController: UIViewController {
         }
     }
     private var locationManager = CLLocationManager()
+    let userDefault = UserDefaults.standard
     
     // MARK: - UI Properties
     
@@ -124,7 +124,7 @@ class MapController: UIViewController {
         weatherView.anchor(top: topScrollView.bottomAnchor,
                             left: view.leftAnchor,
                             bottom: nil,
-                            right: view.rightAnchor,
+                            right: nil,
                             paddingTop: 0,
                             paddingLeft: 15,
                             paddingBottom: 0,
@@ -139,6 +139,19 @@ class MapController: UIViewController {
                              paddingBottom: 0,
                              paddingRight: 10,
                              width: 0, height: 60)
+    }
+    
+    private func setCurrentLocation() {
+        let location = CLLocation(latitude: cameraLatitude, longitude: cameraLongitude)
+//        location.saveCurentLocation()
+        
+        location.fetchCityAndCountry { city, country, error in
+            guard let city = city, let country = country, error == nil else { return }
+            if city != self.userDefault.string(forKey: UserDefaults.currentLocation) {
+                print("save new location")
+                self.userDefault.set("\(city),\(country)", forKey: UserDefaults.currentLocation)
+            }
+        }
     }
     
     // Настройка архитектуры Clean Swift
@@ -211,8 +224,9 @@ extension MapController: GMSMapViewDelegate {
         cameraLongitude = mapView.camera.target.longitude
     }
     
-    // Вызывается по нажатию на карту
+    // Вызывается по нажатию на свое местоположение
     func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
+
         let alert = UIAlertController(
             title: "Location Tapped",
             message: "Current location: <\(location.latitude), \(location.longitude)>",
@@ -223,53 +237,40 @@ extension MapController: GMSMapViewDelegate {
     
     // вызывается при нажатии на маркер
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.35) {
-                self.tabBarController?.tabBar.alpha = 0
-                self.mapView.settings.myLocationButton = false
-            } completion: { _ in
-                self.floatingView.showFloatingView()
-            }
-            UIView.animate(withDuration: 0.5) {
-                self.topScrollView.alpha = 0
-                self.weatherView.alpha = 0
-            }
-
-            CATransaction.begin()
-            CATransaction.setAnimationDuration(0.75)
-            let locationMarketTappedLon = marker.position.longitude
-            let locationMarketTappedLat = marker.position.latitude - 0.0036
-            let location = CLLocationCoordinate2D(latitude: locationMarketTappedLat, longitude: locationMarketTappedLon)
-            let camera = GMSCameraPosition(target: location, zoom: self.cameraZoom + 1)
-            mapView.animate(to: camera)
-            CATransaction.commit()
+        
+        // делаем запрос на данные для floatinView
+        if let nameLocation = marker.title {
+            interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
         }
+        // анимация камеры на конкретный маркер
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0.75)
+        let locationMarketTappedLon = marker.position.longitude
+        let locationMarketTappedLat = marker.position.latitude - 0.0036
+        let location = CLLocationCoordinate2D(latitude: locationMarketTappedLat, longitude: locationMarketTappedLon)
+        let camera = GMSCameraPosition(target: location, zoom: self.cameraZoom + 1)
+        mapView.animate(to: camera)
+        CATransaction.commit()
+        
         return true
     }
     
     
-    // вызывается при нажатии карту
+    // вызывается при нажатии на карту
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        //        проходимся по всем маркерам
-        //        for i in viewModel.allMarkers {
-        //            i.icon = GMSMarker.markerImage(with: .black)
-        //        }
         hideTopSearchView()
         floatingView.hideFloatingView()
         showScrollAndWeatherView()
-        let location = CLLocation(latitude: cameraLatitude, longitude: cameraLongitude)
-        location.fetchCityAndCountry { city, country, error in
-            guard let city = city, let country = country, error == nil else { return }
-            print(city + ", " + country)
-        }
-        
     }
     
     // вызывается когда начинается передвижение карты
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
         hideTopSearchView()
-        print("\(gesture)")
         
+    }
+    // Вызывается когда камера перестала двигатся
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
+        setCurrentLocation()
     }
 }
 
@@ -277,7 +278,7 @@ extension MapController: GMSMapViewDelegate {
 extension MapController: ScrollViewOnMapDelegate {
     
     // Фильтрация маркеров по музею
-    func chooseMuseumFilter(completion: @escaping () -> (Bool)) {
+    func chooseSightFilter(completion: @escaping () -> (Bool)) {
         var request: MapViewModel.FilterName
         if completion() {
             request = MapViewModel.FilterName.Museum
@@ -364,6 +365,7 @@ extension MapController: CLLocationManagerDelegate {
             myCurrentLongitude = location.coordinate.longitude
             cameraLatitude = myCurrentLatitude
             cameraLongitude = myCurrentLongitude
+            
             WeatherAPI().loadCurrentWeather(latitude: myCurrentLatitude,
                                             longitude: myCurrentLongitude) { temp, image in
                 DispatchQueue.main.async {
@@ -428,7 +430,19 @@ extension MapController: MapDisplayLogic {
     // при нажатии на маркер на экране
     // заполнение floating view данными из текущей модели viewModel
     func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel) {
-        print(#function)
-        print("\(viewModel.destinationName)")
+        print("displayChoosenDestination")
+        // всю эту логику перенести в метод от презентера - показ FloatingView конкретной меткой и данными по ней.
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.35) {
+                self.tabBarController?.tabBar.alpha = 0
+                self.mapView.settings.myLocationButton = false
+            } completion: { _ in
+                self.floatingView.showFloatingView()
+            }
+            UIView.animate(withDuration: 0.5) {
+                self.topScrollView.alpha = 0
+                self.weatherView.alpha = 0
+            }
+        }
     }
 }

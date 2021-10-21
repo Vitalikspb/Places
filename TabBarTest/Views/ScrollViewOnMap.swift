@@ -9,7 +9,7 @@ import UIKit
 
 protocol ScrollViewOnMapDelegate {
     func showSearchView()
-    func chooseMuseumFilter(completion: @escaping() -> (Bool))
+    func chooseSightFilter(completion: @escaping() -> (Bool))
     func chooseParkFilter()
     func choosePoiFilter()
     func chooseBeachFilter()
@@ -19,154 +19,167 @@ class ScrollViewOnMap: UIScrollView {
     
     var onMapdelegate: ScrollViewOnMapDelegate?
     
-    private let filter = FilterView(withName: "Поиск", andImage: UIImage(systemName: "sunrise")!)
-    private let filter1 = FilterView(withName: "Музеи", andImage: UIImage(systemName: "terminal")!)
-    private let filter2 = FilterView(withName: "Парки", andImage: UIImage(systemName: "mail")!)
-    private let filter3 = FilterView(withName: "Смотровые площадки", andImage: UIImage(systemName: "sunrise")!)
-    private let filter4 = FilterView(withName: "Пляжи", andImage: UIImage(systemName: "sunrise")!)
     
-    private let shadowFilterView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 18
-        view.backgroundColor = UIColor.white
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.60
-        view.layer.shadowOffset = CGSize(width: 0, height: 1)
-        view.layer.shadowRadius = 2
-        return view
-    }()
-    private let shadowFilterView1: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 18
-        view.backgroundColor = UIColor.white
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.60
-        view.layer.shadowOffset = CGSize(width: 0, height: 1)
-        view.layer.shadowRadius = 2
-        return view
-    }()
-    private let shadowFilterView2: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 18
-        view.backgroundColor = UIColor.white
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.60
-        view.layer.shadowOffset = CGSize(width: 0, height: 1)
-        view.layer.shadowRadius = 2
-        return view
-    }()
-    private let shadowFilterView3: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 18
-        view.backgroundColor = UIColor.white
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.60
-        view.layer.shadowOffset = CGSize(width: 0, height: 1)
-        view.layer.shadowRadius = 2
-        return view
-    }()
-    private let shadowFilterView4: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 18
-        view.backgroundColor = UIColor.white
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.60
-        view.layer.shadowOffset = CGSize(width: 0, height: 1)
-        view.layer.shadowRadius = 2
-        return view
-    }()
+    // поиск
+    private let searchFilter = FilterView(withName: "Поиск", andImage: UIImage(systemName: "sunrise")!)
     
+    // Достопримечательность -
+    // Замки, Музеи, Памятики,
+    private let sightFilter = FilterView(withName: "Достопримечательность", andImage: UIImage(systemName: "mail")!)
     
+    // Транспорт -
+    // ЖДВокзал, АвтоВокзал, Аэропорт
+    private let transportFilter = FilterView(withName: "Транспорт", andImage: UIImage(systemName: "sunrise")!)
+    
+    // Досуг -
+    // Смотровая прощадка, Аквапарки, Выставки, Пещеры, Зоопарки, Заповедники, Водопады
+    private let leisureFilter = FilterView(withName: "Досуг", andImage: UIImage(systemName: "sunrise")!)
+    
+    // Рынок
+    private let marketFilter = FilterView(withName: "Рынок", andImage: UIImage(systemName: "sunrise")!)
+    
+    // Пляж
+    private let beachFilter = FilterView(withName: "Пляж", andImage: UIImage(systemName: "sunrise")!)
+    
+    // Богослужение -
+    // Храм, Мечеть, Церковь, Синагога, Собор
+    private let worshipFilter = FilterView(withName: "Богослужение", andImage: UIImage(systemName: "sunrise")!)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .clear
-        self.isScrollEnabled = true
-        self.isDirectionalLockEnabled = true
-        self.showsHorizontalScrollIndicator = false
-
-        let tapSearch = UITapGestureRecognizer(target: self, action: #selector(handleSearchFilter))
-        filter.addGestureRecognizer(tapSearch)
-        let tapSearchMuseum = UITapGestureRecognizer(target: self, action: #selector(handleMuseumFilter))
-        filter1.addGestureRecognizer(tapSearchMuseum)
-        let tapSearchPark = UITapGestureRecognizer(target: self, action: #selector(handleParkFilter))
-        filter2.addGestureRecognizer(tapSearchPark)
-        let tapSearchPoi = UITapGestureRecognizer(target: self, action: #selector(handlePoiFilter))
-        filter3.addGestureRecognizer(tapSearchPoi)
-        let tapSearchBeach = UITapGestureRecognizer(target: self, action: #selector(handleBeachFilter))
-        filter4.addGestureRecognizer(tapSearchBeach)
-        
-        addSubview(shadowFilterView)
-        addSubview(shadowFilterView1)
-        addSubview(shadowFilterView2)
-        addSubview(shadowFilterView3)
-        addSubview(shadowFilterView4)
-        addSubview(filter)
-        addSubview(filter1)
-        addSubview(filter2)
-        addSubview(filter3)
-        addSubview(filter4)
-
-
-        
-        let frameOne = CGRect(x: 12, y: 2,
-                               width: filter.frame.width, height: 36)
-        filter.frame = frameOne
-        shadowFilterView.frame = frameOne
-        
-        let frameTwo = CGRect(x: filter.frame.width+24, y: 2,
-                               width: filter1.frame.width, height: 36)
-        filter1.frame = frameTwo
-        shadowFilterView1.frame = frameTwo
-        
-        let frameThree = CGRect(x: filter.frame.width+filter1.frame.width+36, y: 2,
-                                width: filter2.frame.width, height: 36)
-        filter2.frame = frameThree
-        shadowFilterView2.frame = frameThree
-        
-        let frameFour = CGRect(x: filter.frame.width+filter1.frame.width+filter2.frame.width+48, y: 2,
-                               width: filter3.frame.width, height: 36)
-        filter3.frame = frameFour
-        shadowFilterView3.frame = frameFour
-        
-        let frameFive = CGRect(x: filter.frame.width+filter1.frame.width+filter2.frame.width+filter3.frame.width+60, y: 2,
-                               width: filter4.frame.width, height: 36)
-        filter4.frame = frameFive
-        shadowFilterView4.frame = frameFive
-        
-        self.contentSize = CGSize(width: filter.frame.width + filter1.frame.width +
-                                    filter2.frame.width + filter3.frame.width + filter4.frame.width + 72,
-                                  height: self.frame.height)
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupUI() {
+        self.backgroundColor = .clear
+        self.isScrollEnabled = true
+        self.isDirectionalLockEnabled = true
+        self.showsHorizontalScrollIndicator = false
+        
+        [searchFilter, sightFilter, transportFilter,
+         leisureFilter, marketFilter, beachFilter, worshipFilter].forEach {
+            $0.layer.cornerRadius = 18
+            $0.backgroundColor = UIColor.white
+            $0.standartShadow(view: $0)
+        }
+        
+
+        let tapSearch = UITapGestureRecognizer(target: self, action: #selector(handleSearchFilter))
+        searchFilter.addGestureRecognizer(tapSearch)
+        let tapSearchSight = UITapGestureRecognizer(target: self, action: #selector(handleSightFilter))
+        sightFilter.addGestureRecognizer(tapSearchSight)
+        let tapSearchTransport = UITapGestureRecognizer(target: self, action: #selector(handleTransportFilter))
+        transportFilter.addGestureRecognizer(tapSearchTransport)
+        let tapSearchLeisure = UITapGestureRecognizer(target: self, action: #selector(handleLeisureFilter))
+        leisureFilter.addGestureRecognizer(tapSearchLeisure)
+        let tapSearchMarket = UITapGestureRecognizer(target: self, action: #selector(handleMarketFilter))
+        marketFilter.addGestureRecognizer(tapSearchMarket)
+        let tapSearchBeach = UITapGestureRecognizer(target: self, action: #selector(handleBeachFilter))
+        beachFilter.addGestureRecognizer(tapSearchBeach)
+        let tapSearchWorship = UITapGestureRecognizer(target: self, action: #selector(handleWorshipFilter))
+        worshipFilter.addGestureRecognizer(tapSearchWorship)
+        
+        addSubview(searchFilter)
+        addSubview(sightFilter)
+        addSubview(transportFilter)
+        addSubview(leisureFilter)
+        addSubview(marketFilter)
+        addSubview(beachFilter)
+        addSubview(worshipFilter)
+        
+        
+        let searchWidth = searchFilter.frame.width
+        let sightWidth = sightFilter.frame.width
+        let transportWidth = transportFilter.frame.width
+        let leisureWidth = leisureFilter.frame.width
+        let marketWidth = marketFilter.frame.width
+        let beachWidth = beachFilter.frame.width
+        let worshipWidth = worshipFilter.frame.width
+        
+        let frameSearch = CGRect(x: 12,
+                                 y: 2,
+                                 width: searchWidth,
+                                 height: 36)
+        searchFilter.frame = frameSearch
+        
+        let frameSight = CGRect(x: searchWidth + 24,
+                                y: 2,
+                                width: sightWidth,
+                                height: 36)
+        sightFilter.frame = frameSight
+        
+        let frameTransport = CGRect(x: searchWidth + sightWidth + 36,
+                                    y: 2,
+                                    width: transportWidth,
+                                    height: 36)
+        transportFilter.frame = frameTransport
+        
+        let frameLeisure = CGRect(x: searchWidth + sightWidth + transportWidth + 48,
+                                  y: 2,
+                                  width: leisureWidth,
+                                  height: 36)
+        leisureFilter.frame = frameLeisure
+        
+        let frameMarket = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + 60,
+                                 y: 2,
+                                 width: marketWidth,
+                                 height: 36)
+    
+        marketFilter.frame = frameMarket
+        let frameBeach = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + marketWidth + 72,
+                                y: 2,
+                                width: beachWidth,
+                                height: 36)
+        
+        beachFilter.frame = frameBeach
+        let frameWorship = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + marketWidth + beachWidth + 84,
+                                  y: 2,
+                                  width: worshipWidth,
+                                  height: 36)
+        worshipFilter.frame = frameWorship
+        
+        
+        
+        
+        self.contentSize = CGSize(width: searchWidth + sightWidth + transportWidth + leisureWidth + marketWidth + beachWidth + worshipWidth + 96,
+                                  height: self.frame.height)
+    }
+    
     @objc func handleSearchFilter() {
         onMapdelegate?.showSearchView()
-        filter1.backgroundColor = .white
-        filter2.backgroundColor = .white
-        filter3.backgroundColor = .white
-        filter4.backgroundColor = .white
+        
+        [sightFilter, transportFilter,
+         leisureFilter, marketFilter, beachFilter, worshipFilter].forEach {
+            $0.backgroundColor = .white
+        }
     }
-    @objc func handleMuseumFilter() {
-        onMapdelegate?.chooseMuseumFilter(completion: {
-            return self.filter1.backgroundColor == .white ? true : false
+
+    @objc func handleSightFilter() {
+        onMapdelegate?.chooseSightFilter(completion: {
+            return self.sightFilter.backgroundColor == .white ? true : false
         })
-        filter1.backgroundColor = filter1.backgroundColor == .white ? .systemBlue : .white
+        sightFilter.backgroundColor = sightFilter.backgroundColor == .white ? .systemBlue : .white
     }
-    @objc func handleParkFilter() {
-        onMapdelegate?.chooseParkFilter()
-        filter2.backgroundColor = filter2.backgroundColor == .white ? .systemBlue : .white
+    @objc func handleTransportFilter() {
+        transportFilter.backgroundColor = transportFilter.backgroundColor == .white ? .systemBlue : .white
     }
-    @objc func handlePoiFilter() {
-        onMapdelegate?.choosePoiFilter()
-        filter3.backgroundColor = filter3.backgroundColor == .white ? .systemBlue : .white
+    @objc func handleLeisureFilter() {
+        leisureFilter.backgroundColor = leisureFilter.backgroundColor == .white ? .systemBlue : .white
+    }
+    @objc func handleMarketFilter() {
+
+        marketFilter.backgroundColor = marketFilter.backgroundColor == .white ? .systemBlue : .white
     }
     @objc func handleBeachFilter() {
-        onMapdelegate?.chooseBeachFilter()
-        filter4.backgroundColor = filter4.backgroundColor == .white ? .systemBlue : .white
+
+        beachFilter.backgroundColor = beachFilter.backgroundColor == .white ? .systemBlue : .white
+    }
+    @objc func handleWorshipFilter() {
+        worshipFilter.backgroundColor = worshipFilter.backgroundColor == .white ? .systemBlue : .white
     }
 
 }

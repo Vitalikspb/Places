@@ -41,10 +41,7 @@ class TopSearchView: UIView {
         self.backgroundColor = .white
         self.layer.cornerRadius = 30
         
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.60
-        self.layer.shadowOffset = CGSize(width: 0, height: 1)
-        self.layer.shadowRadius = 2
+        self.standartShadow(view: self)
         
         self.addSubview(titleImage)
         self.addSubview(inputTextField)
