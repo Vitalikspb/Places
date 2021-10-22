@@ -15,7 +15,14 @@ protocol MapDisplayLogic: AnyObject {
     func displayFetchedMarkersFromSearchView(withString: String)
 }
 
+
+
 class MapController: UIViewController {
+    
+    enum MapViewZoom {
+        case mapViewZoom
+        case countryViewZoom
+    }
     
     // MARK: - Public Properties
     
@@ -50,11 +57,8 @@ class MapController: UIViewController {
     private var locationManager = CLLocationManager()
     private let userDefault = UserDefaults.standard
     private var show: Bool = false
-    private let timer = Timer.scheduledTimer(timeInterval: 60.0,
-                                             target: self,
-                                             selector: #selector(setupLocationManager),
-                                             userInfo: nil,
-                                             repeats: true)
+    private var timer = Timer()
+    
     // MARK: - UI Properties
     
     private var floatingView = FloatingView(frame: CGRect(x: 0,
@@ -82,6 +86,12 @@ class MapController: UIViewController {
         setupUI()
         addDefaultMarkers()
         setupLocationManager()
+        
+        timer = Timer.scheduledTimer(timeInterval: 60.0,
+                                     target: self,
+                                     selector: #selector(setupLocationManager),
+                                     userInfo: nil,
+                                     repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -92,7 +102,8 @@ class MapController: UIViewController {
             let latitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLatitude)
             let longitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLongitude)
             animateCameraToPoint(latitude: latitude,
-                                 longitude: longitude)
+                                 longitude: longitude,
+                                 from: .countryViewZoom)
             userDefault.set(false, forKey: UserDefaults.showSelectedCity)
         }
     }
@@ -228,13 +239,20 @@ class MapController: UIViewController {
         }
     }
     // анимация камеры на конкретный маркер
-    private func animateCameraToPoint(latitude: Double, longitude: Double) {
+    private func animateCameraToPoint(latitude: Double, longitude: Double, from: MapViewZoom) {
         CATransaction.begin()
         CATransaction.setAnimationDuration(0.75)
         let locationMarketTappedLon = longitude
         let locationMarketTappedLat = latitude
         let location = CLLocationCoordinate2D(latitude: locationMarketTappedLat, longitude: locationMarketTappedLon)
-        let camera = GMSCameraPosition(target: location, zoom: self.cameraZoom + 1)
+        var zoom: Float = 0
+        switch from {
+        case .mapViewZoom:
+            zoom = self.cameraZoom + 1
+        case .countryViewZoom:
+            zoom = 10
+        }
+        let camera = GMSCameraPosition(target: location, zoom: zoom)
         mapView.animate(to: camera)
         CATransaction.commit()
     }
@@ -270,7 +288,8 @@ extension MapController: GMSMapViewDelegate {
             interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
         }
         animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
-                             longitude: marker.position.longitude)
+                             longitude: marker.position.longitude,
+                             from: .mapViewZoom)
         return true
     }
 
@@ -303,8 +322,6 @@ extension MapController: ScrollViewOnMapDelegate {
         } else {
             request = MapViewModel.FilterName.Alltest
         }
-        print(completion())
-        print(request)
         interactor?.fetchAllTestMarkers(request: request)
     }
     

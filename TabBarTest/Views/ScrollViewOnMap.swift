@@ -18,7 +18,7 @@ protocol ScrollViewOnMapDelegate {
 class ScrollViewOnMap: UIScrollView {
     
     var onMapdelegate: ScrollViewOnMapDelegate?
-    
+    private var isSelected: Bool = false
     
     // поиск
     private let searchFilter = FilterView(withName: "Поиск", andImage: UIImage(systemName: "sunrise")!)
@@ -67,7 +67,7 @@ class ScrollViewOnMap: UIScrollView {
             $0.standartShadow(view: $0)
         }
         
-
+        
         let tapSearch = UITapGestureRecognizer(target: self, action: #selector(handleSearchFilter))
         searchFilter.addGestureRecognizer(tapSearch)
         let tapSearchSight = UITapGestureRecognizer(target: self, action: #selector(handleSightFilter))
@@ -92,6 +92,10 @@ class ScrollViewOnMap: UIScrollView {
         addSubview(worshipFilter)
         
         
+        updateFullWidth()
+    }
+    
+    func updateFullWidth() {
         let searchWidth = searchFilter.frame.width
         let sightWidth = sightFilter.frame.width
         let transportWidth = transportFilter.frame.width
@@ -128,7 +132,7 @@ class ScrollViewOnMap: UIScrollView {
                                  y: 2,
                                  width: marketWidth,
                                  height: 36)
-    
+        
         marketFilter.frame = frameMarket
         let frameBeach = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + marketWidth + 72,
                                 y: 2,
@@ -151,36 +155,99 @@ class ScrollViewOnMap: UIScrollView {
     
     @objc func handleSearchFilter() {
         onMapdelegate?.showSearchView()
-        
-        [sightFilter, transportFilter,
-         leisureFilter, marketFilter, beachFilter, worshipFilter].forEach {
-            $0.backgroundColor = .white
+    }
+    
+    // показать все фильтры
+    private func showAllFilters() {
+        UIView.animate(withDuration: 0.35) { [weak self] in
+            guard let self = self else { return }
+            self.updateFullWidth()
+        }
+        // анимация появления
+        UIView.animate(withDuration: 0.55) { [weak self] in
+            guard let self = self else { return }
+            
+            [self.searchFilter, self.sightFilter, self.transportFilter,
+             self.leisureFilter, self.marketFilter,
+             self.beachFilter, self.worshipFilter].forEach {
+                $0.alpha = 1
+            }
+            
+        } completion: { success in
+            if success {
+                self.isSelected = false
+            }
         }
     }
-
+    
+    // уменьшить ширину скролл и пересичитать констейны для поиска и выбранного фильтра
+    private func hideAllFilters(withCurrent filterView: FilterView) {
+        UIView.animate(withDuration: 0.55) { [weak self] in
+            guard let self = self else { return }
+            let frame = CGRect(x: 24,
+                               y: 2,
+                               width: filterView.frame.width,
+                               height: 36)
+            filterView.frame = frame
+            self.contentSize = CGSize(width: filterView.frame.width + 200,
+                                      height: self.frame.height)
+            
+        } completion: { success in
+            if success {
+                self.isSelected = true
+            }
+        }
+    }
+    
+    func setupAnimate(filterView: FilterView) {
+        [self.searchFilter, sightFilter, transportFilter,
+         leisureFilter, marketFilter, beachFilter, worshipFilter].forEach { currentView in
+            
+            if currentView === filterView {
+                filterView.backgroundColor = filterView.backgroundColor == .white ? .systemBlue : .white
+                filterView.label.textColor = filterView.label.textColor == .systemBlue ? .white : .systemBlue
+                filterView.myImage.tintColor = filterView.myImage.tintColor == .systemBlue ? .white : .systemBlue
+                
+                if isSelected {
+                    // показать все фильтры
+                    showAllFilters()
+                } else {
+                    // уменьшить ширину скролл и пересичитать констейны для поиска и выбранного фильтра
+                    hideAllFilters(withCurrent: filterView)
+                }
+                self.updateConstraints()
+            } else {
+                UIView.animate(withDuration: 0.55) {
+                    currentView.alpha = !self.isSelected ? 0 : 1
+                }
+                currentView.backgroundColor = .white
+                currentView.label.textColor = .systemBlue
+                currentView.myImage.tintColor = .systemBlue
+            }
+        }
+    }
+    
     @objc func handleSightFilter() {
         onMapdelegate?.chooseSightFilter(completion: {
-            return self.sightFilter.backgroundColor == .white ? true : false
+            return self.isSelected ? false : true
         })
-        sightFilter.backgroundColor = sightFilter.backgroundColor == .white ? .systemBlue : .white
+        setupAnimate(filterView: sightFilter)
     }
     @objc func handleTransportFilter() {
-        transportFilter.backgroundColor = transportFilter.backgroundColor == .white ? .systemBlue : .white
+        setupAnimate(filterView: transportFilter)
     }
     @objc func handleLeisureFilter() {
-        leisureFilter.backgroundColor = leisureFilter.backgroundColor == .white ? .systemBlue : .white
+        setupAnimate(filterView: leisureFilter)
     }
     @objc func handleMarketFilter() {
-
-        marketFilter.backgroundColor = marketFilter.backgroundColor == .white ? .systemBlue : .white
+        setupAnimate(filterView: marketFilter)
     }
     @objc func handleBeachFilter() {
-
-        beachFilter.backgroundColor = beachFilter.backgroundColor == .white ? .systemBlue : .white
+        setupAnimate(filterView: beachFilter)
     }
     @objc func handleWorshipFilter() {
-        worshipFilter.backgroundColor = worshipFilter.backgroundColor == .white ? .systemBlue : .white
+        setupAnimate(filterView: worshipFilter)
     }
-
+    
 }
 

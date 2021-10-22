@@ -11,14 +11,15 @@ import UIKit
 
 class FilterView: UIView {
     
-    private let myImage: UIImageView = {
+     let myImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
+         image.tintColor = .systemBlue
         return image
     }()
-    private let label: UILabel = {
+     let label: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.1764705882, green: 0.2, blue: 0.2588235294, alpha: 1)
+        label.textColor = .systemBlue
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 16)
         return label
