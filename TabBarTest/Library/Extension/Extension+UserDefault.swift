@@ -12,4 +12,12 @@ extension UserDefaults {
     // текущее местоположение для вкладки Страна
     static var currentLocation: String { "currentLocation" }
     
+    // текущее местоположение
+    static var currentLongitude: String { "currentLongitude" }
+    static var currentLatitude: String { "currentLatitude" }
+    
+    // для отображения города на карте из экрана Страна
+    static var showSelectedCity: String { "showSelectedCity" }
+    static var showSelectedCityWithLongitude: String { "showSelectedCityWithLongitude" }
+    static var showSelectedCityWithLatitude: String { "showSelectedCityWithLatitude" }
 }

@@ -14,6 +14,7 @@ protocol MapDisplayLogic: AnyObject {
     func displayMarkers(filter: [GMSMarker])
     func displayFetchedMarkersFromSearchView(withString: String)
 }
+
 class MapController: UIViewController {
     
     // MARK: - Public Properties
@@ -47,8 +48,13 @@ class MapController: UIViewController {
         }
     }
     private var locationManager = CLLocationManager()
-    let userDefault = UserDefaults.standard
-    
+    private let userDefault = UserDefaults.standard
+    private var show: Bool = false
+    private let timer = Timer.scheduledTimer(timeInterval: 60.0,
+                                             target: self,
+                                             selector: #selector(setupLocationManager),
+                                             userInfo: nil,
+                                             repeats: true)
     // MARK: - UI Properties
     
     private var floatingView = FloatingView(frame: CGRect(x: 0,
@@ -76,6 +82,19 @@ class MapController: UIViewController {
         setupUI()
         addDefaultMarkers()
         setupLocationManager()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // проверяем было ли нажатие на кнопку карты на экране Страны и делаем анимацию камеры и переход на нужные координаты
+        show = userDefault.bool(forKey: UserDefaults.showSelectedCity)
+        if show {
+            let latitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLatitude)
+            let longitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLongitude)
+            animateCameraToPoint(latitude: latitude,
+                                 longitude: longitude)
+            userDefault.set(false, forKey: UserDefaults.showSelectedCity)
+        }
     }
     
     deinit {
@@ -143,12 +162,9 @@ class MapController: UIViewController {
     
     private func setCurrentLocation() {
         let location = CLLocation(latitude: cameraLatitude, longitude: cameraLongitude)
-//        location.saveCurentLocation()
-        
         location.fetchCityAndCountry { city, country, error in
             guard let city = city, let country = country, error == nil else { return }
             if city != self.userDefault.string(forKey: UserDefaults.currentLocation) {
-                print("save new location")
                 self.userDefault.set("\(city),\(country)", forKey: UserDefaults.currentLocation)
             }
         }
@@ -165,7 +181,7 @@ class MapController: UIViewController {
     }
     
     // Настройка locationManager
-    private func setupLocationManager() {
+    @objc private func setupLocationManager() {
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -211,6 +227,17 @@ class MapController: UIViewController {
             self.weatherView.alpha = 1
         }
     }
+    // анимация камеры на конкретный маркер
+    private func animateCameraToPoint(latitude: Double, longitude: Double) {
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0.75)
+        let locationMarketTappedLon = longitude
+        let locationMarketTappedLat = latitude
+        let location = CLLocationCoordinate2D(latitude: locationMarketTappedLat, longitude: locationMarketTappedLon)
+        let camera = GMSCameraPosition(target: location, zoom: self.cameraZoom + 1)
+        mapView.animate(to: camera)
+        CATransaction.commit()
+    }
 }
 
 // MARK: - GMSMapViewDelegate
@@ -242,20 +269,11 @@ extension MapController: GMSMapViewDelegate {
         if let nameLocation = marker.title {
             interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
         }
-        // анимация камеры на конкретный маркер
-        CATransaction.begin()
-        CATransaction.setAnimationDuration(0.75)
-        let locationMarketTappedLon = marker.position.longitude
-        let locationMarketTappedLat = marker.position.latitude - 0.0036
-        let location = CLLocationCoordinate2D(latitude: locationMarketTappedLat, longitude: locationMarketTappedLon)
-        let camera = GMSCameraPosition(target: location, zoom: self.cameraZoom + 1)
-        mapView.animate(to: camera)
-        CATransaction.commit()
-        
+        animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
+                             longitude: marker.position.longitude)
         return true
     }
-    
-    
+
     // вызывается при нажатии на карту
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         hideTopSearchView()

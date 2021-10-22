@@ -18,6 +18,9 @@ class WeatherAPI {
                             completion: @escaping(String, UIImage?)->Void) {
         let url = "\(Constants.BASEURL)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&appid=\(Constants.APIKEY)&units=metric"
         guard let wheatherUrl = URL(string: url) else { return }
+
+        UserDefaults.standard.set(myCurrentLatitude, forKey: UserDefaults.currentLatitude)
+        UserDefaults.standard.set(myCurrentLongitude, forKey: UserDefaults.currentLongitude)
         
         URLSession.shared.dataTask(with: wheatherUrl) { data, response, error in
             guard let data = data, error == nil else {

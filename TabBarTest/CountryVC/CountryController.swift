@@ -19,9 +19,10 @@ class CountryController: UIViewController {
     
     // MARK: - Private Properties
     
+    private let sizeOfHeightCell: CGFloat = 235
     private var titleName: String = ""
     private var viewModel: [CountryViewModel.CityModel]!
-    
+    private let userDefault = UserDefaults.standard
     // MARK: - UI Properties
     
     private let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
@@ -35,7 +36,6 @@ class CountryController: UIViewController {
         setupUserDefault()
         setupClean()
         setupUI()
-
         viewModel =  [CountryViewModel.CityModel(name: "", image: UIImage())]
         
     }
@@ -109,6 +109,14 @@ extension CountryController: UICollectionViewDelegate, UICollectionViewDataSourc
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCollectionViewCell.identifier, for: indexPath) as? CountryCollectionViewCell else { return UICollectionViewCell() }
         cell.conigureCell(title: viewModel[indexPath.row].name,
                           image: viewModel[indexPath.row].image)
+        cell.presentMap = { (lat, lon) in
+            print("CountryController lat:\(lat)  lon:\(lon)")
+            self.userDefault.set(true, forKey: UserDefaults.showSelectedCity)
+            self.userDefault.set(lat, forKey: UserDefaults.showSelectedCityWithLatitude)
+            self.userDefault.set(lon, forKey: UserDefaults.showSelectedCityWithLongitude)
+            self.tabBarController?.selectedIndex = 0
+
+        }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -122,8 +130,10 @@ extension CountryController: UICollectionViewDelegate, UICollectionViewDataSourc
 extension CountryController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width - 45) / 2, height: 220)
+        return CGSize(width: (collectionView.frame.width - 45) / 2, height: sizeOfHeightCell)
         }
 }
+
+
 
 
