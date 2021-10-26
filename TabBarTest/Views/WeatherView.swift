@@ -46,7 +46,7 @@ class WeatherView: UIView {
         let label = UILabel()
         label.textColor = #colorLiteral(red: 0.1764705882, green: 0.2, blue: 0.2588235294, alpha: 1)
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.init(name: "GillSans", size: 16)
         label.text = ""
         return label
     }()

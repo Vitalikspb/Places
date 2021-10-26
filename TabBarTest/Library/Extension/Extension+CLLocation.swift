@@ -15,14 +15,4 @@ extension CLLocation {
             completion($0?.first?.locality, $0?.first?.country, $1)
         }
     }
-    
-    func saveCurentLocation() {
-        fetchCityAndCountry { city, country, error in
-            guard let city = city, let country = country, error == nil else { return }
-            let userDefault = UserDefaults.standard
-            print("save new location")
-            userDefault.set("\(city),\(country)", forKey: UserDefaults.currentLocation)
-        }
-    }
-    
 }

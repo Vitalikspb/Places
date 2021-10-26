@@ -37,7 +37,7 @@ class CountryController: UIViewController {
         setupClean()
         setupUI()
         viewModel =  [CountryViewModel.CityModel(name: "", image: UIImage())]
-        
+        tabBarController?.tabBar.items?[1].title = "Текущее"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,8 +60,7 @@ class CountryController: UIViewController {
     
     func setupUserDefault() {
         guard let userDefault = UserDefaults.standard.string(forKey: UserDefaults.currentLocation) else { return }
-        let nameLocation: [String] = userDefault.components(separatedBy: ",")
-        titleName = nameLocation[1]
+        titleName = userDefault
     }
     
     private func setupUI() {
@@ -110,7 +109,6 @@ extension CountryController: UICollectionViewDelegate, UICollectionViewDataSourc
         cell.conigureCell(title: viewModel[indexPath.row].name,
                           image: viewModel[indexPath.row].image)
         cell.presentMap = { (lat, lon) in
-            print("CountryController lat:\(lat)  lon:\(lon)")
             self.userDefault.set(true, forKey: UserDefaults.showSelectedCity)
             self.userDefault.set(lat, forKey: UserDefaults.showSelectedCityWithLatitude)
             self.userDefault.set(lon, forKey: UserDefaults.showSelectedCityWithLongitude)

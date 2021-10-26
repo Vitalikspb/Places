@@ -46,6 +46,7 @@ class CountryCollectionViewCell: UICollectionViewCell {
         
         setupUI()
         setupConstraints()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -91,13 +92,13 @@ class CountryCollectionViewCell: UICollectionViewCell {
         title.contentMode = .center
         title.textAlignment = .left
         title.backgroundColor = .clear
-        title.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        title.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
         
-        numberOfSightLabel.textColor = .white
+        numberOfSightLabel.textColor = UIColor(white: 1.0, alpha: 0.85)
         numberOfSightLabel.contentMode = .center
         numberOfSightLabel.textAlignment = .left
         numberOfSightLabel.backgroundColor = .clear
-        numberOfSightLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        numberOfSightLabel.font = UIFont.init(name: "GillSans", size: 13)
         
         moveToChoosenCityButton.setImage(UIImage(systemName: "map"), for: .normal)
         moveToChoosenCityButton.backgroundColor = .systemGreen

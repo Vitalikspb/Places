@@ -58,6 +58,8 @@ class MapController: UIViewController {
     private let userDefault = UserDefaults.standard
     private var show: Bool = false
     private var timer = Timer()
+    private var currentCountry: String = ""
+    private var selectMark: Bool = false
     
     // MARK: - UI Properties
     
@@ -171,13 +173,17 @@ class MapController: UIViewController {
                              width: 0, height: 60)
     }
     
+    // сохраняем текущее местоположение в виде Страны(Города)
     private func setCurrentLocation() {
+        
         let location = CLLocation(latitude: cameraLatitude, longitude: cameraLongitude)
-        location.fetchCityAndCountry { city, country, error in
-            guard let city = city, let country = country, error == nil else { return }
-            if city != self.userDefault.string(forKey: UserDefaults.currentLocation) {
-                self.userDefault.set("\(city),\(country)", forKey: UserDefaults.currentLocation)
-            }
+        location.fetchCityAndCountry { [weak self] (city, country, error) in
+            guard let self = self,
+                  let country = country,
+                  error == nil,
+                  self.tabBarController?.tabBar.items?[1].title != country else { return }
+            self.userDefault.set("\(country)", forKey: UserDefaults.currentLocation)
+            self.tabBarController?.tabBar.items?[1].title = country
         }
     }
     
@@ -256,6 +262,13 @@ class MapController: UIViewController {
         mapView.animate(to: camera)
         CATransaction.commit()
     }
+    // при отсутствии интернета скрываем погоду
+    private func hideWeatherView() {
+        print("123")
+        UIView.animate(withDuration: 0.5) {
+            self.weatherView.alpha = 0
+        }
+    }
 }
 
 // MARK: - GMSMapViewDelegate
@@ -286,10 +299,11 @@ extension MapController: GMSMapViewDelegate {
         // делаем запрос на данные для floatinView
         if let nameLocation = marker.title {
             interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
+            animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
+                                 longitude: marker.position.longitude,
+                                 from: .mapViewZoom)
+            selectMark = true
         }
-        animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
-                             longitude: marker.position.longitude,
-                             from: .mapViewZoom)
         return true
     }
 
@@ -298,6 +312,10 @@ extension MapController: GMSMapViewDelegate {
         hideTopSearchView()
         floatingView.hideFloatingView()
         showScrollAndWeatherView()
+        if selectMark {
+            addDefaultMarkers()
+            selectMark = false
+        }
     }
     
     // вызывается когда начинается передвижение карты
@@ -319,8 +337,14 @@ extension MapController: ScrollViewOnMapDelegate {
         var request: MapViewModel.FilterName
         if completion() {
             request = MapViewModel.FilterName.Museum
+            UIView.animate(withDuration: 0.5) {
+                self.weatherView.alpha = 0
+            }
         } else {
             request = MapViewModel.FilterName.Alltest
+            UIView.animate(withDuration: 0.5) {
+                self.weatherView.alpha = 1
+            }
         }
         interactor?.fetchAllTestMarkers(request: request)
     }
@@ -372,6 +396,7 @@ extension MapController: TopSearchViewDelegate {
 // MARK: - ConnectivityDelegate
 extension MapController: ConnectivityDelegate {
     func lostInternetConnection() {
+        hideWeatherView()
         internetConnection = false
         let alert = UIAlertController(
             title: "Ошибка интернета",
@@ -388,7 +413,9 @@ extension MapController: ConnectivityDelegate {
     }
     
     func goodInternetConnection() {
+        locationManager.startUpdatingLocation()
         internetConnection = true
+        
     }
 }
 
@@ -404,6 +431,10 @@ extension MapController: CLLocationManagerDelegate {
             WeatherAPI().loadCurrentWeather(latitude: myCurrentLatitude,
                                             longitude: myCurrentLongitude) { temp, image in
                 DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.5) {
+                        print("animate")
+                        self.weatherView.alpha = 1
+                    }
                     self.weatherView.weatherViewTemperature = temp
                     self.weatherView.weatherViewImage = image
                 }
@@ -418,6 +449,7 @@ extension MapController: CLLocationManagerDelegate {
             switch(CLLocationManager.authorizationStatus()) {
             case .notDetermined, .restricted, .denied:
                 showAlert("Please Allow the Location Permision to get weather of your city")
+                hideWeatherView()
             case .authorizedAlways, .authorizedWhenInUse:
                 print("locationEnabled")
             @unknown default:
@@ -426,6 +458,7 @@ extension MapController: CLLocationManagerDelegate {
         } else {
             showAlert("Please Turn ON the location services on your device")
             print("locationDisabled")
+            hideWeatherView()
         }
         manager.stopUpdatingLocation()
     }
@@ -444,6 +477,8 @@ extension MapController: FloatingViewDelegate {
 
 // MARK: - MapDisplayLogic
 extension MapController: MapDisplayLogic {
+    
+    
     
     // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String) {
@@ -467,6 +502,27 @@ extension MapController: MapDisplayLogic {
     func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel) {
         print("displayChoosenDestination")
         // всю эту логику перенести в метод от презентера - показ FloatingView конкретной меткой и данными по ней.
+        
+        mapView.clear()
+        viewModel.markers.forEach {
+            $0.map = mapView
+        }
+        
+        
+//        viewModel.markers.forEach {
+//            $0.icon = GMSMarker.markerImage(with: .black)
+//            if $0.title =
+//        }
+//        marker.icon = GMSMarker.markerImage(with: .red)
+//        map.selectedMarker = marker
+//        }
+        
+        
+                
+        
+        
+        
+        
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.35) {
                 self.tabBarController?.tabBar.alpha = 0

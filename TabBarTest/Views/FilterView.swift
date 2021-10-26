@@ -21,7 +21,7 @@ class FilterView: UIView {
         let label = UILabel()
         label.textColor = .systemBlue
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.init(name: "GillSans", size: 16)
         return label
     }()
     

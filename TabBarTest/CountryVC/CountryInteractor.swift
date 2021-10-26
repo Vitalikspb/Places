@@ -25,10 +25,7 @@ class CountryInteractor: CountryBussinessLogic {
         var viewModel = CountryViewModel.AllCitiesInCurrentCountry.ViewModel(cities: [CountryViewModel.CityModel(name: "", image: UIImage())])
         viewModel.cities.removeFirst()
         allCities.forEach {
-            guard let image = UIImage(named: "new-york") else {
-                print("image nil")
-                return
-            }
+            guard let image = UIImage(named: "new-york") else { return }
             viewModel.cities.append(CountryViewModel.CityModel(name: $0, image: image))
         }
         presenter?.presentAllMarkers(response: viewModel)

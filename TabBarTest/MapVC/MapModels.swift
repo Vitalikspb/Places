@@ -9,6 +9,7 @@ import Foundation
 
 
 import UIKit
+import GoogleMaps
 
 enum MapViewModel {
     
@@ -20,6 +21,7 @@ enum MapViewModel {
         case Park
         case POI
         case Beach
+//        case Selected
     }
     
     enum ChoosenDestinationView {
@@ -31,12 +33,12 @@ enum MapViewModel {
         
         // передаем модель маркера с полной инфой по маркеру для последующего отображения на экране в floating view
         struct Response {
-            let destinationName: CurrentMarkerInfo
+            let markers: [GMSMarker]
         }
         
         // для открытия floating view по нажатию на метку на экране
         struct ViewModel {
-            let destinationName: String
+            let markers: [GMSMarker]
         }
     }
 }
