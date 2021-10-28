@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import CoreLocation
 
 class CustomTaBarVC: UITabBarController, UITabBarControllerDelegate {
     

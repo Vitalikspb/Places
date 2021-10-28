@@ -60,6 +60,7 @@ class MapController: UIViewController {
     private var timer = Timer()
     private var currentCountry: String = ""
     private var selectMark: Bool = false
+    private var selectedFilter: Bool = false
     
     // MARK: - UI Properties
     
@@ -79,6 +80,10 @@ class MapController: UIViewController {
                                                         y: 0,
                                                         width: 50,
                                                         height: 38))
+    private let buttonsView = ActionButtonsScrollView(frame: CGRect(x: 0,
+                                                                    y: 0,
+                                                                    width: UIScreen.main.bounds.width,
+                                                                    height: 60))
     
     // MARK: - LifeCycle
     
@@ -143,7 +148,8 @@ class MapController: UIViewController {
         view.addSubview(topSearchView)
         view.addSubview(weatherView)
         view.addSubview(floatingView)
-
+        view.addSubview(buttonsView)
+        
         topScrollView.anchor(top: view.layoutMarginsGuide.topAnchor,
                              left: view.leftAnchor,
                              bottom: nil,
@@ -171,6 +177,17 @@ class MapController: UIViewController {
                              paddingBottom: 0,
                              paddingRight: 10,
                              width: 0, height: 60)
+        buttonsView.anchor(top: nil,
+                           left: view.leftAnchor,
+                           bottom: view.bottomAnchor,
+                           right: view.rightAnchor,
+                           paddingTop: 0,
+                           paddingLeft: 0,
+                           paddingBottom: 0,
+                           paddingRight: 0,
+                           width: 0,
+                           height: 80)
+        buttonsView.alpha = 0
     }
     
     // сохраняем текущее местоположение в виде Страны(Города)
@@ -199,10 +216,12 @@ class MapController: UIViewController {
     
     // Настройка locationManager
     @objc private func setupLocationManager() {
+        if !selectedFilter {
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
+        }
     }
     
     // Начальная функция показа всех тестовых/реальных маркеров в зависимости от оплаты страны
@@ -241,8 +260,8 @@ class MapController: UIViewController {
     func showScrollAndWeatherView() {
         UIView.animate(withDuration: 0.5) {
             self.topScrollView.alpha = 1
-            self.weatherView.alpha = 1
         }
+        showWeatherView()
     }
     // анимация камеры на конкретный маркер
     private func animateCameraToPoint(latitude: Double, longitude: Double, from: MapViewZoom) {
@@ -264,9 +283,15 @@ class MapController: UIViewController {
     }
     // при отсутствии интернета скрываем погоду
     private func hideWeatherView() {
-        print("123")
         UIView.animate(withDuration: 0.5) {
             self.weatherView.alpha = 0
+        }
+    }
+    private func showWeatherView() {
+        if !selectedFilter {
+            UIView.animate(withDuration: 0.5) {
+                self.weatherView.alpha = 1
+            }
         }
     }
 }
@@ -337,14 +362,12 @@ extension MapController: ScrollViewOnMapDelegate {
         var request: MapViewModel.FilterName
         if completion() {
             request = MapViewModel.FilterName.Museum
-            UIView.animate(withDuration: 0.5) {
-                self.weatherView.alpha = 0
-            }
+            selectedFilter = true
+            hideWeatherView()
         } else {
             request = MapViewModel.FilterName.Alltest
-            UIView.animate(withDuration: 0.5) {
-                self.weatherView.alpha = 1
-            }
+            selectedFilter = false
+            showWeatherView()
         }
         interactor?.fetchAllTestMarkers(request: request)
     }
@@ -430,14 +453,15 @@ extension MapController: CLLocationManagerDelegate {
             
             WeatherAPI().loadCurrentWeather(latitude: myCurrentLatitude,
                                             longitude: myCurrentLongitude) { temp, image in
+                
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.5) {
-                        print("animate")
                         self.weatherView.alpha = 1
+                        self.weatherView.weatherViewTemperature = temp
+                        self.weatherView.weatherViewImage = image
                     }
-                    self.weatherView.weatherViewTemperature = temp
-                    self.weatherView.weatherViewImage = image
                 }
+                
             }
             manager.stopUpdatingLocation()
         }
@@ -466,6 +490,18 @@ extension MapController: CLLocationManagerDelegate {
 
 // MARK: - FloatingViewDelegate
 extension MapController: FloatingViewDelegate {
+    func floatingPanelFullScreen() {
+        UIView.animate(withDuration: 0.35) {
+            self.buttonsView.alpha = 1
+        }
+    }
+    
+    func floatingPanelPatriallyScreen() {
+        UIView.animate(withDuration: 0.35) {
+            self.buttonsView.alpha = 0
+        }
+    }
+    
     func floatingPanelIsHidden() {
         UIView.animate(withDuration: 0.35) {
             self.tabBarController?.tabBar.alpha = 1

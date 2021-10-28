@@ -19,6 +19,8 @@ protocol MapDataStore {
 
 class MapInteractor: MapBussinessLogic {
     
+    
+    
     func fetchAllTestMarkers(request: MapViewModel.FilterName) {
         switch request {
         case .Alltest, .AllRelease:
@@ -59,6 +61,15 @@ class MapInteractor: MapBussinessLogic {
         australiaMarker.iconView = UIImageView(image: UIImage(named: "NY50"))
         australiaMarker.iconView?.contentMode = .center
         
+        let border = UIView()
+        border.backgroundColor = .clear
+        border.layer.borderColor = UIColor.white.cgColor
+        border.layer.borderWidth = 2
+        border.layer.cornerRadius = (australiaMarker.iconView?.frame.width)! / 2
+        border.frame = australiaMarker.iconView!.frame
+        border.center = australiaMarker.iconView!.center
+        australiaMarker.iconView?.addSubview(border)
+
         let sydneyMarker1 = GMSMarker(
             position: CLLocationCoordinate2D(latitude: 59.9122, longitude: 30.3445))
         sydneyMarker1.title = "New Point!"
@@ -104,7 +115,10 @@ class MapInteractor: MapBussinessLogic {
             australiaMarker.isDraggable = true
             australiaMarker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
             australiaMarker.iconView = UIImageView(image: UIImage(named: "NY50"))
+            australiaMarker.iconView?.frame = CGRect(x: 0, y: 0, width: 92, height: 92)
             australiaMarker.iconView?.contentMode = .center
+            
+            
             
             
             
@@ -113,20 +127,48 @@ class MapInteractor: MapBussinessLogic {
             australiaMarker.iconView?.bounds = CGRect(
               origin: oldBounds.origin,
                 size: CGSize(width: oldBounds.size.width, height: oldBounds.size.height))
+
             
-            let sydneyGlow = UIView()
-            sydneyGlow.backgroundColor = .clear
-            sydneyGlow.layer.borderColor = UIColor.red.cgColor
-            sydneyGlow.layer.borderWidth = 2
-            sydneyGlow.layer.cornerRadius = (australiaMarker.iconView?.frame.width)! / 2
-            sydneyGlow.frame = australiaMarker.iconView!.frame
-            sydneyGlow.center = australiaMarker.iconView!.center
+
+            let alphaLayer = UIView()
+            // gradient
+            let radialGradient = CAGradientLayer()
+            radialGradient.type = .radial
+            radialGradient.colors = [ UIColor(red: 0, green: 41/256, blue: 241/256, alpha: 1).cgColor,
+                                      UIColor.clear.cgColor ]
+            radialGradient.startPoint = CGPoint(x: 0.5, y: 0.5)
+            radialGradient.endPoint = CGPoint(x: 1, y: 1)
+
+            radialGradient.frame = CGRect(x: 0, y: 0, width: 92, height: 92)
+            alphaLayer.layer.addSublayer(radialGradient)
+            // gradient
             
-            australiaMarker.iconView?.addSubview(sydneyGlow)
-//            sydneyGlow.center = CGPoint(x: oldBounds.size.width, y: oldBounds.size.height)
+            // only alpha
+            //alphaLayer.backgroundColor = UIColor(red: 0, green: 90/256, blue: 241/256, alpha: 0.45)
+            // only alpha
             
+            alphaLayer.layer.cornerRadius = 46
+            alphaLayer.frame = CGRect(x: 0, y: 0, width: 92, height: 92)
+            alphaLayer.center = australiaMarker.iconView!.center
+
             
+            let border = UIView()
+            border.backgroundColor = .white
+            border.layer.cornerRadius = 26
+            border.frame = CGRect(x: 0, y: 0, width: 52, height: 52)
+            border.center = australiaMarker.iconView!.center
+
             
+            let markImage = UIImageView()
+            markImage.image = UIImage(named: "NY50")
+            markImage.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+            markImage.layer.cornerRadius = 25
+            markImage.center = australiaMarker.iconView!.center
+            
+            alphaLayer.addSubview(border)
+            alphaLayer.addSubview(markImage)
+            australiaMarker.iconView?.addSubview(alphaLayer)
+
             
             
             

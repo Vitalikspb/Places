@@ -30,7 +30,63 @@ class MainFloatingView: UIView {
         imageView.image = UIImage(named: "new-york")
         return imageView
     }()
+    let closeButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+    // TODO: - TODO
+    private let buttonsView = ActionButtonsScrollView(frame: CGRect(x: 0,
+                                                                    y: 0,
+                                                                    width: UIScreen.main.bounds.width,
+                                                                    height: 60))
+ 
     
+    let tableView: UITableView = {
+       let table = UITableView()
+        return table
+    }()
+    
+    // cell 1
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    let typeLocationLabel: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    
+    
+    let imagesScrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        return scroll
+    }()
+    let locationImage: UIImageView = {
+       let image = UIImageView()
+        return image
+    }()
+    
+    
+    // cell 2
+//        let titleNameLabel
+//        let addressTopLabel
+//        let typeLabel
+//        let openLabel
+//        let whenClosedToday
+    let cellImage: UIImageView = {
+        let image = UIImageView()
+         return image
+     }()
+    let cellTitle: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    //for cell with work time
+    let cellArrowImage: UIImageView = {
+        let image = UIImageView()
+         return image
+     }()
+    private var shapeLayer: CALayer?
 //    cell 1
 //    let titleNameLabel
 //    let addressTopLabel
@@ -66,6 +122,15 @@ class MainFloatingView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        configureUI()
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configureUI() {
         self.backgroundColor = .white
         addSubview(imageView)
         addSubview(indicatorView)
@@ -93,11 +158,8 @@ class MainFloatingView: UIView {
                              width: 80,
                              height: 6)
         indicatorView.centerX(inView: self)
-        
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
     
 }

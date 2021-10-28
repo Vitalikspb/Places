@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ThirdViewController: UIViewController {
+class WorldController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

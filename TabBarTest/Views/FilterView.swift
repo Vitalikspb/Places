@@ -21,13 +21,30 @@ class FilterView: UIView {
         let label = UILabel()
         label.textColor = .systemBlue
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans", size: 16)
+        label.font = UIFont.init(name: "GillSans", size: 17)
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
 
+    }
+    
+    init(withName title: String) {
+        super.init(frame: .zero)
+        
+        self.backgroundColor = .white
+        self.layer.cornerRadius = 18
+        self.isUserInteractionEnabled = true
+
+        label.text = title
+        
+        self.addSubview(label)
+        
+        label.frame = CGRect(x: 10, y: 0,
+                             width: label.textWidth()+20, height: 36)
+        self.frame = CGRect(x: 0, y: 0,
+                            width: label.frame.width, height: 36)
     }
     
     init(withName title: String, andImage image: UIImage) {

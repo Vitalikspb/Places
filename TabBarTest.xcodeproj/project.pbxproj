@@ -13,6 +13,7 @@
 		5345E28C2718B30000FCD554 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5345E28B2718B30000FCD554 /* SettingsController.swift */; };
 		5396A4932706377C0044D759 /* InternetConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5396A4922706377C0044D759 /* InternetConnection.swift */; };
 		5396A496270639570044D759 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5396A495270639570044D759 /* Alamofire */; };
+		53D9BB1C272B39CE00CC14A8 /* ActionButtonsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */; };
 		53EF4D1C270E2A53008CB1B2 /* MapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D1B270E2A53008CB1B2 /* MapInteractor.swift */; };
 		53EF4D1E270E2A60008CB1B2 /* MapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D1D270E2A60008CB1B2 /* MapPresenter.swift */; };
 		53EF4D20270E2A6E008CB1B2 /* MapWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D1F270E2A6E008CB1B2 /* MapWorker.swift */; };
@@ -57,6 +58,7 @@
 		5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		5345E28B2718B30000FCD554 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		5396A4922706377C0044D759 /* InternetConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnection.swift; sourceTree = "<group>"; };
+		53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsScrollView.swift; sourceTree = "<group>"; };
 		53EF4D1B270E2A53008CB1B2 /* MapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractor.swift; sourceTree = "<group>"; };
 		53EF4D1D270E2A60008CB1B2 /* MapPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPresenter.swift; sourceTree = "<group>"; };
 		53EF4D1F270E2A6E008CB1B2 /* MapWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWorker.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				C2588FA427030D6E0014CCDC /* FilterView.swift */,
 				C259AA1F272180FB00B03921 /* GradientView.swift */,
 				C2588FA0270307280014CCDC /* ScrollViewOnMap.swift */,
+				53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */,
 				533D8DD7270394890006B0EE /* WeatherView.swift */,
 				C2588FAA270364180014CCDC /* TopSearchView.swift */,
 				C254487D27070753000B9439 /* FloatingView.swift */,
@@ -448,6 +451,7 @@
 				533D8DD8270394890006B0EE /* WeatherView.swift in Sources */,
 				C2CA35D426FDCDAF00795EF6 /* AppDelegate.swift in Sources */,
 				53EF4D22270E2A7B008CB1B2 /* MapModels.swift in Sources */,
+				53D9BB1C272B39CE00CC14A8 /* ActionButtonsScrollView.swift in Sources */,
 				C254487E27070753000B9439 /* FloatingView.swift in Sources */,
 				53EF4D20270E2A6E008CB1B2 /* MapWorker.swift in Sources */,
 				C2CA35D626FDCDAF00795EF6 /* SceneDelegate.swift in Sources */,

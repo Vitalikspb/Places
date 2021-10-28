@@ -10,6 +10,8 @@ import UIKit
 
 protocol FloatingViewDelegate {
     func floatingPanelIsHidden()
+    func floatingPanelFullScreen()
+    func floatingPanelPatriallyScreen()
 }
 
 class FloatingView: UIView {
@@ -27,7 +29,7 @@ class FloatingView: UIView {
     
     // MARK: - Properties UI
     
-    private  let mainView = MainFloatingView(frame: .zero)
+    private let mainView = MainFloatingView(frame: .zero)
     
     
     // MARK: - Init
@@ -72,8 +74,9 @@ class FloatingView: UIView {
     @objc func handleTapGesture() {
         switch expansionState {
         case .FullyExpanded, .none, .NotExpanded:
-            break
+            print("Patrially?")
         case .PatriallyExpanded:
+            delegate?.floatingPanelFullScreen()
             animateInputView(targetPosition: 0, state: .FullyExpanded)
         }
     }
@@ -83,13 +86,16 @@ class FloatingView: UIView {
         case .up:
             if expansionState == .NotExpanded {
                 animateInputView(targetPosition: screenHeight/2, state: .PatriallyExpanded)
+                delegate?.floatingPanelPatriallyScreen()
             } else if expansionState == .PatriallyExpanded {
+                delegate?.floatingPanelFullScreen()
                 animateInputView(targetPosition: 0, state: .FullyExpanded)
             }
             
         case .down:
             if expansionState == .FullyExpanded {
                 animateInputView(targetPosition: screenHeight/2, state: .PatriallyExpanded)
+                delegate?.floatingPanelPatriallyScreen()
             } else if expansionState == .PatriallyExpanded {
                 animateInputView(targetPosition: screenHeight, state: .NotExpanded)
                 delegate?.floatingPanelIsHidden()
@@ -131,9 +137,19 @@ class FloatingView: UIView {
     func configureUI() {
         backgroundColor = .clear
         addSubview(mainView)
-        mainView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
-                        paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0,
-                        width: 0, height: 0)
+        
+        
+        mainView.anchor(top: topAnchor,
+                        left: leftAnchor,
+                        bottom: bottomAnchor,
+                        right: rightAnchor,
+                        paddingTop: 0,
+                        paddingLeft: 0,
+                        paddingBottom: 0,
+                        paddingRight: 0,
+                        width: 0,
+                        height: 0)
+        
         configureGestureRecognizer()
         
         self.standartShadow(view: self)
