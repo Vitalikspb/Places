@@ -16,6 +16,8 @@ protocol FloatingViewDelegate {
 
 class FloatingView: UIView {
     
+    var delegate: FloatingViewDelegate?
+    
     // MARK: - Properties
     
     enum ExpansionState {
@@ -24,7 +26,7 @@ class FloatingView: UIView {
         case FullyExpanded
     }
     private var expansionState: ExpansionState!
-    var delegate: FloatingViewDelegate?
+    
     private  let screenHeight: CGFloat = UIScreen.main.bounds.height
     
     // MARK: - Properties UI
@@ -32,15 +34,14 @@ class FloatingView: UIView {
     private let mainView = MainFloatingView(frame: .zero)
     
     
-    // MARK: - Init
+    // MARK: - Life cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
         expansionState = .NotExpanded
         isUserInteractionEnabled = true
-        
-        
+        mainView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -48,28 +49,6 @@ class FloatingView: UIView {
     }
     
     // MARK: - Selectors
-    func showFloatingView() {
-        switch expansionState {
-        case .FullyExpanded, .PatriallyExpanded, .none:
-            break
-        case .NotExpanded:
-            animateInputView(targetPosition: screenHeight/2, state: .PatriallyExpanded)
-        }
-    }
-    
-    func hideFloatingView() {
-        switch expansionState {
-        case .FullyExpanded:
-            animateInputView(targetPosition: screenHeight, state: .NotExpanded)
-            delegate?.floatingPanelIsHidden()
-        case .PatriallyExpanded:
-            animateInputView(targetPosition: screenHeight, state: .NotExpanded)
-            delegate?.floatingPanelIsHidden()
-        case .none, .NotExpanded:
-            break
-            
-        }
-    }
     
     @objc func handleTapGesture() {
         switch expansionState {
@@ -107,6 +86,29 @@ class FloatingView: UIView {
     }
     
     // MARK: - Helpers function
+    
+    func showFloatingView() {
+        switch expansionState {
+        case .FullyExpanded, .PatriallyExpanded, .none:
+            break
+        case .NotExpanded:
+            animateInputView(targetPosition: screenHeight/2, state: .PatriallyExpanded)
+        }
+    }
+    
+    func hideFloatingView() {
+        switch expansionState {
+        case .FullyExpanded:
+            animateInputView(targetPosition: screenHeight, state: .NotExpanded)
+            delegate?.floatingPanelIsHidden()
+        case .PatriallyExpanded:
+            animateInputView(targetPosition: screenHeight, state: .NotExpanded)
+            delegate?.floatingPanelIsHidden()
+        case .none, .NotExpanded:
+            break
+            
+        }
+    }
     
     func cornerRadii(with radii: Int) {
         let layer = CAShapeLayer()
@@ -169,5 +171,16 @@ class FloatingView: UIView {
         tap.numberOfTapsRequired = 1
         addGestureRecognizer(tap)
     }
+    
+}
+
+// MARK: - MainFloatingViewDelegate
+
+extension FloatingView: MainFloatingViewDelegate {
+    func closeFloatingView() {
+        animateInputView(targetPosition: screenHeight, state: .NotExpanded)
+        delegate?.floatingPanelIsHidden()
+    }
+    
     
 }

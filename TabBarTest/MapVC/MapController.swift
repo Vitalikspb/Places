@@ -93,7 +93,7 @@ class MapController: UIViewController {
         setupUI()
         addDefaultMarkers()
         setupLocationManager()
-        
+        // обновление погоды каждые 60 сек
         timer = Timer.scheduledTimer(timeInterval: 60.0,
                                      target: self,
                                      selector: #selector(setupLocationManager),
@@ -129,6 +129,7 @@ class MapController: UIViewController {
         connectivity.connectivityDelegate = self
         
         floatingView.delegate = self
+        buttonsView.actionButtonDelegate = self
         
         mapView.delegate = self
         mapView.settings.compassButton = true
@@ -511,11 +512,28 @@ extension MapController: FloatingViewDelegate {
     }
 }
 
+// MARK: - ActionButtonsScrollViewDelegate
+
+extension MapController: ActionButtonsScrollViewDelegate {
+    func routeButtonTapped() {
+        print("Постоение маршрута")
+    }
+    
+    func addToFavouritesButtonTapped() {
+        print("Добавление в избранное")
+    }
+    
+    func callButtonTapped() {
+        print("Позвонить")
+    }
+    
+    func shareButtonTapped() {
+        print("Поделиться - ActionView")
+    }
+}
+
 // MARK: - MapDisplayLogic
 extension MapController: MapDisplayLogic {
-    
-    
-    
     // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String) {
         print(#function)
@@ -543,22 +561,6 @@ extension MapController: MapDisplayLogic {
         viewModel.markers.forEach {
             $0.map = mapView
         }
-        
-        
-//        viewModel.markers.forEach {
-//            $0.icon = GMSMarker.markerImage(with: .black)
-//            if $0.title =
-//        }
-//        marker.icon = GMSMarker.markerImage(with: .red)
-//        map.selectedMarker = marker
-//        }
-        
-        
-                
-        
-        
-        
-        
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.35) {
                 self.tabBarController?.tabBar.alpha = 0

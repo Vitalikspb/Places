@@ -19,6 +19,7 @@
 		53EF4D20270E2A6E008CB1B2 /* MapWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D1F270E2A6E008CB1B2 /* MapWorker.swift */; };
 		53EF4D22270E2A7B008CB1B2 /* MapModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D21270E2A7B008CB1B2 /* MapModels.swift */; };
 		53EF561F270F720E00CD3786 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF561E270F720E00CD3786 /* WeatherAPI.swift */; };
+		C2186D8A272C0B05001889AF /* FloatingViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2186D89272C0B05001889AF /* FloatingViewTableViewCell.swift */; };
 		C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25448792706ED32000B9439 /* ModelWeather.swift */; };
 		C254487C2706F52E000B9439 /* Extension+CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487B2706F52E000B9439 /* Extension+CLLocation.swift */; };
 		C254487E27070753000B9439 /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487D27070753000B9439 /* FloatingView.swift */; };
@@ -65,6 +66,7 @@
 		53EF4D21270E2A7B008CB1B2 /* MapModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModels.swift; sourceTree = "<group>"; };
 		53EF561E270F720E00CD3786 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
 		6FDB80F8D64C9AFF6D52A8B3 /* Pods_TabBarTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabBarTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2186D89272C0B05001889AF /* FloatingViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewTableViewCell.swift; sourceTree = "<group>"; };
 		C25448792706ED32000B9439 /* ModelWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWeather.swift; sourceTree = "<group>"; };
 		C254487B2706F52E000B9439 /* Extension+CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CLLocation.swift"; sourceTree = "<group>"; };
 		C254487D27070753000B9439 /* FloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingView.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				C259AA1A27215B7500B03921 /* CountryCollectionViewCell.swift */,
+				C2186D89272C0B05001889AF /* FloatingViewTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5345E28C2718B30000FCD554 /* SettingsController.swift in Sources */,
+				C2186D8A272C0B05001889AF /* FloatingViewTableViewCell.swift in Sources */,
 				53EF4D1E270E2A60008CB1B2 /* MapPresenter.swift in Sources */,
 				C259AA20272180FB00B03921 /* GradientView.swift in Sources */,
 				C2CA35E826FDCDD600795EF6 /* CustomTabBar.swift in Sources */,
