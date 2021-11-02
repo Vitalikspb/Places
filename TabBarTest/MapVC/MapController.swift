@@ -189,6 +189,7 @@ class MapController: UIViewController {
                            width: 0,
                            height: 80)
         buttonsView.alpha = 0
+        
     }
     
     // сохраняем текущее местоположение в виде Страны(Города)
@@ -217,11 +218,11 @@ class MapController: UIViewController {
     
     // Настройка locationManager
     @objc private func setupLocationManager() {
-        if !selectedFilter {
-        self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.startUpdatingLocation()
+        if !selectedFilter && !selectMark {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
         }
     }
     
@@ -506,6 +507,12 @@ extension MapController: FloatingViewDelegate {
     func floatingPanelIsHidden() {
         UIView.animate(withDuration: 0.35) {
             self.tabBarController?.tabBar.alpha = 1
+            self.buttonsView.alpha = 0
+        }
+        
+        if selectMark {
+            addDefaultMarkers()
+            selectMark = false
         }
         self.mapView.settings.myLocationButton = true
         showScrollAndWeatherView()

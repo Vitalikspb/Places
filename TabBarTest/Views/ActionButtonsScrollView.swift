@@ -16,14 +16,23 @@ protocol ActionButtonsScrollViewDelegate: AnyObject {
 
 class ActionButtonsScrollView: UIScrollView {
     
+    // MARK: - Public properties
+    
     var onMapdelegate: ScrollViewOnMapDelegate?
     weak var actionButtonDelegate: ActionButtonsScrollViewDelegate?
+    
+    // MARK: - Private properties
+    
     private var isSelected: Bool = false
+    
+    // MARK: - UI properties
     
      let routeButton = FilterView(withName: "Маршрут")
      let addToFavouritesButton = FilterView(withName: "В избранное")
      let callButton = FilterView(withName: "Позвонить")
      let shareButton = FilterView(withName: "Поделиться")
+    
+    // MARK: - Life cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,6 +42,23 @@ class ActionButtonsScrollView: UIScrollView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Selectors
+
+    @objc func handleRouteButton() {
+        actionButtonDelegate?.routeButtonTapped()
+    }
+    @objc func handleAddToFavouritesButton() {
+        actionButtonDelegate?.addToFavouritesButtonTapped()
+    }
+    @objc func handleCallButton() {
+        actionButtonDelegate?.callButtonTapped()
+    }
+    @objc func handleShareButton() {
+        actionButtonDelegate?.shareButtonTapped()
+    }
+    
+    // MARK: - Helper Functions
     
     private func setupUI() {
         
@@ -99,20 +125,8 @@ class ActionButtonsScrollView: UIScrollView {
         self.contentSize = CGSize(width: searchWidth + sightWidth + transportWidth + leisureWidth + 60,
                                   height: self.frame.height)
     }
- 
-
-    @objc func handleRouteButton() {
-        actionButtonDelegate?.routeButtonTapped()
-    }
-    @objc func handleAddToFavouritesButton() {
-        actionButtonDelegate?.addToFavouritesButtonTapped()
-    }
-    @objc func handleCallButton() {
-        actionButtonDelegate?.callButtonTapped()
-    }
-    @objc func handleShareButton() {
-        actionButtonDelegate?.shareButtonTapped()
-    }
+    
+    
     
     
 }

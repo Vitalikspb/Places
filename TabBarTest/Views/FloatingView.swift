@@ -8,6 +8,8 @@
 
 import UIKit
 
+// MARK: - FloatingViewDelegate
+
 protocol FloatingViewDelegate {
     func floatingPanelIsHidden()
     func floatingPanelFullScreen()
@@ -16,23 +18,23 @@ protocol FloatingViewDelegate {
 
 class FloatingView: UIView {
     
+    // MARK: - Public properties
+    
     var delegate: FloatingViewDelegate?
-    
-    // MARK: - Properties
-    
     enum ExpansionState {
         case NotExpanded
         case PatriallyExpanded
         case FullyExpanded
     }
-    private var expansionState: ExpansionState!
     
-    private  let screenHeight: CGFloat = UIScreen.main.bounds.height
+    // MARK: - private properties
+    
+    private var expansionState: ExpansionState!
+    private let screenHeight: CGFloat = UIScreen.main.bounds.height
     
     // MARK: - Properties UI
     
-    private let mainView = MainFloatingView(frame: .zero)
-    
+    lazy var mainView = MainFloatingView(frame: .zero)
     
     // MARK: - Life cycle
     
@@ -50,34 +52,28 @@ class FloatingView: UIView {
     
     // MARK: - Selectors
     
-    @objc func handleTapGesture() {
-        switch expansionState {
-        case .FullyExpanded, .none, .NotExpanded:
-            print("Patrially?")
-        case .PatriallyExpanded:
-            delegate?.floatingPanelFullScreen()
-            animateInputView(targetPosition: 0, state: .FullyExpanded)
-        }
-    }
-    
     @objc func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
         switch sender.direction {
         case .up:
             if expansionState == .NotExpanded {
                 animateInputView(targetPosition: screenHeight/2, state: .PatriallyExpanded)
                 delegate?.floatingPanelPatriallyScreen()
+                mainView.floatingPanelPatriallyScreen()
             } else if expansionState == .PatriallyExpanded {
-                delegate?.floatingPanelFullScreen()
                 animateInputView(targetPosition: 0, state: .FullyExpanded)
+                delegate?.floatingPanelFullScreen()
+                mainView.floatingPanelFullScreen()
             }
             
         case .down:
             if expansionState == .FullyExpanded {
                 animateInputView(targetPosition: screenHeight/2, state: .PatriallyExpanded)
                 delegate?.floatingPanelPatriallyScreen()
+                mainView.floatingPanelPatriallyScreen()
             } else if expansionState == .PatriallyExpanded {
                 animateInputView(targetPosition: screenHeight, state: .NotExpanded)
                 delegate?.floatingPanelIsHidden()
+                mainView.floatingPanelIsHidden()
             }
             
         default:
@@ -91,8 +87,11 @@ class FloatingView: UIView {
         switch expansionState {
         case .FullyExpanded, .PatriallyExpanded, .none:
             break
+            
         case .NotExpanded:
             animateInputView(targetPosition: screenHeight/2, state: .PatriallyExpanded)
+            delegate?.floatingPanelPatriallyScreen()
+            mainView.floatingPanelPatriallyScreen()
         }
     }
     
@@ -101,12 +100,15 @@ class FloatingView: UIView {
         case .FullyExpanded:
             animateInputView(targetPosition: screenHeight, state: .NotExpanded)
             delegate?.floatingPanelIsHidden()
+            mainView.floatingPanelIsHidden()
+            
         case .PatriallyExpanded:
             animateInputView(targetPosition: screenHeight, state: .NotExpanded)
             delegate?.floatingPanelIsHidden()
+            mainView.floatingPanelIsHidden()
+            
         case .none, .NotExpanded:
             break
-            
         }
     }
     
@@ -140,7 +142,6 @@ class FloatingView: UIView {
         backgroundColor = .clear
         addSubview(mainView)
         
-        
         mainView.anchor(top: topAnchor,
                         left: leftAnchor,
                         bottom: bottomAnchor,
@@ -151,9 +152,7 @@ class FloatingView: UIView {
                         paddingRight: 0,
                         width: 0,
                         height: 0)
-        
         configureGestureRecognizer()
-        
         self.standartShadow(view: self)
     }
     
@@ -166,10 +165,6 @@ class FloatingView: UIView {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
         swipeDown.direction = .down
         addGestureRecognizer(swipeDown)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
-        tap.numberOfTapsRequired = 1
-        addGestureRecognizer(tap)
     }
     
 }
@@ -180,7 +175,6 @@ extension FloatingView: MainFloatingViewDelegate {
     func closeFloatingView() {
         animateInputView(targetPosition: screenHeight, state: .NotExpanded)
         delegate?.floatingPanelIsHidden()
+        mainView.floatingPanelIsHidden()
     }
-    
-    
 }
