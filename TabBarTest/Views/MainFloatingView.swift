@@ -72,14 +72,9 @@ class MainFloatingView: UIView {
         return label
     }()
     
-    
     let imagesScrollView: UIScrollView = {
         let scroll = UIScrollView()
         return scroll
-    }()
-    let locationImage: UIImageView = {
-        let image = UIImageView()
-        return image
     }()
     
     

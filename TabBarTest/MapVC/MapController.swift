@@ -522,6 +522,10 @@ extension MapController: FloatingViewDelegate {
 // MARK: - ActionButtonsScrollViewDelegate
 
 extension MapController: ActionButtonsScrollViewDelegate {
+    func siteButtonTapped() {
+        print("Открытие сайта если он есть")
+    }
+    
     func routeButtonTapped() {
         print("Постоение маршрута")
     }

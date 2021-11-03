@@ -12,6 +12,7 @@ protocol ActionButtonsScrollViewDelegate: AnyObject {
     func addToFavouritesButtonTapped()
     func callButtonTapped()
     func shareButtonTapped()
+    func siteButtonTapped()
 }
 
 class ActionButtonsScrollView: UIScrollView {
@@ -31,6 +32,7 @@ class ActionButtonsScrollView: UIScrollView {
      let addToFavouritesButton = FilterView(withName: "В избранное")
      let callButton = FilterView(withName: "Позвонить")
      let shareButton = FilterView(withName: "Поделиться")
+    let siteButton = FilterView(withName: "Сайт")
     
     // MARK: - Life cycle
     
@@ -57,7 +59,9 @@ class ActionButtonsScrollView: UIScrollView {
     @objc func handleShareButton() {
         actionButtonDelegate?.shareButtonTapped()
     }
-    
+    @objc func handleSiteButton() {
+        actionButtonDelegate?.siteButtonTapped()
+    }
     // MARK: - Helper Functions
     
     private func setupUI() {
@@ -68,61 +72,70 @@ class ActionButtonsScrollView: UIScrollView {
         self.showsHorizontalScrollIndicator = false
         
         [routeButton, addToFavouritesButton, callButton,
-         shareButton].forEach {
+         shareButton, siteButton].forEach {
             $0.layer.cornerRadius = 18
             $0.backgroundColor = UIColor.white
             $0.layer.borderWidth = 2
             $0.layer.borderColor = UIColor.systemBlue.cgColor
         }
         
-        let tapSearch = UITapGestureRecognizer(target: self, action: #selector(handleRouteButton))
-        routeButton.addGestureRecognizer(tapSearch)
-        let tapSearchSight = UITapGestureRecognizer(target: self, action: #selector(handleAddToFavouritesButton))
-        addToFavouritesButton.addGestureRecognizer(tapSearchSight)
-        let tapSearchTransport = UITapGestureRecognizer(target: self, action: #selector(handleCallButton))
-        callButton.addGestureRecognizer(tapSearchTransport)
-        let tapSearchLeisure = UITapGestureRecognizer(target: self, action: #selector(handleShareButton))
-        shareButton.addGestureRecognizer(tapSearchLeisure)
+        let tapRouteButton = UITapGestureRecognizer(target: self, action: #selector(handleRouteButton))
+        routeButton.addGestureRecognizer(tapRouteButton)
+        let tapFavouriteButton = UITapGestureRecognizer(target: self, action: #selector(handleAddToFavouritesButton))
+        addToFavouritesButton.addGestureRecognizer(tapFavouriteButton)
+        let tapCallButton = UITapGestureRecognizer(target: self, action: #selector(handleCallButton))
+        callButton.addGestureRecognizer(tapCallButton)
+        let tapShareButton = UITapGestureRecognizer(target: self, action: #selector(handleShareButton))
+        shareButton.addGestureRecognizer(tapShareButton)
+        let tapSiteButton = UITapGestureRecognizer(target: self, action: #selector(handleSiteButton))
+        shareButton.addGestureRecognizer(tapSiteButton)
         
         addSubview(routeButton)
         addSubview(addToFavouritesButton)
         addSubview(callButton)
         addSubview(shareButton)
-
+        addSubview(siteButton)
         updateFullWidth()
     }
     
     func updateFullWidth() {
-        let searchWidth = routeButton.frame.width
-        let sightWidth = addToFavouritesButton.frame.width
-        let transportWidth = callButton.frame.width
-        let leisureWidth = shareButton.frame.width
+        let routeButtonWidth = routeButton.frame.width
+        let addToFavouritesButtonWidth = addToFavouritesButton.frame.width
+        let callButtonWidth = callButton.frame.width
+        let shareButtonWidth = shareButton.frame.width
+        let siteButtonWidth = siteButton.frame.width
         
-        let frameSearch = CGRect(x: 12,
+        let frameRoute = CGRect(x: 12,
                                  y: 6,
-                                 width: searchWidth,
+                                 width: routeButtonWidth,
                                  height: 36)
-        routeButton.frame = frameSearch
+        routeButton.frame = frameRoute
         
-        let frameSight = CGRect(x: searchWidth + 24,
+        let frameFavourites = CGRect(x: routeButtonWidth + 24,
                                 y: 6,
-                                width: sightWidth,
+                                width: addToFavouritesButtonWidth,
                                 height: 36)
-        addToFavouritesButton.frame = frameSight
+        addToFavouritesButton.frame = frameFavourites
         
-        let frameTransport = CGRect(x: searchWidth + sightWidth + 36,
+        let frameCall = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + 36,
                                     y: 6,
-                                    width: transportWidth,
+                                    width: callButtonWidth,
                                     height: 36)
-        callButton.frame = frameTransport
+        callButton.frame = frameCall
         
-        let frameLeisure = CGRect(x: searchWidth + sightWidth + transportWidth + 48,
+        let frameShare = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + 48,
                                   y: 6,
-                                  width: leisureWidth,
+                                  width: shareButtonWidth,
                                   height: 36)
-        shareButton.frame = frameLeisure
+        shareButton.frame = frameShare
+        
+        let frameSite = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + siteButtonWidth + 60,
+                                  y: 6,
+                                  width: shareButtonWidth,
+                                  height: 36)
+        siteButton.frame = frameSite
     
-        self.contentSize = CGSize(width: searchWidth + sightWidth + transportWidth + leisureWidth + 60,
+        self.contentSize = CGSize(width: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + shareButtonWidth + siteButtonWidth + 72,
                                   height: self.frame.height)
     }
     
