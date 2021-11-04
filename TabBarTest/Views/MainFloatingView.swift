@@ -43,7 +43,7 @@ class MainFloatingView: UIView {
     }()
     let closeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "delete.left.fill"), for: .normal)
+        button.setImage(UIImage(named: "close"), for: .normal)
         button.imageView?.tintColor = .lightGray
         button.backgroundColor = .clear
         button.alpha = 0

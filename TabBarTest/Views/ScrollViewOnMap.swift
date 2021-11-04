@@ -21,29 +21,29 @@ class ScrollViewOnMap: UIScrollView {
     private var isSelected: Bool = false
     
     // поиск
-    private let searchFilter = FilterView(withName: "Поиск", andImage: UIImage(systemName: "sunrise")!)
+    private let searchFilter = FilterView(withName: "Поиск", andImage: UIImage(named: "search")!)
     
     // Достопримечательность -
     // Замки, Музеи, Памятики,
-    private let sightFilter = FilterView(withName: "Достопримечательность", andImage: UIImage(systemName: "mail")!)
+    private let sightFilter = FilterView(withName: "Достопримечательность", andImage: UIImage(named: "museum")!)
     
     // Транспорт -
     // ЖДВокзал, АвтоВокзал, Аэропорт
-    private let transportFilter = FilterView(withName: "Транспорт", andImage: UIImage(systemName: "sunrise")!)
+    private let transportFilter = FilterView(withName: "Транспорт", andImage: UIImage(named: "transport")!)
     
     // Досуг -
     // Смотровая прощадка, Аквапарки, Выставки, Пещеры, Зоопарки, Заповедники, Водопады
-    private let leisureFilter = FilterView(withName: "Досуг", andImage: UIImage(systemName: "sunrise")!)
+    private let leisureFilter = FilterView(withName: "Досуг", andImage: UIImage(named: "sight")!)
     
     // Рынок
-    private let marketFilter = FilterView(withName: "Рынок", andImage: UIImage(systemName: "sunrise")!)
+    private let marketFilter = FilterView(withName: "Рынок", andImage: UIImage(named: "market")!)
     
     // Пляж
-    private let beachFilter = FilterView(withName: "Пляж", andImage: UIImage(systemName: "sunrise")!)
+    private let beachFilter = FilterView(withName: "Пляж", andImage: UIImage(named: "beach")!)
     
     // Богослужение -
     // Храм, Мечеть, Церковь, Синагога, Собор
-    private let worshipFilter = FilterView(withName: "Богослужение", andImage: UIImage(systemName: "sunrise")!)
+    private let worshipFilter = FilterView(withName: "Богослужение", andImage: UIImage(named: "temple")!)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

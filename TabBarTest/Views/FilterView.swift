@@ -11,13 +11,14 @@ import UIKit
 
 class FilterView: UIView {
     
-     let myImage: UIImageView = {
+    let myImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
-         image.tintColor = .systemBlue
+//        image.tintColor = .systemBlue
+        image.image?.withTintColor(.systemBlue)
         return image
     }()
-     let label: UILabel = {
+    let label: UILabel = {
         let label = UILabel()
         label.textColor = .systemBlue
         label.textAlignment = .left
@@ -27,7 +28,7 @@ class FilterView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
     }
     
     init(withName title: String) {
@@ -36,13 +37,11 @@ class FilterView: UIView {
         self.backgroundColor = .white
         self.layer.cornerRadius = 18
         self.isUserInteractionEnabled = true
-
+        
         label.text = title
-        
-        self.addSubview(label)
-        
         label.frame = CGRect(x: 10, y: 0,
                              width: label.textWidth()+20, height: 36)
+        self.addSubview(label)
         self.frame = CGRect(x: 0, y: 0,
                             width: label.frame.width, height: 36)
     }
@@ -53,7 +52,7 @@ class FilterView: UIView {
         self.backgroundColor = .white
         self.layer.cornerRadius = 18
         self.isUserInteractionEnabled = true
-
+        
         
         myImage.image = image
         label.text = title
@@ -62,10 +61,10 @@ class FilterView: UIView {
         self.addSubview(label)
         
         
-        myImage.frame = CGRect(x: 8, y: 2,
-                               width: 32, height: 32)
-        label.frame = CGRect(x: CGFloat(myImage.frame.width)+10, y: 0,
-                             width: label.textWidth()+18, height: 36)
+        myImage.frame = CGRect(x: 8, y: 6,
+                               width: 23, height: 23)
+        label.frame = CGRect(x: CGFloat(myImage.frame.width) + 12, y: 0,
+                             width: label.textWidth() + 18, height: 36)
         self.frame = CGRect(x: 0, y: 0,
                             width: myImage.frame.width + label.frame.width, height: 36)
     }
