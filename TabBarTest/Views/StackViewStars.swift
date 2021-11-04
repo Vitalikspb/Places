@@ -83,9 +83,8 @@ class StackViewStar: UIView {
         stackView.backgroundColor = .clear
         
         [image1, image2, image3, image4, image5].forEach {
-            $0.image = UIImage(systemName: "map")
-            $0.tintColor = .systemGreen
-            $0.image?.withRenderingMode(.alwaysTemplate)
+            $0.image = UIImage(named: "star")
+            $0.tintColor = .yellow
             $0.isHidden = false
         }
     }

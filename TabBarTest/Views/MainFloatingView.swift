@@ -147,10 +147,10 @@ class MainFloatingView: UIView {
                            right: rightAnchor,
                            paddingTop: 10,
                            paddingLeft: 0,
-                           paddingBottom: 10,
-                           paddingRight: 0,
-                           width: 35,
-                           height: 35)
+                           paddingBottom: 0,
+                           paddingRight: 10,
+                           width: 30,
+                           height: 30)
         tableView.anchor(top: imageView.bottomAnchor,
                          left: leftAnchor,
                          bottom: bottomAnchor,

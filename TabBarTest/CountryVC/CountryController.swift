@@ -36,7 +36,8 @@ class CountryController: UIViewController {
         setupUserDefault()
         setupClean()
         setupUI()
-        viewModel =  [CountryViewModel.CityModel(name: "", image: UIImage())]
+        viewModel =  [CountryViewModel.CityModel(name: "",
+                                                 image: UIImage(named: "new-york")!)]
         tabBarController?.tabBar.items?[1].title = "Текущее"
     }
     
@@ -77,8 +78,9 @@ class CountryController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.setCollectionViewLayout(layout, animated: true)
-        collectionView.addConstraintsToFillView(view: view)
         view.addSubview(collectionView)
+        collectionView.addConstraintsToFillView(view: view)
+        
         
     }
 
@@ -102,9 +104,11 @@ extension CountryController: UICollectionViewDelegate, UICollectionViewDataSourc
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.viewModel.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCollectionViewCell.identifier, for: indexPath) as? CountryCollectionViewCell else { return UICollectionViewCell() }
         cell.conigureCell(title: viewModel[indexPath.row].name,

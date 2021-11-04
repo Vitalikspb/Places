@@ -46,9 +46,10 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     let workInformationImage: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .clear
+        imageView.tintColor = .lightGray
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(systemName: "map")
+        imageView.image = UIImage(named: "vosklicanie")
         return imageView
     }()
     let workInformationLabel: UILabel = {
