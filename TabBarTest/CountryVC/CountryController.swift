@@ -77,8 +77,9 @@ class CountryController: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.setCollectionViewLayout(layout, animated: true)
-        view.addSubview(collectionView)
         collectionView.addConstraintsToFillView(view: view)
+        view.addSubview(collectionView)
+        
     }
 
 }

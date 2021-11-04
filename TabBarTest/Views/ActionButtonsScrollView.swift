@@ -28,10 +28,10 @@ class ActionButtonsScrollView: UIScrollView {
     
     // MARK: - UI properties
     
-     let routeButton = FilterView(withName: "Маршрут")
-     let addToFavouritesButton = FilterView(withName: "В избранное")
-     let callButton = FilterView(withName: "Позвонить")
-     let shareButton = FilterView(withName: "Поделиться")
+    let routeButton = FilterView(withName: "Маршрут")
+    let addToFavouritesButton = FilterView(withName: "В избранное")
+    let callButton = FilterView(withName: "Позвонить")
+    let shareButton = FilterView(withName: "Поделиться")
     let siteButton = FilterView(withName: "Сайт")
     
     // MARK: - Life cycle
@@ -46,7 +46,7 @@ class ActionButtonsScrollView: UIScrollView {
     }
     
     // MARK: - Selectors
-
+    
     @objc func handleRouteButton() {
         actionButtonDelegate?.routeButtonTapped()
     }
@@ -77,7 +77,7 @@ class ActionButtonsScrollView: UIScrollView {
             $0.backgroundColor = UIColor.white
             $0.layer.borderWidth = 2
             $0.layer.borderColor = UIColor.systemBlue.cgColor
-        }
+         }
         
         let tapRouteButton = UITapGestureRecognizer(target: self, action: #selector(handleRouteButton))
         routeButton.addGestureRecognizer(tapRouteButton)
@@ -106,36 +106,38 @@ class ActionButtonsScrollView: UIScrollView {
         let siteButtonWidth = siteButton.frame.width
         
         let frameRoute = CGRect(x: 12,
-                                 y: 6,
-                                 width: routeButtonWidth,
-                                 height: 36)
+                                y: 6,
+                                width: routeButtonWidth,
+                                height: 36)
         routeButton.frame = frameRoute
         
         let frameFavourites = CGRect(x: routeButtonWidth + 24,
-                                y: 6,
-                                width: addToFavouritesButtonWidth,
-                                height: 36)
+                                     y: 6,
+                                     width: addToFavouritesButtonWidth,
+                                     height: 36)
         addToFavouritesButton.frame = frameFavourites
         
         let frameCall = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + 36,
-                                    y: 6,
-                                    width: callButtonWidth,
-                                    height: 36)
+                               y: 6,
+                               width: callButtonWidth,
+                               height: 36)
         callButton.frame = frameCall
         
         let frameShare = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + 48,
-                                  y: 6,
-                                  width: shareButtonWidth,
-                                  height: 36)
+                                y: 6,
+                                width: shareButtonWidth,
+                                height: 36)
         shareButton.frame = frameShare
         
-        let frameSite = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + siteButtonWidth + 60,
-                                  y: 6,
-                                  width: shareButtonWidth,
-                                  height: 36)
+        let frameSite = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + shareButtonWidth + 60,
+                               y: 6,
+                               width: siteButtonWidth,
+                               height: 36)
         siteButton.frame = frameSite
-    
-        self.contentSize = CGSize(width: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + shareButtonWidth + siteButtonWidth + 72,
+        
+        self.contentSize = CGSize(width:
+                                    routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth +
+                                    shareButtonWidth + siteButtonWidth + 72,
                                   height: self.frame.height)
     }
     

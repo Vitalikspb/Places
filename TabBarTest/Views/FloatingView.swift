@@ -60,9 +60,10 @@ class FloatingView: UIView {
                 delegate?.floatingPanelPatriallyScreen()
                 mainView.floatingPanelPatriallyScreen()
             } else if expansionState == .PatriallyExpanded {
-                animateInputView(targetPosition: 0, state: .FullyExpanded)
+                
                 delegate?.floatingPanelFullScreen()
                 mainView.floatingPanelFullScreen()
+                animateInputView(targetPosition: 0, state: .FullyExpanded)
             }
             
         case .down:

@@ -21,7 +21,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     }()
     let typeLocationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = .gray
         label.text = "Музей"
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
@@ -40,7 +40,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         label.textColor = .lightGray
         label.text = "Откроется в 09:00"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        label.font = UIFont.init(name: "GillSans", size: 15)
         return label
     }()
     let workInformationImage: UIImageView = {
@@ -48,7 +48,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(systemName: "Gear")
+        imageView.image = UIImage(systemName: "map")
         return imageView
     }()
     let workInformationLabel: UILabel = {
@@ -56,7 +56,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         label.textColor = .lightGray
         label.text = "Информация о режиме работы может изменится"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        label.font = UIFont.init(name: "GillSans", size: 13)
         return label
     }()
     let ratingLabel: UILabel = {
@@ -64,25 +64,18 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         label.textColor = .lightGray
         label.text = "4.5"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        label.font = UIFont.init(name: "GillSans", size: 15)
         return label
     }()
-    let starView: UIView = {
-        let view = UIView()
-         view.backgroundColor = .yellow
-         view.layer.cornerRadius = 20
-         view.layer.masksToBounds = true
-         return view
-     }()
+    let starView = StackViewStar()
     let reviewLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
         label.text = "(14 731)"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        label.font = UIFont.init(name: "GillSans", size: 15)
         return label
     }()
-    
     
     let buttonsView = ActionButtonsScrollView(frame: CGRect(x: 0,
                                                             y: 0,
@@ -93,16 +86,19 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     
     static let identifier = "FloatingViewFirstTableViewCell"
     
-    // MARL: - Lifecycle
+    // MARK: - Private propetries
+    
+    var countOfRatingStars: Int = 0
+    
+    // MARK: - Lifecycle
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        
         setupUI()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         setupUI()
     }
     
@@ -120,18 +116,20 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    // MARL: - Helper functions
+    // MARK: - Helper functions
     
     func configCell(title: String, type: String, showButtons: Bool) {
         titleLabel.text = title
         typeLocationLabel.text = type
         UIView.animate(withDuration: 0.32) {
             self.buttonsView.alpha = showButtons ? 0 : 1
+            self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         }
+        countOfRatingStars = 4
+        starView.show(with: countOfRatingStars)
     }
     
     private func setupUI() {
-        
         buttonsView.actionButtonDelegate = self
         
         contentView.addSubview(titleLabel)
@@ -145,6 +143,8 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         contentView.addSubview(starView)
         contentView.addSubview(reviewLabel)
         
+        
+        
         titleLabel.anchor(top: topAnchor,
                           left: leftAnchor,
                           bottom: nil,
@@ -157,36 +157,36 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         typeLocationLabel.anchor(top: titleLabel.bottomAnchor,
                                  left: leftAnchor,
                                  bottom: nil,
-                                 right: rightAnchor,
+                                 right: nil,
                                  paddingTop: 10,
                                  paddingLeft: 10,
                                  paddingBottom: 0,
                                  paddingRight: 10,
-                                 width: 0, height: 20)
+                                 width: typeLocationLabel.textWidth(), height: 20)
         ratingLabel.anchor(top: titleLabel.bottomAnchor,
                            left: typeLocationLabel.rightAnchor,
                            bottom: nil,
                            right: nil,
                            paddingTop: 10,
-                           paddingLeft: 2,
+                           paddingLeft: 10,
                            paddingBottom: 0,
                            paddingRight: 0,
-                           width: 0, height: 20)
+                           width: ratingLabel.textWidth(), height: 20)
         starView.anchor(top: titleLabel.bottomAnchor,
                         left: ratingLabel.rightAnchor,
                         bottom: nil,
                         right: nil,
                         paddingTop: 10,
-                        paddingLeft: 2,
+                        paddingLeft: 4,
                         paddingBottom: 0,
                         paddingRight: 0,
-                        width: 0, height: 20)
+                        width: CGFloat(countOfRatingStars * 25), height: 20)
         reviewLabel.anchor(top: titleLabel.bottomAnchor,
                            left: starView.rightAnchor,
                            bottom: nil,
                            right: rightAnchor,
                            paddingTop: 10,
-                           paddingLeft: 2,
+                           paddingLeft: 4,
                            paddingBottom: 0,
                            paddingRight: 10,
                            width: 0, height: 20)
@@ -198,43 +198,39 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
                               paddingLeft: 10,
                               paddingBottom: 0,
                               paddingRight: 0,
-                              width: 0, height: 20)
+                              width: openCloseLabel.textWidth(), height: 20)
         whenOpenLabel.anchor(top: typeLocationLabel.bottomAnchor,
                              left: openCloseLabel.rightAnchor,
-                              bottom: nil,
-                              right: rightAnchor,
-                              paddingTop: 10,
-                              paddingLeft: 10,
-                              paddingBottom: 0,
-                              paddingRight: 10,
-                              width: 0, height: 20)
+                             bottom: nil,
+                             right: rightAnchor,
+                             paddingTop: 10,
+                             paddingLeft: 10,
+                             paddingBottom: 0,
+                             paddingRight: 10,
+                             width: 0, height: 20)
         workInformationImage.anchor(top: openCloseLabel.bottomAnchor,
                                     left: leftAnchor,
-                                     bottom: nil,
-                                     right: nil,
-                                     paddingTop: 10,
-                                     paddingLeft: 10,
-                                     paddingBottom: 0,
-                                     paddingRight: 0,
-                                     width: 25, height: 25)
+                                    bottom: nil,
+                                    right: nil,
+                                    paddingTop: 7,
+                                    paddingLeft: 10,
+                                    paddingBottom: 0,
+                                    paddingRight: 0,
+                                    width: 25, height: 25)
         workInformationLabel.anchor(top: openCloseLabel.bottomAnchor,
                                     left: workInformationImage.rightAnchor,
-                                     bottom: nil,
-                                     right: rightAnchor,
-                                     paddingTop: 10,
-                                     paddingLeft: 10,
-                                     paddingBottom: 0,
-                                     paddingRight: 0,
-                                     width: 0, height: 20)
-        
-        
-        
-        
+                                    bottom: nil,
+                                    right: rightAnchor,
+                                    paddingTop: 10,
+                                    paddingLeft: 10,
+                                    paddingBottom: 0,
+                                    paddingRight: 0,
+                                    width: 0, height: 20)
         buttonsView.anchor(top: workInformationImage.bottomAnchor,
                            left: leftAnchor,
                            bottom: bottomAnchor,
                            right: rightAnchor,
-                           paddingTop: 0,
+                           paddingTop: 5,
                            paddingLeft: 0,
                            paddingBottom: 0,
                            paddingRight: 0,
@@ -265,3 +261,4 @@ extension FloatingViewFirstTableViewCell: ActionButtonsScrollViewDelegate {
         print("shareButtonTapped")
     }
 }
+

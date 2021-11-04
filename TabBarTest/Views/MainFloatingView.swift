@@ -16,7 +16,7 @@ class MainFloatingView: UIView {
     // MARK: - Public properties
     
     weak var delegate: MainFloatingViewDelegate?
-    var stateFloatingView: Bool = false
+    var stateFloatingFullView: Bool = false
     
     // MARK: - UI properties
     
@@ -54,7 +54,6 @@ class MainFloatingView: UIView {
     private let tableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = .white
-        table.separatorStyle = .none
         table.allowsSelection = false
         table.isUserInteractionEnabled = true
         table.isScrollEnabled = false
@@ -62,81 +61,11 @@ class MainFloatingView: UIView {
         return table
     }()
     
-    // cell 1
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    let typeLocationLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    let imagesScrollView: UIScrollView = {
-        let scroll = UIScrollView()
-        return scroll
-    }()
-    
-    
-    // cell 2
-    //        let titleNameLabel
-    //        let addressTopLabel
-    //        let typeLabel
-    //        let openLabel
-    //        let whenClosedToday
-    let cellImage: UIImageView = {
-        let image = UIImageView()
-        return image
-    }()
-    let cellTitle: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    //for cell with work time
-    let cellArrowImage: UIImageView = {
-        let image = UIImageView()
-        return image
-    }()
-    private var shapeLayer: CALayer?
-    //    cell 1
-    //    let titleNameLabel
-    //    let addressTopLabel
-    //    let typeLabel
-    //    let openLabel
-    //    let whenClosedToday
-    
-    //    let actionButtonsScrollView
-    //    let favouriteButton
-    //    let routeButton
-    //    let cellButton
-    //    let shareButton
-    //    let siteButton
-    
-    //    cell 2
-    //    let additionalImagesScrollView
-    
-    //    cell 3
-    //    let addressTitleLabel
-    //    let addressLabel
-    
-    //    cell 4
-    //    let contactTitlelabel
-    //    let phoneLabel
-    //    let siteLabel
-    
-    //    cell 5
-    //    let scheduleTitleLabel
-    //    let scheduleLabel
-    //    let scheduleButton
-    //    let scheduleView
-    
     // MARK: - LifeCycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         configureUI()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -151,6 +80,7 @@ class MainFloatingView: UIView {
         UIView.animate(withDuration: 0.4) {
             self.closeButton.alpha = 0
         }
+        stateFloatingFullView = false
         reloadData()
     }
     
@@ -160,6 +90,7 @@ class MainFloatingView: UIView {
         UIView.animate(withDuration: 0.52) {
             self.closeButton.alpha = 1
         }
+        stateFloatingFullView = true
         reloadData()
     }
     
@@ -169,6 +100,7 @@ class MainFloatingView: UIView {
         UIView.animate(withDuration: 0.4) {
             self.closeButton.alpha = 0
         }
+        stateFloatingFullView = false
         reloadData()
     }
     
@@ -185,6 +117,9 @@ class MainFloatingView: UIView {
         tableView.dataSource = self
         tableView.register(FloatingViewFirstTableViewCell.self,
                            forCellReuseIdentifier: FloatingViewFirstTableViewCell.identifier)
+        tableView.register(FloatingViewSecondTableViewCell.self,
+                           forCellReuseIdentifier: FloatingViewSecondTableViewCell.identifier)
+        
         imageView.anchor(top: topAnchor,
                          left: leftAnchor,
                          bottom: nil,
@@ -217,15 +152,15 @@ class MainFloatingView: UIView {
                            width: 35,
                            height: 35)
         tableView.anchor(top: imageView.bottomAnchor,
-                           left: leftAnchor,
-                           bottom: bottomAnchor,
-                           right: rightAnchor,
-                           paddingTop: 15,
-                           paddingLeft: 0,
-                           paddingBottom: 0,
-                           paddingRight: 0,
-                           width: 0,
-                           height: 0)
+                         left: leftAnchor,
+                         bottom: bottomAnchor,
+                         right: rightAnchor,
+                         paddingTop: 15,
+                         paddingLeft: 0,
+                         paddingBottom: 0,
+                         paddingRight: 0,
+                         width: 0,
+                         height: 0)
     }
     
     private func reloadData() {
@@ -249,22 +184,38 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-         let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewFirstTableViewCell.identifier, for: indexPath) as! FloatingViewFirstTableViewCell
+        
+        switch indexPath.row {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewFirstTableViewCell.identifier, for: indexPath) as! FloatingViewFirstTableViewCell
             cell.configCell(title: "Самый лучший музей",
                             type: "Музей",
                             showButtons: tableView.isScrollEnabled == true ? true : false)
-        return cell
-        } else {
-        return UITableViewCell()
+            return cell
+            
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewSecondTableViewCell.identifier, for: indexPath) as! FloatingViewSecondTableViewCell
+            return cell
+            
+        default: return UITableViewCell()
         }
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return UIView()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-        return 200 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        switch indexPath.row {
+        // первая ячейка
+        case 0: return stateFloatingFullView ? 135 : 200
+            
+        // ячейка с collectionView с картинками
+        // размер ячеек - картинок равен 180х140
+        case 1: return 200
+            
+        default:
+            return 200
+        }
     }
 }

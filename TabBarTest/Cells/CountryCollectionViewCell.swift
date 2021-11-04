@@ -73,7 +73,6 @@ class CountryCollectionViewCell: UICollectionViewCell {
     
     private func setupUI() {
         image.contentMode = .scaleAspectFill
-        image.backgroundColor = .clear
         image.layer.cornerRadius = 8
         image.layer.masksToBounds = true
         image.backgroundColor = .white

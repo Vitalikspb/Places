@@ -138,7 +138,7 @@ class MapController: UIViewController {
         mapView.frame = view.frame
         // убираем с карты все дефолтные метки загрузкой JSON в стиль карты
         mapView.mapStyle = try? GMSMapStyle(jsonString: Constants.mapStyleJSON)
-
+        
         // Определение коректного местоположеня
         observation = mapView.observe(\.myLocation, options: [.new]) { [weak self] mapView, _ in
             self?.location = mapView.myLocation
@@ -161,14 +161,14 @@ class MapController: UIViewController {
                              paddingRight: 0,
                              width: 0, height: 65)
         weatherView.anchor(top: topScrollView.bottomAnchor,
-                            left: view.leftAnchor,
-                            bottom: nil,
-                            right: nil,
-                            paddingTop: 0,
-                            paddingLeft: 15,
-                            paddingBottom: 0,
-                            paddingRight: 0,
-                            width: 50, height: 38)
+                           left: view.leftAnchor,
+                           bottom: nil,
+                           right: nil,
+                           paddingTop: 0,
+                           paddingLeft: 15,
+                           paddingBottom: 0,
+                           paddingRight: 0,
+                           width: 50, height: 38)
         topSearchView.anchor(top: view.layoutMarginsGuide.topAnchor,
                              left: view.leftAnchor,
                              bottom: nil,
@@ -219,10 +219,10 @@ class MapController: UIViewController {
     // Настройка locationManager
     @objc private func setupLocationManager() {
         if !selectedFilter && !selectMark {
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
         }
     }
     
@@ -311,7 +311,7 @@ extension MapController: GMSMapViewDelegate {
     
     // Вызывается по нажатию на свое местоположение
     func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
-
+        
         let alert = UIAlertController(
             title: "Location Tapped",
             message: "Current location: <\(location.latitude), \(location.longitude)>",
@@ -333,7 +333,7 @@ extension MapController: GMSMapViewDelegate {
         }
         return true
     }
-
+    
     // вызывается при нажатии на карту
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         hideTopSearchView()
@@ -493,14 +493,20 @@ extension MapController: CLLocationManagerDelegate {
 // MARK: - FloatingViewDelegate
 extension MapController: FloatingViewDelegate {
     func floatingPanelFullScreen() {
-        UIView.animate(withDuration: 0.35) {
-            self.buttonsView.alpha = 1
-        }
+        buttonsView.alpha = 1
+        self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
     }
     
     func floatingPanelPatriallyScreen() {
-        UIView.animate(withDuration: 0.35) {
+        let originYButtonsView = buttonsView.frame.origin.y
+        UIView.animate(withDuration: 0.3) {
+            self.buttonsView.frame.origin.y = UIScreen.main.bounds.height
             self.buttonsView.alpha = 0
+        } completion: { success in
+            if success {
+                self.buttonsView.frame.origin.y = originYButtonsView
+                self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+            }
         }
     }
     
@@ -508,13 +514,14 @@ extension MapController: FloatingViewDelegate {
         UIView.animate(withDuration: 0.35) {
             self.tabBarController?.tabBar.alpha = 1
             self.buttonsView.alpha = 0
+            self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         }
         
         if selectMark {
             addDefaultMarkers()
             selectMark = false
         }
-        self.mapView.settings.myLocationButton = true
+        mapView.settings.myLocationButton = true
         showScrollAndWeatherView()
     }
 }

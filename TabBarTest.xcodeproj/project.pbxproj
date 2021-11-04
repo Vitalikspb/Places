@@ -11,6 +11,9 @@
 		533D8DD8270394890006B0EE /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D8DD7270394890006B0EE /* WeatherView.swift */; };
 		5345E2892718B2D400FCD554 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */; };
 		5345E28C2718B30000FCD554 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5345E28B2718B30000FCD554 /* SettingsController.swift */; };
+		538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF82F27341AAB00D02ECA /* StackViewStars.swift */; };
+		538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF831273422C500D02ECA /* FloatingViewSecondTableViewCell.swift */; };
+		538AF835273424DC00D02ECA /* FloatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */; };
 		5396A4932706377C0044D759 /* InternetConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5396A4922706377C0044D759 /* InternetConnection.swift */; };
 		5396A496270639570044D759 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5396A495270639570044D759 /* Alamofire */; };
 		53D9BB1C272B39CE00CC14A8 /* ActionButtonsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */; };
@@ -58,6 +61,9 @@
 		533D8DD7270394890006B0EE /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		5345E28B2718B30000FCD554 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		538AF82F27341AAB00D02ECA /* StackViewStars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewStars.swift; sourceTree = "<group>"; };
+		538AF831273422C500D02ECA /* FloatingViewSecondTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewSecondTableViewCell.swift; sourceTree = "<group>"; };
+		538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCollectionViewCell.swift; sourceTree = "<group>"; };
 		5396A4922706377C0044D759 /* InternetConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnection.swift; sourceTree = "<group>"; };
 		53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsScrollView.swift; sourceTree = "<group>"; };
 		53EF4D1B270E2A53008CB1B2 /* MapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractor.swift; sourceTree = "<group>"; };
@@ -162,6 +168,15 @@
 			path = SettingsVC;
 			sourceTree = "<group>";
 		};
+		538AF833273422E000D02ECA /* FloatingViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				C2186D89272C0B05001889AF /* FloatingViewFirstTableViewCell.swift */,
+				538AF831273422C500D02ECA /* FloatingViewSecondTableViewCell.swift */,
+			);
+			path = FloatingViewCells;
+			sourceTree = "<group>";
+		};
 		5396A4902706375B0044D759 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				C2588FA427030D6E0014CCDC /* FilterView.swift */,
+				538AF82F27341AAB00D02ECA /* StackViewStars.swift */,
 				C259AA1F272180FB00B03921 /* GradientView.swift */,
 				C2588FA0270307280014CCDC /* ScrollViewOnMap.swift */,
 				53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */,
@@ -264,7 +280,8 @@
 			isa = PBXGroup;
 			children = (
 				C259AA1A27215B7500B03921 /* CountryCollectionViewCell.swift */,
-				C2186D89272C0B05001889AF /* FloatingViewFirstTableViewCell.swift */,
+				538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */,
+				538AF833273422E000D02ECA /* FloatingViewCells */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -451,6 +468,7 @@
 				C259AA1927214A6B00B03921 /* CountryModels.swift in Sources */,
 				53EF4D1C270E2A53008CB1B2 /* MapInteractor.swift in Sources */,
 				C254488027070829000B9439 /* Extention+UIView.swift in Sources */,
+				538AF835273424DC00D02ECA /* FloatingCollectionViewCell.swift in Sources */,
 				C254487C2706F52E000B9439 /* Extension+CLLocation.swift in Sources */,
 				533D8DD8270394890006B0EE /* WeatherView.swift in Sources */,
 				C2CA35D426FDCDAF00795EF6 /* AppDelegate.swift in Sources */,
@@ -470,6 +488,8 @@
 				5396A4932706377C0044D759 /* InternetConnection.swift in Sources */,
 				C259AA1727214A6300B03921 /* CountryWorker.swift in Sources */,
 				C259AA1527214A5B00B03921 /* CountryPresenter.swift in Sources */,
+				538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */,
+				538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */,
 				C2CA35F226FE1DA800795EF6 /* MapController.swift in Sources */,
 				53EF561F270F720E00CD3786 /* WeatherAPI.swift in Sources */,
 			);
@@ -620,7 +640,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8C44H3653W;
+				DEVELOPMENT_TEAM = GR6GC7JSQ5;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -641,7 +661,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8C44H3653W;
+				DEVELOPMENT_TEAM = GR6GC7JSQ5;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
