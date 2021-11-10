@@ -494,7 +494,9 @@ extension MapController: CLLocationManagerDelegate {
 extension MapController: FloatingViewDelegate {
     func floatingPanelFullScreen() {
         buttonsView.alpha = 1
+        UIView.animate(withDuration: 0.5) {
         self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        }
     }
     
     func floatingPanelPatriallyScreen() {
@@ -505,7 +507,9 @@ extension MapController: FloatingViewDelegate {
         } completion: { success in
             if success {
                 self.buttonsView.frame.origin.y = originYButtonsView
+                UIView.animate(withDuration: 0.5) {
                 self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+                }
             }
         }
     }
@@ -514,7 +518,10 @@ extension MapController: FloatingViewDelegate {
         UIView.animate(withDuration: 0.35) {
             self.tabBarController?.tabBar.alpha = 1
             self.buttonsView.alpha = 0
-            self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+            UIView.animate(withDuration: 0.5) {
+                self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+            }
+            
         }
         
         if selectMark {

@@ -23,6 +23,7 @@
 		53EF4D22270E2A7B008CB1B2 /* MapModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D21270E2A7B008CB1B2 /* MapModels.swift */; };
 		53EF561F270F720E00CD3786 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF561E270F720E00CD3786 /* WeatherAPI.swift */; };
 		C2186D8A272C0B05001889AF /* FloatingViewFirstTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2186D89272C0B05001889AF /* FloatingViewFirstTableViewCell.swift */; };
+		C2350E07273AC39F000BA2A7 /* FloatingViewThirdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2350E06273AC39F000BA2A7 /* FloatingViewThirdTableViewCell.swift */; };
 		C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25448792706ED32000B9439 /* ModelWeather.swift */; };
 		C254487C2706F52E000B9439 /* Extension+CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487B2706F52E000B9439 /* Extension+CLLocation.swift */; };
 		C254487E27070753000B9439 /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487D27070753000B9439 /* FloatingView.swift */; };
@@ -73,6 +74,7 @@
 		53EF561E270F720E00CD3786 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
 		6FDB80F8D64C9AFF6D52A8B3 /* Pods_TabBarTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabBarTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2186D89272C0B05001889AF /* FloatingViewFirstTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewFirstTableViewCell.swift; sourceTree = "<group>"; };
+		C2350E06273AC39F000BA2A7 /* FloatingViewThirdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewThirdTableViewCell.swift; sourceTree = "<group>"; };
 		C25448792706ED32000B9439 /* ModelWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWeather.swift; sourceTree = "<group>"; };
 		C254487B2706F52E000B9439 /* Extension+CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CLLocation.swift"; sourceTree = "<group>"; };
 		C254487D27070753000B9439 /* FloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingView.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				C2186D89272C0B05001889AF /* FloatingViewFirstTableViewCell.swift */,
 				538AF831273422C500D02ECA /* FloatingViewSecondTableViewCell.swift */,
+				C2350E06273AC39F000BA2A7 /* FloatingViewThirdTableViewCell.swift */,
 			);
 			path = FloatingViewCells;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				C259AA1E2721710800B03921 /* Extension+UIImageView.swift in Sources */,
 				5396A4932706377C0044D759 /* InternetConnection.swift in Sources */,
 				C259AA1727214A6300B03921 /* CountryWorker.swift in Sources */,
+				C2350E07273AC39F000BA2A7 /* FloatingViewThirdTableViewCell.swift in Sources */,
 				C259AA1527214A5B00B03921 /* CountryPresenter.swift in Sources */,
 				538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */,
 				538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */,
@@ -640,7 +644,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GR6GC7JSQ5;
+				DEVELOPMENT_TEAM = 8C44H3653W;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -661,7 +665,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GR6GC7JSQ5;
+				DEVELOPMENT_TEAM = 8C44H3653W;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

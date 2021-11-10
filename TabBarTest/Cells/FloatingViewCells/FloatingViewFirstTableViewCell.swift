@@ -2,7 +2,6 @@
 //  FloatingViewFirstTableViewCell.swift
 //  TabBarTest
 //
-//  Created by ViceCode on 29.10.2021.
 //
 
 import UIKit
@@ -37,7 +36,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     }()
     let whenOpenLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = .gray
         label.text = "Откроется в 09:00"
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans", size: 15)
@@ -46,7 +45,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     let workInformationImage: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .clear
-        imageView.tintColor = .lightGray
+        imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.image = UIImage(named: "vosklicanie")
@@ -62,7 +61,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     }()
     let ratingLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = .gray
         label.text = "4.5"
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans", size: 15)
@@ -71,7 +70,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     let starView = StackViewStar()
     let reviewLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = .gray
         label.text = "(14 731)"
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans", size: 15)
@@ -122,7 +121,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     func configCell(title: String, type: String, showButtons: Bool) {
         titleLabel.text = title
         typeLocationLabel.text = type
-        UIView.animate(withDuration: 0.32) {
+        UIView.animate(withDuration: 0.5) {
             self.buttonsView.alpha = showButtons ? 0 : 1
             self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         }

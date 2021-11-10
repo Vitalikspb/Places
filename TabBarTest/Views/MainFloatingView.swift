@@ -119,6 +119,8 @@ class MainFloatingView: UIView {
                            forCellReuseIdentifier: FloatingViewFirstTableViewCell.identifier)
         tableView.register(FloatingViewSecondTableViewCell.self,
                            forCellReuseIdentifier: FloatingViewSecondTableViewCell.identifier)
+        tableView.register(FloatingViewThirdTableViewCell.self,
+                           forCellReuseIdentifier: FloatingViewThirdTableViewCell.identifier)
         
         imageView.anchor(top: topAnchor,
                          left: leftAnchor,
@@ -180,11 +182,10 @@ class MainFloatingView: UIView {
 
 extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch indexPath.row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewFirstTableViewCell.identifier, for: indexPath) as! FloatingViewFirstTableViewCell
@@ -197,7 +198,12 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewSecondTableViewCell.identifier, for: indexPath) as! FloatingViewSecondTableViewCell
             return cell
             
-        default: return UITableViewCell()
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewThirdTableViewCell.identifier, for: indexPath) as! FloatingViewThirdTableViewCell
+            return cell
+            
+        default:
+            return UITableViewCell()
         }
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -213,6 +219,9 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
         // ячейка с collectionView с картинками
         // размер ячеек - картинок равен 180х140
         case 1: return 200
+        // ячейка с контактами
+            
+        case 2: return 310
             
         default:
             return 200
