@@ -24,7 +24,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         imageView.tintColor = .lightGray
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "vosklicanie")
+        imageView.image = UIImage(named: "address")
         return imageView
     }()
     let addressLabel: UILabel = {
@@ -53,7 +53,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         imageView.tintColor = .lightGray
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "vosklicanie")
+        imageView.image = UIImage(named: "contacts")
         return imageView
     }()
     let contactsLabel: UILabel = {
@@ -88,7 +88,8 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         let button = UIButton()
         button.backgroundColor = .lightGray
         button.layer.cornerRadius = 8
-        button.setImage(UIImage(named: "star"), for: .normal)
+        button.setImage(UIImage(named: "vkontakte"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
         button.tintColor = .black
         return button
     }()
@@ -96,21 +97,27 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         let button = UIButton()
         button.backgroundColor = .lightGray
         button.layer.cornerRadius = 8
-        button.setImage(UIImage(named: "star"), for: .normal)
+        button.setImage(UIImage(named: "facebook"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.tintColor = .black
         return button
     }()
     let instButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .lightGray
         button.layer.cornerRadius = 8
-        button.setImage(UIImage(named: "star"), for: .normal)
+        button.setImage(UIImage(named: "instagram"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.tintColor = .black
         return button
     }()
     let ytButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .lightGray
         button.layer.cornerRadius = 8
-        button.setImage(UIImage(named: "star"), for: .normal)
+        button.setImage(UIImage(named: "youtube"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.tintColor = .black
         return button
     }()
     let separatorContactsView: UIView = {
@@ -125,7 +132,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         imageView.tintColor = .lightGray
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "vosklicanie")
+        imageView.image = UIImage(named: "workTime")
         return imageView
     }()
     let workTimeLabel: UILabel = {

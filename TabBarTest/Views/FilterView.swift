@@ -14,7 +14,6 @@ class FilterView: UIView {
     let myImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
-//        image.tintColor = .systemBlue
         image.image?.withTintColor(.systemBlue)
         return image
     }()
