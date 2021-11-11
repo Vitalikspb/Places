@@ -32,8 +32,6 @@ class CountryController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
-        setupUserDefault()
         setupClean()
         setupUI()
         viewModel =  [CountryViewModel.CityModel(name: "",
@@ -41,10 +39,16 @@ class CountryController: UIViewController {
         tabBarController?.tabBar.items?[1].title = "Текущее"
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupUserDefault()
         viewModel.removeAll()
         interactor?.showCity()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     // MARK: - Helper Functions
@@ -62,11 +66,10 @@ class CountryController: UIViewController {
     func setupUserDefault() {
         guard let userDefault = UserDefaults.standard.string(forKey: UserDefaults.currentLocation) else { return }
         titleName = userDefault
+        title = titleName
     }
     
     private func setupUI() {
-        title = titleName
-        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
@@ -80,8 +83,6 @@ class CountryController: UIViewController {
         collectionView.setCollectionViewLayout(layout, animated: true)
         view.addSubview(collectionView)
         collectionView.addConstraintsToFillView(view: view)
-        
-        
     }
 
 }
