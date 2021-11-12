@@ -178,6 +178,20 @@ class MainFloatingView: UIView {
     }
 }
 
+// MARK: - UIScrollViewDelegate
+
+extension MainFloatingView: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let yOffset = scrollView.contentOffset.y
+        if scrollView == self.tableView {
+            if yOffset <= 0 {
+                self.tableView.isScrollEnabled = false
+            }
+        }
+    }
+}
+
 // MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
