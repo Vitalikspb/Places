@@ -27,6 +27,7 @@ class MapController: UIViewController {
     // MARK: - Public Properties
     
     var interactor: MapBussinessLogic?
+    var router: (NSObjectProtocol & MapRoutingLogic)?
     
     // MARK: - Private Properties
     
@@ -84,6 +85,10 @@ class MapController: UIViewController {
                                                                     y: 0,
                                                                     width: UIScreen.main.bounds.width,
                                                                     height: 60))
+    private let showCurrentCityView = CurrentCityButtonView(frame: CGRect(x: 0,
+                                                                          y: 0,
+                                                                          width: 60,
+                                                                          height: 60))
     
     // MARK: - LifeCycle
     
@@ -101,8 +106,14 @@ class MapController: UIViewController {
                                      repeats: true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         // проверяем было ли нажатие на кнопку карты на экране Страны и делаем анимацию камеры и переход на нужные координаты
         show = userDefault.bool(forKey: UserDefaults.showSelectedCity)
         if show {
@@ -131,6 +142,8 @@ class MapController: UIViewController {
         floatingView.delegate = self
         buttonsView.actionButtonDelegate = self
         
+        showCurrentCityView.delegate = self
+        
         mapView.delegate = self
         mapView.settings.compassButton = true
         mapView.settings.myLocationButton = true
@@ -150,6 +163,7 @@ class MapController: UIViewController {
         view.addSubview(weatherView)
         view.addSubview(floatingView)
         view.addSubview(buttonsView)
+        view.addSubview(showCurrentCityView)
         
         topScrollView.anchor(top: view.layoutMarginsGuide.topAnchor,
                              left: view.leftAnchor,
@@ -188,20 +202,37 @@ class MapController: UIViewController {
                            paddingRight: 0,
                            width: 0,
                            height: 80)
+        showCurrentCityView.anchor(top: topScrollView.bottomAnchor,
+                                   left: nil,
+                                   bottom: nil,
+                                   right: view.rightAnchor,
+                                   paddingTop: 0,
+                                   paddingLeft: 0,
+                                   paddingBottom: 0,
+                                   paddingRight: 15,
+                                   width: 60,
+                                   height: 60)
         buttonsView.alpha = 0
-        
     }
     
-    // сохраняем текущее местоположение в виде Страны(Города)
+    // сохраняем текущее местоположение в виде Страны и Города
     private func setCurrentLocation() {
         
         let location = CLLocation(latitude: cameraLatitude, longitude: cameraLongitude)
         location.fetchCityAndCountry { [weak self] (city, country, error) in
             guard let self = self,
+                  let city = city,
                   let country = country,
                   error == nil,
                   self.tabBarController?.tabBar.items?[1].title != country else { return }
             self.userDefault.set("\(country)", forKey: UserDefaults.currentLocation)
+            // MARK: - TODO - сделать сравнение текущего города если в структуре у этого города есть метки тогда отображаем кнопку на карте - переход на достопримечательности текущего города, если нету меток тогда не записываем в юзер дефолт и не показываем кнопку перехода.
+//            if *** {
+//                showCurrentCityView.isHidden = 0
+//            } else {
+//                showCurrentCityView.isHidden = 1
+//            }
+            self.userDefault.set("\(city)", forKey: UserDefaults.currentCity)
             self.tabBarController?.tabBar.items?[1].title = country
         }
     }
@@ -211,9 +242,12 @@ class MapController: UIViewController {
         let viewController = self
         let interactor = MapInteractor()
         let presenter = MapPresenter()
+        let router = MapRouter()
+        viewController.router = router
         viewController.interactor = interactor
         interactor.presenter = presenter
         presenter.mapController = viewController
+        router.viewController = viewController
     }
     
     // Настройка locationManager
@@ -521,9 +555,7 @@ extension MapController: FloatingViewDelegate {
             UIView.animate(withDuration: 0.5) {
                 self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
             }
-            
         }
-        
         if selectMark {
             addDefaultMarkers()
             selectMark = false
@@ -598,5 +630,13 @@ extension MapController: MapDisplayLogic {
                 self.weatherView.alpha = 0
             }
         }
+    }
+}
+
+// MARK: - CurrentCityButtonViewDelegate
+
+extension MapController: CurrentCityButtonViewDelegate {
+    func showCurrentCityViewController() {
+        router?.routeToCityVC()
     }
 }

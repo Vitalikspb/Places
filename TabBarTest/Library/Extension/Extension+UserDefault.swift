@@ -12,6 +12,9 @@ extension UserDefaults {
     // текущее местоположение для вкладки Страна
     static var currentLocation: String { "currentLocation" }
     
+    // текущий город для экрана дом инфа по городу
+    static var currentCity: String { "currentCity" }
+    
     // текущее местоположение
     static var currentLongitude: String { "currentLongitude" }
     static var currentLatitude: String { "currentLatitude" }

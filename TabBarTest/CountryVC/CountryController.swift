@@ -12,16 +12,17 @@ protocol CountryDisplayLogic: AnyObject {
 }
 
 class CountryController: UIViewController {
-
+    
     // MARK: - Public Properties
     
     var interactor: CountryBussinessLogic?
+    var router: (NSObjectProtocol & CountryRoutingLogic)?
     
     // MARK: - Private Properties
     
     private let sizeOfHeightCell: CGFloat = 235
     private var titleName: String = ""
-    private var viewModel: [CountryViewModel.CityModel]!
+    var viewModel: [CountryViewModel.CityModel]!
     private let userDefault = UserDefaults.standard
     // MARK: - UI Properties
     
@@ -46,10 +47,6 @@ class CountryController: UIViewController {
         interactor?.showCity()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
     
     // MARK: - Helper Functions
     
@@ -58,9 +55,12 @@ class CountryController: UIViewController {
         let viewController = self
         let interactor = CountryInteractor()
         let presenter = CountryPresenter()
+        let router = CountryRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         presenter.CountryController = viewController
+        router.viewController = viewController
     }
     
     func setupUserDefault() {
@@ -84,7 +84,7 @@ class CountryController: UIViewController {
         view.addSubview(collectionView)
         collectionView.addConstraintsToFillView(view: view)
     }
-
+    
 }
 
 // MARK: - CountryDisplayLogic
@@ -119,14 +119,15 @@ extension CountryController: UICollectionViewDelegate, UICollectionViewDataSourc
             self.userDefault.set(lat, forKey: UserDefaults.showSelectedCityWithLatitude)
             self.userDefault.set(lon, forKey: UserDefaults.showSelectedCityWithLongitude)
             self.tabBarController?.selectedIndex = 0
-
+            
         }
         return cell
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            print("indexPath: \(indexPath)")
-        }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        interactor?.showCurrentCity(viewModel[indexPath.row].name)
+        router?.routeToCityVC()
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -135,7 +136,7 @@ extension CountryController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (collectionView.frame.width - 45) / 2, height: sizeOfHeightCell)
-        }
+    }
 }
 
 
