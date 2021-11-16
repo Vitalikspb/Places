@@ -16,6 +16,10 @@
 		538AF835273424DC00D02ECA /* FloatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */; };
 		5396A4932706377C0044D759 /* InternetConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5396A4922706377C0044D759 /* InternetConnection.swift */; };
 		5396A496270639570044D759 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5396A495270639570044D759 /* Alamofire */; };
+		5397795627442BC4006644D3 /* AvailableCities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397795527442BC4006644D3 /* AvailableCities.swift */; };
+		5397795827443107006644D3 /* Extension+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397795727443107006644D3 /* Extension+UIViewController.swift */; };
+		5397795B27443866006644D3 /* CountryDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397795A27443866006644D3 /* CountryDescriptionTableViewCell.swift */; };
+		5397795D27443872006644D3 /* CountryPhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5397795C27443872006644D3 /* CountryPhotosTableViewCell.swift */; };
 		53D9BB1C272B39CE00CC14A8 /* ActionButtonsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */; };
 		53EF4D1C270E2A53008CB1B2 /* MapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D1B270E2A53008CB1B2 /* MapInteractor.swift */; };
 		53EF4D1E270E2A60008CB1B2 /* MapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D1D270E2A60008CB1B2 /* MapPresenter.swift */; };
@@ -51,7 +55,7 @@
 		C259AA1527214A5B00B03921 /* CountryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259AA1427214A5B00B03921 /* CountryPresenter.swift */; };
 		C259AA1727214A6300B03921 /* CountryWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259AA1627214A6300B03921 /* CountryWorker.swift */; };
 		C259AA1927214A6B00B03921 /* CountryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259AA1827214A6B00B03921 /* CountryModels.swift */; };
-		C259AA1B27215B7500B03921 /* CountryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259AA1A27215B7500B03921 /* CountryCollectionViewCell.swift */; };
+		C259AA1B27215B7500B03921 /* CountryCitiesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259AA1A27215B7500B03921 /* CountryCitiesTableViewCell.swift */; };
 		C259AA1E2721710800B03921 /* Extension+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259AA1D2721710800B03921 /* Extension+UIImageView.swift */; };
 		C259AA20272180FB00B03921 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259AA1F272180FB00B03921 /* GradientView.swift */; };
 		C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6D2F1271D824300DD9DF4 /* MainFloatingView.swift */; };
@@ -76,6 +80,10 @@
 		538AF831273422C500D02ECA /* FloatingViewSecondTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewSecondTableViewCell.swift; sourceTree = "<group>"; };
 		538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCollectionViewCell.swift; sourceTree = "<group>"; };
 		5396A4922706377C0044D759 /* InternetConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnection.swift; sourceTree = "<group>"; };
+		5397795527442BC4006644D3 /* AvailableCities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableCities.swift; sourceTree = "<group>"; };
+		5397795727443107006644D3 /* Extension+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIViewController.swift"; sourceTree = "<group>"; };
+		5397795A27443866006644D3 /* CountryDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDescriptionTableViewCell.swift; sourceTree = "<group>"; };
+		5397795C27443872006644D3 /* CountryPhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPhotosTableViewCell.swift; sourceTree = "<group>"; };
 		53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsScrollView.swift; sourceTree = "<group>"; };
 		53EF4D1B270E2A53008CB1B2 /* MapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractor.swift; sourceTree = "<group>"; };
 		53EF4D1D270E2A60008CB1B2 /* MapPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPresenter.swift; sourceTree = "<group>"; };
@@ -112,7 +120,7 @@
 		C259AA1427214A5B00B03921 /* CountryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPresenter.swift; sourceTree = "<group>"; };
 		C259AA1627214A6300B03921 /* CountryWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryWorker.swift; sourceTree = "<group>"; };
 		C259AA1827214A6B00B03921 /* CountryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryModels.swift; sourceTree = "<group>"; };
-		C259AA1A27215B7500B03921 /* CountryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCollectionViewCell.swift; sourceTree = "<group>"; };
+		C259AA1A27215B7500B03921 /* CountryCitiesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCitiesTableViewCell.swift; sourceTree = "<group>"; };
 		C259AA1D2721710800B03921 /* Extension+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImageView.swift"; sourceTree = "<group>"; };
 		C259AA1F272180FB00B03921 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		C2A6D2F1271D824300DD9DF4 /* MainFloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFloatingView.swift; sourceTree = "<group>"; };
@@ -218,6 +226,16 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
+		5397795927443147006644D3 /* CountryTabBarCell */ = {
+			isa = PBXGroup;
+			children = (
+				C259AA1A27215B7500B03921 /* CountryCitiesTableViewCell.swift */,
+				5397795A27443866006644D3 /* CountryDescriptionTableViewCell.swift */,
+				5397795C27443872006644D3 /* CountryPhotosTableViewCell.swift */,
+			);
+			path = CountryTabBarCell;
+			sourceTree = "<group>";
+		};
 		53F3E2F0273FD760004B278E /* CityVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				C25448792706ED32000B9439 /* ModelWeather.swift */,
+				5397795527442BC4006644D3 /* AvailableCities.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -291,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				C2588FA2270307980014CCDC /* Extension+UILabel.swift */,
+				5397795727443107006644D3 /* Extension+UIViewController.swift */,
 				C254487B2706F52E000B9439 /* Extension+CLLocation.swift */,
 				C254487F27070829000B9439 /* Extention+UIView.swift */,
 				C259AA1027204DA600B03921 /* Extension+UserDefault.swift */,
@@ -319,7 +339,7 @@
 		C259AA1C27215B7A00B03921 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C259AA1A27215B7500B03921 /* CountryCollectionViewCell.swift */,
+				5397795927443147006644D3 /* CountryTabBarCell */,
 				538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */,
 				538AF833273422E000D02ECA /* FloatingViewCells */,
 			);
@@ -504,8 +524,9 @@
 				C2588FA7270325770014CCDC /* Constants.swift in Sources */,
 				C2588FAB270364180014CCDC /* TopSearchView.swift in Sources */,
 				C259AA1327214A4F00B03921 /* CountryInteractor.swift in Sources */,
+				5397795827443107006644D3 /* Extension+UIViewController.swift in Sources */,
 				C2CA35EA26FDF98E00795EF6 /* TabBarWithCorners.swift in Sources */,
-				C259AA1B27215B7500B03921 /* CountryCollectionViewCell.swift in Sources */,
+				C259AA1B27215B7500B03921 /* CountryCitiesTableViewCell.swift in Sources */,
 				C2CA35F026FE0C9C00795EF6 /* CountryController.swift in Sources */,
 				C259AA1927214A6B00B03921 /* CountryModels.swift in Sources */,
 				53EF4D1C270E2A53008CB1B2 /* MapInteractor.swift in Sources */,
@@ -523,9 +544,12 @@
 				C2588FA1270307280014CCDC /* ScrollViewOnMap.swift in Sources */,
 				C2588FA3270307980014CCDC /* Extension+UILabel.swift in Sources */,
 				C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */,
+				5397795B27443866006644D3 /* CountryDescriptionTableViewCell.swift in Sources */,
+				5397795D27443872006644D3 /* CountryPhotosTableViewCell.swift in Sources */,
 				C2588FA527030D6E0014CCDC /* FilterView.swift in Sources */,
 				53F3E2F4273FD7E3004B278E /* CityInteractor.swift in Sources */,
 				C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */,
+				5397795627442BC4006644D3 /* AvailableCities.swift in Sources */,
 				53F3E2F2273FD7D7004B278E /* CityController.swift in Sources */,
 				53F3E2FE273FDD4D004B278E /* CountryRouter.swift in Sources */,
 				C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */,

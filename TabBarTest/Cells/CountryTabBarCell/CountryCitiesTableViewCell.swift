@@ -1,13 +1,12 @@
 //
-//  CountryCollectionViewCell.swift
+//  CountryCitiesTableViewCell.swift
 //  TabBarTest
 //
-//  Created by ViceCode on 21.10.2021.
 //
 
 import UIKit
 
-class CountryCollectionViewCell: UICollectionViewCell {
+class CountryCitiesTableViewCell: UITableViewCell {
     
     // MARK: - Private Properties
     
@@ -21,7 +20,7 @@ class CountryCollectionViewCell: UICollectionViewCell {
     
     // MARK: -  Public Properties
     
-    static let identifier = "CountryCollectionViewCell"
+    static let identifier = "CountryCitiesTableViewCell"
     var presentMap: ((_ lat : Double, _ lon: Double) -> ())?
     var cellImage: UIImage = UIImage() {
         didSet {
@@ -40,14 +39,11 @@ class CountryCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - LifeCycle
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        setupUI()
-        setupConstraints()
-        
-    }
+        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+            super.init(style: style, reuseIdentifier: reuseIdentifier)
+            setupUI()
+            setupConstraints()
+        }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -77,7 +73,7 @@ class CountryCollectionViewCell: UICollectionViewCell {
         image.layer.masksToBounds = true
         image.backgroundColor = .white
         
-        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 50),
+        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 220),
                                 byRoundingCorners: [.bottomLeft, .bottomRight],
                                 cornerRadii: CGSize(width: 8, height: 8))
         let maskLayer = CAShapeLayer()

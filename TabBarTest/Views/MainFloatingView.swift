@@ -2,7 +2,6 @@
 //  MainFloatingView.swift
 //  TabBarTest
 //
-//  Created by ViceCode on 18.10.2021.
 //
 
 import UIKit

@@ -20,13 +20,12 @@ class CountryController: UIViewController {
     
     // MARK: - Private Properties
     
-    private let sizeOfHeightCell: CGFloat = 235
     private var titleName: String = ""
     var viewModel: [CountryViewModel.CityModel]!
     private let userDefault = UserDefaults.standard
     // MARK: - UI Properties
     
-    private let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout.init())
+    private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
     // MARK: - Lifecycle
     
@@ -64,25 +63,55 @@ class CountryController: UIViewController {
     }
     
     func setupUserDefault() {
-        guard let userDefault = UserDefaults.standard.string(forKey: UserDefaults.currentLocation) else { return }
+        guard let userDefault = UserDefaults.standard.string(forKey: UserDefaults.currentCity) else { return }
         titleName = userDefault
         title = titleName
     }
     
     private func setupUI() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
-        collectionView.register(CountryCollectionViewCell.self,
-                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        collectionView.setCollectionViewLayout(layout, animated: true)
-        view.addSubview(collectionView)
-        collectionView.addConstraintsToFillView(view: view)
+        // скролл картинок
+        tableView.register(CountryPhotosTableViewCell.self,
+                           forCellReuseIdentifier: CountryPhotosTableViewCell.identifier)
+        // описание с кнопкой
+        tableView.register(CountryDescriptionTableViewCell.self,
+                           forCellReuseIdentifier: CountryDescriptionTableViewCell.identifier)
+        // другие города
+        tableView.register(CountryCitiesTableViewCell.self,
+                           forCellReuseIdentifier: CountryCitiesTableViewCell.identifier)
+//        // кнопки
+//        tableView.register(CountryCollectionViewCell.self,
+//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+//        // другие города
+//        tableView.register(CountryCollectionViewCell.self,
+//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+//        // обязательно к просмотру
+//        tableView.register(CountryCollectionViewCell.self,
+//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+//        // билеты и экскурсии
+//        tableView.register(CountryCollectionViewCell.self,
+//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+//        // погода в текущем городе
+//        tableView.register(CountryCollectionViewCell.self,
+//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+//        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
+//        tableView.register(CountryCollectionViewCell.self,
+//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+//        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
+//        tableView.register(CountryCollectionViewCell.self,
+//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+//        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
+//        tableView.register(CountryCollectionViewCell.self,
+//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+//        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
+//        tableView.register(CountryCollectionViewCell.self,
+//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.backgroundColor = .clear
+        view.addSubview(tableView)
+        tableView.addConstraintsToFillView(view: view)
     }
     
 }
@@ -92,7 +121,7 @@ extension CountryController: CountryDisplayLogic {
     func displayAllCities(viewModel: CountryViewModel.AllCitiesInCurrentCountry.ViewModel) {
         self.viewModel = viewModel.cities
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
+            self.tableView.reloadData()
         }
         
     }
@@ -100,42 +129,33 @@ extension CountryController: CountryDisplayLogic {
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension CountryController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+extension CountryController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.viewModel.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCollectionViewCell.identifier, for: indexPath) as? CountryCollectionViewCell else { return UICollectionViewCell() }
-        cell.conigureCell(title: viewModel[indexPath.row].name,
-                          image: viewModel[indexPath.row].image)
-        cell.presentMap = { (lat, lon) in
-            self.userDefault.set(true, forKey: UserDefaults.showSelectedCity)
-            self.userDefault.set(lat, forKey: UserDefaults.showSelectedCityWithLatitude)
-            self.userDefault.set(lon, forKey: UserDefaults.showSelectedCityWithLongitude)
-            self.tabBarController?.selectedIndex = 0
-            
-        }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCitiesTableViewCell.identifier, for: indexPath) as? CountryCitiesTableViewCell else { return UITableViewCell() }
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        interactor?.showCurrentCity(viewModel[indexPath.row].name)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0: return 100
+        case 1: return 300
+        case 2: return 220
+        default: return 50
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         router?.routeToCityVC()
     }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension CountryController: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.frame.width - 45) / 2, height: sizeOfHeightCell)
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
     }
 }
 

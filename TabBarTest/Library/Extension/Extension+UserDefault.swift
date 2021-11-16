@@ -2,7 +2,6 @@
 //  Extension+UserDefault.swift
 //  TabBarTest
 //
-//  Created by ViceCode on 20.10.2021.
 //
 
 import Foundation
