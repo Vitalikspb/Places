@@ -39,7 +39,7 @@ class CountryController: UIViewController {
         setupClean()
         setupUI()
         viewModel =  [CountryViewModel.CityModel(name: "",
-                                                 image: UIImage(named: "new-york")!)]
+                                                 image: UIImage(named: "hub3")!)]
         tabBarController?.tabBar.items?[1].title = "Текущее"
         navigationController?.navigationBar.isHidden = false
     }
@@ -160,6 +160,7 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCitiesTableViewCell.identifier, for: indexPath) as? CountryCitiesTableViewCell else { return UITableViewCell() }
             cell.delegate = self
+            
             return cell
         default: return UITableViewCell()
         }
@@ -200,7 +201,10 @@ extension CountryController: CountryDescriptionTableViewCellDelegate {
 
 extension CountryController: CountryCitiesTableViewCellDelegate {
     func showSelectedCityOnMap(_ lat: Double, _ lon: Double) {
-        print("move to selected city")
+            self.userDefault.set(true, forKey: UserDefaults.showSelectedCity)
+            self.userDefault.set(lat, forKey: UserDefaults.showSelectedCityWithLatitude)
+            self.userDefault.set(lon, forKey: UserDefaults.showSelectedCityWithLongitude)
+            self.tabBarController?.selectedIndex = 0
     }
 }
 

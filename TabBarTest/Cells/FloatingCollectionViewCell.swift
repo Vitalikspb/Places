@@ -34,7 +34,7 @@ class FloatingCollectionViewCell: UICollectionViewCell {
         image.layer.cornerRadius = 8
         image.layer.masksToBounds = true
         image.backgroundColor = .white
-        image.image = UIImage(named: "new-york")
+        image.image = UIImage(named: "hub3")
         
         self.backgroundColor = .clear
         self.standartShadow(view: self)

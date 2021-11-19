@@ -90,7 +90,7 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier, for: indexPath) as? CountryCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.conigureCell(title: citiesAvailable[indexPath.row], image: UIImage(named: "new-york")!)
+        cell.conigureCell(title: citiesAvailable[indexPath.row], image: UIImage(named: "hub3")!)
         cell.delegate = self
         return cell
     }

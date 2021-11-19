@@ -32,7 +32,7 @@ class CountryCellsPhotosCollectionViewCell: UICollectionViewCell {
         image.layer.cornerRadius = 10
         image.layer.masksToBounds = true
         image.backgroundColor = .white
-        image.image = UIImage(named: "new-york")
+        image.image = UIImage(named: "hub3")
 
         contentView.addSubview(image)
         image.addConstraintsToFillView(view: contentView)

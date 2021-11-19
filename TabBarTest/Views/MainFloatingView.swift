@@ -37,7 +37,7 @@ class MainFloatingView: UIView {
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "new-york")
+        imageView.image = UIImage(named: "hub3")
         return imageView
     }()
     let closeButton: UIButton = {
