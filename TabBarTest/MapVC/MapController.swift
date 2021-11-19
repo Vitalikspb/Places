@@ -28,7 +28,7 @@ class MapController: UIViewController {
     
     var interactor: MapBussinessLogic?
     var router: (NSObjectProtocol & MapRoutingLogic)?
-    var citiesAvailable = ["Москва","Санкт-Петербург","Сочи","Краснодар","Гатчина"]
+    var citiesAvailable = ["Москва","Санкт-Петербург","Сочи","Краснодар","Гатчина","Cupertino"]
     
     // MARK: - Private Properties
     
@@ -230,7 +230,7 @@ class MapController: UIViewController {
             // MARK: - TODO - сделать сравнение текущего города если в структуре у этого города есть метки тогда отображаем кнопку на карте - переход на достопримечательности текущего города, если нету меток тогда не записываем в юзер дефолт и не показываем кнопку перехода.
             
             self.citiesAvailable.forEach {
-                if $0 == country {
+                if $0 == city {
                     self.userDefault.set("\(city)", forKey: UserDefaults.currentCity)
                 }
             }

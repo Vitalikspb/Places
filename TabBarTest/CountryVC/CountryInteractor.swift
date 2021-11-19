@@ -8,7 +8,6 @@ import UIKit
 
 protocol CountryBussinessLogic {
     func showCity()
-    func showCurrentCity(_ nameCity: String)
 }
 
 protocol CountryDataStore {
@@ -17,18 +16,12 @@ protocol CountryDataStore {
 }
 
 class CountryInteractor: CountryBussinessLogic, CountryDataStore {
-    func showCurrentCity(_ nameCity: String) {
-        guard let currentCity = UserDefaults.standard.string(forKey: UserDefaults.currentCity) else { return }
-            nameCity == "Текущий" ? UserDefaults.standard.set(nameCity, forKey: currentCity) :
-            UserDefaults.standard.set(nameCity, forKey: UserDefaults.currentCity)
-    }
     
     var currentCity: String = ""
-    
     var city: [String] = ["Текущий", "Москва", "Санкт-Петербург", "Сочи", "Омск", "Краснодар", "Саратов"]
     
     var presenter: CountryPresentationLogic?
-    
+
     func showCity() {
         var viewModel = CountryViewModel.AllCitiesInCurrentCountry.ViewModel(cities: [CountryViewModel.CityModel(name: "", image: UIImage())])
         viewModel.cities.removeFirst()

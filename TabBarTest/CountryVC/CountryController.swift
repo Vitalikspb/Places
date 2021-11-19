@@ -23,6 +23,10 @@ class CountryController: UIViewController {
     private var titleName: String = ""
     var viewModel: [CountryViewModel.CityModel]!
     private let userDefault = UserDefaults.standard
+    // выбранной ячейки для тапа по описанию и погоде, для увеличения высоты ячейки
+    private var selectedDescriptionCell: Bool = false
+    private var selectedWeatherCell: Bool = false
+    
     // MARK: - UI Properties
     
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
@@ -37,13 +41,14 @@ class CountryController: UIViewController {
         viewModel =  [CountryViewModel.CityModel(name: "",
                                                  image: UIImage(named: "new-york")!)]
         tabBarController?.tabBar.items?[1].title = "Текущее"
+        navigationController?.navigationBar.isHidden = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupUserDefault()
+        title = userDefault.string(forKey: UserDefaults.currentCity)
         viewModel.removeAll()
-        interactor?.showCity()
+//        interactor?.showCity()
     }
     
     
@@ -60,12 +65,6 @@ class CountryController: UIViewController {
         interactor.presenter = presenter
         presenter.CountryController = viewController
         router.viewController = viewController
-    }
-    
-    func setupUserDefault() {
-        guard let userDefault = UserDefaults.standard.string(forKey: UserDefaults.currentCity) else { return }
-        titleName = userDefault
-        title = titleName
     }
     
     private func setupUI() {
@@ -110,8 +109,18 @@ class CountryController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         view.addSubview(tableView)
-        tableView.addConstraintsToFillView(view: view)
+        
+        tableView.anchor(top: view.topAnchor,
+                         left: view.leftAnchor,
+                         bottom: view.bottomAnchor,
+                         right: view.rightAnchor,
+                         paddingTop: 0,
+                         paddingLeft: 0,
+                         paddingBottom: 0,
+                         paddingRight: 0,
+                         width: 0, height: 0)
     }
     
 }
@@ -123,7 +132,6 @@ extension CountryController: CountryDisplayLogic {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-        
     }
 }
 
@@ -135,19 +143,29 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCitiesTableViewCell.identifier, for: indexPath) as? CountryCitiesTableViewCell else { return UITableViewCell() }
-        return cell
+        switch indexPath.row {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier, for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
+            return cell
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier, for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
+            return cell
+        case 2:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCitiesTableViewCell.identifier, for: indexPath) as? CountryCitiesTableViewCell else { return UITableViewCell() }
+            return cell
+        default: return UITableViewCell()
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
-        case 0: return 100
-        case 1: return 300
+        case 0: return UIScreen.main.bounds.width - (UIScreen.main.bounds.width / 3)
+        case 1: return selectedDescriptionCell ? 600 : 200
         case 2: return 220
         default: return 50
         }
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         router?.routeToCityVC()
     }

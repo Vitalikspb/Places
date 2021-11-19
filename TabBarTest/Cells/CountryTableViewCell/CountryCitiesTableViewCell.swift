@@ -64,9 +64,6 @@ class CountryCitiesTableViewCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.setCollectionViewLayout(layout, animated: true)
-        
-        
-        
         contentView.addSubview(collectionView)
         collectionView.addConstraintsToFillView(view: contentView)
     }

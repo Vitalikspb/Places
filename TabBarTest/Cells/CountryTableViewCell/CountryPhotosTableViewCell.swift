@@ -53,7 +53,8 @@ class CountryPhotosTableViewCell: UITableViewCell {
     private func setupUI() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 140, height: 180)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width,
+                                 height: UIScreen.main.bounds.width-(UIScreen.main.bounds.width/3))
         layout.minimumLineSpacing = 10.0
         layout.minimumInteritemSpacing = 10.0
         collectionView.register(CountryCellsPhotosCollectionViewCell.self,
@@ -64,9 +65,8 @@ class CountryPhotosTableViewCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.setCollectionViewLayout(layout, animated: true)
-        
-        
-        
+        collectionView.isPagingEnabled = true
+
         contentView.addSubview(collectionView)
         collectionView.addConstraintsToFillView(view: contentView)
     }

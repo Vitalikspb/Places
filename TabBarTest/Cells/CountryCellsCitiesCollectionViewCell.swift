@@ -43,11 +43,13 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        setupConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupUI()
+        setupConstraints()
     }
     
     override func prepareForReuse() {
@@ -94,14 +96,17 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         moveToChoosenCityButton.layer.cornerRadius = 8
         moveToChoosenCityButton.standartShadow(view: moveToChoosenCityButton)
         
-        self.backgroundColor = .clear
+        self.backgroundColor = .red
+        self.layer.cornerRadius = 8
         self.standartShadow(view: self)
+        
         
         contentView.addSubview(image)
         contentView.addSubview(gradientView)
         contentView.addSubview(title)
         contentView.addSubview(numberOfSightLabel)
         contentView.addSubview(moveToChoosenCityButton)
+        
     }
     
     private func setupConstraints() {
