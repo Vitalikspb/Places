@@ -48,7 +48,7 @@ class CountryController: UIViewController {
         super.viewWillAppear(animated)
         title = userDefault.string(forKey: UserDefaults.currentCity)
         viewModel.removeAll()
-//        interactor?.showCity()
+        //        interactor?.showCity()
     }
     
     
@@ -77,39 +77,40 @@ class CountryController: UIViewController {
         // другие города
         tableView.register(CountryCitiesTableViewCell.self,
                            forCellReuseIdentifier: CountryCitiesTableViewCell.identifier)
-//        // кнопки
-//        tableView.register(CountryCollectionViewCell.self,
-//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
-//        // другие города
-//        tableView.register(CountryCollectionViewCell.self,
-//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
-//        // обязательно к просмотру
-//        tableView.register(CountryCollectionViewCell.self,
-//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
-//        // билеты и экскурсии
-//        tableView.register(CountryCollectionViewCell.self,
-//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
-//        // погода в текущем городе
-//        tableView.register(CountryCollectionViewCell.self,
-//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
-//        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
-//        tableView.register(CountryCollectionViewCell.self,
-//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
-//        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
-//        tableView.register(CountryCollectionViewCell.self,
-//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
-//        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
-//        tableView.register(CountryCollectionViewCell.self,
-//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
-//        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
-//        tableView.register(CountryCollectionViewCell.self,
-//                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+        //        // кнопки
+        //        tableView.register(CountryCollectionViewCell.self,
+        //                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+        //        // другие города
+        //        tableView.register(CountryCollectionViewCell.self,
+        //                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+        //        // обязательно к просмотру
+        //        tableView.register(CountryCollectionViewCell.self,
+        //                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+        //        // билеты и экскурсии
+        //        tableView.register(CountryCollectionViewCell.self,
+        //                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+        //        // погода в текущем городе
+        //        tableView.register(CountryCollectionViewCell.self,
+        //                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+        //        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
+        //        tableView.register(CountryCollectionViewCell.self,
+        //                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+        //        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
+        //        tableView.register(CountryCollectionViewCell.self,
+        //                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+        //        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
+        //        tableView.register(CountryCollectionViewCell.self,
+        //                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
+        //        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
+        //        tableView.register(CountryCollectionViewCell.self,
+        //                                forCellWithReuseIdentifier: CountryCollectionViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.allowsSelection = false
         view.addSubview(tableView)
         
         tableView.anchor(top: view.topAnchor,
@@ -147,11 +148,18 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier, for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
             return cell
+            
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier, for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
+            cell.delegate = self
+            selectedDescriptionCell ?
+                cell.moreButtons.setTitle("Скрыть", for: .normal) :
+                cell.moreButtons.setTitle("Читать далее", for: .normal)
             return cell
+            
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCitiesTableViewCell.identifier, for: indexPath) as? CountryCitiesTableViewCell else { return UITableViewCell() }
+            cell.delegate = self
             return cell
         default: return UITableViewCell()
         }
@@ -160,8 +168,11 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
-        case 0: return UIScreen.main.bounds.width - (UIScreen.main.bounds.width / 3)
-        case 1: return selectedDescriptionCell ? 600 : 200
+        // ячейка с картинками текущего города
+        case 0: return UIScreen.main.bounds.width - (UIScreen.main.bounds.width / 3) + 32
+        // ячейка с описанием города
+        case 1: return selectedDescriptionCell ? 380 : 200
+        // ячейка с другими городами текущей страны где есть метки
         case 2: return 220
         default: return 50
         }
@@ -176,6 +187,23 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
         return view
     }
 }
+
+extension CountryController: CountryDescriptionTableViewCellDelegate {
+    func showMoreText() {
+        selectedDescriptionCell = !selectedDescriptionCell
+        
+        tableView.reloadData()
+    }
+    
+    
+}
+
+extension CountryController: CountryCitiesTableViewCellDelegate {
+    func showSelectedCityOnMap(_ lat: Double, _ lon: Double) {
+        print("move to selected city")
+    }
+}
+
 
 
 

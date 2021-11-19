@@ -6,12 +6,16 @@
 
 import UIKit
 
+protocol CountryCellsCitiesCollectionViewCellDelegate: AnyObject {
+    func handleSelectedCity(_ lat : Double, _ lon: Double)
+}
+
 class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Public properties
     
+    weak var delegate: CountryCellsCitiesCollectionViewCellDelegate?
     static let identifier = "CountryCellsCitiesCollectionViewCell"
-    var presentMap: ((_ lat : Double, _ lon: Double) -> ())?
     var cellImage: UIImage = UIImage() {
         didSet {
             image.image = cellImage
@@ -34,7 +38,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     private let title = UILabel()
     private let gradientView = GradientView()
     private let numberOfSightLabel = UILabel()
-    private let moveToChoosenCityButton = UIButton()
+    let moveToChoosenCityButton = UIButton()
     private let latitude = 59.88422
     private let longitude = 30.2545
     
@@ -57,10 +61,6 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Helper functions
-    
-    func configCell(title: String) {
-        
-    }
     
     private func setupUI() {
         image.contentMode = .scaleAspectFill
@@ -91,10 +91,11 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         numberOfSightLabel.font = UIFont.init(name: "GillSans", size: 13)
         
         moveToChoosenCityButton.setImage(UIImage(systemName: "map"), for: .normal)
-        moveToChoosenCityButton.backgroundColor = .systemGreen
+        moveToChoosenCityButton.backgroundColor = .clear
+        moveToChoosenCityButton.tintColor = .white
         moveToChoosenCityButton.addTarget(self, action: #selector(moveToMapViewHandle), for: .touchUpInside)
         moveToChoosenCityButton.layer.cornerRadius = 8
-        moveToChoosenCityButton.standartShadow(view: moveToChoosenCityButton)
+        
         
         self.backgroundColor = .red
         self.layer.cornerRadius = 8
@@ -144,9 +145,9 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
                                        right: contentView.rightAnchor,
                                        paddingTop: 0,
                                        paddingLeft: 0,
-                                       paddingBottom: 8,
-                                       paddingRight: 8,
-                                       width: 32, height: 32)
+                                       paddingBottom: 0,
+                                       paddingRight: 0,
+                                       width: 50, height: 50)
     }
     
     func conigureCell(title: String, image: UIImage) {
@@ -159,16 +160,12 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     
     @objc private func moveToMapViewHandle() {
         let from = self.cellTitle
-        let lat = UserDefaults.standard.double(forKey: UserDefaults.currentLatitude)
-        let lon = UserDefaults.standard.double(forKey: UserDefaults.currentLongitude)
         switch from {
-        case "Текущий": presentMap?(lat, lon)
-        case "Москва": presentMap?(55.7529517, 37.6232801)
-        case "Санкт-Петербург": presentMap?(59.9396340, 30.3104843)
+        case "Москва": delegate?.handleSelectedCity(55.7529517, 37.6232801)
+        case "Санкт-Петербург": delegate?.handleSelectedCity(59.9396340, 30.3104843)
         default:
             break
         }
-        
     }
 }
 

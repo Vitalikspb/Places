@@ -53,7 +53,7 @@ class CountryPhotosTableViewCell: UITableViewCell {
     private func setupUI() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width,
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width-32,
                                  height: UIScreen.main.bounds.width-(UIScreen.main.bounds.width/3))
         layout.minimumLineSpacing = 10.0
         layout.minimumInteritemSpacing = 10.0
@@ -85,8 +85,9 @@ extension CountryPhotosTableViewCell: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsPhotosCollectionViewCell.identifier, for: indexPath) as? CountryCellsPhotosCollectionViewCell { return cell }
-        return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsPhotosCollectionViewCell.identifier, for: indexPath) as? CountryCellsPhotosCollectionViewCell else { return UICollectionViewCell() }
+        cell.layer.cornerRadius = 10
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
