@@ -38,6 +38,36 @@ class WeatherAPI {
         }.resume()
     }
     
+    func descriptionCurrentWeather(latitude myCurrentLatitude: CLLocationDegrees,
+                            longitude myCurrentLongitude: CLLocationDegrees,
+                            completion: @escaping(String, String, UIImage?, String, String, String)->Void) {
+        let url = "\(Constants.BASEURL)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&appid=\(Constants.APIKEY)&units=metric"
+        guard let wheatherUrl = URL(string: url) else { return }
+
+        UserDefaults.standard.set(myCurrentLatitude, forKey: UserDefaults.currentLatitude)
+        UserDefaults.standard.set(myCurrentLongitude, forKey: UserDefaults.currentLongitude)
+        
+        URLSession.shared.dataTask(with: wheatherUrl) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Error fetch request of weather")
+                return
+            }
+            do {
+                let forecast = try JSONDecoder().decode(CurrentWeather.self, from: data)
+                self.loadIconFromApi(with: forecast.weather[0].icon) { image in
+                    completion("\(Int(forecast.main.temp))\(self.unit)",
+                               "\(Int(forecast.main.feels_like))\(self.unit)",
+                               image,
+                               "\(forecast.weather[0].description)",
+                               "\(forecast.sys.sunrise)",
+                               "\(forecast.sys.sunset)")
+                }
+            } catch let error {
+                print(error)
+            }
+        }.resume()
+    }
+    
     private func loadIconFromApi(with iconCode: String?, completion: @escaping(UIImage?)->Void) {
         guard let iconCode = iconCode,
               let imageUrl = URL(string: Constants.weatherIconUrl + iconCode + Constants.weatherIconUrlEnd) else { return }

@@ -1,16 +1,12 @@
 //
-//  CountryCitiesTableViewCell.swift
+//  ParksCollectionViewCell.swift
 //  TabBarTest
 //
 //
 
 import UIKit
 
-protocol CountryCitiesTableViewCellDelegate: AnyObject {
-    func showSelectedCityOnMap(_ lat: Double, _ lon: Double)
-}
-
-class CountryCitiesTableViewCell: UITableViewCell {
+class ParksCollectionViewCell: UITableViewCell {
     
     // MARK: - UI properties
     private let titleLabel: UILabel = {
@@ -18,18 +14,28 @@ class CountryCitiesTableViewCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
-        label.text = "Другие города"
+        label.text = "Парки"
         return label
     }()
     let collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: UICollectionViewLayout.init())
     
     // MARK: - Public properties
-    weak var delegate: CountryCitiesTableViewCellDelegate?
-    static let identifier = "CountryCitiesTableViewCell"
+    static let identifier = "ParksCollectionViewCell"
     
     // MARK: - Private properties
-    private var citiesAvailable = ["Москва","Санкт-Петербург","Сочи","Краснодар","Гатчина","Cupertino"]
+    struct MustSeeStruct {
+        let name: String
+        let image: UIImage
+    }
+    private var mustSeeArray: [MustSeeStruct] = [
+        MustSeeStruct(name: "Эрмитаж", image: UIImage(named: "hub3")!),
+        MustSeeStruct(name: "Русский музей", image: UIImage(named: "hub3")!),
+        MustSeeStruct(name: "Купчино", image: UIImage(named: "hub3")!),
+        MustSeeStruct(name: "Петропавловская крепость", image: UIImage(named: "hub3")!),
+        MustSeeStruct(name: "Казанский собор", image: UIImage(named: "hub3")!),
+        MustSeeStruct(name: "Исаакиевский собор", image: UIImage(named: "hub3")!)
+    ]
     
     // MARK: - Lifecycle
     
@@ -59,18 +65,14 @@ class CountryCitiesTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(title: String) {
-        
-    }
-    
     private func setupUI() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 280, height: 180)
+        layout.itemSize = CGSize(width: 200, height: 140)
         layout.minimumLineSpacing = 10.0
         layout.minimumInteritemSpacing = 10.0
-        collectionView.register(CountryCellsCitiesCollectionViewCell.self,
-                                forCellWithReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier)
+        collectionView.register(ParksCellsCitiesCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ParksCellsCitiesCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
@@ -104,10 +106,10 @@ class CountryCitiesTableViewCell: UITableViewCell {
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
-extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ParksCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return citiesAvailable.count
+        return mustSeeArray.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -115,20 +117,13 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier, for: indexPath) as? CountryCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
-        
-        cell.conigureCell(title: citiesAvailable[indexPath.row], image: UIImage(named: "hub3")!)
-        cell.delegate = self
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParksCellsCitiesCollectionViewCell.identifier, for: indexPath) as? ParksCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
+        cell.conigureCell(name: mustSeeArray[indexPath.row].name,
+                          image: mustSeeArray[indexPath.row].image)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-    }
-}
-
-extension CountryCitiesTableViewCell: CountryCellsCitiesCollectionViewCellDelegate {
-    func handleSelectedCity(_ lat: Double, _ lon: Double) {
-        delegate?.showSelectedCityOnMap(lat, lon)
     }
 }

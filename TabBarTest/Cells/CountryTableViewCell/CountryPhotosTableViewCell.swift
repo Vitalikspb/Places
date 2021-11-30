@@ -12,6 +12,12 @@ class CountryPhotosTableViewCell: UITableViewCell {
     
     let collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: UICollectionViewLayout.init())
+    var pageControl: UIPageControl = {
+        let control = UIPageControl()
+        control.currentPage = 0
+        control.isUserInteractionEnabled = false
+        return control
+    }()
     
     // MARK: - Public properties
     
@@ -53,10 +59,6 @@ class CountryPhotosTableViewCell: UITableViewCell {
     private func setupUI() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width-32,
-                                 height: UIScreen.main.bounds.width-(UIScreen.main.bounds.width/3))
-        layout.minimumLineSpacing = 10.0
-        layout.minimumInteritemSpacing = 10.0
         collectionView.register(CountryCellsPhotosCollectionViewCell.self,
                                 forCellWithReuseIdentifier: CountryCellsPhotosCollectionViewCell.identifier)
         collectionView.delegate = self
@@ -68,6 +70,17 @@ class CountryPhotosTableViewCell: UITableViewCell {
         collectionView.isPagingEnabled = true
 
         contentView.addSubview(collectionView)
+        contentView.addSubview(pageControl)
+        pageControl.anchor(top: nil,
+                           left: contentView.leftAnchor,
+                           bottom: contentView.bottomAnchor,
+                           right: contentView.rightAnchor,
+                           paddingTop: 0,
+                           paddingLeft: 50,
+                           paddingBottom: 30,
+                           paddingRight: 50,
+                           width: 0,
+                           height: 0)
         collectionView.addConstraintsToFillView(view: contentView)
     }
 }
@@ -77,7 +90,10 @@ class CountryPhotosTableViewCell: UITableViewCell {
 extension CountryPhotosTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        let count = 5
+        pageControl.numberOfPages = count
+        pageControl.isHidden = !(count > 1)
+        return count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -90,7 +106,29 @@ extension CountryPhotosTableViewCell: UICollectionViewDelegate, UICollectionView
         return cell
     }
     
+    // Отступы от краев экрана на крайних ячейках
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+    
+    // Размер ячейки
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width-32,
+                      height: UIScreen.main.bounds.width-(UIScreen.main.bounds.width/3))
+    }
+    
+    // Расстояние между ячейками - белый отступ
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 32
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+
+        pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+    }
+
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+
+        pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
     }
 }

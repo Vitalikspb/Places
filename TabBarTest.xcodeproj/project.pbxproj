@@ -8,6 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		18C25D03035A82AD9CDBBF21 /* Pods_TabBarTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FDB80F8D64C9AFF6D52A8B3 /* Pods_TabBarTest.framework */; };
+		5312191F2756B8F9006C48AA /* NearbyPlacesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5312191E2756B8F9006C48AA /* NearbyPlacesTableViewCell.swift */; };
+		531219212756B96F006C48AA /* NearbyPlacesCellsCitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531219202756B96F006C48AA /* NearbyPlacesCellsCitiesCollectionViewCell.swift */; };
+		5323BA12274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA11274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift */; };
+		5323BA14274D3BA500F6BA5E /* MustSeeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA13274D3BA500F6BA5E /* MustSeeTableViewCell.swift */; };
+		5323BA16274D3DBE00F6BA5E /* MustSeeCellsCitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA15274D3DBE00F6BA5E /* MustSeeCellsCitiesCollectionViewCell.swift */; };
+		5323BA18274D509700F6BA5E /* TicketCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA17274D509700F6BA5E /* TicketCollectionViewCell.swift */; };
+		5323BA1A274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA19274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift */; };
+		5323BA1C274D82CC00F6BA5E /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA1B274D82CC00F6BA5E /* WeatherCollectionViewCell.swift */; };
+		5323BA1E274E6A4400F6BA5E /* ChoiseRedactionCellsCitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA1D274E6A4400F6BA5E /* ChoiseRedactionCellsCitiesCollectionViewCell.swift */; };
+		5323BA20274E6A7B00F6BA5E /* ChoiseRedactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA1F274E6A7B00F6BA5E /* ChoiseRedactionTableViewCell.swift */; };
+		5323BA22274E6C4900F6BA5E /* MuseumsCellsCitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA21274E6C4900F6BA5E /* MuseumsCellsCitiesCollectionViewCell.swift */; };
+		5323BA24274E6C6000F6BA5E /* MuseumsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA23274E6C6000F6BA5E /* MuseumsTableViewCell.swift */; };
+		5323BA26274E6D0000F6BA5E /* ParksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA25274E6D0000F6BA5E /* ParksCollectionViewCell.swift */; };
+		5323BA28274E6D4D00F6BA5E /* ParksCellsCitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA27274E6D4D00F6BA5E /* ParksCellsCitiesCollectionViewCell.swift */; };
 		533D8DD8270394890006B0EE /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D8DD7270394890006B0EE /* WeatherView.swift */; };
 		5345E2892718B2D400FCD554 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */; };
 		5345E28C2718B30000FCD554 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5345E28B2718B30000FCD554 /* SettingsController.swift */; };
@@ -75,6 +89,20 @@
 
 /* Begin PBXFileReference section */
 		500C05E5E5A28B5089ECD296 /* Pods-TabBarTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.release.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.release.xcconfig"; sourceTree = "<group>"; };
+		5312191E2756B8F9006C48AA /* NearbyPlacesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPlacesTableViewCell.swift; sourceTree = "<group>"; };
+		531219202756B96F006C48AA /* NearbyPlacesCellsCitiesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyPlacesCellsCitiesCollectionViewCell.swift; sourceTree = "<group>"; };
+		5323BA11274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsCollectionViewCell.swift; sourceTree = "<group>"; };
+		5323BA13274D3BA500F6BA5E /* MustSeeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MustSeeTableViewCell.swift; sourceTree = "<group>"; };
+		5323BA15274D3DBE00F6BA5E /* MustSeeCellsCitiesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MustSeeCellsCitiesCollectionViewCell.swift; sourceTree = "<group>"; };
+		5323BA17274D509700F6BA5E /* TicketCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketCollectionViewCell.swift; sourceTree = "<group>"; };
+		5323BA19274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsCellsCitiesCollectionViewCell.swift; sourceTree = "<group>"; };
+		5323BA1B274D82CC00F6BA5E /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
+		5323BA1D274E6A4400F6BA5E /* ChoiseRedactionCellsCitiesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiseRedactionCellsCitiesCollectionViewCell.swift; sourceTree = "<group>"; };
+		5323BA1F274E6A7B00F6BA5E /* ChoiseRedactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiseRedactionTableViewCell.swift; sourceTree = "<group>"; };
+		5323BA21274E6C4900F6BA5E /* MuseumsCellsCitiesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumsCellsCitiesCollectionViewCell.swift; sourceTree = "<group>"; };
+		5323BA23274E6C6000F6BA5E /* MuseumsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseumsTableViewCell.swift; sourceTree = "<group>"; };
+		5323BA25274E6D0000F6BA5E /* ParksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksCollectionViewCell.swift; sourceTree = "<group>"; };
+		5323BA27274E6D4D00F6BA5E /* ParksCellsCitiesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParksCellsCitiesCollectionViewCell.swift; sourceTree = "<group>"; };
 		533D8DD7270394890006B0EE /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		5345E28B2718B30000FCD554 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
@@ -236,6 +264,14 @@
 				5397795C27443872006644D3 /* CountryPhotosTableViewCell.swift */,
 				5397795A27443866006644D3 /* CountryDescriptionTableViewCell.swift */,
 				C259AA1A27215B7500B03921 /* CountryCitiesTableViewCell.swift */,
+				5323BA13274D3BA500F6BA5E /* MustSeeTableViewCell.swift */,
+				5323BA1F274E6A7B00F6BA5E /* ChoiseRedactionTableViewCell.swift */,
+				5312191E2756B8F9006C48AA /* NearbyPlacesTableViewCell.swift */,
+				5323BA25274E6D0000F6BA5E /* ParksCollectionViewCell.swift */,
+				5323BA23274E6C6000F6BA5E /* MuseumsTableViewCell.swift */,
+				5323BA11274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift */,
+				5323BA17274D509700F6BA5E /* TicketCollectionViewCell.swift */,
+				5323BA1B274D82CC00F6BA5E /* WeatherCollectionViewCell.swift */,
 			);
 			path = CountryTableViewCell;
 			sourceTree = "<group>";
@@ -345,6 +381,12 @@
 			children = (
 				C2C985EA2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift */,
 				C2C985EE2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift */,
+				5323BA15274D3DBE00F6BA5E /* MustSeeCellsCitiesCollectionViewCell.swift */,
+				5323BA1D274E6A4400F6BA5E /* ChoiseRedactionCellsCitiesCollectionViewCell.swift */,
+				531219202756B96F006C48AA /* NearbyPlacesCellsCitiesCollectionViewCell.swift */,
+				5323BA21274E6C4900F6BA5E /* MuseumsCellsCitiesCollectionViewCell.swift */,
+				5323BA27274E6D4D00F6BA5E /* ParksCellsCitiesCollectionViewCell.swift */,
+				5323BA19274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift */,
 				538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */,
 				5397795927443147006644D3 /* CountryTableViewCell */,
 				538AF833273422E000D02ECA /* FloatingViewCells */,
@@ -526,14 +568,17 @@
 				C2186D8A272C0B05001889AF /* FloatingViewFirstTableViewCell.swift in Sources */,
 				53EF4D1E270E2A60008CB1B2 /* MapPresenter.swift in Sources */,
 				C259AA20272180FB00B03921 /* GradientView.swift in Sources */,
+				5323BA20274E6A7B00F6BA5E /* ChoiseRedactionTableViewCell.swift in Sources */,
 				C2CA35E826FDCDD600795EF6 /* CustomTabBar.swift in Sources */,
 				C2588FA7270325770014CCDC /* Constants.swift in Sources */,
+				5323BA1A274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift in Sources */,
 				C2588FAB270364180014CCDC /* TopSearchView.swift in Sources */,
 				C259AA1327214A4F00B03921 /* CountryInteractor.swift in Sources */,
 				5397795827443107006644D3 /* Extension+UIViewController.swift in Sources */,
 				C2CA35EA26FDF98E00795EF6 /* TabBarWithCorners.swift in Sources */,
 				C259AA1B27215B7500B03921 /* CountryCitiesTableViewCell.swift in Sources */,
 				C2CA35F026FE0C9C00795EF6 /* CountryController.swift in Sources */,
+				5312191F2756B8F9006C48AA /* NearbyPlacesTableViewCell.swift in Sources */,
 				C259AA1927214A6B00B03921 /* CountryModels.swift in Sources */,
 				53EF4D1C270E2A53008CB1B2 /* MapInteractor.swift in Sources */,
 				C254488027070829000B9439 /* Extention+UIView.swift in Sources */,
@@ -551,17 +596,26 @@
 				C2588FA1270307280014CCDC /* ScrollViewOnMap.swift in Sources */,
 				C2588FA3270307980014CCDC /* Extension+UILabel.swift in Sources */,
 				C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */,
+				5323BA12274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift in Sources */,
+				5323BA14274D3BA500F6BA5E /* MustSeeTableViewCell.swift in Sources */,
 				5397795B27443866006644D3 /* CountryDescriptionTableViewCell.swift in Sources */,
+				5323BA1E274E6A4400F6BA5E /* ChoiseRedactionCellsCitiesCollectionViewCell.swift in Sources */,
 				5397795D27443872006644D3 /* CountryPhotosTableViewCell.swift in Sources */,
 				C2588FA527030D6E0014CCDC /* FilterView.swift in Sources */,
+				531219212756B96F006C48AA /* NearbyPlacesCellsCitiesCollectionViewCell.swift in Sources */,
 				53F3E2F4273FD7E3004B278E /* CityInteractor.swift in Sources */,
 				C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */,
+				5323BA24274E6C6000F6BA5E /* MuseumsTableViewCell.swift in Sources */,
 				5397795627442BC4006644D3 /* AvailableCities.swift in Sources */,
 				53F3E2F2273FD7D7004B278E /* CityController.swift in Sources */,
+				5323BA18274D509700F6BA5E /* TicketCollectionViewCell.swift in Sources */,
+				5323BA28274E6D4D00F6BA5E /* ParksCellsCitiesCollectionViewCell.swift in Sources */,
+				5323BA16274D3DBE00F6BA5E /* MustSeeCellsCitiesCollectionViewCell.swift in Sources */,
 				53F3E2FE273FDD4D004B278E /* CountryRouter.swift in Sources */,
 				C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */,
 				C259AA1127204DA600B03921 /* Extension+UserDefault.swift in Sources */,
 				C259AA1E2721710800B03921 /* Extension+UIImageView.swift in Sources */,
+				5323BA1C274D82CC00F6BA5E /* WeatherCollectionViewCell.swift in Sources */,
 				5396A4932706377C0044D759 /* InternetConnection.swift in Sources */,
 				53F3E300273FED23004B278E /* CityRouter.swift in Sources */,
 				C2C985EB2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift in Sources */,
@@ -572,7 +626,9 @@
 				53F3E3042740469E004B278E /* MapRouter.swift in Sources */,
 				538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */,
 				538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */,
+				5323BA22274E6C4900F6BA5E /* MuseumsCellsCitiesCollectionViewCell.swift in Sources */,
 				53F3E2FA273FD803004B278E /* CityModels.swift in Sources */,
+				5323BA26274E6D0000F6BA5E /* ParksCollectionViewCell.swift in Sources */,
 				C2CA35F226FE1DA800795EF6 /* MapController.swift in Sources */,
 				53F3E2F6273FD7F2004B278E /* CityWorker.swift in Sources */,
 				53EF561F270F720E00CD3786 /* WeatherAPI.swift in Sources */,

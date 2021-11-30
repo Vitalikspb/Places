@@ -1,16 +1,12 @@
 //
-//  CountryCitiesTableViewCell.swift
+//  MustSeeTableViewCell.swift
 //  TabBarTest
 //
 //
 
 import UIKit
 
-protocol CountryCitiesTableViewCellDelegate: AnyObject {
-    func showSelectedCityOnMap(_ lat: Double, _ lon: Double)
-}
-
-class CountryCitiesTableViewCell: UITableViewCell {
+class TicketCollectionViewCell: UITableViewCell {
     
     // MARK: - UI properties
     private let titleLabel: UILabel = {
@@ -18,18 +14,30 @@ class CountryCitiesTableViewCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
-        label.text = "Другие города"
+        label.text = "Билеты на экскурсии"
         return label
     }()
     let collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: UICollectionViewLayout.init())
     
     // MARK: - Public properties
-    weak var delegate: CountryCitiesTableViewCellDelegate?
-    static let identifier = "CountryCitiesTableViewCell"
+    static let identifier = "TicketCollectionViewCell"
     
     // MARK: - Private properties
-    private var citiesAvailable = ["Москва","Санкт-Петербург","Сочи","Краснодар","Гатчина","Cupertino"]
+    struct TicketExibitions {
+        let name: String
+        let image: UIImage
+        let price: Int
+        let rating: Float
+        let reviews: Int
+    }
+    private var ticketsArray: [TicketExibitions] = [
+        TicketExibitions(name: "Эрмитаж, Санкт-Петербург: билеты и самостоятельная экскурсия", image: UIImage(named: "hub3")!, price: 1060, rating: 4.5, reviews: 79),
+        TicketExibitions(name: "Санкт-Петербург: билет в музей «Гранд Макет Россия»", image: UIImage(named: "hub3")!, price: 6500, rating: 4.5, reviews: 135),
+        TicketExibitions(name: "Санкт-Петербург: билет в музей «Гранд Макет Россия»", image: UIImage(named: "hub3")!, price: 5304, rating: 0, reviews: 0),
+        TicketExibitions(name: "Санкт-Петербург: билет на балет «Лебединое озеро»", image: UIImage(named: "hub3")!, price: 6500, rating: 4.4, reviews: 78),
+        TicketExibitions(name: "Государственный Русский музей: аудиотур на русском", image: UIImage(named: "hub3")!, price: 928, rating: 4.1, reviews: 11)
+    ]
     
     // MARK: - Lifecycle
     
@@ -59,18 +67,14 @@ class CountryCitiesTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(title: String) {
-        
-    }
-    
     private func setupUI() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 280, height: 180)
+        layout.itemSize = CGSize(width: 250, height: 180)
         layout.minimumLineSpacing = 10.0
         layout.minimumInteritemSpacing = 10.0
-        collectionView.register(CountryCellsCitiesCollectionViewCell.self,
-                                forCellWithReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier)
+        collectionView.register(TicketsCellsCitiesCollectionViewCell.self,
+                                forCellWithReuseIdentifier: TicketsCellsCitiesCollectionViewCell.identifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
@@ -104,10 +108,10 @@ class CountryCitiesTableViewCell: UITableViewCell {
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
-extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension TicketCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return citiesAvailable.count
+        return ticketsArray.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -115,20 +119,16 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier, for: indexPath) as? CountryCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
-        
-        cell.conigureCell(title: citiesAvailable[indexPath.row], image: UIImage(named: "hub3")!)
-        cell.delegate = self
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TicketsCellsCitiesCollectionViewCell.identifier, for: indexPath) as? TicketsCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
+        cell.conigureCell(title: ticketsArray[indexPath.row].name,
+                          image: ticketsArray[indexPath.row].image,
+                          price: ticketsArray[indexPath.row].price,
+                          rating: ticketsArray[indexPath.row].rating,
+                          reviews: ticketsArray[indexPath.row].reviews)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-    }
-}
-
-extension CountryCitiesTableViewCell: CountryCellsCitiesCollectionViewCellDelegate {
-    func handleSelectedCity(_ lat: Double, _ lon: Double) {
-        delegate?.showSelectedCityOnMap(lat, lon)
     }
 }
