@@ -6,6 +6,10 @@
 
 import UIKit
 
+protocol MustSeeTableViewCellDelegate: AnyObject {
+    func handleSelectedSight(_ name: String)
+}
+
 class MustSeeTableViewCell: UITableViewCell {
     
     // MARK: - UI properties
@@ -21,7 +25,9 @@ class MustSeeTableViewCell: UITableViewCell {
                                           collectionViewLayout: UICollectionViewLayout.init())
     
     // MARK: - Public properties
+    
     static let identifier = "MustSeeTableViewCell"
+    weak var delegate: MustSeeTableViewCellDelegate?
     
     // MARK: - Private properties
     struct MustSeeStruct {
@@ -102,6 +108,15 @@ class MustSeeTableViewCell: UITableViewCell {
                           width: 0,
                           height: 0)
     }
+    
+    @objc private func moveToMapViewHandle(name: String) {
+        switch name {
+        case "Эрмитаж": delegate?.handleSelectedSight(name)
+        case "Русский музей": delegate?.handleSelectedSight(name)
+        default:
+            break
+        }
+    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
@@ -126,4 +141,10 @@ extension MustSeeTableViewCell: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            moveToMapViewHandle(name: mustSeeArray[indexPath.row].name)
+    }
 }
+
+

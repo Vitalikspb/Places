@@ -187,6 +187,7 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
         // Обязательно к просмотру
         case 4:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MustSeeTableViewCell.identifier, for: indexPath) as? MustSeeTableViewCell else { return UITableViewCell() }
+            cell.delegate = self
             return cell
             
         // Билеты на экскурсии
@@ -284,10 +285,18 @@ extension CountryController: CountryDescriptionTableViewCellDelegate {
 
 extension CountryController: CountryCitiesTableViewCellDelegate {
     func showSelectedCityOnMap(_ lat: Double, _ lon: Double) {
-            self.userDefault.set(true, forKey: UserDefaults.showSelectedCity)
-            self.userDefault.set(lat, forKey: UserDefaults.showSelectedCityWithLatitude)
-            self.userDefault.set(lon, forKey: UserDefaults.showSelectedCityWithLongitude)
-            self.tabBarController?.selectedIndex = 0
+            userDefault.set(true, forKey: UserDefaults.showSelectedCity)
+            userDefault.set(lat, forKey: UserDefaults.showSelectedCityWithLatitude)
+            userDefault.set(lon, forKey: UserDefaults.showSelectedCityWithLongitude)
+            tabBarController?.selectedIndex = 0
+    }
+}
+
+extension CountryController: MustSeeTableViewCellDelegate {
+    func handleSelectedSight(_ name: String) {
+        userDefault.set(true, forKey: UserDefaults.showSelectedSight)
+        userDefault.set(name, forKey: UserDefaults.showSelectedSightName)
+        tabBarController?.selectedIndex = 0
     }
 }
 

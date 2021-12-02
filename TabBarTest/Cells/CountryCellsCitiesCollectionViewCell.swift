@@ -12,6 +12,48 @@ protocol CountryCellsCitiesCollectionViewCellDelegate: AnyObject {
 
 class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - UI properties
+    
+    private let image: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .white
+        return imageView
+    }()
+    private let title: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.contentMode = .center
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        return label
+    }()
+    private let gradientView = GradientView()
+    private let numberOfSightLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(white: 1.0, alpha: 0.85)
+        label.contentMode = .center
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans", size: 13)
+        return label
+    }()
+    private let moveToChoosenCityButton: UILabel = {
+        let label = UILabel()
+        label.text = "На карту"
+        label.textColor = .white
+        label.backgroundColor = .clear
+        label.textAlignment = .right
+        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        return label
+    }()
+    
+    private let latitude = 59.88422
+    private let longitude = 30.2545
+    
     // MARK: - Public properties
     
     weak var delegate: CountryCellsCitiesCollectionViewCellDelegate?
@@ -31,17 +73,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
             numberOfSightLabel.text = "Мест: \(cellNumberOfSight)"
         }
     }
-    
-    // MARK: - Private properties
-    
-    private let image = UIImageView()
-    private let title = UILabel()
-    private let gradientView = GradientView()
-    private let numberOfSightLabel = UILabel()
-    let moveToChoosenCityButton = UIButton()
-    private let latitude = 59.88422
-    private let longitude = 30.2545
-    
+
     // MARK: - LifeCycle
     
     override init(frame: CGRect) {
@@ -63,11 +95,6 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 8
-        image.layer.masksToBounds = true
-        image.backgroundColor = .white
-        
         let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 50),
                                 byRoundingCorners: [.bottomLeft, .bottomRight],
                                 cornerRadii: CGSize(width: 8, height: 8))
@@ -77,37 +104,20 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientView.layer.mask = maskLayer
-        
-        title.textColor = .white
-        title.contentMode = .center
-        title.textAlignment = .left
-        title.backgroundColor = .clear
-        title.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
-        
-        numberOfSightLabel.textColor = UIColor(white: 1.0, alpha: 0.85)
-        numberOfSightLabel.contentMode = .center
-        numberOfSightLabel.textAlignment = .left
-        numberOfSightLabel.backgroundColor = .clear
-        numberOfSightLabel.font = UIFont.init(name: "GillSans", size: 13)
-        
-        moveToChoosenCityButton.setImage(UIImage(systemName: "map"), for: .normal)
-        moveToChoosenCityButton.backgroundColor = .clear
-        moveToChoosenCityButton.tintColor = .white
-        moveToChoosenCityButton.addTarget(self, action: #selector(moveToMapViewHandle), for: .touchUpInside)
-        moveToChoosenCityButton.layer.cornerRadius = 8
-        
-        
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
+        moveToChoosenCityButton.isUserInteractionEnabled = true
+        moveToChoosenCityButton.addGestureRecognizer(tap)
+
         self.backgroundColor = .red
         self.layer.cornerRadius = 8
         self.standartShadow(view: self)
-        
         
         contentView.addSubview(image)
         contentView.addSubview(gradientView)
         contentView.addSubview(title)
         contentView.addSubview(numberOfSightLabel)
         contentView.addSubview(moveToChoosenCityButton)
-        
     }
     
     private func setupConstraints() {
@@ -140,14 +150,14 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
                                   paddingRight: 0,
                                   width: 0, height: 20)
         moveToChoosenCityButton.anchor(top: nil,
-                                       left: nil,
+                                       left: numberOfSightLabel.rightAnchor,
                                        bottom: contentView.bottomAnchor,
                                        right: contentView.rightAnchor,
                                        paddingTop: 0,
-                                       paddingLeft: 0,
-                                       paddingBottom: 0,
-                                       paddingRight: 0,
-                                       width: 50, height: 50)
+                                       paddingLeft: 8,
+                                       paddingBottom: 8,
+                                       paddingRight: 8,
+                                       width: 0, height: 50)
     }
     
     func conigureCell(title: String, image: UIImage) {
@@ -159,8 +169,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     // MARK: - Selectors
     
     @objc private func moveToMapViewHandle() {
-        let from = self.cellTitle
-        switch from {
+        switch cellTitle {
         case "Москва": delegate?.handleSelectedCity(55.7529517, 37.6232801)
         case "Санкт-Петербург": delegate?.handleSelectedCity(59.9396340, 30.3104843)
         default:

@@ -22,4 +22,8 @@ extension UserDefaults {
     static var showSelectedCity: String { "showSelectedCity" }
     static var showSelectedCityWithLongitude: String { "showSelectedCityWithLongitude" }
     static var showSelectedCityWithLatitude: String { "showSelectedCityWithLatitude" }
+    
+    // для отображения Места на карте из экрана Страна
+    static var showSelectedSight: String { "showSelectedSight" }
+    static var showSelectedSightName: String { "showSelectedSightName" }
 }

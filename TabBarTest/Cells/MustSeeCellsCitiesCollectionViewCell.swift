@@ -9,6 +9,27 @@ import UIKit
 
 class MustSeeCellsCitiesCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - UI properties
+    
+    private let image: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .white
+        return imageView
+    }()
+    private let imageFavourite: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .center
+        imageView.tintColor = .yellow
+        imageView.backgroundColor = .clear
+        imageView.image = UIImage(systemName: "star")
+        return imageView
+    }()
+    private let title = UILabel()
+    private let gradientView = GradientView()
+    
     // MARK: - Public properties
     
     static let identifier = "MustSeeCellsCitiesCollectionViewCell"
@@ -23,11 +44,8 @@ class MustSeeCellsCitiesCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - Private properties
+    private var putToFavouritesList: Bool = false
     
-    private let image = UIImageView()
-    private let title = UILabel()
-    private let gradientView = GradientView()
     
     // MARK: - LifeCycle
     
@@ -50,10 +68,7 @@ class MustSeeCellsCitiesCollectionViewCell: UICollectionViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 8
-        image.layer.masksToBounds = true
-        image.backgroundColor = .white
+        
         
         let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 50),
                                 byRoundingCorners: [.bottomLeft, .bottomRight],
@@ -72,6 +87,11 @@ class MustSeeCellsCitiesCollectionViewCell: UICollectionViewCell {
         title.numberOfLines = 0
         title.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFavouriteHandle))
+        imageFavourite.isUserInteractionEnabled = true
+        imageFavourite.addGestureRecognizer(tap)
+        imageFavourite.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+        
         self.backgroundColor = .white
         self.layer.cornerRadius = 8
         self.standartShadow(view: self)
@@ -80,7 +100,19 @@ class MustSeeCellsCitiesCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(image)
         contentView.addSubview(gradientView)
         contentView.addSubview(title)
-        
+        contentView.addSubview(imageFavourite)
+    }
+    
+    private func updateFavouriteButton() {
+        DispatchQueue.main.async {
+//            self.
+        }
+    }
+    
+    @objc private func tapFavouriteHandle() {
+        print("Put to favourite list")
+        putToFavouritesList = !putToFavouritesList
+        imageFavourite.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
     }
     
     private func setupConstraints() {
@@ -103,6 +135,15 @@ class MustSeeCellsCitiesCollectionViewCell: UICollectionViewCell {
                      paddingBottom: 0,
                      paddingRight: 8,
                      width: 0, height: 50)
+        imageFavourite.anchor(top: contentView.topAnchor,
+                              left: nil,
+                              bottom: nil,
+                              right: contentView.rightAnchor,
+                              paddingTop: 4,
+                              paddingLeft: 0,
+                              paddingBottom: 0,
+                              paddingRight: 4,
+                              width: 35, height: 35)
     }
     
     func conigureCell(name: String, image: UIImage) {

@@ -262,9 +262,9 @@
 			isa = PBXGroup;
 			children = (
 				5397795C27443872006644D3 /* CountryPhotosTableViewCell.swift */,
-				5397795A27443866006644D3 /* CountryDescriptionTableViewCell.swift */,
 				C259AA1A27215B7500B03921 /* CountryCitiesTableViewCell.swift */,
 				5323BA13274D3BA500F6BA5E /* MustSeeTableViewCell.swift */,
+				5397795A27443866006644D3 /* CountryDescriptionTableViewCell.swift */,
 				5323BA1F274E6A7B00F6BA5E /* ChoiseRedactionTableViewCell.swift */,
 				5312191E2756B8F9006C48AA /* NearbyPlacesTableViewCell.swift */,
 				5323BA25274E6D0000F6BA5E /* ParksCollectionViewCell.swift */,

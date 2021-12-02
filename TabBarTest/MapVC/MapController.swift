@@ -97,6 +97,8 @@ class MapController: UIViewController {
         super.viewDidLoad()
         setupClean()
         setupUI()
+        // вызываем только 1 раз для заполнения массива маркерами
+        interactor?.appendAllMarkers()
         addDefaultMarkers()
         setupLocationManager()
         // обновление погоды каждые 60 сек
@@ -125,6 +127,15 @@ class MapController: UIViewController {
                                  from: .countryViewZoom)
             userDefault.set(false, forKey: UserDefaults.showSelectedCity)
         }
+        
+        // проверяем было ли нажатие на кнопку Места на экране Страны и делаем анимацию камеры и переход на нужные координаты
+        show = userDefault.bool(forKey: UserDefaults.showSelectedSight)
+        if show {
+            userDefault.set(false, forKey: UserDefaults.showSelectedSight)
+            guard let name = userDefault.string(forKey: UserDefaults.showSelectedSightName),
+                  let marker = interactor?.fetchSelectedSightWithAllMarkers(withName: name) else { return }
+            showMarkerSightWithAnimating(marker: marker)
+        }
     }
     
     deinit {
@@ -134,6 +145,9 @@ class MapController: UIViewController {
     // MARK: - Helper Functions
     
     private func setupUI() {
+        
+        
+        
         topScrollView.onMapdelegate = self
         topSearchView.alpha = 0
         topSearchView.topSearchDelegate = self
@@ -333,6 +347,17 @@ class MapController: UIViewController {
             }
         }
     }
+    
+    private func showMarkerSightWithAnimating(marker: GMSMarker) {
+        // делаем запрос на данные для floatinView
+        if let nameLocation = marker.title {
+            interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
+            animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
+                                 longitude: marker.position.longitude,
+                                 from: .mapViewZoom)
+            selectMark = true
+        }
+    }
 }
 
 // MARK: - GMSMapViewDelegate
@@ -361,13 +386,7 @@ extension MapController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
         // делаем запрос на данные для floatinView
-        if let nameLocation = marker.title {
-            interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
-            animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
-                                 longitude: marker.position.longitude,
-                                 from: .mapViewZoom)
-            selectMark = true
-        }
+        showMarkerSightWithAnimating(marker: marker)
         return true
     }
     
