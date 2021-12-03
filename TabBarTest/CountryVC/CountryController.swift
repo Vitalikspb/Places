@@ -23,7 +23,7 @@ class CountryController: UIViewController {
     private var titleName: String = ""
     var viewModel: [CountryViewModel.CityModel]!
     private let userDefault = UserDefaults.standard
-    // выбранной ячейки для тапа по описанию и погоде, для увеличения высоты ячейки
+    // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
     private struct DescriptionWeather {
         var temp: String
@@ -48,7 +48,6 @@ class CountryController: UIViewController {
         setupUI()
         viewModel =  [CountryViewModel.CityModel(name: "",
                                                  image: UIImage(named: "hub3")!)]
-        tabBarController?.tabBar.items?[1].title = "Текущее"
         navigationController?.navigationBar.isHidden = false
     }
     
@@ -90,33 +89,20 @@ class CountryController: UIViewController {
         // кнопки
         tableView.register(ButtonsCollectionViewCell.self,
                            forCellReuseIdentifier: ButtonsCollectionViewCell.identifier)
-        // Обязательно к просмотру
-        tableView.register(MustSeeTableViewCell.self,
-                                forCellReuseIdentifier: MustSeeTableViewCell.identifier)
+        // Переиспользуемая для всех интересных мест
+        tableView.register(SightTableViewCell.self,
+                           forCellReuseIdentifier: SightTableViewCell.identifier)
         // Билеты на экскурсии
         tableView.register(TicketCollectionViewCell.self,
-                                forCellReuseIdentifier: TicketCollectionViewCell.identifier)
+                           forCellReuseIdentifier: TicketCollectionViewCell.identifier)
         // Погода
         tableView.register(WeatherCollectionViewCell.self,
-                                forCellReuseIdentifier: WeatherCollectionViewCell.identifier)
-        // Выбор редакции
-        tableView.register(ChoiseRedactionTableViewCell.self,
-                                    forCellReuseIdentifier: ChoiseRedactionTableViewCell.identifier)
-        // Интересные места по близости
-        tableView.register(NearbyPlacesTableViewCell.self,
-                                    forCellReuseIdentifier: NearbyPlacesTableViewCell.identifier)
-        // Музеи
-        tableView.register(MuseumsTableViewCell.self,
-                                forCellReuseIdentifier: MuseumsTableViewCell.identifier)
-        // Парки
-        tableView.register(ParksCollectionViewCell.self,
-                                forCellReuseIdentifier: ParksCollectionViewCell.identifier)
-        //        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
-        //        tableView.register(CountryCollectionViewCell.self,
-        //                                forCellReuseIdentifier: CountryCollectionViewCell.identifier)
-        //        // ПЕРЕИСПОЛЬЗУЕМАЯ выбор редакции - лучшие места текущего города
-        //        tableView.register(CountryCollectionViewCell.self,
-        //                                forCellReuseIdentifier: CountryCollectionViewCell.identifier)
+                           forCellReuseIdentifier: WeatherCollectionViewCell.identifier)
+
+        // +1
+        //        tableView.register(MuseumsTableViewCell.self,
+        //                                forCellReuseIdentifier: MuseumsTableViewCell.identifier)
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
@@ -124,6 +110,7 @@ class CountryController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        
         view.addSubview(tableView)
         
         tableView.anchor(top: view.topAnchor,
@@ -140,7 +127,10 @@ class CountryController: UIViewController {
 }
 
 // MARK: - CountryDisplayLogic
+
 extension CountryController: CountryDisplayLogic {
+    // отображение обновленной таблицы после заполнения в интеракторе данными модели
+    // пока что не работает т.к нету модели
     func displayAllCities(viewModel: CountryViewModel.AllCitiesInCurrentCountry.ViewModel) {
         self.viewModel = viewModel.cities
         DispatchQueue.main.async {
@@ -155,120 +145,122 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 11
     }
-    
+    // MARK: - заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
-        
-        // картинки города
+            
+            // картинки города
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier, for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
             return cell
             
-        // описание
+            // описание
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier, for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
             cell.delegate = self
             selectedDescriptionCell ?
-                cell.moreButtons.setTitle("Скрыть", for: .normal) :
-                cell.moreButtons.setTitle("Читать далее", for: .normal)
+            cell.moreButtons.setTitle("Скрыть", for: .normal) :
+            cell.moreButtons.setTitle("Читать далее", for: .normal)
             return cell
             
-        // другие города
-        case 10:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCitiesTableViewCell.identifier, for: indexPath) as? CountryCitiesTableViewCell else { return UITableViewCell() }
-            cell.delegate = self
+            // Интересные места по близости
+        case 2:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+            cell.titleCell = "Места в окресностях"
+            cell.sizeCell = CGSize(width: 230, height: 170)
             return cell
             
-        // кнопки
+            // кнопки
         case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonsCollectionViewCell.identifier, for: indexPath) as? ButtonsCollectionViewCell else { return UITableViewCell() }
-            return cell
-            
-        // Обязательно к просмотру
-        case 4:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: MustSeeTableViewCell.identifier, for: indexPath) as? MustSeeTableViewCell else { return UITableViewCell() }
             cell.delegate = self
             return cell
             
-        // Билеты на экскурсии
+            // Обязательно к просмотру
+        case 4:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+            cell.delegate = self
+            cell.titleCell = "Обязательно к просмотру"
+            cell.sizeCell = CGSize(width: 200, height: 140)
+            return cell
+            
+            // Билеты на экскурсии
         case 5:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TicketCollectionViewCell.identifier, for: indexPath) as? TicketCollectionViewCell else { return UITableViewCell() }
             return cell
             
-        // Погода
+            // Погода
         case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
             cell.configureCell(city: titleName, latitude: 59.9396340, longitude: 30.3104843)
             return cell
             
-        // Выбор редакции
+            // Выбор редакции
         case 7:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ChoiseRedactionTableViewCell.identifier, for: indexPath) as? ChoiseRedactionTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+            cell.titleCell = "Выбор редакции"
+            cell.sizeCell = CGSize(width: 230, height: 170)
             return cell
             
-        // Интересные места по близости
-        case 2:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: NearbyPlacesTableViewCell.identifier, for: indexPath) as? NearbyPlacesTableViewCell else { return UITableViewCell() }
-            return cell
-            
-        // Музеи
+            // Музеи
         case 8:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: MuseumsTableViewCell.identifier, for: indexPath) as? MuseumsTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+            cell.delegate = self
+            cell.titleCell = "Музеи"
+            cell.sizeCell = CGSize(width: 200, height: 140)
             return cell
             
-        // Парки
+            // Парки
         case 9:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ParksCollectionViewCell.identifier, for: indexPath) as? ParksCollectionViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+            cell.delegate = self
+            cell.titleCell = "Парки"
+            cell.sizeCell = CGSize(width: 200, height: 140)
+            return cell
+            
+            // другие города
+        case 10:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCitiesTableViewCell.identifier, for: indexPath) as? CountryCitiesTableViewCell else { return UITableViewCell() }
+            cell.delegate = self
             return cell
             
         default: return UITableViewCell()
         }
         
     }
-    
+    // MARK: - высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
-        
-        // ячейка с картинками текущего города
+            
+            // ячейка с картинками текущего города
         case 0: return UIScreen.main.bounds.width - (UIScreen.main.bounds.width / 3) + 32
             
-        // ячейка с описанием города
+            // ячейка с описанием города
         case 1: return selectedDescriptionCell ? 380 : 200
             
-        // ячейка с другими городами текущей страны где есть метки
-        case 2: return 215
-        
-        // ячейка с кнопками
+            // ячейка с другими городами текущей страны где есть метки
+            // Выбор редакции
+        case 2,7: return 215
+            
+            // ячейка с кнопками
         case 3: return 150
             
-        // Обязательно к просмотру
-        case 4: return 180
+            // Билеты на экскурсии
+            // другие города
+        case 5,10: return 230
             
-        // Билеты на экскурсии
-        case 5: return 230
-            
-        // Погода
+            // Погода
         case 6: return 200
             
-        // Выбор редакции
-        case 7: return 215
-        
-        // Интересные места по близости
-        case 8: return 180
-            
-        // Музеи
-        case 9: return 180
-        
-        // Парки
-        case 10: return 220
+            // Обязательно к просмотру
+            // Интересные места по близости
+            // Музеи
+        case 4,8,9: return 180
             
         default: return 50
         }
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        router?.routeToCityVC()
-    }
-    
+    // MARK: - белое заполнение пустой части таблицы
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView()
         view.backgroundColor = .white
@@ -276,28 +268,72 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - CountryDescriptionTableViewCellDelegate
+
 extension CountryController: CountryDescriptionTableViewCellDelegate {
+    // показываем больше текста в описании (расширяем таблицу)
     func showMoreText() {
         selectedDescriptionCell = !selectedDescriptionCell
         tableView.reloadData()
     }
 }
 
+// MARK: - CountryCitiesTableViewCellDelegate
+
 extension CountryController: CountryCitiesTableViewCellDelegate {
+    // Открываем другой город из текущего
+    func showSelectedCityDescription(_ name: String) {
+        router?.routeToCityVC()
+    }
+    // открываем выбранный город на карте
     func showSelectedCityOnMap(_ lat: Double, _ lon: Double) {
-            userDefault.set(true, forKey: UserDefaults.showSelectedCity)
-            userDefault.set(lat, forKey: UserDefaults.showSelectedCityWithLatitude)
-            userDefault.set(lon, forKey: UserDefaults.showSelectedCityWithLongitude)
-            tabBarController?.selectedIndex = 0
+        userDefault.set(true, forKey: UserDefaults.showSelectedCity)
+        userDefault.set(lat, forKey: UserDefaults.showSelectedCityWithLatitude)
+        userDefault.set(lon, forKey: UserDefaults.showSelectedCityWithLongitude)
+        tabBarController?.selectedIndex = 0
     }
 }
 
-extension CountryController: MustSeeTableViewCellDelegate {
+// MARK: - SightTableViewCellDelegate
+
+extension CountryController: SightTableViewCellDelegate {
+    // открываем выбранную достопримечательность на карте
     func handleSelectedSight(_ name: String) {
         userDefault.set(true, forKey: UserDefaults.showSelectedSight)
         userDefault.set(name, forKey: UserDefaults.showSelectedSightName)
         tabBarController?.selectedIndex = 0
     }
+}
+
+// MARK: - ButtonsCollectionViewCellDelegate
+
+extension CountryController: ButtonsCollectionViewCellDelegate {
+    // открываем экран списка любимых/избранных достопримечательностей
+    func favouritesHandler() {
+        router?.routeToCityVC()
+    }
+    
+    func eventsHandler() {
+        
+    }
+    
+    func ticketHandler() {
+        
+    }
+    
+    func faqHandler() {
+        
+    }
+    
+    func rentAutoHandler() {
+        
+    }
+    
+    func chatHandler() {
+        
+    }
+    
+    
 }
 
 

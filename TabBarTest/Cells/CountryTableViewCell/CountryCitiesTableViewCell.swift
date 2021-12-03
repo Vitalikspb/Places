@@ -8,6 +8,7 @@ import UIKit
 
 protocol CountryCitiesTableViewCellDelegate: AnyObject {
     func showSelectedCityOnMap(_ lat: Double, _ lon: Double)
+    func showSelectedCityDescription(_ name: String)
 }
 
 class CountryCitiesTableViewCell: UITableViewCell {
@@ -77,8 +78,10 @@ class CountryCitiesTableViewCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.setCollectionViewLayout(layout, animated: true)
+        
         contentView.addSubview(titleLabel)
         contentView.addSubview(collectionView)
+        
         titleLabel.anchor(top: contentView.topAnchor,
                           left: contentView.leftAnchor,
                           bottom: nil,
@@ -124,6 +127,9 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.showSelectedCityDescription(citiesAvailable[indexPath.row])
     }
 }
 

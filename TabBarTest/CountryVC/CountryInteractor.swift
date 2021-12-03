@@ -23,6 +23,14 @@ class CountryInteractor: CountryBussinessLogic, CountryDataStore {
     var presenter: CountryPresentationLogic?
 
     func showCity() {
+//        Здесь создаем модель для текукщего города - заполняем модель все информацией -
+//        погодой,
+//        главными картинкам,
+//        описанием
+//        ссылками кнопок
+//        местами
+//        другими городами
+//        по этой модели будем заполнять экран а не как сейчас
         var viewModel = CountryViewModel.AllCitiesInCurrentCountry.ViewModel(cities: [CountryViewModel.CityModel(name: "", image: UIImage())])
         viewModel.cities.removeFirst()
         city.forEach {

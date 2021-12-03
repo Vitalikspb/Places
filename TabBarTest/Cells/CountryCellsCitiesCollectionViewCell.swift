@@ -41,14 +41,15 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         label.font = UIFont.init(name: "GillSans", size: 13)
         return label
     }()
-    private let moveToChoosenCityButton: UILabel = {
-        let label = UILabel()
-        label.text = "На карту"
-        label.textColor = .white
-        label.backgroundColor = .clear
-        label.textAlignment = .right
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
-        return label
+    private let moveToChoosenCityButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("На карту", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .clear
+        button.contentHorizontalAlignment = .right
+        button.contentVerticalAlignment = .bottom
+        button.titleLabel?.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        return button
     }()
     
     private let latitude = 59.88422
@@ -105,10 +106,8 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientView.layer.mask = maskLayer
 
-        let tap = UITapGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
-        moveToChoosenCityButton.isUserInteractionEnabled = true
-        moveToChoosenCityButton.addGestureRecognizer(tap)
-
+        moveToChoosenCityButton.addTarget(self, action: #selector(moveToMapViewHandle), for: .touchUpInside)
+        
         self.backgroundColor = .red
         self.layer.cornerRadius = 8
         self.standartShadow(view: self)
@@ -155,9 +154,9 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
                                        right: contentView.rightAnchor,
                                        paddingTop: 0,
                                        paddingLeft: 8,
-                                       paddingBottom: 8,
+                                       paddingBottom: 4,
                                        paddingRight: 8,
-                                       width: 0, height: 50)
+                                       width: 0, height: 40)
     }
     
     func conigureCell(title: String, image: UIImage) {
