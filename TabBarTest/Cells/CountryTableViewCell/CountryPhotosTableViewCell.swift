@@ -77,7 +77,7 @@ class CountryPhotosTableViewCell: UITableViewCell {
                            right: contentView.rightAnchor,
                            paddingTop: 0,
                            paddingLeft: 50,
-                           paddingBottom: 30,
+                           paddingBottom: 20,
                            paddingRight: 50,
                            width: 0,
                            height: 0)

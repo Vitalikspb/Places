@@ -32,6 +32,13 @@
 		53EF4D20270E2A6E008CB1B2 /* MapWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D1F270E2A6E008CB1B2 /* MapWorker.swift */; };
 		53EF4D22270E2A7B008CB1B2 /* MapModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF4D21270E2A7B008CB1B2 /* MapModels.swift */; };
 		53EF561F270F720E00CD3786 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF561E270F720E00CD3786 /* WeatherAPI.swift */; };
+		53F0D7A2275E98340087A9BB /* FavouritesController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53F0D7A1275E98340087A9BB /* FavouritesController.storyboard */; };
+		53F0D7A4275E98560087A9BB /* FavouritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0D7A3275E98560087A9BB /* FavouritesController.swift */; };
+		53F0D7A6275E987F0087A9BB /* FavouritesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0D7A5275E987F0087A9BB /* FavouritesInteractor.swift */; };
+		53F0D7A8275E98870087A9BB /* FavouritesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0D7A7275E98870087A9BB /* FavouritesRouter.swift */; };
+		53F0D7AA275E988E0087A9BB /* FavouritesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0D7A9275E988E0087A9BB /* FavouritesWorker.swift */; };
+		53F0D7AC275E98940087A9BB /* FavouritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0D7AB275E98940087A9BB /* FavouritesPresenter.swift */; };
+		53F0D7AE275E98990087A9BB /* FavouritesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0D7AD275E98990087A9BB /* FavouritesModels.swift */; };
 		53F3E2F2273FD7D7004B278E /* CityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F3E2F1273FD7D7004B278E /* CityController.swift */; };
 		53F3E2F4273FD7E3004B278E /* CityInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F3E2F3273FD7E3004B278E /* CityInteractor.swift */; };
 		53F3E2F6273FD7F2004B278E /* CityWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F3E2F5273FD7F2004B278E /* CityWorker.swift */; };
@@ -104,6 +111,13 @@
 		53EF4D1F270E2A6E008CB1B2 /* MapWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWorker.swift; sourceTree = "<group>"; };
 		53EF4D21270E2A7B008CB1B2 /* MapModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModels.swift; sourceTree = "<group>"; };
 		53EF561E270F720E00CD3786 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
+		53F0D7A1275E98340087A9BB /* FavouritesController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FavouritesController.storyboard; sourceTree = "<group>"; };
+		53F0D7A3275E98560087A9BB /* FavouritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesController.swift; sourceTree = "<group>"; };
+		53F0D7A5275E987F0087A9BB /* FavouritesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesInteractor.swift; sourceTree = "<group>"; };
+		53F0D7A7275E98870087A9BB /* FavouritesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesRouter.swift; sourceTree = "<group>"; };
+		53F0D7A9275E988E0087A9BB /* FavouritesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesWorker.swift; sourceTree = "<group>"; };
+		53F0D7AB275E98940087A9BB /* FavouritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesPresenter.swift; sourceTree = "<group>"; };
+		53F0D7AD275E98990087A9BB /* FavouritesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesModels.swift; sourceTree = "<group>"; };
 		53F3E2F1273FD7D7004B278E /* CityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityController.swift; sourceTree = "<group>"; };
 		53F3E2F3273FD7E3004B278E /* CityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInteractor.swift; sourceTree = "<group>"; };
 		53F3E2F5273FD7F2004B278E /* CityWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWorker.swift; sourceTree = "<group>"; };
@@ -256,6 +270,32 @@
 			path = CountryTableViewCell;
 			sourceTree = "<group>";
 		};
+		53F0D79F275E97FC0087A9BB /* TabBarButtons */ = {
+			isa = PBXGroup;
+			children = (
+				C2588F9A2702F6530014CCDC /* Tabbar */,
+				C2588F962702F5B40014CCDC /* MapVC */,
+				C2588F992702F6080014CCDC /* CountryVC */,
+				C2588F9F2702F69A0014CCDC /* WorldVC */,
+				5345E28A2718B2DB00FCD554 /* SettingsVC */,
+			);
+			path = TabBarButtons;
+			sourceTree = "<group>";
+		};
+		53F0D7A0275E980B0087A9BB /* FavouritesVC */ = {
+			isa = PBXGroup;
+			children = (
+				53F0D7A1275E98340087A9BB /* FavouritesController.storyboard */,
+				53F0D7A3275E98560087A9BB /* FavouritesController.swift */,
+				53F0D7A5275E987F0087A9BB /* FavouritesInteractor.swift */,
+				53F0D7A7275E98870087A9BB /* FavouritesRouter.swift */,
+				53F0D7A9275E988E0087A9BB /* FavouritesWorker.swift */,
+				53F0D7AB275E98940087A9BB /* FavouritesPresenter.swift */,
+				53F0D7AD275E98990087A9BB /* FavouritesModels.swift */,
+			);
+			path = FavouritesVC;
+			sourceTree = "<group>";
+		};
 		53F3E2F0273FD760004B278E /* CityVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,12 +433,9 @@
 			children = (
 				533D8DD62703930A0006B0EE /* Delegate */,
 				5396A491270637690044D759 /* Library */,
-				C2588F962702F5B40014CCDC /* MapVC */,
+				53F0D79F275E97FC0087A9BB /* TabBarButtons */,
+				53F0D7A0275E980B0087A9BB /* FavouritesVC */,
 				53F3E2F0273FD760004B278E /* CityVC */,
-				C2588F992702F6080014CCDC /* CountryVC */,
-				C2588F9F2702F69A0014CCDC /* WorldVC */,
-				5345E28A2718B2DB00FCD554 /* SettingsVC */,
-				C2588F9A2702F6530014CCDC /* Tabbar */,
 				C25448782706ED21000B9439 /* Models */,
 				C259AA1C27215B7A00B03921 /* Cells */,
 				C2588FA92703439C0014CCDC /* Views */,
@@ -485,6 +522,7 @@
 				53F3E2FC273FD830004B278E /* CityController.storyboard in Resources */,
 				C2CA35DD26FDCDB100795EF6 /* Assets.xcassets in Resources */,
 				C2588F9C2702F6750014CCDC /* WorldStoryboard.storyboard in Resources */,
+				53F0D7A2275E98340087A9BB /* FavouritesController.storyboard in Resources */,
 				C2CA35DB26FDCDAF00795EF6 /* Main.storyboard in Resources */,
 				C2588F982702F5D40014CCDC /* CountryStoryboard.storyboard in Resources */,
 				5345E2892718B2D400FCD554 /* SettingsStoryboard.storyboard in Resources */,
@@ -551,12 +589,15 @@
 				C259AA1327214A4F00B03921 /* CountryInteractor.swift in Sources */,
 				5397795827443107006644D3 /* Extension+UIViewController.swift in Sources */,
 				C2CA35EA26FDF98E00795EF6 /* TabBarWithCorners.swift in Sources */,
+				53F0D7A4275E98560087A9BB /* FavouritesController.swift in Sources */,
 				C259AA1B27215B7500B03921 /* CountryCitiesTableViewCell.swift in Sources */,
+				53F0D7A8275E98870087A9BB /* FavouritesRouter.swift in Sources */,
 				C2CA35F026FE0C9C00795EF6 /* CountryController.swift in Sources */,
 				C259AA1927214A6B00B03921 /* CountryModels.swift in Sources */,
 				53EF4D1C270E2A53008CB1B2 /* MapInteractor.swift in Sources */,
 				C254488027070829000B9439 /* Extention+UIView.swift in Sources */,
 				538AF835273424DC00D02ECA /* FloatingCollectionViewCell.swift in Sources */,
+				53F0D7AA275E988E0087A9BB /* FavouritesWorker.swift in Sources */,
 				C254487C2706F52E000B9439 /* Extension+CLLocation.swift in Sources */,
 				533D8DD8270394890006B0EE /* WeatherView.swift in Sources */,
 				C2C985EF2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift in Sources */,
@@ -570,11 +611,14 @@
 				C2588FA1270307280014CCDC /* ScrollViewOnMap.swift in Sources */,
 				C2588FA3270307980014CCDC /* Extension+UILabel.swift in Sources */,
 				C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */,
+				53F0D7AE275E98990087A9BB /* FavouritesModels.swift in Sources */,
 				5323BA12274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift in Sources */,
 				5323BA14274D3BA500F6BA5E /* SightTableViewCell.swift in Sources */,
 				5397795B27443866006644D3 /* CountryDescriptionTableViewCell.swift in Sources */,
 				5397795D27443872006644D3 /* CountryPhotosTableViewCell.swift in Sources */,
 				C2588FA527030D6E0014CCDC /* FilterView.swift in Sources */,
+				53F0D7AC275E98940087A9BB /* FavouritesPresenter.swift in Sources */,
+				53F0D7A6275E987F0087A9BB /* FavouritesInteractor.swift in Sources */,
 				53F3E2F4273FD7E3004B278E /* CityInteractor.swift in Sources */,
 				C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */,
 				5397795627442BC4006644D3 /* AvailableCities.swift in Sources */,

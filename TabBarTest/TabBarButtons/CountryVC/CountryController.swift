@@ -285,6 +285,7 @@ extension CountryController: CountryCitiesTableViewCellDelegate {
     func showSelectedCityDescription(_ name: String) {
         router?.routeToCityVC()
     }
+    
     // открываем выбранный город на карте
     func showSelectedCityOnMap(_ lat: Double, _ lon: Double) {
         userDefault.set(true, forKey: UserDefaults.showSelectedCity)
@@ -310,7 +311,8 @@ extension CountryController: SightTableViewCellDelegate {
 extension CountryController: ButtonsCollectionViewCellDelegate {
     // открываем экран списка любимых/избранных достопримечательностей
     func favouritesHandler() {
-        router?.routeToCityVC()
+        print("favourites")
+        router?.routeToFavouritesVC()
     }
     
     func eventsHandler() {
