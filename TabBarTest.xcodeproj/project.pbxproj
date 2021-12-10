@@ -15,6 +15,10 @@
 		5323BA1A274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA19274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift */; };
 		5323BA1C274D82CC00F6BA5E /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA1B274D82CC00F6BA5E /* WeatherCollectionViewCell.swift */; };
 		533D8DD8270394890006B0EE /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D8DD7270394890006B0EE /* WeatherView.swift */; };
+		53403D68275FF1B5004087F7 /* FavouritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D67275FF1B4004087F7 /* FavouritesTableViewCell.swift */; };
+		53403D6B275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D6A275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift */; };
+		53403D6D2763C402004087F7 /* FavouritesTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D6C2763C402004087F7 /* FavouritesTopView.swift */; };
+		53403D6F2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D6E2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift */; };
 		5345E2892718B2D400FCD554 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */; };
 		5345E28C2718B30000FCD554 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5345E28B2718B30000FCD554 /* SettingsController.swift */; };
 		538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF82F27341AAB00D02ECA /* StackViewStars.swift */; };
@@ -95,6 +99,10 @@
 		5323BA19274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsCellsCitiesCollectionViewCell.swift; sourceTree = "<group>"; };
 		5323BA1B274D82CC00F6BA5E /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		533D8DD7270394890006B0EE /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		53403D67275FF1B4004087F7 /* FavouritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTableViewCell.swift; sourceTree = "<group>"; };
+		53403D6A275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTableViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		53403D6C2763C402004087F7 /* FavouritesTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTopView.swift; sourceTree = "<group>"; };
+		53403D6E2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTopCollectionViewCell.swift; sourceTree = "<group>"; };
 		5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		5345E28B2718B30000FCD554 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		538AF82F27341AAB00D02ECA /* StackViewStars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewStars.swift; sourceTree = "<group>"; };
@@ -219,6 +227,16 @@
 			path = Delegate;
 			sourceTree = "<group>";
 		};
+		53403D69275FF1BD004087F7 /* FavouritesCell */ = {
+			isa = PBXGroup;
+			children = (
+				53403D67275FF1B4004087F7 /* FavouritesTableViewCell.swift */,
+				53403D6A275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift */,
+				53403D6E2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift */,
+			);
+			path = FavouritesCell;
+			sourceTree = "<group>";
+		};
 		5345E28A2718B2DB00FCD554 /* SettingsVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,7 +274,7 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
-		5397795927443147006644D3 /* CountryTableViewCell */ = {
+		5397795927443147006644D3 /* CountryCell */ = {
 			isa = PBXGroup;
 			children = (
 				5397795C27443872006644D3 /* CountryPhotosTableViewCell.swift */,
@@ -267,7 +285,7 @@
 				5323BA17274D509700F6BA5E /* TicketCollectionViewCell.swift */,
 				5323BA1B274D82CC00F6BA5E /* WeatherCollectionViewCell.swift */,
 			);
-			path = CountryTableViewCell;
+			path = CountryCell;
 			sourceTree = "<group>";
 		};
 		53F0D79F275E97FC0087A9BB /* TabBarButtons */ = {
@@ -392,6 +410,7 @@
 				C2588FAA270364180014CCDC /* TopSearchView.swift */,
 				C254487D27070753000B9439 /* FloatingView.swift */,
 				C2A6D2F1271D824300DD9DF4 /* MainFloatingView.swift */,
+				53403D6C2763C402004087F7 /* FavouritesTopView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -404,8 +423,9 @@
 				5323BA15274D3DBE00F6BA5E /* SightCollectionViewCell.swift */,
 				5323BA19274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift */,
 				538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */,
-				5397795927443147006644D3 /* CountryTableViewCell */,
+				5397795927443147006644D3 /* CountryCell */,
 				538AF833273422E000D02ECA /* FloatingViewCells */,
+				53403D69275FF1BD004087F7 /* FavouritesCell */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -578,6 +598,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53403D6F2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift in Sources */,
 				5345E28C2718B30000FCD554 /* SettingsController.swift in Sources */,
 				C2186D8A272C0B05001889AF /* FloatingViewFirstTableViewCell.swift in Sources */,
 				53EF4D1E270E2A60008CB1B2 /* MapPresenter.swift in Sources */,
@@ -606,11 +627,13 @@
 				53D9BB1C272B39CE00CC14A8 /* ActionButtonsScrollView.swift in Sources */,
 				C254487E27070753000B9439 /* FloatingView.swift in Sources */,
 				53F3E30227404119004B278E /* CurrentCityButtonView.swift in Sources */,
+				53403D6B275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift in Sources */,
 				53EF4D20270E2A6E008CB1B2 /* MapWorker.swift in Sources */,
 				C2CA35D626FDCDAF00795EF6 /* SceneDelegate.swift in Sources */,
 				C2588FA1270307280014CCDC /* ScrollViewOnMap.swift in Sources */,
 				C2588FA3270307980014CCDC /* Extension+UILabel.swift in Sources */,
 				C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */,
+				53403D68275FF1B5004087F7 /* FavouritesTableViewCell.swift in Sources */,
 				53F0D7AE275E98990087A9BB /* FavouritesModels.swift in Sources */,
 				5323BA12274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift in Sources */,
 				5323BA14274D3BA500F6BA5E /* SightTableViewCell.swift in Sources */,
@@ -628,6 +651,7 @@
 				53F3E2FE273FDD4D004B278E /* CountryRouter.swift in Sources */,
 				C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */,
 				C259AA1127204DA600B03921 /* Extension+UserDefault.swift in Sources */,
+				53403D6D2763C402004087F7 /* FavouritesTopView.swift in Sources */,
 				C259AA1E2721710800B03921 /* Extension+UIImageView.swift in Sources */,
 				5323BA1C274D82CC00F6BA5E /* WeatherCollectionViewCell.swift in Sources */,
 				5396A4932706377C0044D759 /* InternetConnection.swift in Sources */,
@@ -792,7 +816,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8C44H3653W;
+				DEVELOPMENT_TEAM = GR6GC7JSQ5;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -813,7 +837,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8C44H3653W;
+				DEVELOPMENT_TEAM = GR6GC7JSQ5;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
