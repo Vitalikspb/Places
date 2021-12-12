@@ -43,7 +43,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     }()
     private let moveToChoosenCityButton: UIButton = {
         let button = UIButton()
-        button.setTitle("На карту", for: .normal)
+        button.setTitle(Constants.Cells.toMap, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .clear
         button.contentHorizontalAlignment = .right
@@ -71,7 +71,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     }
     var cellNumberOfSight: Int = 0 {
         didSet {
-            numberOfSightLabel.text = "Мест: \(cellNumberOfSight)"
+            numberOfSightLabel.text = "\(Constants.Cells.countSights): \(cellNumberOfSight)"
         }
     }
 

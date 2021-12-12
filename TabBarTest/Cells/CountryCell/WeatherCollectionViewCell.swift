@@ -20,7 +20,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
-        label.text = "Погода"
+        label.text = Constants.Cells.weather
         return label
     }()
     private let todayLabel: UILabel = {
@@ -29,7 +29,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "Сегодня"
+        label.text = Constants.Cells.today
         return label
     }()
     private let curTempLabel: UILabel = {
@@ -38,7 +38,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "+3"
+        label.text = ""
         return label
     }()
     private let curImageLabel: UIImageView = {
@@ -53,7 +53,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "Ясно"
+        label.text = ""
         return label
     }()
     private let tempFeelsLikeLabel: UILabel = {
@@ -62,7 +62,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "Ощущается как "
+        label.text = Constants.Cells.weatherFellsLike
         return label
     }()
     let mainStackView: UIStackView = {
@@ -87,7 +87,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "Восход солнца"
+        label.text = Constants.Cells.sunrise
         return label
     }()
     private let sunriseTimeLabel: UILabel = {
@@ -96,7 +96,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "09:15"
+        label.text = "00:00"
         return label
     }()
     let sunsetStackView: UIStackView = {
@@ -113,7 +113,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "Закат солнца"
+        label.text = Constants.Cells.sunset
         return label
     }()
     private let sunsetTimeLabel: UILabel = {
@@ -122,7 +122,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "16:16"
+        label.text = "00:00"
         return label
     }()
     
@@ -263,7 +263,7 @@ class WeatherCollectionViewCell: UITableViewCell {
     func configureCell(city: String,
                        latitude: CLLocationDegrees,
                        longitude: CLLocationDegrees) {
-        titleLabel.text = "Погода в " + city
+        titleLabel.text = Constants.Cells.weatherInCity + city
         // координаты берутся из структуры города для теста питер - 59.9396340, 30.3104843
         WeatherAPI().descriptionCurrentWeather(
             latitude: latitude,
@@ -272,7 +272,7 @@ class WeatherCollectionViewCell: UITableViewCell {
                 guard let self = self else { return }
                 DispatchQueue.main.async {
                     self.curTempLabel.text = temp
-                    self.tempFeelsLikeLabel.text = "Ощущается как " + feelsLike
+                    self.tempFeelsLikeLabel.text = Constants.Cells.weatherFellsLike + feelsLike
                     self.curImageLabel.image = image!
                     self.descriptionLabel.text = description
                     self.utcToLocal(dateStr: sunrise) { currentTime in

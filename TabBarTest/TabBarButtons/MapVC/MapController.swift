@@ -301,8 +301,8 @@ class MapController: UIViewController {
     }
     
     func showAlert(_ message:String) {
-        let alert = UIAlertController(title: "Location Error", message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        let alert = UIAlertController(title: Constants.Errors.locationError, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: Constants.Errors.ok, style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -372,6 +372,7 @@ extension MapController: GMSMapViewDelegate {
     }
     
     // Вызывается по нажатию на свое местоположение
+    // MARK: - TODO УДАЛИТЬ
     func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
         
         let alert = UIAlertController(
@@ -432,21 +433,18 @@ extension MapController: ScrollViewOnMapDelegate {
     
     // Фильтрация маркеров по парку
     func chooseParkFilter() {
-        print("Park filter")
         let request = MapViewModel.FilterName.Park
         interactor?.fetchAllTestMarkers(request: request)
     }
     
     // Фильтрация маркеров по достопримечательностям
     func choosePoiFilter() {
-        print("Poi filter")
         let request = MapViewModel.FilterName.POI
         interactor?.fetchAllTestMarkers(request: request)
     }
     
     // Фильтрация маркеров по пляжам
     func chooseBeachFilter() {
-        print("Beach filter")
         let request = MapViewModel.FilterName.Beach
         interactor?.fetchAllTestMarkers(request: request)
     }
@@ -480,16 +478,16 @@ extension MapController: ConnectivityDelegate {
         hideWeatherView()
         internetConnection = false
         let alert = UIAlertController(
-            title: "Ошибка интернета",
-            message: "Включите интернет",
+            title: Constants.Errors.internetError,
+            message: Constants.Errors.turnOnInternet,
             preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        alert.addAction(UIAlertAction(title: "Настройки", style: .default, handler: {_ in
+        alert.addAction(UIAlertAction(title: Constants.Errors.ok, style: .default))
+        alert.addAction(UIAlertAction(title: Constants.Errors.settings, style: .default, handler: {_ in
             if let url = URL.init(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }))
-        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
+        alert.addAction(UIAlertAction(title: Constants.Errors.close, style: .cancel))
         present(alert, animated: true)
     }
     
@@ -530,16 +528,15 @@ extension MapController: CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             switch(CLLocationManager.authorizationStatus()) {
             case .notDetermined, .restricted, .denied:
-                showAlert("Please Allow the Location Permision to get weather of your city")
+                showAlert(Constants.Errors.allowLocationPermision)
                 hideWeatherView()
             case .authorizedAlways, .authorizedWhenInUse:
-                print("locationEnabled")
+                break
             @unknown default:
                 break
             }
         } else {
-            showAlert("Please Turn ON the location services on your device")
-            print("locationDisabled")
+            showAlert(Constants.Errors.allowLocationOnDevice)
             hideWeatherView()
         }
         manager.stopUpdatingLocation()
@@ -633,7 +630,6 @@ extension MapController: MapDisplayLogic {
     // при нажатии на маркер на экране
     // заполнение floating view данными из текущей модели viewModel
     func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel) {
-        print("displayChoosenDestination")
         // всю эту логику перенести в метод от презентера - показ FloatingView конкретной меткой и данными по ней.
         
         mapView.clear()

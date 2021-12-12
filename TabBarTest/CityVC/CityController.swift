@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CityDisplayLogic: AnyObject {
-    func displayCurrentCity(viewModel: CityViewModel.CurrentCity.ViewModel)
+    func displayCurrentCity(viewModel: String)
 }
 
 class CityController: UIViewController {
@@ -18,18 +18,26 @@ class CityController: UIViewController {
     
     var interactor: CityBussinessLogic?
     var router: (NSObjectProtocol & CityRoutingLogic & CityDataPassing)?
+    var viewModel: String = ""
+    
+    //MARK: - Private properties
     
     private var titleName: String = ""
-    var viewModel: [CityViewModel.CityModel]!
 
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .white
-        setupClean()
         setupUI()
-        viewModel =  [CityViewModel.CityModel(title: "",
-                                              image: UIImage(named: "new-york")!)]
+        interactor?.showCity()
+    }
+    
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupClean()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,8 +47,7 @@ class CityController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.removeAll()
-        interactor?.showCity()
+        
     }
 
     // MARK: - Helper Functions
@@ -56,7 +63,7 @@ class CityController: UIViewController {
         interactor.presenter = presenter
         presenter.CityController = viewController
         router.viewController = viewController
-//        router.dataStore = interactor
+        router.dataStore = interactor
     }
     
     private func setupUserDefault() {
@@ -71,7 +78,7 @@ class CityController: UIViewController {
 // MARK: - CountryDisplayLogic
 extension CityController: CityDisplayLogic {
     // показ информации о текущем городе
-    func displayCurrentCity(viewModel: CityViewModel.CurrentCity.ViewModel) {
-        title = viewModel.city.title
+    func displayCurrentCity(viewModel: String) {
+        title = viewModel
     }
 }

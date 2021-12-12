@@ -27,17 +27,17 @@ class ButtonsCollectionViewCell: UITableViewCell {
     }()
     let savedButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Избранное", for: .normal)
+        button.setTitle(Constants.Cells.favourites, for: .normal)
         return button
     }()
     let eventsButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Интересные \nсобытия", for: .normal)
+        button.setTitle(Constants.Cells.intrestingViews, for: .normal)
         return button
     }()
     let ticketsButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Билеты на \nэкскурсии", for: .normal)
+        button.setTitle(Constants.Cells.ticketToSights, for: .normal)
         return button
     }()
     let buttonsBottomStackView: UIStackView = {
@@ -49,17 +49,17 @@ class ButtonsCollectionViewCell: UITableViewCell {
     }()
     let FAQButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Вопросы и \nответы", for: .normal)
+        button.setTitle(Constants.Cells.FAQ, for: .normal)
         return button
     }()
     let rentAutoButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Аренда \nавтомобиля", for: .normal)
+        button.setTitle(Constants.Cells.rentAuto, for: .normal)
         return button
     }()
     let chatButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Чат", for: .normal)
+        button.setTitle(Constants.Cells.chat, for: .normal)
         return button
     }()
     // MARK: -  Public Properties

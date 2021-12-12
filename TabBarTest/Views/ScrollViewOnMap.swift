@@ -21,29 +21,29 @@ class ScrollViewOnMap: UIScrollView {
     private var isSelected: Bool = false
     
     // поиск
-    private let searchFilter = FilterView(withName: "Поиск", andImage: UIImage(named: "search")!)
+    private let searchFilter = FilterView(withName: Constants.Views.search, andImage: UIImage(named: "search")!)
     
     // Достопримечательность -
     // Замки, Музеи, Памятики,
-    private let sightFilter = FilterView(withName: "Достопримечательность", andImage: UIImage(named: "museum")!)
+    private let sightFilter = FilterView(withName: Constants.Views.sights, andImage: UIImage(named: "museum")!)
     
     // Транспорт -
     // ЖДВокзал, АвтоВокзал, Аэропорт
-    private let transportFilter = FilterView(withName: "Транспорт", andImage: UIImage(named: "transport")!)
+    private let transportFilter = FilterView(withName: Constants.Views.transport, andImage: UIImage(named: "transport")!)
     
     // Досуг -
     // Смотровая прощадка, Аквапарки, Выставки, Пещеры, Зоопарки, Заповедники, Водопады
-    private let leisureFilter = FilterView(withName: "Досуг", andImage: UIImage(named: "sight")!)
+    private let leisureFilter = FilterView(withName: Constants.Views.relax, andImage: UIImage(named: "sight")!)
     
     // Рынок
-    private let marketFilter = FilterView(withName: "Рынок", andImage: UIImage(named: "market")!)
+    private let marketFilter = FilterView(withName: Constants.Views.market, andImage: UIImage(named: "market")!)
     
     // Пляж
-    private let beachFilter = FilterView(withName: "Пляж", andImage: UIImage(named: "beach")!)
+    private let beachFilter = FilterView(withName: Constants.Views.beach, andImage: UIImage(named: "beach")!)
     
     // Богослужение -
     // Храм, Мечеть, Церковь, Синагога, Собор
-    private let worshipFilter = FilterView(withName: "Богослужение", andImage: UIImage(named: "temple")!)
+    private let worshipFilter = FilterView(withName: Constants.Views.worship, andImage: UIImage(named: "temple")!)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

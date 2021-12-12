@@ -8,6 +8,7 @@ import UIKit
 
 protocol CountryDescriptionTableViewCellDelegate: AnyObject {
     func showMoreText()
+    func heightCell(height: CGFloat)
 }
 
 class CountryDescriptionTableViewCell: UITableViewCell {
@@ -18,7 +19,7 @@ class CountryDescriptionTableViewCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .center
         label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
-        label.text = "Описание города"
+        label.text = Constants.Cells.cityDescription
         return label
     }()
     private let mainTextLabel: UILabel = {
@@ -27,7 +28,7 @@ class CountryDescriptionTableViewCell: UITableViewCell {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa"
+        label.text = ""
         return label
     }()
     private let gradientView = GradientView()
@@ -36,7 +37,7 @@ class CountryDescriptionTableViewCell: UITableViewCell {
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.init(name: "GillSans-semibold", size: 16)
-        button.setTitle("Читать дальше", for: .normal)
+        button.setTitle(Constants.Cells.readMore, for: .normal)
         return button
     }()
     // MARK: -  Public Properties
@@ -128,5 +129,11 @@ class CountryDescriptionTableViewCell: UITableViewCell {
     
     @objc func moreButtonTapped() {
         delegate?.showMoreText()
+    }
+    
+    func configureCell(description: String) {
+        mainTextLabel.text = description
+        let screenInsetsLeftRight:CGFloat = 32
+        delegate?.heightCell(height: description.height(widthScreen: UIScreen.main.bounds.width - screenInsetsLeftRight,font: UIFont(name: "GillSans", size: 14)!))
     }
 }

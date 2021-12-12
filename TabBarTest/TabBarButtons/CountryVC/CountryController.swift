@@ -16,7 +16,8 @@ class CountryController: UIViewController {
     // MARK: - Public Properties
     
     var interactor: CountryBussinessLogic?
-    var router: (NSObjectProtocol & CountryRoutingLogic)?
+    var router: (NSObjectProtocol & CountryRoutingLogic & CountryDataPassing)?
+    var currentCity: String = ""
     
     // MARK: - Private Properties
     
@@ -34,6 +35,8 @@ class CountryController: UIViewController {
         var sunset: String
     }
     private var currentWeather: DescriptionWeather!
+    private var descriptionHeightCell: CGFloat = 0
+    
     
     // MARK: - UI Properties
     
@@ -74,6 +77,7 @@ class CountryController: UIViewController {
         interactor.presenter = presenter
         presenter.CountryController = viewController
         router.viewController = viewController
+        router.dataStore = interactor
     }
     
     private func setupUI() {
@@ -158,15 +162,16 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier, for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            selectedDescriptionCell ?
-            cell.moreButtons.setTitle("Скрыть", for: .normal) :
-            cell.moreButtons.setTitle("Читать далее", for: .normal)
+            cell.configureCell(description: "lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa")
+            selectedDescriptionCell
+                ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
+                : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
             return cell
             
             // Интересные места по близости
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
-            cell.titleCell = "Места в окресностях"
+            cell.titleCell = Constants.Cells.sightNearMe
             cell.sizeCell = CGSize(width: 230, height: 170)
             return cell
             
@@ -180,7 +185,7 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
         case 4:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.titleCell = "Обязательно к просмотру"
+            cell.titleCell = Constants.Cells.mustSeeSights
             cell.sizeCell = CGSize(width: 200, height: 140)
             return cell
             
@@ -198,7 +203,7 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
             // Выбор редакции
         case 7:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
-            cell.titleCell = "Выбор редакции"
+            cell.titleCell = Constants.Cells.chooseOfRedaction
             cell.sizeCell = CGSize(width: 230, height: 170)
             return cell
             
@@ -206,7 +211,7 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
         case 8:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.titleCell = "Музеи"
+            cell.titleCell = Constants.Cells.museums
             cell.sizeCell = CGSize(width: 200, height: 140)
             return cell
             
@@ -214,7 +219,7 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
         case 9:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.titleCell = "Парки"
+            cell.titleCell = Constants.Cells.parks
             cell.sizeCell = CGSize(width: 200, height: 140)
             return cell
             
@@ -236,7 +241,7 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
         case 0: return UIScreen.main.bounds.width - (UIScreen.main.bounds.width / 3) + 32
             
             // ячейка с описанием города
-        case 1: return selectedDescriptionCell ? 380 : 200
+        case 1: return selectedDescriptionCell ? descriptionHeightCell : 180
             
             // ячейка с другими городами текущей страны где есть метки
             // Выбор редакции
@@ -271,6 +276,12 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - CountryDescriptionTableViewCellDelegate
 
 extension CountryController: CountryDescriptionTableViewCellDelegate {
+    // определяем высоту для расширенной ячейки описание города
+    func heightCell(height: CGFloat) {
+        let standartHeightDataOfCell: CGFloat = 90
+        descriptionHeightCell = height + standartHeightDataOfCell
+    }
+    
     // показываем больше текста в описании (расширяем таблицу)
     func showMoreText() {
         selectedDescriptionCell = !selectedDescriptionCell
@@ -283,6 +294,8 @@ extension CountryController: CountryDescriptionTableViewCellDelegate {
 extension CountryController: CountryCitiesTableViewCellDelegate {
     // Открываем другой город из текущего
     func showSelectedCityDescription(_ name: String) {
+        currentCity = name
+        router?.dataStore?.currentCity = name
         router?.routeToCityVC()
     }
     
@@ -311,7 +324,6 @@ extension CountryController: SightTableViewCellDelegate {
 extension CountryController: ButtonsCollectionViewCellDelegate {
     // открываем экран списка любимых/избранных достопримечательностей
     func favouritesHandler() {
-        print("favourites")
         router?.routeToFavouritesVC()
     }
     

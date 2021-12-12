@@ -205,7 +205,7 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
         cellTitle = title
         priceLabel.text = "\(price) Р."
         ratingLabel.text = "\(rating)"
-        reviewsLabel.text = "Отзывов: \(reviews)"
+        reviewsLabel.text = "\(Constants.Cells.reviews): \(reviews)"
     }
     
 }

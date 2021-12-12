@@ -18,7 +18,7 @@ class SightTableViewCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
-        label.text = "Обязательно к просмотру"
+        label.text = Constants.Cells.mustSeeSights
         return label
     }()
     let collectionView = UICollectionView(frame: CGRect.zero,

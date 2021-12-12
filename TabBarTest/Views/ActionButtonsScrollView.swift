@@ -28,11 +28,11 @@ class ActionButtonsScrollView: UIScrollView {
     
     // MARK: - UI properties
     
-    let routeButton = FilterView(withName: "Маршрут")
-    let addToFavouritesButton = FilterView(withName: "В избранное")
-    let callButton = FilterView(withName: "Позвонить")
-    let shareButton = FilterView(withName: "Поделиться")
-    let siteButton = FilterView(withName: "Сайт")
+    let routeButton = FilterView(withName: Constants.Views.travelGuide)
+    let addToFavouritesButton = FilterView(withName: Constants.Views.toFeatures)
+    let callButton = FilterView(withName: Constants.Views.makeCall)
+    let shareButton = FilterView(withName: Constants.Views.share)
+    let siteButton = FilterView(withName: Constants.Views.toSite)
     
     // MARK: - Life cycle
     

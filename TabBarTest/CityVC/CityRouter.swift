@@ -11,10 +11,11 @@ protocol CityRoutingLogic {
 }
 
 protocol CityDataPassing {
+    var dataStore: CityDataStore? { get }
 }
 
 class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
-    
-  weak var viewController: CityController?
+    var dataStore: CityDataStore?
+    weak var viewController: CityController?
     
 }

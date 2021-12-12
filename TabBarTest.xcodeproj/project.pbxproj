@@ -19,6 +19,7 @@
 		53403D6B275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D6A275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift */; };
 		53403D6D2763C402004087F7 /* FavouritesTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D6C2763C402004087F7 /* FavouritesTopView.swift */; };
 		53403D6F2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D6E2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift */; };
+		53403D712763E0FC004087F7 /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D702763E0FC004087F7 /* Extension+String.swift */; };
 		5345E2892718B2D400FCD554 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */; };
 		5345E28C2718B30000FCD554 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5345E28B2718B30000FCD554 /* SettingsController.swift */; };
 		538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF82F27341AAB00D02ECA /* StackViewStars.swift */; };
@@ -103,6 +104,7 @@
 		53403D6A275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTableViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		53403D6C2763C402004087F7 /* FavouritesTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTopView.swift; sourceTree = "<group>"; };
 		53403D6E2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTopCollectionViewCell.swift; sourceTree = "<group>"; };
+		53403D702763E0FC004087F7 /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 		5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		5345E28B2718B30000FCD554 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		538AF82F27341AAB00D02ECA /* StackViewStars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewStars.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 				C254487F27070829000B9439 /* Extention+UIView.swift */,
 				C259AA1027204DA600B03921 /* Extension+UserDefault.swift */,
 				C259AA1D2721710800B03921 /* Extension+UIImageView.swift */,
+				53403D702763E0FC004087F7 /* Extension+String.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -630,6 +633,7 @@
 				53403D6B275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift in Sources */,
 				53EF4D20270E2A6E008CB1B2 /* MapWorker.swift in Sources */,
 				C2CA35D626FDCDAF00795EF6 /* SceneDelegate.swift in Sources */,
+				53403D712763E0FC004087F7 /* Extension+String.swift in Sources */,
 				C2588FA1270307280014CCDC /* ScrollViewOnMap.swift in Sources */,
 				C2588FA3270307980014CCDC /* Extension+UILabel.swift in Sources */,
 				C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */,

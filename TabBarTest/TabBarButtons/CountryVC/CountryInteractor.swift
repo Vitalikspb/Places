@@ -23,6 +23,7 @@ class CountryInteractor: CountryBussinessLogic, CountryDataStore {
     var presenter: CountryPresentationLogic?
 
     func showCity() {
+//        adasd
 //        Здесь создаем модель для текукщего города - заполняем модель все информацией -
 //        погодой,
 //        главными картинкам,

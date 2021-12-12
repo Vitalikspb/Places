@@ -14,7 +14,7 @@ class TicketCollectionViewCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
-        label.text = "Билеты на экскурсии"
+        label.text = Constants.Cells.ticketToSights
         return label
     }()
     let collectionView = UICollectionView(frame: CGRect.zero,

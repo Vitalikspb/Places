@@ -74,7 +74,7 @@ class FavouritesController: UIViewController {
     }
     
     private func setupUI() {
-        title = "Сохраненное"
+        title = Constants.Favourites.titleScreen
         // скролл картинок
         
         // таблица

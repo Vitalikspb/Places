@@ -23,7 +23,7 @@ class TopSearchView: UIView {
     
     let inputTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Поиск"
+        textField.placeholder = Constants.Views.search
         textField.borderStyle = .none
         textField.clearButtonMode = .whileEditing
         textField.isUserInteractionEnabled = true
@@ -72,7 +72,6 @@ class TopSearchView: UIView {
 extension TopSearchView: UITextFieldDelegate {
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        print("should clear")
         topSearchDelegate?.clearTextField()
         return true
     }
