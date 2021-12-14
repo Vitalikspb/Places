@@ -21,6 +21,7 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
     var presenter: CityPresentationLogic?
     
     func showCity() {
+        // тут запрашиваем у базы всю инфу по текущему городу
         presenter?.presentCity(response: currentCity)
     }
 }

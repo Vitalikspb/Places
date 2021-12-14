@@ -76,7 +76,8 @@ class MainFloatingView: UIView {
     func floatingPanelIsHidden() {
         tableView.isUserInteractionEnabled = false
         tableView.isScrollEnabled = false
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.4) { [weak self] in
+            guard let self = self else { return }
             self.closeButton.alpha = 0
         }
         stateFloatingFullView = false
@@ -86,7 +87,8 @@ class MainFloatingView: UIView {
     func floatingPanelFullScreen() {
         tableView.isUserInteractionEnabled = true
         tableView.isScrollEnabled = true
-        UIView.animate(withDuration: 0.52) {
+        UIView.animate(withDuration: 0.52) { [weak self] in
+            guard let self = self else { return }
             self.closeButton.alpha = 1
         }
         stateFloatingFullView = true
@@ -96,7 +98,8 @@ class MainFloatingView: UIView {
     func floatingPanelPatriallyScreen() {
         tableView.isUserInteractionEnabled = true
         tableView.isScrollEnabled = false
-        UIView.animate(withDuration: 0.4) {
+        UIView.animate(withDuration: 0.4) { [weak self] in
+            guard let self = self else { return }
             self.closeButton.alpha = 0
         }
         stateFloatingFullView = false
@@ -165,7 +168,8 @@ class MainFloatingView: UIView {
     }
     
     private func reloadData() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             self.tableView.reloadData()
         }
     }

@@ -125,7 +125,8 @@ class FloatingView: UIView {
     }
     
     func animateInputView(targetPosition: CGFloat, state: ExpansionState) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 self.frame.origin.y = targetPosition
                 if state == .FullyExpanded {

@@ -200,7 +200,7 @@ class ScrollViewOnMap: UIScrollView {
     }
     
     func setupAnimate(filterView: FilterView) {
-        [self.searchFilter, sightFilter, transportFilter,
+        [searchFilter, sightFilter, transportFilter,
          leisureFilter, marketFilter, beachFilter, worshipFilter].forEach { currentView in
             
             if currentView === filterView {
@@ -217,7 +217,8 @@ class ScrollViewOnMap: UIScrollView {
                 }
                 self.updateConstraints()
             } else {
-                UIView.animate(withDuration: 0.55) {
+                UIView.animate(withDuration: 0.55) { [weak self] in
+                    guard let self = self else { return }
                     currentView.alpha = !self.isSelected ? 0 : 1
                 }
                 currentView.backgroundColor = .white
@@ -228,7 +229,7 @@ class ScrollViewOnMap: UIScrollView {
     }
     
     @objc func handleSightFilter() {
-        onMapdelegate?.chooseSightFilter(completion: {
+        onMapdelegate?.chooseSightFilter(completion: { 
             return self.isSelected ? false : true
         })
         setupAnimate(filterView: sightFilter)

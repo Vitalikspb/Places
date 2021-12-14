@@ -95,13 +95,15 @@ class WeatherView: UIView {
     
     @objc func repeatWeatherAnimate() {
         if timerRepeat {
-            UIView.animate(withDuration: 1.8, animations: {
+            UIView.animate(withDuration: 1.8, animations: { [weak self] in
+                guard let self = self else { return }
                 self.weatherImage.frame.origin.x = -40
                 self.temperatureLabel.frame.origin.x = 12
             })
             timerRepeat = false
         } else {
-            UIView.animate(withDuration: 1.8, animations: {
+            UIView.animate(withDuration: 1.8, animations: { [weak self] in
+                guard let self = self else { return }
                 self.weatherImage.frame.origin.x = 9
                 self.temperatureLabel.frame.origin.x = 55
             })

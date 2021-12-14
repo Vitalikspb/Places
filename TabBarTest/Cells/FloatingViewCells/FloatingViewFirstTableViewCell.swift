@@ -121,7 +121,8 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     func configCell(title: String, type: String, showButtons: Bool) {
         titleLabel.text = title
         typeLocationLabel.text = type
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard let self = self else { return }
             self.buttonsView.alpha = showButtons ? 0 : 1
             self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         }

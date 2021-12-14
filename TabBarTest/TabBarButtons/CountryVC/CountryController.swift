@@ -137,7 +137,8 @@ extension CountryController: CountryDisplayLogic {
     // пока что не работает т.к нету модели
     func displayAllCities(viewModel: CountryViewModel.AllCitiesInCurrentCountry.ViewModel) {
         self.viewModel = viewModel.cities
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             self.tableView.reloadData()
         }
     }

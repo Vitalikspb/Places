@@ -283,7 +283,8 @@ class MapController: UIViewController {
     // Сокрытие поисковой строки и отображение строки с фильтрами
     private func hideTopSearchView() {
         if topSearchView.alpha == 1 {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 UIView.animate(withDuration: 0.25) {
                     self.topSearchView.alpha = 0
                     self.topSearchView.inputTextField.resignFirstResponder()
@@ -308,7 +309,8 @@ class MapController: UIViewController {
     
     // Показ строки с фильтрами
     func showScrollAndWeatherView() {
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard let self = self else { return }
             self.topScrollView.alpha = 1
         }
         showWeatherView()
@@ -335,14 +337,16 @@ class MapController: UIViewController {
     
     // при отсутствии интернета скрываем погоду
     private func hideWeatherView() {
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard let self = self else { return }
             self.weatherView.alpha = 0
         }
     }
     
     private func showWeatherView() {
         if !selectedFilter {
-            UIView.animate(withDuration: 0.5) {
+            UIView.animate(withDuration: 0.5) { [weak self] in
+                guard let self = self else { return }
                 self.weatherView.alpha = 1
             }
         }
@@ -451,7 +455,8 @@ extension MapController: ScrollViewOnMapDelegate {
     
     // Отображение поисковой строки и сокрытие строки с фильтрами
     func showSearchView() {
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
+            guard let self = self else { return }
             self.weatherView.alpha = 0
             self.topScrollView.alpha = 0
         } completion: { success in
@@ -510,7 +515,8 @@ extension MapController: CLLocationManagerDelegate {
             WeatherAPI().loadCurrentWeather(latitude: myCurrentLatitude,
                                             longitude: myCurrentLongitude) { temp, image in
                 
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
                     UIView.animate(withDuration: 0.5) {
                         self.weatherView.alpha = 1
                         self.weatherView.weatherViewTemperature = temp
@@ -547,14 +553,16 @@ extension MapController: CLLocationManagerDelegate {
 extension MapController: FloatingViewDelegate {
     func floatingPanelFullScreen() {
         buttonsView.alpha = 1
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard let self = self else { return }
             self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         }
     }
     
     func floatingPanelPatriallyScreen() {
         let originYButtonsView = buttonsView.frame.origin.y
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            guard let self = self else { return }
             self.buttonsView.frame.origin.y = UIScreen.main.bounds.height
             self.buttonsView.alpha = 0
         } completion: { success in
@@ -568,7 +576,8 @@ extension MapController: FloatingViewDelegate {
     }
     
     func floatingPanelIsHidden() {
-        UIView.animate(withDuration: 0.35) {
+        UIView.animate(withDuration: 0.35) { [weak self] in
+            guard let self = self else { return }
             self.tabBarController?.tabBar.alpha = 1
             self.buttonsView.alpha = 0
             UIView.animate(withDuration: 0.5) {
@@ -636,7 +645,8 @@ extension MapController: MapDisplayLogic {
         viewModel.markers.forEach {
             $0.map = mapView
         }
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             UIView.animate(withDuration: 0.35) {
                 self.tabBarController?.tabBar.alpha = 0
                 self.mapView.settings.myLocationButton = false

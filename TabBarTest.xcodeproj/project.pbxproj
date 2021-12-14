@@ -76,6 +76,11 @@
 		C259AA1B27215B7500B03921 /* CountryCitiesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259AA1A27215B7500B03921 /* CountryCitiesTableViewCell.swift */; };
 		C259AA1E2721710800B03921 /* Extension+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259AA1D2721710800B03921 /* Extension+UIImageView.swift */; };
 		C259AA20272180FB00B03921 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C259AA1F272180FB00B03921 /* GradientView.swift */; };
+		C26BFE412768A00200ABD119 /* WorldInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE402768A00200ABD119 /* WorldInteractor.swift */; };
+		C26BFE432768A00E00ABD119 /* WorldWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE422768A00E00ABD119 /* WorldWorker.swift */; };
+		C26BFE452768A01B00ABD119 /* WorldPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE442768A01B00ABD119 /* WorldPresenter.swift */; };
+		C26BFE472768A02300ABD119 /* WorldModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE462768A02300ABD119 /* WorldModels.swift */; };
+		C26BFE492768A02F00ABD119 /* WorldRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE482768A02F00ABD119 /* WorldRouter.swift */; };
 		C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6D2F1271D824300DD9DF4 /* MainFloatingView.swift */; };
 		C2C985EB2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C985EA2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift */; };
 		C2C985EF2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C985EE2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift */; };
@@ -161,6 +166,11 @@
 		C259AA1A27215B7500B03921 /* CountryCitiesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCitiesTableViewCell.swift; sourceTree = "<group>"; };
 		C259AA1D2721710800B03921 /* Extension+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIImageView.swift"; sourceTree = "<group>"; };
 		C259AA1F272180FB00B03921 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		C26BFE402768A00200ABD119 /* WorldInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldInteractor.swift; sourceTree = "<group>"; };
+		C26BFE422768A00E00ABD119 /* WorldWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldWorker.swift; sourceTree = "<group>"; };
+		C26BFE442768A01B00ABD119 /* WorldPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPresenter.swift; sourceTree = "<group>"; };
+		C26BFE462768A02300ABD119 /* WorldModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldModels.swift; sourceTree = "<group>"; };
+		C26BFE482768A02F00ABD119 /* WorldRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRouter.swift; sourceTree = "<group>"; };
 		C2A6D2F1271D824300DD9DF4 /* MainFloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFloatingView.swift; sourceTree = "<group>"; };
 		C2C985EA2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCellsPhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		C2C985EE2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCellsCitiesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -232,8 +242,7 @@
 		53403D69275FF1BD004087F7 /* FavouritesCell */ = {
 			isa = PBXGroup;
 			children = (
-				53403D67275FF1B4004087F7 /* FavouritesTableViewCell.swift */,
-				53403D6A275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift */,
+				C26BFE3E276890F900ABD119 /* TableView */,
 				53403D6E2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift */,
 			);
 			path = FavouritesCell;
@@ -382,6 +391,11 @@
 			children = (
 				C2588F9B2702F6750014CCDC /* WorldStoryboard.storyboard */,
 				C2588F9D2702F6960014CCDC /* WorldController.swift */,
+				C26BFE402768A00200ABD119 /* WorldInteractor.swift */,
+				C26BFE422768A00E00ABD119 /* WorldWorker.swift */,
+				C26BFE442768A01B00ABD119 /* WorldPresenter.swift */,
+				C26BFE462768A02300ABD119 /* WorldModels.swift */,
+				C26BFE482768A02F00ABD119 /* WorldRouter.swift */,
 			);
 			path = WorldVC;
 			sourceTree = "<group>";
@@ -431,6 +445,23 @@
 				53403D69275FF1BD004087F7 /* FavouritesCell */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		C26BFE3E276890F900ABD119 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				53403D67275FF1B4004087F7 /* FavouritesTableViewCell.swift */,
+				C26BFE3F2768910B00ABD119 /* Cell */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		C26BFE3F2768910B00ABD119 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				53403D6A275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		C2CA35C726FDCDAF00795EF6 = {
@@ -622,6 +653,7 @@
 				C254488027070829000B9439 /* Extention+UIView.swift in Sources */,
 				538AF835273424DC00D02ECA /* FloatingCollectionViewCell.swift in Sources */,
 				53F0D7AA275E988E0087A9BB /* FavouritesWorker.swift in Sources */,
+				C26BFE472768A02300ABD119 /* WorldModels.swift in Sources */,
 				C254487C2706F52E000B9439 /* Extension+CLLocation.swift in Sources */,
 				533D8DD8270394890006B0EE /* WeatherView.swift in Sources */,
 				C2C985EF2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift in Sources */,
@@ -629,6 +661,7 @@
 				53EF4D22270E2A7B008CB1B2 /* MapModels.swift in Sources */,
 				53D9BB1C272B39CE00CC14A8 /* ActionButtonsScrollView.swift in Sources */,
 				C254487E27070753000B9439 /* FloatingView.swift in Sources */,
+				C26BFE492768A02F00ABD119 /* WorldRouter.swift in Sources */,
 				53F3E30227404119004B278E /* CurrentCityButtonView.swift in Sources */,
 				53403D6B275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift in Sources */,
 				53EF4D20270E2A6E008CB1B2 /* MapWorker.swift in Sources */,
@@ -636,6 +669,7 @@
 				53403D712763E0FC004087F7 /* Extension+String.swift in Sources */,
 				C2588FA1270307280014CCDC /* ScrollViewOnMap.swift in Sources */,
 				C2588FA3270307980014CCDC /* Extension+UILabel.swift in Sources */,
+				C26BFE412768A00200ABD119 /* WorldInteractor.swift in Sources */,
 				C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */,
 				53403D68275FF1B5004087F7 /* FavouritesTableViewCell.swift in Sources */,
 				53F0D7AE275E98990087A9BB /* FavouritesModels.swift in Sources */,
@@ -651,7 +685,9 @@
 				5397795627442BC4006644D3 /* AvailableCities.swift in Sources */,
 				53F3E2F2273FD7D7004B278E /* CityController.swift in Sources */,
 				5323BA18274D509700F6BA5E /* TicketCollectionViewCell.swift in Sources */,
+				C26BFE432768A00E00ABD119 /* WorldWorker.swift in Sources */,
 				5323BA16274D3DBE00F6BA5E /* SightCollectionViewCell.swift in Sources */,
+				C26BFE452768A01B00ABD119 /* WorldPresenter.swift in Sources */,
 				53F3E2FE273FDD4D004B278E /* CountryRouter.swift in Sources */,
 				C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */,
 				C259AA1127204DA600B03921 /* Extension+UserDefault.swift in Sources */,
@@ -820,7 +856,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GR6GC7JSQ5;
+				DEVELOPMENT_TEAM = 8C44H3653W;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -841,7 +877,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GR6GC7JSQ5;
+				DEVELOPMENT_TEAM = 8C44H3653W;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

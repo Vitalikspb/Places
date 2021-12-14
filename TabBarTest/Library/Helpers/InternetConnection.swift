@@ -25,7 +25,8 @@ class Connectivity {
     }
     
     func startNetworkReachabilityObserver() {
-        reachabilityManager?.startListening(onUpdatePerforming: { (status) in
+        reachabilityManager?.startListening(onUpdatePerforming: { [weak self] (status) in
+            guard let self = self else { return }
             switch status {
             case .notReachable:
                 print("[startNetworkReachabilityObserver] The network is not reachable")

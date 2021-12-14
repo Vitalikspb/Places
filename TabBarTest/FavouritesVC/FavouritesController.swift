@@ -33,6 +33,7 @@ class FavouritesController: UIViewController {
     // массив всех достопримечательностей
     var data: FavouritesViewModel.FavouritesSight.ViewModel!
     
+    private let userDefault = UserDefaults.standard
     
     // MARK: - Life cycle
     
@@ -90,7 +91,7 @@ class FavouritesController: UIViewController {
         tableView.tableHeaderView = topTableView
         
         view.addSubview(tableView)
-        
+        topTableView.delegate = self
         tableView.anchor(top: view.topAnchor,
                          left: view.leftAnchor,
                          bottom: view.bottomAnchor,
@@ -101,6 +102,8 @@ class FavouritesController: UIViewController {
                          paddingRight: 0,
                          width: 0, height: 0)
     }
+    
+//    private func
 }
 
 // MARK: - CountryDisplayLogic
@@ -141,6 +144,7 @@ extension FavouritesController: UITableViewDelegate, UITableViewDataSource {
         cell.configCell(data: FavouritesTableViewCell.CellModel(
                             city: data.county[indexPath.section].city[indexPath.row].city,
                             descriptionCity: allCitiesSight))
+        cell.delegate = self
         return cell
     }
     
@@ -163,3 +167,13 @@ extension FavouritesController: UITableViewDelegate, UITableViewDataSource {
         return view
     }
 }
+
+extension FavouritesController: FavouritesTableViewCellDelegate {
+    func showSelectedSightOnMap(_ name: String) {
+        print("FavouritesTableViewCellDelegate tap on cell sight with name: \(name)")
+        userDefault.set(true, forKey: UserDefaults.showSelectedSight)
+        userDefault.set(name, forKey: UserDefaults.showSelectedSightName)
+        tabBarController?.selectedIndex = 0
+    }
+}
+

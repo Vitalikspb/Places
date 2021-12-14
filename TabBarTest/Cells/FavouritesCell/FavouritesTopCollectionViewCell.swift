@@ -51,6 +51,7 @@ class FavouritesTopCollectionViewCell: UICollectionViewCell {
     // MARK: - Public properties
     
     static let identifier = "FavouritesTopCollectionViewCell"
+    private var putToFavouritesList: Bool = true
     
     // MARK: - LifeCycle
     
@@ -87,11 +88,22 @@ class FavouritesTopCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 8
         self.standartShadow(view: self)
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFavouriteHandle))
+        favouriteFlag.isUserInteractionEnabled = true
+        favouriteFlag.addGestureRecognizer(tap)
+        favouriteFlag.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+        
         contentView.addSubview(sightImageView)
         contentView.addSubview(gradientView)
         contentView.addSubview(sightNameLabel)
         contentView.addSubview(sightCityLabel)
         contentView.addSubview(favouriteFlag)
+    }
+    
+    @objc private func tapFavouriteHandle() {
+        print("Put to favourite list")
+        putToFavouritesList = !putToFavouritesList
+        favouriteFlag.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
     }
     
     private func setupConstraints() {

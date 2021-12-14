@@ -52,6 +52,8 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "FavouritesTopCollectionViewCell"
     
+    private var putToFavouritesList: Bool = true
+    
     // MARK: - LifeCycle
     
     override init(frame: CGRect) {
@@ -83,6 +85,11 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell {
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientView.layer.mask = maskLayer
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFavouriteHandle))
+        favouriteFlag.isUserInteractionEnabled = true
+        favouriteFlag.addGestureRecognizer(tap)
+        favouriteFlag.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+        
         self.backgroundColor = .red
         self.layer.cornerRadius = 8
         self.standartShadow(view: self)
@@ -92,6 +99,12 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(sightNameLabel)
         contentView.addSubview(sightTypeLabel)
         contentView.addSubview(favouriteFlag)
+    }
+    
+    @objc private func tapFavouriteHandle() {
+        print("Put to favourite list")
+        putToFavouritesList = !putToFavouritesList
+        favouriteFlag.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
     }
     
     private func setupConstraints() {

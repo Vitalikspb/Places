@@ -11,6 +11,7 @@ class FavouritesTopView: UIView {
     // MARK: - Public properties
     
     var dataModel = [IFavouritesAllCitiesModel]()
+    weak var delegate: FavouritesTableViewCellDelegate?
     
     // MARK: - UI properties
     
@@ -52,7 +53,6 @@ class FavouritesTopView: UIView {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.setCollectionViewLayout(layout, animated: true)
-        collectionView.isPagingEnabled = true
         
         addSubview(collectionView)
         
@@ -90,6 +90,10 @@ extension FavouritesTopView: UICollectionViewDelegate, UICollectionViewDataSourc
                           image: dataModel[indexPath.row].image,
                           favouritesFlag: dataModel[indexPath.row].sightFavouritesFlag)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.showSelectedSightOnMap(dataModel[indexPath.row].nameOfSight)
     }
     
     // Отступы от краев экрана на крайних ячейках

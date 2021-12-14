@@ -103,16 +103,10 @@ class SightCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(imageFavourite)
     }
     
-    private func updateFavouriteButton() {
-        DispatchQueue.main.async {
-//            self.
-        }
-    }
-    
     @objc private func tapFavouriteHandle() {
         print("Put to favourite list")
         putToFavouritesList = !putToFavouritesList
-        imageFavourite.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+        imageFavourite.image = putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
     }
     
     private func setupConstraints() {
