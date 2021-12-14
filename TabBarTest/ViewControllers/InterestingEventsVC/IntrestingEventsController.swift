@@ -1,0 +1,138 @@
+//
+//  FavouritesController.swift
+//  TabBarTest
+//
+//  Created by VITALIY SVIRIDOV on 13.11.2021.
+//
+
+import UIKit
+
+protocol IntrestingEventsDisplayLogic: AnyObject {
+    func displayIntrestingEvents(viewModel: IntrestingEventsModels.IntrestingEvents.ViewModel)
+}
+
+class IntrestingEventsController: UIViewController {
+    
+    // MARK: - UI Properties
+    private let tableView = UITableView(frame: CGRect.zero, style: .plain)
+    
+    // MARK: - Public Properties
+    
+    var interactor: IntrestingEventsBussinessLogic?
+    var router: (NSObjectProtocol & IntrestingEventsRoutingLogic & IntrestingEventsDataPassing)?
+    
+    // массив всех достопримечательностей
+    var data: IntrestingEventsModels.IntrestingEvents.ViewModel!
+    
+    private let userDefault = UserDefaults.standard
+    
+    // MARK: - Life cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = false
+        view.backgroundColor = .white
+        setupClean()
+        setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        interactor?.showIntrestingEvents()
+    }
+    
+    // MARK: - Helper Functions
+    
+    // Настройка архитектуры Clean Swift
+    private func setupClean() {
+        let viewController = self
+        let interactor = IntrestingEventsInteractor()
+        let presenter = IntrestingEventsPresenter()
+        let router = IntrestingEventsRouter()
+        viewController.interactor = interactor
+        viewController.router = router
+        interactor.presenter = presenter
+        presenter.IntrestingEventsController = viewController
+        router.viewController = viewController
+//        router.dataStore = interactor
+    }
+    
+    private func setupUserDefault() {
+        
+    }
+    
+    private func setupUI() {
+        title = Constants.Favourites.titleScreen
+        
+        // таблица
+        tableView.register(InterestingEventsTableViewCell.self,
+                           forCellReuseIdentifier: InterestingEventsTableViewCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        
+        view.addSubview(tableView)
+        tableView.anchor(top: view.topAnchor,
+                         left: view.leftAnchor,
+                         bottom: view.bottomAnchor,
+                         right: view.rightAnchor,
+                         paddingTop: 0,
+                         paddingLeft: 0,
+                         paddingBottom: 0,
+                         paddingRight: 0,
+                         width: 0, height: 0)
+    }
+    
+//    private func
+}
+
+// MARK: - CountryDisplayLogic
+extension IntrestingEventsController: IntrestingEventsDisplayLogic {
+    func displayIntrestingEvents(viewModel: IntrestingEventsModels.IntrestingEvents.ViewModel) {
+        data = viewModel
+        tableView.reloadData()
+    }
+}
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
+extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return data?.events.count ?? 0
+    }
+    
+    // заполнение каждой ячейки
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: InterestingEventsTableViewCell.identifier, for: indexPath) as? InterestingEventsTableViewCell else { return UITableViewCell() }
+        
+        var imageArray = [UIImage]()
+        // 5 всех достопримечательностей
+        // массив для заполенния достопримечательносей в каждой ячейке
+        for (_, valueSight) in data.events[indexPath.row].image.enumerated() {
+            imageArray.append(valueSight)
+        }
+        cell.configureCell(title: data.events[indexPath.row].name,
+                           description: data.events[indexPath.row].descriptions,
+                           date: data.events[indexPath.row].date,
+                           image: imageArray)
+        return cell
+    }
+    
+    // высота каждой ячейки
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // ячейка с кнопками
+        return 220
+    }
+    
+    // белое заполнение пустой части таблицы
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }
+}
+

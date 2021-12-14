@@ -81,6 +81,14 @@
 		C26BFE452768A01B00ABD119 /* WorldPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE442768A01B00ABD119 /* WorldPresenter.swift */; };
 		C26BFE472768A02300ABD119 /* WorldModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE462768A02300ABD119 /* WorldModels.swift */; };
 		C26BFE492768A02F00ABD119 /* WorldRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE482768A02F00ABD119 /* WorldRouter.swift */; };
+		C26BFE4F2768D7A800ABD119 /* IntrestingEventsController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C26BFE4E2768D7A800ABD119 /* IntrestingEventsController.storyboard */; };
+		C26BFE512768D7BB00ABD119 /* IntrestingEventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE502768D7BB00ABD119 /* IntrestingEventsController.swift */; };
+		C26BFE532768D7CC00ABD119 /* IntrestingEventsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE522768D7CC00ABD119 /* IntrestingEventsInteractor.swift */; };
+		C26BFE552768D7D400ABD119 /* IntrestingEventsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE542768D7D400ABD119 /* IntrestingEventsRouter.swift */; };
+		C26BFE572768D7D900ABD119 /* IntrestingEventsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE562768D7D900ABD119 /* IntrestingEventsWorker.swift */; };
+		C26BFE592768D7E200ABD119 /* IntrestingEventsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE582768D7E200ABD119 /* IntrestingEventsPresenter.swift */; };
+		C26BFE5B2768D7EA00ABD119 /* IntrestingEventsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE5A2768D7EA00ABD119 /* IntrestingEventsModels.swift */; };
+		C26BFE5E2768DC6000ABD119 /* InterestingEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE5D2768DC6000ABD119 /* InterestingEventsTableViewCell.swift */; };
 		C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A6D2F1271D824300DD9DF4 /* MainFloatingView.swift */; };
 		C2C985EB2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C985EA2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift */; };
 		C2C985EF2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C985EE2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift */; };
@@ -171,6 +179,14 @@
 		C26BFE442768A01B00ABD119 /* WorldPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldPresenter.swift; sourceTree = "<group>"; };
 		C26BFE462768A02300ABD119 /* WorldModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldModels.swift; sourceTree = "<group>"; };
 		C26BFE482768A02F00ABD119 /* WorldRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldRouter.swift; sourceTree = "<group>"; };
+		C26BFE4E2768D7A800ABD119 /* IntrestingEventsController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IntrestingEventsController.storyboard; sourceTree = "<group>"; };
+		C26BFE502768D7BB00ABD119 /* IntrestingEventsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrestingEventsController.swift; sourceTree = "<group>"; };
+		C26BFE522768D7CC00ABD119 /* IntrestingEventsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrestingEventsInteractor.swift; sourceTree = "<group>"; };
+		C26BFE542768D7D400ABD119 /* IntrestingEventsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrestingEventsRouter.swift; sourceTree = "<group>"; };
+		C26BFE562768D7D900ABD119 /* IntrestingEventsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrestingEventsWorker.swift; sourceTree = "<group>"; };
+		C26BFE582768D7E200ABD119 /* IntrestingEventsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrestingEventsPresenter.swift; sourceTree = "<group>"; };
+		C26BFE5A2768D7EA00ABD119 /* IntrestingEventsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntrestingEventsModels.swift; sourceTree = "<group>"; };
+		C26BFE5D2768DC6000ABD119 /* InterestingEventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestingEventsTableViewCell.swift; sourceTree = "<group>"; };
 		C2A6D2F1271D824300DD9DF4 /* MainFloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFloatingView.swift; sourceTree = "<group>"; };
 		C2C985EA2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCellsPhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		C2C985EE2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCellsCitiesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -392,10 +408,10 @@
 				C2588F9B2702F6750014CCDC /* WorldStoryboard.storyboard */,
 				C2588F9D2702F6960014CCDC /* WorldController.swift */,
 				C26BFE402768A00200ABD119 /* WorldInteractor.swift */,
+				C26BFE482768A02F00ABD119 /* WorldRouter.swift */,
 				C26BFE422768A00E00ABD119 /* WorldWorker.swift */,
 				C26BFE442768A01B00ABD119 /* WorldPresenter.swift */,
 				C26BFE462768A02300ABD119 /* WorldModels.swift */,
-				C26BFE482768A02F00ABD119 /* WorldRouter.swift */,
 			);
 			path = WorldVC;
 			sourceTree = "<group>";
@@ -435,6 +451,7 @@
 		C259AA1C27215B7A00B03921 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C26BFE5C2768DC2500ABD119 /* InterestingEvents */,
 				C2C985EA2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift */,
 				C2C985EE2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift */,
 				5323BA15274D3DBE00F6BA5E /* SightCollectionViewCell.swift */,
@@ -464,6 +481,38 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		C26BFE4C2768D67D00ABD119 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C26BFE4D2768D68900ABD119 /* InterestingEventsVC */,
+				53F0D7A0275E980B0087A9BB /* FavouritesVC */,
+				53F3E2F0273FD760004B278E /* CityVC */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C26BFE4D2768D68900ABD119 /* InterestingEventsVC */ = {
+			isa = PBXGroup;
+			children = (
+				C26BFE4E2768D7A800ABD119 /* IntrestingEventsController.storyboard */,
+				C26BFE502768D7BB00ABD119 /* IntrestingEventsController.swift */,
+				C26BFE522768D7CC00ABD119 /* IntrestingEventsInteractor.swift */,
+				C26BFE542768D7D400ABD119 /* IntrestingEventsRouter.swift */,
+				C26BFE562768D7D900ABD119 /* IntrestingEventsWorker.swift */,
+				C26BFE582768D7E200ABD119 /* IntrestingEventsPresenter.swift */,
+				C26BFE5A2768D7EA00ABD119 /* IntrestingEventsModels.swift */,
+			);
+			path = InterestingEventsVC;
+			sourceTree = "<group>";
+		};
+		C26BFE5C2768DC2500ABD119 /* InterestingEvents */ = {
+			isa = PBXGroup;
+			children = (
+				C26BFE5D2768DC6000ABD119 /* InterestingEventsTableViewCell.swift */,
+			);
+			path = InterestingEvents;
+			sourceTree = "<group>";
+		};
 		C2CA35C726FDCDAF00795EF6 = {
 			isa = PBXGroup;
 			children = (
@@ -488,8 +537,7 @@
 				533D8DD62703930A0006B0EE /* Delegate */,
 				5396A491270637690044D759 /* Library */,
 				53F0D79F275E97FC0087A9BB /* TabBarButtons */,
-				53F0D7A0275E980B0087A9BB /* FavouritesVC */,
-				53F3E2F0273FD760004B278E /* CityVC */,
+				C26BFE4C2768D67D00ABD119 /* ViewControllers */,
 				C25448782706ED21000B9439 /* Models */,
 				C259AA1C27215B7A00B03921 /* Cells */,
 				C2588FA92703439C0014CCDC /* Views */,
@@ -573,6 +621,7 @@
 			files = (
 				C2CA35E026FDCDB100795EF6 /* LaunchScreen.storyboard in Resources */,
 				C2CA35F426FE1DB700795EF6 /* MapStoryboard.storyboard in Resources */,
+				C26BFE4F2768D7A800ABD119 /* IntrestingEventsController.storyboard in Resources */,
 				53F3E2FC273FD830004B278E /* CityController.storyboard in Resources */,
 				C2CA35DD26FDCDB100795EF6 /* Assets.xcassets in Resources */,
 				C2588F9C2702F6750014CCDC /* WorldStoryboard.storyboard in Resources */,
@@ -643,6 +692,7 @@
 				C2588FAB270364180014CCDC /* TopSearchView.swift in Sources */,
 				C259AA1327214A4F00B03921 /* CountryInteractor.swift in Sources */,
 				5397795827443107006644D3 /* Extension+UIViewController.swift in Sources */,
+				C26BFE592768D7E200ABD119 /* IntrestingEventsPresenter.swift in Sources */,
 				C2CA35EA26FDF98E00795EF6 /* TabBarWithCorners.swift in Sources */,
 				53F0D7A4275E98560087A9BB /* FavouritesController.swift in Sources */,
 				C259AA1B27215B7500B03921 /* CountryCitiesTableViewCell.swift in Sources */,
@@ -663,6 +713,7 @@
 				C254487E27070753000B9439 /* FloatingView.swift in Sources */,
 				C26BFE492768A02F00ABD119 /* WorldRouter.swift in Sources */,
 				53F3E30227404119004B278E /* CurrentCityButtonView.swift in Sources */,
+				C26BFE5E2768DC6000ABD119 /* InterestingEventsTableViewCell.swift in Sources */,
 				53403D6B275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift in Sources */,
 				53EF4D20270E2A6E008CB1B2 /* MapWorker.swift in Sources */,
 				C2CA35D626FDCDAF00795EF6 /* SceneDelegate.swift in Sources */,
@@ -677,8 +728,11 @@
 				5323BA14274D3BA500F6BA5E /* SightTableViewCell.swift in Sources */,
 				5397795B27443866006644D3 /* CountryDescriptionTableViewCell.swift in Sources */,
 				5397795D27443872006644D3 /* CountryPhotosTableViewCell.swift in Sources */,
+				C26BFE572768D7D900ABD119 /* IntrestingEventsWorker.swift in Sources */,
+				C26BFE512768D7BB00ABD119 /* IntrestingEventsController.swift in Sources */,
 				C2588FA527030D6E0014CCDC /* FilterView.swift in Sources */,
 				53F0D7AC275E98940087A9BB /* FavouritesPresenter.swift in Sources */,
+				C26BFE552768D7D400ABD119 /* IntrestingEventsRouter.swift in Sources */,
 				53F0D7A6275E987F0087A9BB /* FavouritesInteractor.swift in Sources */,
 				53F3E2F4273FD7E3004B278E /* CityInteractor.swift in Sources */,
 				C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */,
@@ -705,6 +759,8 @@
 				538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */,
 				538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */,
 				53F3E2FA273FD803004B278E /* CityModels.swift in Sources */,
+				C26BFE5B2768D7EA00ABD119 /* IntrestingEventsModels.swift in Sources */,
+				C26BFE532768D7CC00ABD119 /* IntrestingEventsInteractor.swift in Sources */,
 				C2CA35F226FE1DA800795EF6 /* MapController.swift in Sources */,
 				53F3E2F6273FD7F2004B278E /* CityWorker.swift in Sources */,
 				53EF561F270F720E00CD3786 /* WeatherAPI.swift in Sources */,

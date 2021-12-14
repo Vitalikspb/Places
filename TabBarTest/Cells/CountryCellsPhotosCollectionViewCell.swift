@@ -38,4 +38,8 @@ class CountryCellsPhotosCollectionViewCell: UICollectionViewCell {
         image.addConstraintsToFillView(view: contentView)
     }
     
+    func configureCell(data: UIImage) {
+        image.image = data
+    }
+    
 }
