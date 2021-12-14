@@ -14,7 +14,11 @@ protocol IntrestingEventsDisplayLogic: AnyObject {
 class IntrestingEventsController: UIViewController {
     
     // MARK: - UI Properties
+    
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
+    // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
+    private var selectedDescriptionCell: Bool = false
+    private var heightOfSelectedCell: CGFloat = 260
     
     // MARK: - Public Properties
     
@@ -62,7 +66,7 @@ class IntrestingEventsController: UIViewController {
     }
     
     private func setupUI() {
-        title = Constants.Favourites.titleScreen
+        title = "События в городе"
         
         // таблица
         tableView.register(InterestingEventsTableViewCell.self,
@@ -87,7 +91,6 @@ class IntrestingEventsController: UIViewController {
                          width: 0, height: 0)
     }
     
-//    private func
 }
 
 // MARK: - CountryDisplayLogic
@@ -119,13 +122,17 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
                            description: data.events[indexPath.row].descriptions,
                            date: data.events[indexPath.row].date,
                            image: imageArray)
+        selectedDescriptionCell
+            ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
+            : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
+        cell.delegate = self
         return cell
     }
     
     // высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // ячейка с кнопками
-        return 220
+        return selectedDescriptionCell ? heightOfSelectedCell : 260
     }
     
     // белое заполнение пустой части таблицы
@@ -136,3 +143,21 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
     }
 }
 
+// MARK: - InterestingEventsTableViewCellDelegate
+
+extension IntrestingEventsController: InterestingEventsTableViewCellDelegate {
+    func showMoreText() {
+        selectedDescriptionCell = !selectedDescriptionCell
+        tableView.reloadData()
+    }
+    
+    func heightCell(height: CGFloat) {
+        heightOfSelectedCell = height + 260
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.tableView.reloadData()
+        }
+    }
+    
+    
+}

@@ -22,6 +22,8 @@
 		53403D712763E0FC004087F7 /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D702763E0FC004087F7 /* Extension+String.swift */; };
 		5345E2892718B2D400FCD554 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */; };
 		5345E28C2718B30000FCD554 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5345E28B2718B30000FCD554 /* SettingsController.swift */; };
+		534E20E62769193000442F29 /* WorldStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534E20E52769193000442F29 /* WorldStoryboard.storyboard */; };
+		534E20E92769390E00442F29 /* InterestingEventsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534E20E82769390E00442F29 /* InterestingEventsCollectionViewCell.swift */; };
 		538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF82F27341AAB00D02ECA /* StackViewStars.swift */; };
 		538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF831273422C500D02ECA /* FloatingViewSecondTableViewCell.swift */; };
 		538AF835273424DC00D02ECA /* FloatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */; };
@@ -61,7 +63,6 @@
 		C254487E27070753000B9439 /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487D27070753000B9439 /* FloatingView.swift */; };
 		C254488027070829000B9439 /* Extention+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487F27070829000B9439 /* Extention+UIView.swift */; };
 		C2588F982702F5D40014CCDC /* CountryStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2588F972702F5D40014CCDC /* CountryStoryboard.storyboard */; };
-		C2588F9C2702F6750014CCDC /* WorldStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2588F9B2702F6750014CCDC /* WorldStoryboard.storyboard */; };
 		C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2588F9D2702F6960014CCDC /* WorldController.swift */; };
 		C2588FA1270307280014CCDC /* ScrollViewOnMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2588FA0270307280014CCDC /* ScrollViewOnMap.swift */; };
 		C2588FA3270307980014CCDC /* Extension+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2588FA2270307980014CCDC /* Extension+UILabel.swift */; };
@@ -120,6 +121,8 @@
 		53403D702763E0FC004087F7 /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 		5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		5345E28B2718B30000FCD554 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		534E20E52769193000442F29 /* WorldStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldStoryboard.storyboard; sourceTree = "<group>"; };
+		534E20E82769390E00442F29 /* InterestingEventsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestingEventsCollectionViewCell.swift; sourceTree = "<group>"; };
 		538AF82F27341AAB00D02ECA /* StackViewStars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewStars.swift; sourceTree = "<group>"; };
 		538AF831273422C500D02ECA /* FloatingViewSecondTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewSecondTableViewCell.swift; sourceTree = "<group>"; };
 		538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -159,7 +162,6 @@
 		C254487D27070753000B9439 /* FloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingView.swift; sourceTree = "<group>"; };
 		C254487F27070829000B9439 /* Extention+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extention+UIView.swift"; sourceTree = "<group>"; };
 		C2588F972702F5D40014CCDC /* CountryStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CountryStoryboard.storyboard; sourceTree = "<group>"; };
-		C2588F9B2702F6750014CCDC /* WorldStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldStoryboard.storyboard; sourceTree = "<group>"; };
 		C2588F9D2702F6960014CCDC /* WorldController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldController.swift; sourceTree = "<group>"; };
 		C2588FA0270307280014CCDC /* ScrollViewOnMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewOnMap.swift; sourceTree = "<group>"; };
 		C2588FA2270307980014CCDC /* Extension+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UILabel.swift"; sourceTree = "<group>"; };
@@ -271,6 +273,14 @@
 				5345E28B2718B30000FCD554 /* SettingsController.swift */,
 			);
 			path = SettingsVC;
+			sourceTree = "<group>";
+		};
+		534E20E7276938D500442F29 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				534E20E82769390E00442F29 /* InterestingEventsCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		538AF833273422E000D02ECA /* FloatingViewCells */ = {
@@ -405,7 +415,7 @@
 		C2588F9F2702F69A0014CCDC /* WorldVC */ = {
 			isa = PBXGroup;
 			children = (
-				C2588F9B2702F6750014CCDC /* WorldStoryboard.storyboard */,
+				534E20E52769193000442F29 /* WorldStoryboard.storyboard */,
 				C2588F9D2702F6960014CCDC /* WorldController.swift */,
 				C26BFE402768A00200ABD119 /* WorldInteractor.swift */,
 				C26BFE482768A02F00ABD119 /* WorldRouter.swift */,
@@ -509,6 +519,7 @@
 			isa = PBXGroup;
 			children = (
 				C26BFE5D2768DC6000ABD119 /* InterestingEventsTableViewCell.swift */,
+				534E20E7276938D500442F29 /* Cell */,
 			);
 			path = InterestingEvents;
 			sourceTree = "<group>";
@@ -624,8 +635,8 @@
 				C26BFE4F2768D7A800ABD119 /* IntrestingEventsController.storyboard in Resources */,
 				53F3E2FC273FD830004B278E /* CityController.storyboard in Resources */,
 				C2CA35DD26FDCDB100795EF6 /* Assets.xcassets in Resources */,
-				C2588F9C2702F6750014CCDC /* WorldStoryboard.storyboard in Resources */,
 				53F0D7A2275E98340087A9BB /* FavouritesController.storyboard in Resources */,
+				534E20E62769193000442F29 /* WorldStoryboard.storyboard in Resources */,
 				C2CA35DB26FDCDAF00795EF6 /* Main.storyboard in Resources */,
 				C2588F982702F5D40014CCDC /* CountryStoryboard.storyboard in Resources */,
 				5345E2892718B2D400FCD554 /* SettingsStoryboard.storyboard in Resources */,
@@ -757,6 +768,7 @@
 				C259AA1527214A5B00B03921 /* CountryPresenter.swift in Sources */,
 				53F3E3042740469E004B278E /* MapRouter.swift in Sources */,
 				538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */,
+				534E20E92769390E00442F29 /* InterestingEventsCollectionViewCell.swift in Sources */,
 				538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */,
 				53F3E2FA273FD803004B278E /* CityModels.swift in Sources */,
 				C26BFE5B2768D7EA00ABD119 /* IntrestingEventsModels.swift in Sources */,
@@ -912,7 +924,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8C44H3653W;
+				DEVELOPMENT_TEAM = GR6GC7JSQ5;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -933,7 +945,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8C44H3653W;
+				DEVELOPMENT_TEAM = GR6GC7JSQ5;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

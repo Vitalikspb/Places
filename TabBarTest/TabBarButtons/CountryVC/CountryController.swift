@@ -103,10 +103,6 @@ class CountryController: UIViewController {
         tableView.register(WeatherCollectionViewCell.self,
                            forCellReuseIdentifier: WeatherCollectionViewCell.identifier)
 
-        // +1
-        //        tableView.register(MuseumsTableViewCell.self,
-        //                                forCellReuseIdentifier: MuseumsTableViewCell.identifier)
-
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
@@ -329,7 +325,7 @@ extension CountryController: ButtonsCollectionViewCellDelegate {
     }
     
     func eventsHandler() {
-        
+        router?.routeToInterestingEventsVC()
     }
     
     func ticketHandler() {

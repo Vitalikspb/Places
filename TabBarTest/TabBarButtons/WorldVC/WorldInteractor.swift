@@ -18,7 +18,7 @@ protocol WorldDataStore {
 class WorldInteractor: WorldBussinessLogic, WorldDataStore {
     
     var currentCity: String = ""
-    var city: [String] = ["Текущий", "Москва", "Санкт-Петербург", "Сочи", "Омск", "Краснодар", "Саратов"]
+    var city: [String] = ["Россия", "США", "Франция", "Италия", "Германия", "Испания"]
     
     var presenter: WorldPresentationLogic?
     

@@ -15,8 +15,6 @@ protocol MapDisplayLogic: AnyObject {
     func displayFetchedMarkersFromSearchView(withString: String)
 }
 
-
-
 class MapController: UIViewController {
     
     enum MapViewZoom {

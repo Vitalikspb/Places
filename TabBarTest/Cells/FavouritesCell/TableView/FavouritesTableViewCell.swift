@@ -46,7 +46,8 @@ class FavouritesTableViewCell: UITableViewCell {
     static let identifier = "FavouritesTableViewCell"
     
     // MARK: - Private properties
-    private var citiesAvailable = ["Москва","Санкт-Петербург","Сочи","Краснодар","Гатчина","Cupertino"]
+    // MARK: - TODO Изменить citiesAvailable на нормальные данные из модели
+    private var citiesAvailable = ["Эрмитаж","Русский музей","Мавзолей","Красная площадь"]
     
     // MARK: - Lifecycle
     

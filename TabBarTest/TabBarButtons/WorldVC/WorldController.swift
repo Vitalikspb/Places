@@ -80,14 +80,14 @@ class WorldController: UIViewController {
     
     private func setupUI() {
         // скролл картинок
-        tableView.register(CountryPhotosTableViewCell.self,
-                           forCellReuseIdentifier: CountryPhotosTableViewCell.identifier)
+        tableView.register(InterestingEventsTableViewCell.self,
+                           forCellReuseIdentifier: InterestingEventsTableViewCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .white
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         
@@ -124,20 +124,24 @@ extension WorldController: WorldDisplayLogic {
 
 extension WorldController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return viewModel.country.count
     }
     
     // MARK: - заполнение каждой ячейки
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier, for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: InterestingEventsTableViewCell.identifier, for: indexPath) as? InterestingEventsTableViewCell else { return UITableViewCell() }
+        cell.configureCell(title: viewModel.country[indexPath.row].name,
+                           description: "Descriptions",
+                           date: "00-00-0000",
+                           image: [viewModel.country[indexPath.row].image,viewModel.country[indexPath.row].image,])
         return cell
     }
     
     // MARK: - высота каждой ячейки
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 230
+        return 240
     }
     
     // MARK: - белое заполнение пустой части таблицы

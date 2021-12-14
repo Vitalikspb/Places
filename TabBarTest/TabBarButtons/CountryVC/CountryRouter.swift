@@ -10,6 +10,7 @@ import UIKit
 protocol CountryRoutingLogic {
     func routeToCityVC()
     func routeToFavouritesVC()
+    func routeToInterestingEventsVC()
 }
 
 protocol CountryDataPassing {
@@ -27,6 +28,11 @@ class CountryRouter: NSObject, CountryRoutingLogic, CountryDataPassing {
         let destinationVC: FavouritesController = FavouritesController.loadFromStoryboard()
         navigateToFavourites(source: viewController!, destination: destinationVC)
     }
+    // На экран интересные события
+    func routeToInterestingEventsVC() {
+        let destinationVC: IntrestingEventsController = IntrestingEventsController.loadFromStoryboard()
+        navigateToIntrestingEvents(source: viewController!, destination: destinationVC)
+    }
     // на экран выбранного города
     func routeToCityVC() {
         let destinationVC: CityController = CityController.loadFromStoryboard()
@@ -38,6 +44,10 @@ class CountryRouter: NSObject, CountryRoutingLogic, CountryDataPassing {
     // MARK: - Навигация
     // открыть избранное
     func navigateToFavourites(source: CountryController, destination: FavouritesController) {
+        source.navigationController?.pushViewController(destination, animated: true)
+    }
+    // Открыть интересные события
+    func navigateToIntrestingEvents(source: CountryController, destination: IntrestingEventsController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
     

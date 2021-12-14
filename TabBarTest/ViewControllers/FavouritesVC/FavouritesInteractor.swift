@@ -71,7 +71,7 @@ class FavouritesInteractor: FavouritesBussinessLogic {
         let citySpbSight = [
             FavouritesViewModel.FavouritesSight.CitySight(
                 sightType: "Музей",
-                sightName: "Эрммитаж",
+                sightName: "Эрмитаж",
                 sightImage: UIImage(named: "hub3")!,
                 sightFavouritesFlag: true),
             FavouritesViewModel.FavouritesSight.CitySight(

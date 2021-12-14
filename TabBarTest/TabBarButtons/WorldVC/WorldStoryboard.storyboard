@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Bpd-VU-9cC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nYB-QF-1Ij">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -11,48 +11,49 @@
     </dependencies>
     <scenes>
         <!--World Controller-->
-        <scene sceneID="y8S-AO-hvH">
+        <scene sceneID="neF-RT-3uR">
             <objects>
-                <viewController storyboardIdentifier="WorldController" id="p18-ON-aRf" customClass="WorldController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Thd-b2-bqZ">
+                <viewController storyboardIdentifier="WorldController" id="0D0-hV-Gf5" customClass="WorldController" customModule="TabBarTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NnC-uX-dVe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="Flh-CS-qd1"/>
-                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <viewLayoutGuide key="safeArea" id="Ybp-gF-le3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xG0-id-QJX"/>
+                    <navigationItem key="navigationItem" id="aNk-L5-zS6"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IcI-EP-fC2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rFR-IG-CO7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1781.1594202898552" y="61.607142857142854"/>
+            <point key="canvasLocation" x="900.00000000000011" y="88.392857142857139"/>
         </scene>
-        <!--Мир-->
-        <scene sceneID="u5m-Mp-lV5">
+        <!--Страны-->
+        <scene sceneID="39s-A6-mWK">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Bpd-VU-9cC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="2" title="Мир" id="t6K-cG-Jhl">
-                        <imageReference key="image" image="network" catalog="system" symbolScale="default"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nYB-QF-1Ij" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" tag="3" title="Страны" id="6PX-Zy-LQ0">
+                        <imageReference key="image" image="gear" catalog="system" symbolScale="default"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f87-8O-8Aw">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7Hw-J0-gsX">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="p18-ON-aRf" kind="relationship" relationship="rootViewController" id="dax-U3-jhe"/>
+                        <segue destination="0D0-hV-Gf5" kind="relationship" relationship="rootViewController" id="G4l-6v-BHl"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nB2-Oe-diT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bCk-cR-ZtR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="871.01449275362324" y="61.607142857142854"/>
+            <point key="canvasLocation" x="-10.144927536231885" y="88.392857142857139"/>
         </scene>
     </scenes>
     <resources>
-        <image name="network" catalog="system" width="128" height="121"/>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <image name="gear" catalog="system" width="128" height="119"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>
