@@ -134,7 +134,7 @@ extension WorldController: UITableViewDelegate, UITableViewDataSource {
         cell.configureCell(title: viewModel.country[indexPath.row].name,
                            description: "Descriptions",
                            date: "00-00-0000",
-                           image: [viewModel.country[indexPath.row].image,viewModel.country[indexPath.row].image,])
+                           image: [viewModel.country[indexPath.row].image,viewModel.country[indexPath.row].image,], indexPathRow: indexPath.row)
         return cell
     }
     

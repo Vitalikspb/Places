@@ -7,7 +7,7 @@
 import UIKit
 
 protocol InterestingEventsTableViewCellDelegate: AnyObject {
-    func showMoreText()
+    func showMoreText(withRow row: Int)
     func heightCell(height: CGFloat)
 }
 
@@ -50,7 +50,7 @@ class InterestingEventsTableViewCell: UITableViewCell {
     }()
     
     // MARK: - Public properties
-    
+    var selfIndexPathRow: Int = 0
     weak var delegate: InterestingEventsTableViewCellDelegate?
     static let identifier = "InterestingEventsTableViewCell"
     private let layout = UICollectionViewFlowLayout()
@@ -87,6 +87,9 @@ class InterestingEventsTableViewCell: UITableViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
+        // Для обрезания длинного текста описания события
+        self.clipsToBounds = true
+        
         gradientView.colors = [UIColor(white: 1, alpha: 0), UIColor.white]
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
@@ -131,19 +134,19 @@ class InterestingEventsTableViewCell: UITableViewCell {
                           paddingRight: 16,
                           width: 0,
                           height: 0)
-        collectionView.anchor(top: titleLabel.bottomAnchor,
+        collectionView.anchor(top: contentView.topAnchor,
                               left: contentView.leftAnchor,
                               bottom: nil,
                               right: contentView.rightAnchor,
-                              paddingTop: 8,
+                              paddingTop: 35,
                               paddingLeft: 0,
                               paddingBottom: 0,
                               paddingRight: 0,
                               width: 0,
-                              height: 0)
+                              height: 170)
         mainTextLabel.anchor(top: collectionView.bottomAnchor,
                              left: contentView.leftAnchor,
-                             bottom: contentView.bottomAnchor,
+                             bottom: nil,
                              right: contentView.rightAnchor,
                              paddingTop: 10,
                              paddingLeft: 16,
@@ -171,15 +174,15 @@ class InterestingEventsTableViewCell: UITableViewCell {
     }
     
     @objc func moreButtonTapped() {
-        delegate?.showMoreText()
+        delegate?.showMoreText(withRow: selfIndexPathRow)
     }
     
-    func configureCell(title: String, description: String, date: String, image: [UIImage]) {
+    func configureCell(title: String, description: String, date: String, image: [UIImage], indexPathRow: Int) {
         mainTextLabel.text = description
         titleLabel.text = title
         dateLabel.text = date
         modelImage = image
-        
+        selfIndexPathRow = indexPathRow
         let screenInsetsLeftRight: CGFloat = 32
         delegate?.heightCell(height: description.height(widthScreen: UIScreen.main.bounds.width - screenInsetsLeftRight,font: UIFont(name: "GillSans", size: 14)!))
     }

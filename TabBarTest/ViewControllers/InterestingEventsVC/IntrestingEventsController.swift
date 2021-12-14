@@ -58,7 +58,7 @@ class IntrestingEventsController: UIViewController {
         interactor.presenter = presenter
         presenter.IntrestingEventsController = viewController
         router.viewController = viewController
-//        router.dataStore = interactor
+        //        router.dataStore = interactor
     }
     
     private func setupUserDefault() {
@@ -121,7 +121,7 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
         cell.configureCell(title: data.events[indexPath.row].name,
                            description: data.events[indexPath.row].descriptions,
                            date: data.events[indexPath.row].date,
-                           image: imageArray)
+                           image: imageArray, indexPathRow: indexPath.row)
         selectedDescriptionCell
             ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
             : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
@@ -146,18 +146,16 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
 // MARK: - InterestingEventsTableViewCellDelegate
 
 extension IntrestingEventsController: InterestingEventsTableViewCellDelegate {
-    func showMoreText() {
+    func showMoreText(withRow row: Int) {
         selectedDescriptionCell = !selectedDescriptionCell
-        tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            print(row)
+            self.tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .automatic)
+        }
     }
     
     func heightCell(height: CGFloat) {
         heightOfSelectedCell = height + 260
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.tableView.reloadData()
-        }
     }
-    
-    
 }
