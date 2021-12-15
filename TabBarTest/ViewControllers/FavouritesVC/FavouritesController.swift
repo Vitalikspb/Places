@@ -65,7 +65,7 @@ class FavouritesController: UIViewController {
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
-        presenter.FavouritesController = viewController
+        presenter.favouritesController = viewController
         router.viewController = viewController
         //        router.dataStore = interactor
     }

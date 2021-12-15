@@ -12,11 +12,11 @@ protocol FavouritesPresentationLogic {
 }
 
 final class FavouritesPresenter: FavouritesPresentationLogic {
-    weak var FavouritesController: FavouritesController?
+    weak var favouritesController: FavouritesController?
     
     func presentFavourites(response: FavouritesViewModel.FavouritesSight.ViewModel) {
         let viewModel = response
-        FavouritesController?.displayFavourites(viewModel: viewModel)
+        favouritesController?.displayFavourites(viewModel: viewModel)
     }
     
 }

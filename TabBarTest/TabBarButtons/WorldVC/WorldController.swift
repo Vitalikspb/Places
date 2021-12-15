@@ -13,6 +13,11 @@ protocol WorldDisplayLogic: AnyObject {
 
 class WorldController: UIViewController {
     
+    // MARK: - UI Properties
+    
+    private lazy var searchBar:UISearchBar = UISearchBar()
+    private let tableView = UITableView(frame: CGRect.zero, style: .plain)
+    
     // MARK: - Public Properties
     
     var interactor: WorldBussinessLogic?
@@ -36,11 +41,9 @@ class WorldController: UIViewController {
     }
     private var currentWeather: DescriptionWeather!
     private var descriptionHeightCell: CGFloat = 0
-    
-    
-    // MARK: - UI Properties
-    
-    private let tableView = UITableView(frame: CGRect.zero, style: .plain)
+    private var isSearch : Bool = false
+    private var filteredTableData = WorldViewModels.AllCountriesInTheWorld.ViewModel(
+        country: [WorldViewModels.WorldModel(name: "", image: UIImage(named: "hub3")!)])
     
     // MARK: - Lifecycle
     
@@ -49,15 +52,22 @@ class WorldController: UIViewController {
         view.backgroundColor = .white
         setupClean()
         setupUI()
-        viewModel =  WorldViewModels.AllCountriesInTheWorld.ViewModel(country: [WorldViewModels.WorldModel(name: "", image: UIImage(named: "hub3")!)])
-        navigationController?.navigationBar.isHidden = false
+        viewModel =  WorldViewModels.AllCountriesInTheWorld.ViewModel(
+            country: [WorldViewModels.WorldModel(name: "", image: UIImage(named: "hub3")!)])
+        
+//        MARK: - TODO посмотреть что будет лучше
+//        navigationController?.navigationBar.isHidden = false
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        MARK: - TODO удалить лишний
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = "Страны"
         viewModel.country.removeAll()
-        // в интеракторе создаем большую модель для заполнения всех ячеек таблицы, заголовка, погоды и всей остальой инфорамции
+        filteredTableData.country.removeAll()
+        // в интеракторе создаем большую модель для заполнения всех ячеек таблицы,
+        // заголовка, погоды и всей остальой инфорамции
         interactor?.showCity()
     }
     
@@ -80,8 +90,17 @@ class WorldController: UIViewController {
     
     private func setupUI() {
         // скролл картинок
-        tableView.register(InterestingEventsTableViewCell.self,
-                           forCellReuseIdentifier: InterestingEventsTableViewCell.identifier)
+        
+        searchBar.searchBarStyle = UISearchBar.Style.default
+        searchBar.placeholder = " Search..."
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        searchBar.backgroundImage = UIImage()
+        searchBar.delegate = self
+        //            navigationItem.titleView = searchBar
+        tableView.tableHeaderView = searchBar
+        tableView.register(CountryToSelectTableViewCell.self,
+                           forCellReuseIdentifier: CountryToSelectTableViewCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -113,6 +132,7 @@ extension WorldController: WorldDisplayLogic {
     // пока что не работает т.к нету модели
     func displayAllCities(viewModel: WorldViewModels.AllCountriesInTheWorld.ViewModel) {
         self.viewModel = viewModel
+        filteredTableData = viewModel
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()
@@ -124,33 +144,82 @@ extension WorldController: WorldDisplayLogic {
 
 extension WorldController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.country.count
+        return filteredTableData.country.count
     }
     
-    // MARK: - заполнение каждой ячейки
-    
+    // Заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: InterestingEventsTableViewCell.identifier, for: indexPath) as? InterestingEventsTableViewCell else { return UITableViewCell() }
-        cell.configureCell(title: viewModel.country[indexPath.row].name,
-                           description: "Descriptions",
-                           date: "00-00-0000",
-                           image: [viewModel.country[indexPath.row].image,viewModel.country[indexPath.row].image,], indexPathRow: indexPath.row)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryToSelectTableViewCell.identifier, for: indexPath) as? CountryToSelectTableViewCell else { return UITableViewCell() }
+        cell.configureCell(title: filteredTableData.country[indexPath.row].name,
+                           image: filteredTableData.country[indexPath.row].image)
         return cell
     }
     
-    // MARK: - высота каждой ячейки
-    
+    // Высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 240
     }
     
-    // MARK: - белое заполнение пустой части таблицы
-    
+    // Белое заполнение пустой части таблицы
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView()
         view.backgroundColor = .white
         return view
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let countryName = filteredTableData.country[indexPath.row].name
+        print(countryName)
+        currentCity = countryName
+//        router?.dataStore?.currentCity = countryName
+//        router?.routeToCityVC()
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension WorldController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        isSearch = true
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        isSearch = false
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        isSearch = false
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        isSearch = false
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let countSymbol = searchText.count
+        if countSymbol != 0 {
+            filteredTableData.country.removeAll()
+            viewModel.country.forEach {
+                let searchText = String($0.name.prefix(countSymbol)).capitalized
+                if searchText == searchText.capitalized {
+                    filteredTableData.country.append($0)
+                }
+            }
+        } else {
+            filteredTableData = viewModel
+        }
+        
+        if filteredTableData.country.isEmpty {
+            filteredTableData = viewModel
+        }
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.tableView.reloadData()
+        }
+    }
+    
 }
 
 

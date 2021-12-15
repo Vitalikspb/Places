@@ -17,7 +17,9 @@ protocol WorldDataStore {
 
 class WorldInteractor: WorldBussinessLogic, WorldDataStore {
     
+    // выбранная страна куда будет осуществляться переход
     var currentCity: String = ""
+    // список всех стран которые есть в приложении
     var city: [String] = ["Россия", "США", "Франция", "Италия", "Германия", "Испания"]
     
     var presenter: WorldPresentationLogic?

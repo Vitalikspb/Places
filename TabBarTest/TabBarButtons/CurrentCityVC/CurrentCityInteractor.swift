@@ -1,26 +1,26 @@
 //
-//  CountryInteractor.swift
+//  CurrentCityInteractor.swift
 //  TabBarTest
 //
 //
 
 import UIKit
 
-protocol CountryBussinessLogic {
+protocol CurrentCityBussinessLogic {
     func showCity()
 }
 
-protocol CountryDataStore {
+protocol CurrentCityDataStore {
     var city: [String] { get set }
     var currentCity: String { get set }
 }
 
-class CountryInteractor: CountryBussinessLogic, CountryDataStore {
+class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
     
     var currentCity: String = ""
     var city: [String] = ["Текущий", "Москва", "Санкт-Петербург", "Сочи", "Омск", "Краснодар", "Саратов"]
     
-    var presenter: CountryPresentationLogic?
+    var presenter: CurrentCityPresentationLogic?
 
     func showCity() {
 //        Здесь создаем модель для текукщего города - заполняем модель все информацией -
@@ -31,11 +31,11 @@ class CountryInteractor: CountryBussinessLogic, CountryDataStore {
 //        местами
 //        другими городами
 //        по этой модели будем заполнять экран а не как сейчас
-        var viewModel = CountryViewModel.AllCitiesInCurrentCountry.ViewModel(cities: [CountryViewModel.CityModel(name: "", image: UIImage())])
+        var viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(cities: [CurrentCityViewModel.CityModel(name: "", image: UIImage())])
         viewModel.cities.removeFirst()
         city.forEach {
             guard let image = UIImage(named: "hub3") else { return }
-            viewModel.cities.append(CountryViewModel.CityModel(name: $0, image: image))
+            viewModel.cities.append(CurrentCityViewModel.CityModel(name: $0, image: image))
         }
         presenter?.presentAllMarkers(response: viewModel)
     }

@@ -120,7 +120,7 @@ extension TicketCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TicketsCellsCitiesCollectionViewCell.identifier, for: indexPath) as? TicketsCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
-        cell.conigureCell(title: ticketsArray[indexPath.row].name,
+        cell.configureCell(title: ticketsArray[indexPath.row].name,
                           image: ticketsArray[indexPath.row].image,
                           price: ticketsArray[indexPath.row].price,
                           rating: ticketsArray[indexPath.row].rating,

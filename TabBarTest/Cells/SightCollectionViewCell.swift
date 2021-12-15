@@ -104,7 +104,6 @@ class SightCollectionViewCell: UICollectionViewCell {
     }
     
     @objc private func tapFavouriteHandle() {
-        print("Put to favourite list")
         putToFavouritesList = !putToFavouritesList
         imageFavourite.image = putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
     }

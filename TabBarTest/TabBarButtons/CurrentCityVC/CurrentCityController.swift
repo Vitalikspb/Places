@@ -1,5 +1,5 @@
 //
-//  WeatherView.swift
+//  CurrentCityController.swift
 //  TabBarTest
 //
 //  Created by VITALIY SVIRIDOV on 28.09.2021.
@@ -7,22 +7,22 @@
 
 import UIKit
 
-protocol CountryDisplayLogic: AnyObject {
-    func displayAllCities(viewModel: CountryViewModel.AllCitiesInCurrentCountry.ViewModel)
+protocol CurrentCityDisplayLogic: AnyObject {
+    func displayAllCities(viewModel: CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel)
 }
 
-class CountryController: UIViewController {
+class CurrentCityController: UIViewController {
     
     // MARK: - Public Properties
     
-    var interactor: CountryBussinessLogic?
-    var router: (NSObjectProtocol & CountryRoutingLogic & CountryDataPassing)?
+    var interactor: CurrentCityBussinessLogic?
+    var router: (NSObjectProtocol & CurrentCityRoutingLogic & CurrentCityDataPassing)?
     var currentCity: String = ""
     
     // MARK: - Private Properties
     
     private var titleName: String = ""
-    var viewModel: [CountryViewModel.CityModel]!
+    var viewModel: [CurrentCityViewModel.CityModel]!
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
@@ -49,7 +49,7 @@ class CountryController: UIViewController {
         view.backgroundColor = .white
         setupClean()
         setupUI()
-        viewModel =  [CountryViewModel.CityModel(name: "",
+        viewModel =  [CurrentCityViewModel.CityModel(name: "",
                                                  image: UIImage(named: "hub3")!)]
         navigationController?.navigationBar.isHidden = false
     }
@@ -69,13 +69,13 @@ class CountryController: UIViewController {
     // Настройка архитектуры Clean Swift
     private func setupClean() {
         let viewController = self
-        let interactor = CountryInteractor()
-        let presenter = CountryPresenter()
-        let router = CountryRouter()
+        let interactor = CurrentCityInteractor()
+        let presenter = CurrentCityPresenter()
+        let router = CurrentCityRouter()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
-        presenter.CountryController = viewController
+        presenter.CurrentCityController = viewController
         router.viewController = viewController
         router.dataStore = interactor
     }
@@ -128,10 +128,10 @@ class CountryController: UIViewController {
 
 // MARK: - CountryDisplayLogic
 
-extension CountryController: CountryDisplayLogic {
+extension CurrentCityController: CurrentCityDisplayLogic {
     // отображение обновленной таблицы после заполнения в интеракторе данными модели
     // пока что не работает т.к нету модели
-    func displayAllCities(viewModel: CountryViewModel.AllCitiesInCurrentCountry.ViewModel) {
+    func displayAllCities(viewModel: CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel) {
         self.viewModel = viewModel.cities
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -142,7 +142,7 @@ extension CountryController: CountryDisplayLogic {
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension CountryController: UITableViewDelegate, UITableViewDataSource {
+extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 11
     }
@@ -272,7 +272,7 @@ extension CountryController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - CountryDescriptionTableViewCellDelegate
 
-extension CountryController: CountryDescriptionTableViewCellDelegate {
+extension CurrentCityController: CountryDescriptionTableViewCellDelegate {
     // определяем высоту для расширенной ячейки описание города
     func heightCell(height: CGFloat) {
         let standartHeightDataOfCell: CGFloat = 90
@@ -288,7 +288,7 @@ extension CountryController: CountryDescriptionTableViewCellDelegate {
 
 // MARK: - CountryCitiesTableViewCellDelegate
 
-extension CountryController: CountryCitiesTableViewCellDelegate {
+extension CurrentCityController: CountryCitiesTableViewCellDelegate {
     // Открываем другой город из текущего
     func showSelectedCityDescription(_ name: String) {
         currentCity = name
@@ -307,7 +307,7 @@ extension CountryController: CountryCitiesTableViewCellDelegate {
 
 // MARK: - SightTableViewCellDelegate
 
-extension CountryController: SightTableViewCellDelegate {
+extension CurrentCityController: SightTableViewCellDelegate {
     // открываем выбранную достопримечательность на карте
     func handleSelectedSight(_ name: String) {
         userDefault.set(true, forKey: UserDefaults.showSelectedSight)
@@ -318,7 +318,7 @@ extension CountryController: SightTableViewCellDelegate {
 
 // MARK: - ButtonsCollectionViewCellDelegate
 
-extension CountryController: ButtonsCollectionViewCellDelegate {
+extension CurrentCityController: ButtonsCollectionViewCellDelegate {
     // открываем экран списка любимых/избранных достопримечательностей
     func favouritesHandler() {
         router?.routeToFavouritesVC()

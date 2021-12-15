@@ -12,11 +12,11 @@ protocol IntrestingEventsPresentationLogic {
 }
 
 final class IntrestingEventsPresenter: IntrestingEventsPresentationLogic {
-    weak var IntrestingEventsController: IntrestingEventsController?
+    weak var intrestingEventsController: IntrestingEventsController?
     
     func presentIntrestingEvents(response: IntrestingEventsModels.IntrestingEvents.ViewModel) {
         let viewModel = response
-        IntrestingEventsController?.displayIntrestingEvents(viewModel: viewModel)
+        intrestingEventsController?.displayIntrestingEvents(viewModel: viewModel)
     }
     
 }

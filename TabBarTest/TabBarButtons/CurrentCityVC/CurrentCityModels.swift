@@ -8,7 +8,7 @@ import Foundation
 
 import UIKit
 
-enum CountryViewModel {
+enum CurrentCityViewModel {
     
     struct CityModel {
         let name: String

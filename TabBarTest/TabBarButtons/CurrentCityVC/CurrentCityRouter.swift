@@ -7,20 +7,20 @@
 
 import UIKit
 
-protocol CountryRoutingLogic {
+protocol CurrentCityRoutingLogic {
     func routeToCityVC()
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
 }
 
-protocol CountryDataPassing {
-    var dataStore: CountryDataStore? { get set }
+protocol CurrentCityDataPassing {
+    var dataStore: CurrentCityDataStore? { get set }
 }
 
-class CountryRouter: NSObject, CountryRoutingLogic, CountryDataPassing {
+class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassing {
     
-    weak var viewController: CountryController?
-    var dataStore: CountryDataStore?
+    weak var viewController: CurrentCityController?
+    var dataStore: CurrentCityDataStore?
     
     // MARK: - Роутинг
     // на экран сохраненных достопримечательностей
@@ -43,21 +43,21 @@ class CountryRouter: NSObject, CountryRoutingLogic, CountryDataPassing {
 
     // MARK: - Навигация
     // открыть избранное
-    func navigateToFavourites(source: CountryController, destination: FavouritesController) {
+    func navigateToFavourites(source: CurrentCityController, destination: FavouritesController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
     // Открыть интересные события
-    func navigateToIntrestingEvents(source: CountryController, destination: IntrestingEventsController) {
+    func navigateToIntrestingEvents(source: CurrentCityController, destination: IntrestingEventsController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
     
     // открыть следующий город по тыку на ячееке с городами
-    func navigateToViewContact(source: CountryController, destination: CityController) {
+    func navigateToViewContact(source: CurrentCityController, destination: CityController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
     
     // MARK: - Передача данных
-    func passDataToLeadMore(source: CountryDataStore, destination: inout CityDataStore) {
+    func passDataToLeadMore(source: CurrentCityDataStore, destination: inout CityDataStore) {
         destination.currentCity = source.currentCity
     }
 }

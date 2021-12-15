@@ -1,5 +1,5 @@
 //
-//  FavouritesController.swift
+//  ExibitionsController.swift
 //  TabBarTest
 //
 //  Created by VITALIY SVIRIDOV on 13.11.2021.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol IntrestingEventsDisplayLogic: AnyObject {
-    func displayIntrestingEvents(viewModel: IntrestingEventsModels.IntrestingEvents.ViewModel)
+protocol ExibitionsDisplayLogic: AnyObject {
+    func displayExibitions(viewModel: ExibitionsModels.Exibitions.ViewModel)
 }
 
-class IntrestingEventsController: UIViewController {
+class ExibitionsController: UIViewController {
     
     // MARK: - UI Properties
     
@@ -23,11 +23,11 @@ class IntrestingEventsController: UIViewController {
     
     // MARK: - Public Properties
     
-    var interactor: IntrestingEventsBussinessLogic?
-    var router: (NSObjectProtocol & IntrestingEventsRoutingLogic & IntrestingEventsDataPassing)?
+    var interactor: ExibitionsBussinessLogic?
+    var router: (NSObjectProtocol & ExibitionsRoutingLogic & ExibitionsDataPassing)?
     
     // массив всех достопримечательностей
-    var data: IntrestingEventsModels.IntrestingEvents.ViewModel!
+    var data: ExibitionsModels.Exibitions.ViewModel!
     
     private let userDefault = UserDefaults.standard
     
@@ -43,7 +43,7 @@ class IntrestingEventsController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        interactor?.showIntrestingEvents()
+        interactor?.showExibitions()
     }
     
     // MARK: - Helper Functions
@@ -51,27 +51,23 @@ class IntrestingEventsController: UIViewController {
     // Настройка архитектуры Clean Swift
     private func setupClean() {
         let viewController = self
-        let interactor = IntrestingEventsInteractor()
-        let presenter = IntrestingEventsPresenter()
-        let router = IntrestingEventsRouter()
+        let interactor = ExibitionsInteractor()
+        let presenter = ExibitionsPresenter()
+        let router = ExibitionsRouter()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
-        presenter.intrestingEventsController = viewController
+        presenter.exibitionsController = viewController
         router.viewController = viewController
         //        router.dataStore = interactor
-    }
-    
-    private func setupUserDefault() {
-        
     }
     
     private func setupUI() {
         title = "События в городе"
         
         // таблица
-        tableView.register(InterestingEventsTableViewCell.self,
-                           forCellReuseIdentifier: InterestingEventsTableViewCell.identifier)
+        tableView.register(ExibitionsTableViewCell.self,
+                           forCellReuseIdentifier: ExibitionsTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
@@ -95,8 +91,8 @@ class IntrestingEventsController: UIViewController {
 }
 
 // MARK: - CountryDisplayLogic
-extension IntrestingEventsController: IntrestingEventsDisplayLogic {
-    func displayIntrestingEvents(viewModel: IntrestingEventsModels.IntrestingEvents.ViewModel) {
+extension ExibitionsController: ExibitionsDisplayLogic {
+    func displayExibitions(viewModel: ExibitionsModels.Exibitions.ViewModel) {
         data = viewModel
         tableView.reloadData()
     }
@@ -104,36 +100,28 @@ extension IntrestingEventsController: IntrestingEventsDisplayLogic {
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource {
+extension ExibitionsController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data?.events.count ?? 0
     }
     
     // заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: InterestingEventsTableViewCell.identifier, for: indexPath) as? InterestingEventsTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ExibitionsTableViewCell.identifier, for: indexPath) as? ExibitionsTableViewCell else { return UITableViewCell() }
         
-        var imageArray = [UIImage]()
-        // 5 всех достопримечательностей
-        // массив для заполенния достопримечательносей в каждой ячейке
-        for (_, valueSight) in data.events[indexPath.row].image.enumerated() {
-            imageArray.append(valueSight)
-        }
-        cell.configureCell(title: data.events[indexPath.row].name,
-                           description: data.events[indexPath.row].descriptions,
-                           date: data.events[indexPath.row].date,
-                           image: imageArray, indexPathRow: indexPath.row)
-        selectedDescriptionCell
-            ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
-            : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
-        cell.delegate = self
+        cell.configureCell(name: data.events[indexPath.row].name,
+                           image: data.events[indexPath.row].image,
+                           reviewsStar: data.events[indexPath.row].reviewsStar,
+                           reviewsCount: data.events[indexPath.row].reviewsCount,
+                           price: data.events[indexPath.row].price,
+                           duration: data.events[indexPath.row].duration)
         return cell
     }
     
     // высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // ячейка с кнопками
-        return indexPath.row == selectedDescriptionIndex ? heightOfSelectedCell : 260
+        return 260
     }
     
     // белое заполнение пустой части таблицы
@@ -141,22 +129,5 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
         let view = UIView()
         view.backgroundColor = .white
         return view
-    }
-}
-
-// MARK: - InterestingEventsTableViewCellDelegate
-
-extension IntrestingEventsController: InterestingEventsTableViewCellDelegate {
-    func showMoreText(withRow row: Int) {
-        selectedDescriptionCell = !selectedDescriptionCell
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.selectedDescriptionIndex = row
-            self.tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .automatic)
-        }
-    }
-    
-    func heightCell(height: CGFloat) {
-        heightOfSelectedCell = height + 260
     }
 }

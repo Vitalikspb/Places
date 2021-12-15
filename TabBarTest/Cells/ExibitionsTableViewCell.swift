@@ -6,26 +6,24 @@
 
 import UIKit
 
-class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
+class ExibitionsTableViewCell: UITableViewCell {
     
     // MARK: - Public properties
     
     weak var delegate: CountryCellsCitiesCollectionViewCellDelegate?
-    static let identifier = "TicketsCellsCitiesCollectionViewCell"
-    var cellImage: UIImage = UIImage() {
-        didSet {
-            image.image = cellImage
-        }
-    }
-    var cellTitle: String = "" {
-        didSet {
-            title.text = cellTitle
-        }
-    }
+    static let identifier = "ExibitionsTableViewCell"
+
     
     // MARK: - Private properties
     
-    private let image = UIImageView()
+    private let mainImageView: UIImageView = {
+       let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .white
+        return imageView
+    }()
     private let title = UILabel()
     private let gradientView = GradientView()
     let mainStackView: UIStackView = {
@@ -49,31 +47,34 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
     private let separatorRight = UIView()
     private let reviewsLabel = UILabel()
     
-    // MARK: - LifeCycle
+    // MARK: - Lifecycle
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         setupUI()
-        setupConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupUI()
-        setupConstraints()
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setupUI()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
     // MARK: - Helper functions
     
     private func setupUI() {
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 8
-        image.layer.masksToBounds = true
-        image.backgroundColor = .white
         
         let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 50),
                                 byRoundingCorners: [.bottomLeft, .bottomRight],
@@ -124,7 +125,7 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
         self.standartShadow(view: self)
         
         
-        contentView.addSubview(image)
+        contentView.addSubview(mainImageView)
         contentView.addSubview(gradientView)
         contentView.addSubview(title)
         contentView.addSubview(mainStackView)
@@ -141,7 +142,7 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupConstraints() {
-        image.addConstraintsToFillView(view: contentView)
+        mainImageView.addConstraintsToFillView(view: contentView)
         gradientView.anchor(top: nil,
                             left: contentView.leftAnchor,
                             bottom: contentView.bottomAnchor,
@@ -199,13 +200,13 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
        
 
     }
-    
-    func configureCell(title: String, image: UIImage, price: Int, rating: Float, reviews: Int) {
-        cellImage = image
-        cellTitle = title
+    func configureCell(name: String, image: UIImage, reviewsStar: Int, reviewsCount: Int, price: Int, duration: String) {
+        title.text = name
+        mainImageView.image = image
         priceLabel.text = "\(price) Р."
-        ratingLabel.text = "\(rating)"
-        reviewsLabel.text = "\(Constants.Cells.reviews): \(reviews)"
+        ratingLabel.text = "\(reviewsCount)"
+        reviewsLabel.text = "\(Constants.Cells.reviews): \(reviewsStar)"
+        duration
     }
     
 }
