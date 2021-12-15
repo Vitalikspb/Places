@@ -206,7 +206,7 @@ class ExibitionsTableViewCell: UITableViewCell {
         priceLabel.text = "\(price) Р."
         ratingLabel.text = "\(reviewsCount)"
         reviewsLabel.text = "\(Constants.Cells.reviews): \(reviewsStar)"
-        duration
+        
     }
     
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TVg-qq-acQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="n6L-j2-wrv">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -11,46 +11,47 @@
     </dependencies>
     <scenes>
         <!--Current City Controller-->
-        <scene sceneID="d1Q-8V-0dD">
+        <scene sceneID="Tss-B6-aR1">
             <objects>
-                <viewController storyboardIdentifier="CurrentCityController" id="Aap-Gp-bkj" customClass="CurrentCityController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ljH-9q-sso">
+                <viewController storyboardIdentifier="CurrentCityController" id="DxH-qy-GAK" customClass="CurrentCityController" customModule="TabBarTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UuS-7x-jPJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="WTc-KA-c2a"/>
+                        <viewLayoutGuide key="safeArea" id="HAS-ih-jbB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Z7u-GT-PBy"/>
+                    <navigationItem key="navigationItem" id="bUW-Pv-8sw"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="H2c-QH-qIg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4SD-y5-54E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1355.072463768116" y="6.6964285714285712"/>
+            <point key="canvasLocation" x="900.00000000000011" y="88.392857142857139"/>
         </scene>
-        <!--Страна-->
-        <scene sceneID="mmH-Q7-NTt">
+        <!--Настройки-->
+        <scene sceneID="1ev-aO-AiN">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TVg-qq-acQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1" title="Страна" id="z6P-oW-CDS">
-                        <imageReference key="image" image="building.2" catalog="system" symbolScale="default"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="n6L-j2-wrv" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" tag="1" title="Настройки" id="7B5-Oa-Xnv">
+                        <imageReference key="image" image="gear" catalog="system" symbolScale="default"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="SP2-3a-x5K">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NZR-5E-ro8">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Aap-Gp-bkj" kind="relationship" relationship="rootViewController" id="iIv-Mh-zZi"/>
+                        <segue destination="DxH-qy-GAK" kind="relationship" relationship="rootViewController" id="BwY-b2-jGn"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="axh-W0-MyM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y1O-6y-3ka" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="444.92753623188412" y="6.6964285714285712"/>
+            <point key="canvasLocation" x="-10.144927536231885" y="88.392857142857139"/>
         </scene>
     </scenes>
     <resources>
-        <image name="building.2" catalog="system" width="128" height="106"/>
+        <image name="gear" catalog="system" width="128" height="119"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
