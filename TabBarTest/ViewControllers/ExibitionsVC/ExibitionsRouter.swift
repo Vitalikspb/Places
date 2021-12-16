@@ -11,9 +11,12 @@ protocol ExibitionsRoutingLogic {
 }
 
 protocol ExibitionsDataPassing {
+    var dataStore: ExibitionsDataStore? { get }
 }
 
 class ExibitionsRouter: NSObject, ExibitionsRoutingLogic, ExibitionsDataPassing {
+    var dataStore: ExibitionsDataStore?
+    
     
   weak var viewController: ExibitionsController?
     

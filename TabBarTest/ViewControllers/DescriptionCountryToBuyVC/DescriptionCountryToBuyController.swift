@@ -1,28 +1,31 @@
 //
-//  BuyCountryController.swift
+//  DescriptionCountryToBuyController.swift
 //  TabBarTest
 //
-//  Created by VITALIY SVIRIDOV on 28.09.2021.
+//  Created by VITALIY SVIRIDOV on 13.11.2021.
 //
 
 import UIKit
 
-protocol BuyCountryDisplayLogic: AnyObject {
-    func displayAllCities(viewModel: BuyCountryViewModel.AllCitiesInCurrentCountry.ViewModel)
+protocol DescriptionCountryToBuyDisplayLogic: AnyObject {
+    func displayCurrentCountry(viewModel: String)
 }
 
-class BuyCountryController: UIViewController {
+class DescriptionCountryToBuyController: UIViewController {
+
+    
+    // MARK: - UI Properties
+    
+    private let tableView = UITableView(frame: CGRect.zero, style: .plain)
+    
     
     // MARK: - Public Properties
     
-    var interactor: BuyCountryBussinessLogic?
-    var router: (NSObjectProtocol & BuyCountryRoutingLogic & BuyCountryDataPassing)?
-    var currentCity: String = ""
+    var interactor: DescriptionCountryToBuyBussinessLogic?
+    var router: (NSObjectProtocol & DescriptionCountryToBuyRoutingLogic & DescriptionCountryToBuyDataPassing)?
+    var viewModel: String = ""
     
-    // MARK: - Private Properties
-    
-    private var titleName: String = ""
-    var viewModel: [BuyCountryViewModel.CityModel]!
+    //MARK: - Private properties
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
@@ -36,48 +39,53 @@ class BuyCountryController: UIViewController {
     }
     private var currentWeather: DescriptionWeather!
     private var descriptionHeightCell: CGFloat = 0
-    
-    
-    // MARK: - UI Properties
-    
-    private let tableView = UITableView(frame: CGRect.zero, style: .plain)
-    
+    private var titleName: String = ""
+
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        setupClean()
-        setupUI()
-        viewModel =  [BuyCountryViewModel.CityModel(name: "",
-                                                 image: UIImage(named: "hub3")!)]
         navigationController?.navigationBar.isHidden = false
+        view.backgroundColor = .white
+        setupUI()
+        interactor?.showCity()
+    }
+    
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupClean()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupClean()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        titleName = userDefault.string(forKey: UserDefaults.currentCity) ?? ""
-        title = titleName
-        viewModel.removeAll()
         // в интеракторе создаем большую модель для заполнения всех ячеек таблицы, заголовка, погоды и всей остальой инфорамции
         //        interactor?.showCity()
     }
-    
-    
+
     // MARK: - Helper Functions
     
     // Настройка архитектуры Clean Swift
     private func setupClean() {
         let viewController = self
-        let interactor = BuyCountryInteractor()
-        let presenter = BuyCountryPresenter()
-        let router = BuyCountryRouter()
+        let interactor = DescriptionCountryToBuyInteractor()
+        let presenter = DescriptionCountryToBuyPresenter()
+        let router = DescriptionCountryToBuyRouter()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
-        presenter.buyCountryController = viewController
+        presenter.descriptionCountryToBuyController = viewController
         router.viewController = viewController
         router.dataStore = interactor
+    }
+    
+    private func setupUserDefault() {
+        
     }
     
     private func setupUI() {
@@ -87,6 +95,9 @@ class BuyCountryController: UIViewController {
         // описание с кнопкой
         tableView.register(CountryDescriptionTableViewCell.self,
                            forCellReuseIdentifier: CountryDescriptionTableViewCell.identifier)
+        // другие города
+        tableView.register(CountryCitiesTableViewCell.self,
+                           forCellReuseIdentifier: CountryCitiesTableViewCell.identifier)
         // кнопки
         tableView.register(ButtonsCollectionViewCell.self,
                            forCellReuseIdentifier: ButtonsCollectionViewCell.identifier)
@@ -99,6 +110,10 @@ class BuyCountryController: UIViewController {
         // Погода
         tableView.register(WeatherCollectionViewCell.self,
                            forCellReuseIdentifier: WeatherCollectionViewCell.identifier)
+
+        // +1
+        //        tableView.register(MuseumsTableViewCell.self,
+        //                                forCellReuseIdentifier: MuseumsTableViewCell.identifier)
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -120,26 +135,11 @@ class BuyCountryController: UIViewController {
                          paddingRight: 0,
                          width: 0, height: 0)
     }
-    
-}
-
-// MARK: - CountryDisplayLogic
-
-extension BuyCountryController: BuyCountryDisplayLogic {
-    // отображение обновленной таблицы после заполнения в интеракторе данными модели
-    // пока что не работает т.к нету модели
-    func displayAllCities(viewModel: BuyCountryViewModel.AllCitiesInCurrentCountry.ViewModel) {
-        self.viewModel = viewModel.cities
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.tableView.reloadData()
-        }
-    }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
-extension BuyCountryController: UITableViewDelegate, UITableViewDataSource {
+extension DescriptionCountryToBuyController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
@@ -156,7 +156,8 @@ extension BuyCountryController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier, for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.configureCell(description: "lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa")
+            cell.configureCell(titleName: "Описание страны",
+                               description: "lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa")
             selectedDescriptionCell
                 ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
                 : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
@@ -172,6 +173,7 @@ extension BuyCountryController: UITableViewDelegate, UITableViewDataSource {
             // кнопки
         case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonsCollectionViewCell.identifier, for: indexPath) as? ButtonsCollectionViewCell else { return UITableViewCell() }
+            cell.delegate = self
             return cell
             
             // Обязательно к просмотру
@@ -215,7 +217,9 @@ extension BuyCountryController: UITableViewDelegate, UITableViewDataSource {
             cell.titleCell = Constants.Cells.parks
             cell.sizeCell = CGSize(width: 200, height: 140)
             return cell
-
+            
+            // другие города
+            
         default: return UITableViewCell()
         }
         
@@ -238,8 +242,7 @@ extension BuyCountryController: UITableViewDelegate, UITableViewDataSource {
         case 3: return 150
             
             // Билеты на экскурсии
-            // другие города
-        case 5,10: return 230
+        case 5: return 230
             
             // Погода
         case 6: return 200
@@ -260,9 +263,25 @@ extension BuyCountryController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - CountryDisplayLogic
+extension DescriptionCountryToBuyController: DescriptionCountryToBuyDisplayLogic {
+    func displayCurrentCountry(viewModel: String) {
+        title = viewModel
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.tableView.reloadData()
+        }
+    }
+    
+    // показ информации о текущем городе
+    // отображение обновленной таблицы после заполнения в интеракторе данными модели
+    // пока что не работает т.к нету модели
+
+}
+
 // MARK: - CountryDescriptionTableViewCellDelegate
 
-extension BuyCountryController: CountryDescriptionTableViewCellDelegate {
+extension DescriptionCountryToBuyController: CountryDescriptionTableViewCellDelegate {
     // определяем высоту для расширенной ячейки описание города
     func heightCell(height: CGFloat) {
         let standartHeightDataOfCell: CGFloat = 90
@@ -272,13 +291,17 @@ extension BuyCountryController: CountryDescriptionTableViewCellDelegate {
     // показываем больше текста в описании (расширяем таблицу)
     func showMoreText() {
         selectedDescriptionCell = !selectedDescriptionCell
-        tableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.tableView.reloadData()
+        }
+        
     }
 }
 
 // MARK: - SightTableViewCellDelegate
 
-extension BuyCountryController: SightTableViewCellDelegate {
+extension DescriptionCountryToBuyController: SightTableViewCellDelegate {
     // открываем выбранную достопримечательность на карте
     func handleSelectedSight(_ name: String) {
         userDefault.set(true, forKey: UserDefaults.showSelectedSight)
@@ -287,7 +310,29 @@ extension BuyCountryController: SightTableViewCellDelegate {
     }
 }
 
+// MARK: - ButtonsCollectionViewCellDelegate
 
-
-
-
+extension DescriptionCountryToBuyController: ButtonsCollectionViewCellDelegate {
+    // открываем экран списка любимых/избранных достопримечательностей
+    func favouritesHandler() {
+    }
+    
+    func eventsHandler() {
+        
+    }
+    
+    func ticketHandler() {
+        
+    }
+    
+    func faqHandler() {
+        
+    }
+    
+    func rentAutoHandler() {
+        
+    }
+    
+    func chatHandler() {
+    }
+}

@@ -11,9 +11,9 @@ class CountryToSelectTableViewCell: UITableViewCell {
     // MARK: - UI properties
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.font = UIFont.init(name: "GillSans-Semibold", size: 20)
         return label
     }()
     private let mainImageView: UIImageView = {
@@ -61,7 +61,7 @@ class CountryToSelectTableViewCell: UITableViewCell {
         // Для обрезания длинного текста описания события
         self.clipsToBounds = true
         
-        gradientView.colors = [UIColor(white: 1, alpha: 0), UIColor.white]
+        gradientView.colors = [UIColor(white: 1, alpha: 0), UIColor.black]
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
         
@@ -69,16 +69,16 @@ class CountryToSelectTableViewCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(gradientView)
 
-        titleLabel.anchor(top: contentView.topAnchor,
+        titleLabel.anchor(top: nil,
                           left: contentView.leftAnchor,
-                          bottom: nil,
-                          right: nil,
-                          paddingTop: 8,
-                          paddingLeft: 16,
+                          bottom: contentView.bottomAnchor,
+                          right: contentView.rightAnchor,
+                          paddingTop: 0,
+                          paddingLeft: 0,
                           paddingBottom: 0,
                           paddingRight: 0,
                           width: 0,
-                          height: 0)
+                          height: 50)
         mainImageView.anchor(top: contentView.topAnchor,
                              left: contentView.leftAnchor,
                              bottom: contentView.bottomAnchor,

@@ -5,17 +5,16 @@
 //
 
 import Foundation
-
 import UIKit
 
-enum BuyCountryViewModel {
+enum SelectedInterestingEventViewModel {
     
-    struct CityModel {
-        let name: String
-        let image: UIImage
+    struct EventModel {
+        let mainText: String
+        let image: [UIImage]
     }
     
-    enum AllCitiesInCurrentCountry {
+    enum EventModels {
 
         // передаем в интерактор
         struct Request { }
@@ -25,7 +24,7 @@ enum BuyCountryViewModel {
         
         // посылаем все города для отображения на экране
         struct ViewModel {
-            var cities: [CityModel]
+            var event: EventModel
         }
     }
 }

@@ -6,11 +6,6 @@
 
 import UIKit
 
-protocol InterestingEventsTableViewCellDelegate: AnyObject {
-    func showMoreText(withRow row: Int)
-    func heightCell(height: CGFloat)
-}
-
 class InterestingEventsTableViewCell: UITableViewCell {
     
     // MARK: - UI properties
@@ -28,8 +23,14 @@ class InterestingEventsTableViewCell: UITableViewCell {
         label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
         return label
     }()
-    let collectionView = UICollectionView(frame: CGRect.zero,
-                                          collectionViewLayout: UICollectionViewLayout.init())
+    private let mainImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .white
+        return imageView
+    }()
     private let mainTextLabel: UILabel = {
        let label = UILabel()
         label.textColor = .black
@@ -39,25 +40,10 @@ class InterestingEventsTableViewCell: UITableViewCell {
         label.text = ""
         return label
     }()
-    let gradientView = GradientView()
-    let moreButtons: UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .clear
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.init(name: "GillSans-semibold", size: 16)
-        button.setTitle(Constants.Cells.readMore, for: .normal)
-        return button
-    }()
     
     // MARK: - Public properties
-    var selfIndexPathRow: Int = 0
-    weak var delegate: InterestingEventsTableViewCellDelegate?
+    
     static let identifier = "InterestingEventsTableViewCell"
-    private let layout = UICollectionViewFlowLayout()
-    
-    // MARK: - Public properties
-    
-    private lazy var modelImage = [UIImage]()
     
     // MARK: - Lifecycle
     
@@ -90,28 +76,9 @@ class InterestingEventsTableViewCell: UITableViewCell {
         // Для обрезания длинного текста описания события
         self.clipsToBounds = true
         
-        gradientView.colors = [UIColor(white: 1, alpha: 0), UIColor.white]
-        gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
-        
-        layout.scrollDirection = .horizontal
-        collectionView.register(InterestingEventsCollectionViewCell.self,
-                                forCellWithReuseIdentifier: InterestingEventsCollectionViewCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        layout.itemSize = CGSize(width: 240, height: 170)
-        collectionView.setCollectionViewLayout(layout, animated: true)
-        
-        moreButtons.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
-        
         contentView.addSubview(titleLabel)
-        contentView.addSubview(collectionView)
+        contentView.addSubview(mainImageView)
         contentView.addSubview(mainTextLabel)
-        contentView.addSubview(gradientView)
-        contentView.addSubview(moreButtons)
         contentView.addSubview(dateLabel)
         
         titleLabel.anchor(top: contentView.topAnchor,
@@ -134,7 +101,7 @@ class InterestingEventsTableViewCell: UITableViewCell {
                           paddingRight: 16,
                           width: 0,
                           height: 0)
-        collectionView.anchor(top: contentView.topAnchor,
+        mainImageView.anchor(top: contentView.topAnchor,
                               left: contentView.leftAnchor,
                               bottom: nil,
                               right: contentView.rightAnchor,
@@ -144,7 +111,7 @@ class InterestingEventsTableViewCell: UITableViewCell {
                               paddingRight: 0,
                               width: 0,
                               height: 170)
-        mainTextLabel.anchor(top: collectionView.bottomAnchor,
+        mainTextLabel.anchor(top: mainImageView.bottomAnchor,
                              left: contentView.leftAnchor,
                              bottom: nil,
                              right: contentView.rightAnchor,
@@ -153,62 +120,12 @@ class InterestingEventsTableViewCell: UITableViewCell {
                              paddingBottom: 0,
                              paddingRight: 16,
                              width: 0, height: 0)
-        gradientView.anchor(top: nil,
-                            left: contentView.leftAnchor,
-                            bottom: contentView.bottomAnchor,
-                            right: contentView.rightAnchor,
-                            paddingTop: 0,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 0,
-                            width: 0, height: 50)
-        moreButtons.anchor(top: nil,
-                           left: contentView.leftAnchor,
-                           bottom: contentView.bottomAnchor,
-                           right: contentView.rightAnchor,
-                           paddingTop: 0,
-                           paddingLeft: 16,
-                           paddingBottom: 0,
-                           paddingRight: 16,
-                           width: 0, height: 35)
     }
     
-    @objc func moreButtonTapped() {
-        delegate?.showMoreText(withRow: selfIndexPathRow)
-    }
-    
-    func configureCell(title: String, description: String, date: String, image: [UIImage], indexPathRow: Int) {
+    func configureCell(title: String, description: String, date: String, image: UIImage) {
         mainTextLabel.text = description
         titleLabel.text = title
         dateLabel.text = date
-        modelImage = image
-        selfIndexPathRow = indexPathRow
-        let screenInsetsLeftRight: CGFloat = 32
-        delegate?.heightCell(height: description.height(widthScreen: UIScreen.main.bounds.width - screenInsetsLeftRight,font: UIFont(name: "GillSans", size: 14)!))
-    }
-}
-
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
-
-extension InterestingEventsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return modelImage.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InterestingEventsCollectionViewCell.identifier, for: indexPath) as? InterestingEventsCollectionViewCell else { return UICollectionViewCell() }
-        cell.conigureCell(image: modelImage[indexPath.row])
-        return cell
-    }
-    
-    // Отступы от краев экрана на крайних ячейках
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-    }
-    
-    // Расстояние между ячейками - белый отступ
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 16
+        mainImageView.image = image
     }
 }

@@ -11,7 +11,7 @@ class InterestingEventsCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI properties
     
-    private let image: UIImageView = {
+    private let mainImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 8
@@ -25,7 +25,7 @@ class InterestingEventsCollectionViewCell: UICollectionViewCell {
     static let identifier = "InterestingEventsCollectionViewCell"
     var cellImage: UIImage = UIImage() {
         didSet {
-            image.image = cellImage
+            mainImageView.image = cellImage
         }
     }
     
@@ -34,13 +34,11 @@ class InterestingEventsCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        setupConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupUI()
-        setupConstraints()
     }
     
     override func prepareForReuse() {
@@ -51,25 +49,22 @@ class InterestingEventsCollectionViewCell: UICollectionViewCell {
     
     private func setupUI() {
         
+        // TODO
+//        let path = UIBezierPath(roundedRect: CGRect(x: 0,
+//                                                    y: 0,
+//                                                    width: contentView.frame.width,
+//                                                    height: 50),
+//                                byRoundingCorners: [.bottomLeft, .bottomRight],
+//                                cornerRadii: CGSize(width: 8, height: 8))
+//        let maskLayer = CAShapeLayer()
+//        maskLayer.path = path.cgPath
+        backgroundColor = .white
+        layer.cornerRadius = 8
+        standartShadow(view: self)
         
-        let path = UIBezierPath(roundedRect: CGRect(x: 0,
-                                                    y: 0,
-                                                    width: contentView.frame.width,
-                                                    height: 50),
-                                byRoundingCorners: [.bottomLeft, .bottomRight],
-                                cornerRadii: CGSize(width: 8, height: 8))
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = path.cgPath
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 8
-        self.standartShadow(view: self)
-        contentView.addSubview(image)
-    }
-    
-    
-    
-    private func setupConstraints() {
-        image.addConstraintsToFillView(view: contentView)
+        contentView.addSubview(mainImageView)
+        
+        mainImageView.addConstraintsToFillView(view: contentView)
     }
     
     func conigureCell(image: UIImage) {

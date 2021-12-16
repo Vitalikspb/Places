@@ -10,13 +10,14 @@ import UIKit
 protocol ExibitionsBussinessLogic {
     func showExibitions()
 }
-//
-//protocol FavouritesDataStore {
-//    var citiesArray: [String] { get set }
-//}
 
-class ExibitionsInteractor: ExibitionsBussinessLogic {
+protocol ExibitionsDataStore {
+    var currentCity: String { get set }
+}
+
+class ExibitionsInteractor: ExibitionsBussinessLogic, ExibitionsDataStore {
     
+    var currentCity: String = ""
     var presenter: ExibitionsPresentationLogic?
     
     func showExibitions() {
@@ -54,7 +55,7 @@ class ExibitionsInteractor: ExibitionsBussinessLogic {
                                                                                          duration: "5"),
                                
         ]
-        let viewModel = ExibitionsModels.Exibitions.ViewModel(events: interestingEvent)
+        let viewModel = ExibitionsModels.Exibitions.ViewModel(country: currentCity, events: interestingEvent)
         presenter?.displayExibitions(response: viewModel)
     }
 }

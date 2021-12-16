@@ -59,7 +59,7 @@ class IntrestingEventsController: UIViewController {
         interactor.presenter = presenter
         presenter.intrestingEventsController = viewController
         router.viewController = viewController
-        //        router.dataStore = interactor
+        router.dataStore = interactor
     }
     
     private func setupUserDefault() {
@@ -67,7 +67,7 @@ class IntrestingEventsController: UIViewController {
     }
     
     private func setupUI() {
-        title = "События в городе"
+        title = "События в \(data.country)"
         
         // таблица
         tableView.register(InterestingEventsTableViewCell.self,
@@ -112,21 +112,11 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
     // заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: InterestingEventsTableViewCell.identifier, for: indexPath) as? InterestingEventsTableViewCell else { return UITableViewCell() }
-        
-        var imageArray = [UIImage]()
-        // 5 всех достопримечательностей
-        // массив для заполенния достопримечательносей в каждой ячейке
-        for (_, valueSight) in data.events[indexPath.row].image.enumerated() {
-            imageArray.append(valueSight)
-        }
+
         cell.configureCell(title: data.events[indexPath.row].name,
                            description: data.events[indexPath.row].descriptions,
                            date: data.events[indexPath.row].date,
-                           image: imageArray, indexPathRow: indexPath.row)
-        selectedDescriptionCell
-            ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
-            : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
-        cell.delegate = self
+                           image: data.events[indexPath.row].image.first!)
         return cell
     }
     
@@ -141,22 +131,5 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
         let view = UIView()
         view.backgroundColor = .white
         return view
-    }
-}
-
-// MARK: - InterestingEventsTableViewCellDelegate
-
-extension IntrestingEventsController: InterestingEventsTableViewCellDelegate {
-    func showMoreText(withRow row: Int) {
-        selectedDescriptionCell = !selectedDescriptionCell
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.selectedDescriptionIndex = row
-            self.tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .automatic)
-        }
-    }
-    
-    func heightCell(height: CGFloat) {
-        heightOfSelectedCell = height + 260
     }
 }
