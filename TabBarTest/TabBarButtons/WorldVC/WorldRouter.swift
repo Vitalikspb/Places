@@ -24,7 +24,7 @@ class WorldRouter: NSObject, WorldRoutingLogic, WorldDataPassing {
 
     // на экран выбранного города
     func routeToCountryVC() {
-        let destinationVC: CityController = CityController.loadFromStoryboard()
+        let destinationVC: DescriptionCountryToBuyController = DescriptionCountryToBuyController.loadFromStoryboard()
         var destinationDS = destinationVC.router!.dataStore!
         passDataToLeadMore(source: dataStore!, destination: &destinationDS)
         navigateToViewContact(source: viewController!, destination: destinationVC)
@@ -33,14 +33,14 @@ class WorldRouter: NSObject, WorldRoutingLogic, WorldDataPassing {
     // MARK: - Навигация
     
     // открыть следующий город по тыку на ячееке с городами
-    func navigateToViewContact(source: WorldController, destination: CityController) {
+    func navigateToViewContact(source: WorldController, destination: DescriptionCountryToBuyController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
     
     // MARK: - Передача данных
     
-    func passDataToLeadMore(source: WorldDataStore, destination: inout CityDataStore) {
-        destination.currentCity = source.currentCity
+    func passDataToLeadMore(source: WorldDataStore, destination: inout DescriptionCountryToBuyDataStore) {
+        destination.currentCountry = source.currentCity
     }
 }
 

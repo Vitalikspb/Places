@@ -12,10 +12,10 @@ protocol CityPresentationLogic {
 }
 
 final class CityPresenter: CityPresentationLogic {
-    weak var CityController: CityController?
+    weak var cityController: CityController?
     
     func presentCity(response: String) {
-        CityController?.displayCurrentCity(viewModel: response)
+        cityController?.displayCurrentCity(viewModel: response)
     }
     
 }

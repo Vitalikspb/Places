@@ -59,11 +59,11 @@ class ExibitionsController: UIViewController {
         interactor.presenter = presenter
         presenter.exibitionsController = viewController
         router.viewController = viewController
-        //        router.dataStore = interactor
+        router.dataStore = interactor
     }
     
     private func setupUI() {
-        title = "События в городе"
+        title = "Экскурсии в \(data.country)"
         
         // таблица
         tableView.register(ExibitionsTableViewCell.self,

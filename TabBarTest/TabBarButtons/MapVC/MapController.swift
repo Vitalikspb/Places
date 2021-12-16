@@ -243,9 +243,10 @@ class MapController: UIViewController {
             self.citiesAvailable.forEach {
                 if $0 == city {
                     self.userDefault.set("\(city)", forKey: UserDefaults.currentCity)
+                    self.tabBarController?.tabBar.items?[1].title = city
                 }
             }
-            self.tabBarController?.tabBar.items?[1].title = country
+            
         }
     }
     

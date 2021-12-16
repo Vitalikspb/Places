@@ -123,12 +123,10 @@ extension CountryPhotosTableViewCell: UICollectionViewDelegate, UICollectionView
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-
         pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
     }
 
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-
         pageControl.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
     }
 }

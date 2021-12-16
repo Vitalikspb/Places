@@ -11,6 +11,7 @@ protocol CurrentCityRoutingLogic {
     func routeToCityVC()
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
+    func routeToExibitionVC()
 }
 
 protocol CurrentCityDataPassing {
@@ -40,6 +41,13 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         passDataToLeadMore(source: dataStore!, destination: &destinationDS)
         navigateToViewContact(source: viewController!, destination: destinationVC)
     }
+    // на экран билеты на экскурсию
+    func routeToExibitionVC() {
+        let destinationVC: ExibitionsController = ExibitionsController.loadFromStoryboard()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToExibitions(source: dataStore!, destination: &destinationDS)
+        navigateToExibitions(source: viewController!, destination: destinationVC)
+    }
 
     // MARK: - Навигация
     // открыть избранное
@@ -56,8 +64,16 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         source.navigationController?.pushViewController(destination, animated: true)
     }
     
+    func navigateToExibitions(source: CurrentCityController!, destination: ExibitionsController) {
+        source.navigationController?.pushViewController(destination, animated: true)
+    }
+    
     // MARK: - Передача данных
     func passDataToLeadMore(source: CurrentCityDataStore, destination: inout CityDataStore) {
+        destination.currentCity = source.currentCity
+    }
+    
+    func passDataToExibitions(source: CurrentCityDataStore, destination: inout ExibitionsDataStore) {
         destination.currentCity = source.currentCity
     }
 }

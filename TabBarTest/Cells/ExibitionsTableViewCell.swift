@@ -24,7 +24,15 @@ class ExibitionsTableViewCell: UITableViewCell {
         imageView.backgroundColor = .white
         return imageView
     }()
-    private let title = UILabel()
+    private let title: UILabel = {
+       let title = UILabel()
+        title.textColor = .white
+        title.contentMode = .center
+        title.textAlignment = .left
+        title.backgroundColor = .clear
+        title.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        return title
+    }()
     private let gradientView = GradientView()
     let mainStackView: UIStackView = {
         let stack = UIStackView()
@@ -33,8 +41,20 @@ class ExibitionsTableViewCell: UITableViewCell {
         stack.axis = .horizontal
         return stack
     }()
-    private let priceLabel = UILabel()
-    private let separatorLeft = UIView()
+    private let priceLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = UIColor(white: 1.0, alpha: 0.85)
+        label.contentMode = .center
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans", size: 13)
+        return label
+    }()
+    private let separatorLeft: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 1.0, alpha: 0.85)
+        return view
+    }()
     let ratingStackView: UIStackView = {
         let stack = UIStackView()
         stack.distribution = .fill
@@ -42,10 +62,46 @@ class ExibitionsTableViewCell: UITableViewCell {
         stack.axis = .horizontal
         return stack
     }()
-    private let ratingImage = UIImageView()
-    private let ratingLabel = UILabel()
-    private let separatorRight = UIView()
-    private let reviewsLabel = UILabel()
+    private let ratingImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "star.fill")
+        image.contentMode = .scaleAspectFit
+        image.tintColor = .yellow
+        return image
+    }()
+    private let ratingLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(white: 1.0, alpha: 0.85)
+        label.contentMode = .center
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans", size: 13)
+        return label
+    }()
+    private let separatorRight: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 1.0, alpha: 0.85)
+        return view
+    }()
+    private let reviewsLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = UIColor(white: 1.0, alpha: 0.85)
+        label.contentMode = .center
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans", size: 13)
+        return label
+    }()
+    private let durationLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = UIColor(white: 1.0, alpha: 0.85)
+        label.contentMode = .center
+        label.textAlignment = .right
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans", size: 13)
+        return label
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -85,41 +141,7 @@ class ExibitionsTableViewCell: UITableViewCell {
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientView.layer.mask = maskLayer
-        
-        title.textColor = .white
-        title.contentMode = .center
-        title.textAlignment = .left
-        title.backgroundColor = .clear
-        title.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
-        
-        
-        priceLabel.textColor = UIColor(white: 1.0, alpha: 0.85)
-        priceLabel.contentMode = .center
-        priceLabel.textAlignment = .left
-        priceLabel.backgroundColor = .clear
-        priceLabel.font = UIFont.init(name: "GillSans", size: 13)
-        
-        separatorLeft.backgroundColor = UIColor(white: 1.0, alpha: 0.85)
-        
-        ratingImage.image = UIImage(systemName: "star.fill")
-        ratingImage.contentMode = .scaleAspectFit
-        ratingImage.tintColor = .yellow
-        
-        ratingLabel.textColor = UIColor(white: 1.0, alpha: 0.85)
-        ratingLabel.contentMode = .center
-        ratingLabel.textAlignment = .left
-        ratingLabel.backgroundColor = .clear
-        ratingLabel.font = UIFont.init(name: "GillSans", size: 13)
-        
-        separatorRight.backgroundColor = UIColor(white: 1.0, alpha: 0.85)
-        
-        reviewsLabel.textColor = UIColor(white: 1.0, alpha: 0.85)
-        reviewsLabel.contentMode = .center
-        reviewsLabel.textAlignment = .left
-        reviewsLabel.backgroundColor = .clear
-        reviewsLabel.font = UIFont.init(name: "GillSans", size: 13)
-        
-        
+
         self.backgroundColor = .white
         self.layer.cornerRadius = 8
         self.standartShadow(view: self)
@@ -129,6 +151,7 @@ class ExibitionsTableViewCell: UITableViewCell {
         contentView.addSubview(gradientView)
         contentView.addSubview(title)
         contentView.addSubview(mainStackView)
+        contentView.addSubview(durationLabel)
         
         mainStackView.addArrangedSubview(priceLabel)
         mainStackView.addArrangedSubview(separatorLeft)
@@ -138,7 +161,6 @@ class ExibitionsTableViewCell: UITableViewCell {
         
         ratingStackView.addArrangedSubview(ratingImage)
         ratingStackView.addArrangedSubview(ratingLabel)
-        
     }
     
     private func setupConstraints() {
@@ -161,6 +183,15 @@ class ExibitionsTableViewCell: UITableViewCell {
                      paddingBottom: 0,
                      paddingRight: 0,
                      width: 0, height: 25)
+        durationLabel.anchor(top: contentView.topAnchor,
+                             left: nil,
+                             bottom: nil,
+                             right: contentView.rightAnchor,
+                             paddingTop: 8,
+                             paddingLeft: 8,
+                             paddingBottom: 0,
+                             paddingRight: 0,
+                             width: 0, height: 25)
         ratingImage.anchor(top: nil,
                            left: nil,
                            bottom: nil,
@@ -206,7 +237,7 @@ class ExibitionsTableViewCell: UITableViewCell {
         priceLabel.text = "\(price) Р."
         ratingLabel.text = "\(reviewsCount)"
         reviewsLabel.text = "\(Constants.Cells.reviews): \(reviewsStar)"
-        duration
+        durationLabel.text = duration + "h"
     }
     
 }

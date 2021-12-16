@@ -27,6 +27,7 @@ enum IntrestingEventsModels {
         
         // посылаем все интеренсые события для отображения на экране
         struct ViewModel {
+            var country: String
             var events: [IntrestingEventsModel]
         }
     }

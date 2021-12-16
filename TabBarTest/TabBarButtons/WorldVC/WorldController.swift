@@ -92,7 +92,7 @@ class WorldController: UIViewController {
         // скролл картинок
         
         searchBar.searchBarStyle = UISearchBar.Style.default
-        searchBar.placeholder = " Search..."
+        searchBar.placeholder = "Поиск страны"
         searchBar.sizeToFit()
         searchBar.isTranslucent = false
         searchBar.backgroundImage = UIImage()
@@ -171,8 +171,8 @@ extension WorldController: UITableViewDelegate, UITableViewDataSource {
         let countryName = filteredTableData.country[indexPath.row].name
         print(countryName)
         currentCity = countryName
-//        router?.dataStore?.currentCity = countryName
-//        router?.routeToCityVC()
+        router?.dataStore?.currentCity = countryName
+        router?.routeToCountryVC()
     }
 }
 

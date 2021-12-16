@@ -131,7 +131,8 @@ class CountryDescriptionTableViewCell: UITableViewCell {
         delegate?.showMoreText()
     }
     
-    func configureCell(description: String) {
+    func configureCell(titleName name: String, description: String) {
+        titleLabel.text = name
         mainTextLabel.text = description
         let screenInsetsLeftRight:CGFloat = 32
         delegate?.heightCell(height: description.height(widthScreen: UIScreen.main.bounds.width - screenInsetsLeftRight,font: UIFont(name: "GillSans", size: 14)!))

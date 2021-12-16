@@ -10,13 +10,16 @@ import UIKit
 protocol IntrestingEventsBussinessLogic {
     func showIntrestingEvents()
 }
-//
-//protocol FavouritesDataStore {
-//    var citiesArray: [String] { get set }
-//}
 
-class IntrestingEventsInteractor: IntrestingEventsBussinessLogic {
+protocol IntrestingEventsDataStore {
+    var currentCity: String { get set }
+    var image: [UIImage] { get set }
+}
+
+class IntrestingEventsInteractor: IntrestingEventsBussinessLogic, IntrestingEventsDataStore {
     
+    var image: [UIImage] = []
+    var currentCity: String = ""
     var presenter: IntrestingEventsPresentationLogic?
     
     func showIntrestingEvents() {
@@ -71,7 +74,11 @@ class IntrestingEventsInteractor: IntrestingEventsBussinessLogic {
                                     descriptions: "Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание ",
                                     date: "05.12.2021")
         ]
-        let viewModel = IntrestingEventsModels.IntrestingEvents.ViewModel(events: interestingEvent)
+        image = [UIImage(named: "hub3")!,
+                 UIImage(named: "hub3")!,
+                 UIImage(named: "hub3")!
+                ]
+        let viewModel = IntrestingEventsModels.IntrestingEvents.ViewModel(country: currentCity, events: interestingEvent)
         presenter?.presentIntrestingEvents(response: viewModel)
     }
 }
