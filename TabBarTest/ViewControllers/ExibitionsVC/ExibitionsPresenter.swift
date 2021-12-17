@@ -16,7 +16,6 @@ final class ExibitionsPresenter: ExibitionsPresentationLogic {
     weak var exibitionsController: ExibitionsController?
     
     func displayExibitions(response: ExibitionsModels.Exibitions.ViewModel) {
-        let viewModel = response
-        exibitionsController?.displayExibitions(viewModel: viewModel)
+        exibitionsController?.displayExibitions(viewModel: response)
     } 
 }

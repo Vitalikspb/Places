@@ -70,12 +70,13 @@ class SightCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         
         
-        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 50),
+        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0,
+                                                    width: contentView.frame.width, height: 50),
                                 byRoundingCorners: [.bottomLeft, .bottomRight],
                                 cornerRadii: CGSize(width: 8, height: 8))
         let maskLayer = CAShapeLayer()
         maskLayer.path = path.cgPath
-        gradientView.colors = [UIColor.clear, UIColor.black]
+        gradientView.colors = [UIColor.clear, UIColor.red]
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientView.layer.mask = maskLayer

@@ -51,7 +51,6 @@ class CityController: UIViewController {
         interactor?.showCity()
     }
     
-    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setupClean()
@@ -60,12 +59,6 @@ class CityController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupClean()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // в интеракторе создаем большую модель для заполнения всех ячеек таблицы, заголовка, погоды и всей остальой инфорамции
-        //        interactor?.showCity()
     }
 
     // MARK: - Helper Functions

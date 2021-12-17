@@ -12,7 +12,7 @@ protocol IntrestingEventsRoutingLogic {
 }
 
 protocol IntrestingEventsDataPassing {
-    var dataStore: IntrestingEventsDataStore? { get }
+    var dataStore: IntrestingEventsDataStore? { get set }
 }
 
 class IntrestingEventsRouter: NSObject, IntrestingEventsRoutingLogic, IntrestingEventsDataPassing {
@@ -41,7 +41,8 @@ class IntrestingEventsRouter: NSObject, IntrestingEventsRoutingLogic, Intresting
     // MARK: - Передача данных
     
     func passDataToLeadMore(source: IntrestingEventsDataStore, destination: inout SelectedInterestingEventDataStore) {
-        destination.currentCity = source.currentCity
+        destination.name = source.name
         destination.image = source.image
+        destination.description = source.description
     }
 }

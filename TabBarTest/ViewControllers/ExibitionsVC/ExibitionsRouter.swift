@@ -16,8 +16,7 @@ protocol ExibitionsDataPassing {
 
 class ExibitionsRouter: NSObject, ExibitionsRoutingLogic, ExibitionsDataPassing {
     var dataStore: ExibitionsDataStore?
-    
-    
-  weak var viewController: ExibitionsController?
+    weak var viewController: ExibitionsController?
     
 }
+

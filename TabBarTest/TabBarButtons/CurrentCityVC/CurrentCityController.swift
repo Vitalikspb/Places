@@ -22,7 +22,8 @@ class CurrentCityController: UIViewController {
     // MARK: - Private Properties
     
     private var titleName: String = ""
-    var viewModel: [CurrentCityViewModel.CityModel]!
+    var viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(
+        cities: CurrentCityViewModel.CityModel(name: "", image: UIImage(named: "hub3")!))
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
@@ -46,21 +47,29 @@ class CurrentCityController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        setupClean()
-        setupUI()
-        viewModel =  [CurrentCityViewModel.CityModel(name: "",
-                                                 image: UIImage(named: "hub3")!)]
         navigationController?.navigationBar.isHidden = false
+        view.backgroundColor = .white
+//        setupClean()
+        setupUI()
+        interactor?.showCity()
+    }
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupClean()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupClean()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleName = userDefault.string(forKey: UserDefaults.currentCity) ?? ""
         title = titleName
-        viewModel.removeAll()
         // в интеракторе создаем большую модель для заполнения всех ячеек таблицы, заголовка, погоды и всей остальой инфорамции
-        //        interactor?.showCity()
+        currentCity = titleName
+        router?.dataStore?.currentCity = currentCity
     }
     
     
@@ -132,7 +141,7 @@ extension CurrentCityController: CurrentCityDisplayLogic {
     // отображение обновленной таблицы после заполнения в интеракторе данными модели
     // пока что не работает т.к нету модели
     func displayAllCities(viewModel: CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel) {
-        self.viewModel = viewModel.cities
+        self.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()
@@ -159,7 +168,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier, for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.configureCell(titleName: "123123123", description: "lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa")
+            cell.configureCell(titleName: "Описание города", description: "lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa")
             selectedDescriptionCell
                 ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
                 : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
@@ -257,7 +266,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             // Обязательно к просмотру
             // Интересные места по близости
             // Музеи
-        case 4,8,9: return 180
+        case 4,8,9: return 185
             
         default: return 50
         }
@@ -292,7 +301,7 @@ extension CurrentCityController: CountryCitiesTableViewCellDelegate {
     // Открываем другой город из текущего
     func showSelectedCityDescription(_ name: String) {
         currentCity = name
-        router?.dataStore?.currentCity = name
+        router?.dataStore?.currentCity = currentCity
         router?.routeToCityVC()
     }
     

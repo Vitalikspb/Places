@@ -10,14 +10,14 @@ class InterestingEventsTableViewCell: UITableViewCell {
     
     // MARK: - UI properties
     private let titleLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
         return label
     }()
     private let dateLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
@@ -32,7 +32,7 @@ class InterestingEventsTableViewCell: UITableViewCell {
         return imageView
     }()
     private let mainTextLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -92,32 +92,32 @@ class InterestingEventsTableViewCell: UITableViewCell {
                           width: 0,
                           height: 0)
         dateLabel.anchor(top: contentView.topAnchor,
-                          left: titleLabel.rightAnchor,
-                          bottom: nil,
-                          right: contentView.rightAnchor,
-                          paddingTop: 8,
-                          paddingLeft: 16,
-                          paddingBottom: 0,
-                          paddingRight: 16,
-                          width: 0,
-                          height: 0)
+                         left: titleLabel.rightAnchor,
+                         bottom: nil,
+                         right: contentView.rightAnchor,
+                         paddingTop: 8,
+                         paddingLeft: 16,
+                         paddingBottom: 0,
+                         paddingRight: 16,
+                         width: 0,
+                         height: 0)
         mainImageView.anchor(top: contentView.topAnchor,
-                              left: contentView.leftAnchor,
-                              bottom: nil,
-                              right: contentView.rightAnchor,
-                              paddingTop: 35,
-                              paddingLeft: 0,
-                              paddingBottom: 0,
-                              paddingRight: 0,
-                              width: 0,
-                              height: 170)
-        mainTextLabel.anchor(top: mainImageView.bottomAnchor,
                              left: contentView.leftAnchor,
                              bottom: nil,
                              right: contentView.rightAnchor,
-                             paddingTop: 10,
+                             paddingTop: 35,
                              paddingLeft: 16,
                              paddingBottom: 0,
+                             paddingRight: 16,
+                             width: 0,
+                             height: 170)
+        mainTextLabel.anchor(top: mainImageView.bottomAnchor,
+                             left: contentView.leftAnchor,
+                             bottom: contentView.bottomAnchor,
+                             right: contentView.rightAnchor,
+                             paddingTop: 10,
+                             paddingLeft: 16,
+                             paddingBottom: 5,
                              paddingRight: 16,
                              width: 0, height: 0)
     }

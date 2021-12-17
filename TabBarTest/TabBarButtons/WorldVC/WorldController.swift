@@ -15,7 +15,6 @@ class WorldController: UIViewController {
     
     // MARK: - UI Properties
     
-    private lazy var searchBar:UISearchBar = UISearchBar()
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
     // MARK: - Public Properties
@@ -55,14 +54,11 @@ class WorldController: UIViewController {
         viewModel =  WorldViewModels.AllCountriesInTheWorld.ViewModel(
             country: [WorldViewModels.WorldModel(name: "", image: UIImage(named: "hub3")!)])
         
-//        MARK: - TODO посмотреть что будет лучше
-//        navigationController?.navigationBar.isHidden = false
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        MARK: - TODO удалить лишний
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
         title = "Страны"
         viewModel.country.removeAll()
         filteredTableData.country.removeAll()
@@ -89,16 +85,6 @@ class WorldController: UIViewController {
     }
     
     private func setupUI() {
-        // скролл картинок
-        
-        searchBar.searchBarStyle = UISearchBar.Style.default
-        searchBar.placeholder = "Поиск страны"
-        searchBar.sizeToFit()
-        searchBar.isTranslucent = false
-        searchBar.backgroundImage = UIImage()
-        searchBar.delegate = self
-        //            navigationItem.titleView = searchBar
-        tableView.tableHeaderView = searchBar
         tableView.register(CountryToSelectTableViewCell.self,
                            forCellReuseIdentifier: CountryToSelectTableViewCell.identifier)
         
@@ -108,7 +94,6 @@ class WorldController: UIViewController {
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         
         view.addSubview(tableView)
         
@@ -161,11 +146,11 @@ extension WorldController: UITableViewDelegate, UITableViewDataSource {
     }
     
     // Белое заполнение пустой части таблицы
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let view = UIView()
+//        view.backgroundColor = .white
+//        return view
+//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let countryName = filteredTableData.country[indexPath.row].name
@@ -198,12 +183,13 @@ extension WorldController: UISearchBarDelegate {
         isSearch = false
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print("searchText \(searchText)")
         let countSymbol = searchText.count
         if countSymbol != 0 {
             filteredTableData.country.removeAll()
             viewModel.country.forEach {
-                let searchText = String($0.name.prefix(countSymbol)).capitalized
-                if searchText == searchText.capitalized {
+                let searchTextName = String($0.name.prefix(countSymbol)).capitalized
+                if searchTextName == searchText.capitalized {
                     filteredTableData.country.append($0)
                 }
             }

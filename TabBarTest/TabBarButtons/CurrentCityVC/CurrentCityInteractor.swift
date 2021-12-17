@@ -31,12 +31,8 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
 //        местами
 //        другими городами
 //        по этой модели будем заполнять экран а не как сейчас
-        var viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(cities: [CurrentCityViewModel.CityModel(name: "", image: UIImage())])
-        viewModel.cities.removeFirst()
-        city.forEach {
-            guard let image = UIImage(named: "hub3") else { return }
-            viewModel.cities.append(CurrentCityViewModel.CityModel(name: $0, image: image))
-        }
+        let viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(
+            cities: CurrentCityViewModel.CityModel(name: currentCity, image: UIImage()))
         presenter?.presentAllMarkers(response: viewModel)
     }
     

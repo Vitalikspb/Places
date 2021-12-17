@@ -17,9 +17,6 @@ class IntrestingEventsController: UIViewController {
     
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
-    private var selectedDescriptionCell: Bool = false
-    private var heightOfSelectedCell: CGFloat = 260
-    private var selectedDescriptionIndex: Int = 0
     
     // MARK: - Public Properties
     
@@ -29,6 +26,8 @@ class IntrestingEventsController: UIViewController {
     // массив всех достопримечательностей
     var data: IntrestingEventsModels.IntrestingEvents.ViewModel!
     
+    // MARK: - Private Properties
+    
     private let userDefault = UserDefaults.standard
     
     // MARK: - Life cycle
@@ -37,13 +36,18 @@ class IntrestingEventsController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .white
-        setupClean()
         setupUI()
+        interactor?.showIntrestingEvents()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        interactor?.showIntrestingEvents()
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupClean()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupClean()
     }
     
     // MARK: - Helper Functions
@@ -62,14 +66,7 @@ class IntrestingEventsController: UIViewController {
         router.dataStore = interactor
     }
     
-    private func setupUserDefault() {
-        
-    }
-    
     private func setupUI() {
-        title = "События в \(data.country)"
-        
-        // таблица
         tableView.register(InterestingEventsTableViewCell.self,
                            forCellReuseIdentifier: InterestingEventsTableViewCell.identifier)
         tableView.delegate = self
@@ -78,7 +75,6 @@ class IntrestingEventsController: UIViewController {
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         
         view.addSubview(tableView)
         tableView.anchor(top: view.topAnchor,
@@ -98,6 +94,7 @@ class IntrestingEventsController: UIViewController {
 extension IntrestingEventsController: IntrestingEventsDisplayLogic {
     func displayIntrestingEvents(viewModel: IntrestingEventsModels.IntrestingEvents.ViewModel) {
         data = viewModel
+        title = "Интересные события в \(data.country)"
         tableView.reloadData()
     }
 }
@@ -122,8 +119,7 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
     
     // высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // ячейка с кнопками
-        return indexPath.row == selectedDescriptionIndex ? heightOfSelectedCell : 260
+        return 270
     }
     
     // белое заполнение пустой части таблицы
@@ -131,5 +127,12 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
         let view = UIView()
         view.backgroundColor = .white
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        router?.dataStore?.name = data.events[indexPath.row].name
+        router?.dataStore?.description = data.events[indexPath.row].descriptions
+        router?.dataStore?.image = data.events[indexPath.row].image
+        router?.routeToSelectedEventVC()
     }
 }

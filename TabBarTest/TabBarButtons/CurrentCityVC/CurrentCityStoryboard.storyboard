@@ -27,12 +27,12 @@
             </objects>
             <point key="canvasLocation" x="900.00000000000011" y="88.392857142857139"/>
         </scene>
-        <!--Настройки-->
+        <!--Город-->
         <scene sceneID="1ev-aO-AiN">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="n6L-j2-wrv" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1" title="Настройки" id="7B5-Oa-Xnv">
-                        <imageReference key="image" image="gear" catalog="system" symbolScale="default"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Город" id="7B5-Oa-Xnv">
+                        <imageReference key="image" image="map" catalog="system" symbolScale="default"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -51,7 +51,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="gear" catalog="system" width="128" height="119"/>
+        <image name="map" catalog="system" width="128" height="110"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

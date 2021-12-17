@@ -7,13 +7,7 @@
 import UIKit
 
 class ExibitionsTableViewCell: UITableViewCell {
-    
-    // MARK: - Public properties
-    
-    weak var delegate: CountryCellsCitiesCollectionViewCellDelegate?
-    static let identifier = "ExibitionsTableViewCell"
 
-    
     // MARK: - Private properties
     
     private let mainImageView: UIImageView = {
@@ -30,7 +24,7 @@ class ExibitionsTableViewCell: UITableViewCell {
         title.contentMode = .center
         title.textAlignment = .left
         title.backgroundColor = .clear
-        title.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        title.font = UIFont.init(name: "GillSans-SemiBold", size: 20)
         return title
     }()
     private let gradientView = GradientView()
@@ -102,6 +96,9 @@ class ExibitionsTableViewCell: UITableViewCell {
         return label
     }()
     
+    // MARK: - Public properties
+    
+    static let identifier = "ExibitionsTableViewCell"
     
     // MARK: - Lifecycle
     
@@ -131,7 +128,6 @@ class ExibitionsTableViewCell: UITableViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        
         let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 50),
                                 byRoundingCorners: [.bottomLeft, .bottomRight],
                                 cornerRadii: CGSize(width: 8, height: 8))
@@ -141,11 +137,6 @@ class ExibitionsTableViewCell: UITableViewCell {
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientView.layer.mask = maskLayer
-
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 8
-        self.standartShadow(view: self)
-        
         
         contentView.addSubview(mainImageView)
         contentView.addSubview(gradientView)
@@ -161,36 +152,42 @@ class ExibitionsTableViewCell: UITableViewCell {
         
         ratingStackView.addArrangedSubview(ratingImage)
         ratingStackView.addArrangedSubview(ratingLabel)
-    }
-    
-    private func setupConstraints() {
-        mainImageView.addConstraintsToFillView(view: contentView)
+
+        mainImageView.anchor(top: contentView.topAnchor,
+                             left: contentView.leftAnchor,
+                             bottom: contentView.bottomAnchor,
+                             right: contentView.rightAnchor,
+                             paddingTop: 8,
+                             paddingLeft: 16,
+                             paddingBottom: 8,
+                             paddingRight: 16,
+                             width: 0, height: 0)
         gradientView.anchor(top: nil,
                             left: contentView.leftAnchor,
                             bottom: contentView.bottomAnchor,
                             right: contentView.rightAnchor,
                             paddingTop: 0,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 0,
+                            paddingLeft: 16,
+                            paddingBottom: 8,
+                            paddingRight: 16,
                             width: 0, height: 50)
         title.anchor(top: nil,
                      left: contentView.leftAnchor,
-                     bottom: nil,
+                     bottom: contentView.bottomAnchor,
                      right: contentView.rightAnchor,
                      paddingTop: 0,
-                     paddingLeft: 8,
-                     paddingBottom: 0,
-                     paddingRight: 0,
+                     paddingLeft: 32,
+                     paddingBottom: 45,
+                     paddingRight: 32,
                      width: 0, height: 25)
         durationLabel.anchor(top: contentView.topAnchor,
                              left: nil,
                              bottom: nil,
                              right: contentView.rightAnchor,
-                             paddingTop: 8,
-                             paddingLeft: 8,
+                             paddingTop: 16,
+                             paddingLeft: 0,
                              paddingBottom: 0,
-                             paddingRight: 0,
+                             paddingRight: 32,
                              width: 0, height: 25)
         ratingImage.anchor(top: nil,
                            left: nil,
@@ -219,14 +216,14 @@ class ExibitionsTableViewCell: UITableViewCell {
                            paddingBottom: 0,
                            paddingRight: 0,
                            width: 2, height: 15)
-        mainStackView.anchor(top: title.bottomAnchor,
+        mainStackView.anchor(top: nil,
                                   left: contentView.leftAnchor,
                                   bottom: contentView.bottomAnchor,
                                   right: contentView.rightAnchor,
                                   paddingTop: 0,
-                                  paddingLeft: 8,
-                                  paddingBottom: 8,
-                                  paddingRight: 8,
+                                  paddingLeft: 32,
+                                  paddingBottom: 21,
+                                  paddingRight: 32,
                                   width: 0, height: 15)
        
 

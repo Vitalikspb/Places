@@ -15,8 +15,7 @@ final class IntrestingEventsPresenter: IntrestingEventsPresentationLogic {
     weak var intrestingEventsController: IntrestingEventsController?
     
     func presentIntrestingEvents(response: IntrestingEventsModels.IntrestingEvents.ViewModel) {
-        let viewModel = response
-        intrestingEventsController?.displayIntrestingEvents(viewModel: viewModel)
+        intrestingEventsController?.displayIntrestingEvents(viewModel: response)
     }
     
 }

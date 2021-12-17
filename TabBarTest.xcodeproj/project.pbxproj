@@ -97,7 +97,7 @@
 		C26BFE6B276A1C1500ABD119 /* SelectedInterestingEventWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE6A276A1C1500ABD119 /* SelectedInterestingEventWorker.swift */; };
 		C26BFE6D276A1C1D00ABD119 /* SelectedInterestingEventPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE6C276A1C1D00ABD119 /* SelectedInterestingEventPresenter.swift */; };
 		C26BFE6F276A1C2400ABD119 /* SelectedInterestingEventModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE6E276A1C2400ABD119 /* SelectedInterestingEventModels.swift */; };
-		C26BFE72276A260500ABD119 /* ExibitionsContoller.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C26BFE71276A260500ABD119 /* ExibitionsContoller.storyboard */; };
+		C26BFE72276A260500ABD119 /* ExibitionsController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C26BFE71276A260500ABD119 /* ExibitionsController.storyboard */; };
 		C26BFE74276A261200ABD119 /* ExibitionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE73276A261200ABD119 /* ExibitionsController.swift */; };
 		C26BFE76276A261D00ABD119 /* ExibitionsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE75276A261D00ABD119 /* ExibitionsInteractor.swift */; };
 		C26BFE78276A262400ABD119 /* ExibitionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26BFE77276A262400ABD119 /* ExibitionsRouter.swift */; };
@@ -219,7 +219,7 @@
 		C26BFE6A276A1C1500ABD119 /* SelectedInterestingEventWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedInterestingEventWorker.swift; sourceTree = "<group>"; };
 		C26BFE6C276A1C1D00ABD119 /* SelectedInterestingEventPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedInterestingEventPresenter.swift; sourceTree = "<group>"; };
 		C26BFE6E276A1C2400ABD119 /* SelectedInterestingEventModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedInterestingEventModels.swift; sourceTree = "<group>"; };
-		C26BFE71276A260500ABD119 /* ExibitionsContoller.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ExibitionsContoller.storyboard; sourceTree = "<group>"; };
+		C26BFE71276A260500ABD119 /* ExibitionsController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ExibitionsController.storyboard; sourceTree = "<group>"; };
 		C26BFE73276A261200ABD119 /* ExibitionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExibitionsController.swift; sourceTree = "<group>"; };
 		C26BFE75276A261D00ABD119 /* ExibitionsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExibitionsInteractor.swift; sourceTree = "<group>"; };
 		C26BFE77276A262400ABD119 /* ExibitionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExibitionsRouter.swift; sourceTree = "<group>"; };
@@ -349,7 +349,7 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
-		5397795927443147006644D3 /* CountryCell */ = {
+		5397795927443147006644D3 /* CurrentCity */ = {
 			isa = PBXGroup;
 			children = (
 				5397795C27443872006644D3 /* CountryPhotosTableViewCell.swift */,
@@ -360,7 +360,7 @@
 				5323BA17274D509700F6BA5E /* TicketCollectionViewCell.swift */,
 				5323BA1B274D82CC00F6BA5E /* WeatherCollectionViewCell.swift */,
 			);
-			path = CountryCell;
+			path = CurrentCity;
 			sourceTree = "<group>";
 		};
 		53F0D79F275E97FC0087A9BB /* TabBarButtons */ = {
@@ -508,7 +508,7 @@
 				538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */,
 				C2A0C221276B85E00023BF60 /* SelectedInterestingEventCell */,
 				C26BFE5C2768DC2500ABD119 /* InterestingEvents */,
-				5397795927443147006644D3 /* CountryCell */,
+				5397795927443147006644D3 /* CurrentCity */,
 				538AF833273422E000D02ECA /* FloatingViewCells */,
 				53403D69275FF1BD004087F7 /* FavouritesCell */,
 			);
@@ -537,8 +537,8 @@
 			children = (
 				C2A0C212276B45EB0023BF60 /* DescriptionCountryToBuyVC */,
 				C26BFE70276A25B600ABD119 /* ExibitionsVC */,
-				C26BFE61276A1B9600ABD119 /* SelectedInterestingEventVC */,
 				C26BFE4D2768D68900ABD119 /* InterestingEventsVC */,
+				C26BFE61276A1B9600ABD119 /* SelectedInterestingEventVC */,
 				53F0D7A0275E980B0087A9BB /* FavouritesVC */,
 				53F3E2F0273FD760004B278E /* CityVC */,
 			);
@@ -584,7 +584,7 @@
 		C26BFE70276A25B600ABD119 /* ExibitionsVC */ = {
 			isa = PBXGroup;
 			children = (
-				C26BFE71276A260500ABD119 /* ExibitionsContoller.storyboard */,
+				C26BFE71276A260500ABD119 /* ExibitionsController.storyboard */,
 				C26BFE73276A261200ABD119 /* ExibitionsController.swift */,
 				C26BFE75276A261D00ABD119 /* ExibitionsInteractor.swift */,
 				C26BFE77276A262400ABD119 /* ExibitionsRouter.swift */,
@@ -728,7 +728,7 @@
 				C26BFE4F2768D7A800ABD119 /* IntrestingEventsController.storyboard in Resources */,
 				53F3E2FC273FD830004B278E /* CityController.storyboard in Resources */,
 				C2CA35DD26FDCDB100795EF6 /* Assets.xcassets in Resources */,
-				C26BFE72276A260500ABD119 /* ExibitionsContoller.storyboard in Resources */,
+				C26BFE72276A260500ABD119 /* ExibitionsController.storyboard in Resources */,
 				53F0D7A2275E98340087A9BB /* FavouritesController.storyboard in Resources */,
 				534E20E62769193000442F29 /* WorldStoryboard.storyboard in Resources */,
 				C2CA35DB26FDCDAF00795EF6 /* Main.storyboard in Resources */,
@@ -1040,7 +1040,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8C44H3653W;
+				DEVELOPMENT_TEAM = GR6GC7JSQ5;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1061,7 +1061,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8C44H3653W;
+				DEVELOPMENT_TEAM = GR6GC7JSQ5;
 				INFOPLIST_FILE = TabBarTest/AppSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -29,21 +29,29 @@ class ExibitionsController: UIViewController {
     // массив всех достопримечательностей
     var data: ExibitionsModels.Exibitions.ViewModel!
     
-    private let userDefault = UserDefaults.standard
-    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .white
-        setupClean()
+        interactor?.showExibitions()
         setupUI()
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupClean()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupClean()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        interactor?.showExibitions()
+//        interactor?.showExibitions()
     }
     
     // MARK: - Helper Functions
@@ -63,9 +71,7 @@ class ExibitionsController: UIViewController {
     }
     
     private func setupUI() {
-        title = "Экскурсии в \(data.country)"
         
-        // таблица
         tableView.register(ExibitionsTableViewCell.self,
                            forCellReuseIdentifier: ExibitionsTableViewCell.identifier)
         tableView.delegate = self
@@ -75,6 +81,7 @@ class ExibitionsController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         
         view.addSubview(tableView)
         tableView.anchor(top: view.topAnchor,
@@ -91,9 +98,11 @@ class ExibitionsController: UIViewController {
 }
 
 // MARK: - CountryDisplayLogic
+
 extension ExibitionsController: ExibitionsDisplayLogic {
     func displayExibitions(viewModel: ExibitionsModels.Exibitions.ViewModel) {
         data = viewModel
+        title = "Экскурсии по \(data.country)"
         tableView.reloadData()
     }
 }
@@ -120,14 +129,10 @@ extension ExibitionsController: UITableViewDelegate, UITableViewDataSource {
     
     // высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // ячейка с кнопками
         return 260
     }
     
-    // белое заполнение пустой части таблицы
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("indexPath.row: \(indexPath.row)")
     }
 }

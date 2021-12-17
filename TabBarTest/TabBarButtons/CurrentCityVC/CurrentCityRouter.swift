@@ -32,6 +32,8 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     // На экран интересные события
     func routeToInterestingEventsVC() {
         let destinationVC: IntrestingEventsController = IntrestingEventsController.loadFromStoryboard()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToIntrestingEvents(source: dataStore!, destination: &destinationDS)
         navigateToIntrestingEvents(source: viewController!, destination: destinationVC)
     }
     // на экран выбранного города
@@ -69,6 +71,10 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     }
     
     // MARK: - Передача данных
+    func passDataToIntrestingEvents(source: CurrentCityDataStore, destination: inout IntrestingEventsDataStore) {
+        destination.currentCity = source.currentCity
+    }
+    
     func passDataToLeadMore(source: CurrentCityDataStore, destination: inout CityDataStore) {
         destination.currentCity = source.currentCity
     }

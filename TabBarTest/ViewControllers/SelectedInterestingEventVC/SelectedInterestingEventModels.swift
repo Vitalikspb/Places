@@ -10,6 +10,7 @@ import UIKit
 enum SelectedInterestingEventViewModel {
     
     struct EventModel {
+        let nameEvent: String
         let mainText: String
         let image: [UIImage]
     }

@@ -61,17 +61,27 @@ class CountryToSelectTableViewCell: UITableViewCell {
         // Для обрезания длинного текста описания события
         self.clipsToBounds = true
         
-        gradientView.colors = [UIColor(white: 1, alpha: 0), UIColor.black]
+        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width-32, height: 50),
+                                byRoundingCorners: [.bottomLeft, .bottomRight],
+                                cornerRadii: CGSize(width: 8, height: 8))
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = path.cgPath
+        gradientView.colors = [UIColor.clear, UIColor.black]
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
+        gradientView.layer.mask = maskLayer
+        
+        self.backgroundColor = .white
+        self.layer.cornerRadius = 8
+        self.standartShadow(view: self)
         
         contentView.addSubview(mainImageView)
-        contentView.addSubview(titleLabel)
         contentView.addSubview(gradientView)
-
+        contentView.addSubview(titleLabel)
+        
         titleLabel.anchor(top: nil,
                           left: contentView.leftAnchor,
-                          bottom: contentView.bottomAnchor,
+                          bottom: mainImageView.bottomAnchor,
                           right: contentView.rightAnchor,
                           paddingTop: 0,
                           paddingLeft: 0,
@@ -89,9 +99,9 @@ class CountryToSelectTableViewCell: UITableViewCell {
                              paddingRight: 16,
                              width: 0, height: 0)
         gradientView.anchor(top: nil,
-                            left: contentView.leftAnchor,
-                            bottom: contentView.bottomAnchor,
-                            right: contentView.rightAnchor,
+                            left: mainImageView.leftAnchor,
+                            bottom: mainImageView.bottomAnchor,
+                            right: mainImageView.rightAnchor,
                             paddingTop: 0,
                             paddingLeft: 0,
                             paddingBottom: 0,

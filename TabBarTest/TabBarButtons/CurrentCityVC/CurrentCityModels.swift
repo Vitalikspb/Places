@@ -25,7 +25,7 @@ enum CurrentCityViewModel {
         
         // посылаем все города для отображения на экране
         struct ViewModel {
-            var cities: [CityModel]
+            var cities: CityModel
         }
     }
 }

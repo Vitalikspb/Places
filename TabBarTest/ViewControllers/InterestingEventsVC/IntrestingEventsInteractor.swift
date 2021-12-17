@@ -13,13 +13,17 @@ protocol IntrestingEventsBussinessLogic {
 
 protocol IntrestingEventsDataStore {
     var currentCity: String { get set }
+    var name: String { get set }
     var image: [UIImage] { get set }
+    var description: String { get set }
 }
 
 class IntrestingEventsInteractor: IntrestingEventsBussinessLogic, IntrestingEventsDataStore {
     
-    var image: [UIImage] = []
     var currentCity: String = ""
+    var image: [UIImage] = []
+    var name: String = ""
+    var description: String = ""
     var presenter: IntrestingEventsPresentationLogic?
     
     func showIntrestingEvents() {
@@ -78,7 +82,8 @@ class IntrestingEventsInteractor: IntrestingEventsBussinessLogic, IntrestingEven
                  UIImage(named: "hub3")!,
                  UIImage(named: "hub3")!
                 ]
-        let viewModel = IntrestingEventsModels.IntrestingEvents.ViewModel(country: currentCity, events: interestingEvent)
+        let viewModel = IntrestingEventsModels.IntrestingEvents.ViewModel(
+            country: currentCity, events: interestingEvent)
         presenter?.presentIntrestingEvents(response: viewModel)
     }
 }
