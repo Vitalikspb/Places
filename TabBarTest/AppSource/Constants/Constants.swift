@@ -66,7 +66,7 @@ enum Constants {
         static let intrestingViews = "Интересные события"
         static let ticketToSights = "Билеты на экскурсии"
         static let FAQ = "Вопросы и ответы"
-        static let rentAuto = "Аренда автомобиля"
+        static let rentAuto = "Такси и аренда авто"
         static let chat = "Чат"
         static let weather = "Погода"
         static let today = "Сегодня"

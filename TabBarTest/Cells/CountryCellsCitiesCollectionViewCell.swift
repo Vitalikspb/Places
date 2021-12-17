@@ -113,7 +113,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
 
         moveToChoosenCityButton.addTarget(self, action: #selector(moveToMapViewHandle), for: .touchUpInside)
         
-        self.backgroundColor = .red
+        self.backgroundColor = .white
         contentView.standartShadow(cornerRadius: 8)
         
         contentView.addSubview(image)

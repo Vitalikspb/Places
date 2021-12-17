@@ -133,6 +133,7 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
         router?.dataStore?.name = data.events[indexPath.row].name
         router?.dataStore?.description = data.events[indexPath.row].descriptions
         router?.dataStore?.image = data.events[indexPath.row].image
+        router?.dataStore?.date = data.events[indexPath.row].date
         router?.routeToSelectedEventVC()
     }
 }

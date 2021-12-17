@@ -13,6 +13,7 @@ protocol CurrentCityRoutingLogic {
     func routeToInterestingEventsVC()
     func routeToExibitionVC()
     func routeToRentAutoVC()
+    func routeToFAQVC()
 }
 
 protocol CurrentCityDataPassing {
@@ -29,6 +30,10 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     func routeToRentAutoVC() {
         let destination: RentAutoController = RentAutoController.loadFromStoryboard()
         presentModalRentAuto(source: viewController!, destination: destination)
+    }
+    func routeToFAQVC() {
+        let destination: FAQController = FAQController.loadFromStoryboard()
+        presentModalFaq(source: viewController!, destination: destination)
     }
     // на экран сохраненных достопримечательностей
     func routeToFavouritesVC() {
@@ -77,6 +82,9 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     }
     
     func presentModalRentAuto(source: CurrentCityController!, destination: RentAutoController) {
+        source.present(destination, animated: true, completion: nil)
+    }
+    func presentModalFaq(source: CurrentCityController!, destination: FAQController) {
         source.present(destination, animated: true, completion: nil)
     }
     

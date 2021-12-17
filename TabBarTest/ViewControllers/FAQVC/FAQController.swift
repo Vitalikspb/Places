@@ -13,9 +13,19 @@ protocol FAQDisplayLogic: AnyObject {
 }
 
 class FAQController: UIViewController {
-
-    // MARK: - Public Properties
     
+    struct HeightOfCells {
+        var bigCell: CGFloat
+        var smallCell: CGFloat
+    }
+    
+    // MARK: - Public Properties
+    private let topSeparator: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 2
+        return view
+    }()
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
     // MARK: - Public Properties
@@ -27,15 +37,19 @@ class FAQController: UIViewController {
     // MARK: - Private properties
     
     private var selectedIndex: Int = -1
-
+    private var lastIndexPath: IndexPath = IndexPath(row: 0, section: 0)
+    private var heightOfCells: [HeightOfCells] = []
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .white
-        setupUI()
         interactor?.showFAQ()
+        heightOfCells.removeAll()
+        setupUI()
+        setupHeightOfCells()
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -47,7 +61,11 @@ class FAQController: UIViewController {
         super.init(coder: aDecoder)
         setupClean()
     }
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
     // MARK: - Helper Functions
     
     // Настройка архитектуры Clean Swift
@@ -64,30 +82,57 @@ class FAQController: UIViewController {
         router.dataStore = interactor
     }
     
-    private func setupUserDefault() {
-        
+    private func setupHeightOfCells() {
+        viewModel.FAQModel.forEach {
+            let standartSmallHeightCell: CGFloat = 43
+            let standartBigHeightCell: CGFloat = standartSmallHeightCell + 35
+            let standartInsetScreen: CGFloat = 60
+            let bigCellHeight = $0.answer.height(
+                widthScreen: UIScreen.main.bounds.width - standartInsetScreen,
+                font: UIFont(name: "GillSans-SemiBold",
+                             size: 16)!)
+            let smallCellHeight = $0.question.height(
+                widthScreen: UIScreen.main.bounds.width - standartInsetScreen,
+                font: UIFont(name: "GillSans-SemiBold",
+                             size: 16)!)
+            heightOfCells.append(
+                HeightOfCells(bigCell: bigCellHeight + standartBigHeightCell,
+                              smallCell: smallCellHeight + standartSmallHeightCell)
+            )
+        }
     }
     
     private func setupUI() {
-        title = "Вопросы и ответы"
         tableView.register(FAQTableViewCell.self,
                            forCellReuseIdentifier: FAQTableViewCell.identifier)
-
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
+        tableView.allowsSelection = true
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
+        view.addSubview(topSeparator)
         view.addSubview(tableView)
         
-        tableView.anchor(top: view.topAnchor,
+        topSeparator.centerX(inView: view)
+        topSeparator.anchor(top: view.topAnchor,
+                            left: nil,
+                            bottom: nil,
+                            right: nil,
+                            paddingTop: 10,
+                            paddingLeft: 0,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 100, height: 4)
+        tableView.anchor(top: topSeparator.bottomAnchor,
                          left: view.leftAnchor,
                          bottom: view.bottomAnchor,
                          right: view.rightAnchor,
-                         paddingTop: 0,
+                         paddingTop: 10,
                          paddingLeft: 0,
                          paddingBottom: 0,
                          paddingRight: 0,
@@ -113,15 +158,20 @@ extension FAQController: UITableViewDelegate, UITableViewDataSource {
         let currentModel = viewModel.FAQModel[indexPath.row]
         cell.configureCell(question: currentModel.question,
                            answer: currentModel.answer)
-
         return cell
     }
     
     // Высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return indexPath.row == selectedIndex ? 130 : 70
+        return indexPath.row == selectedIndex
+            ? heightOfCells[indexPath.row].bigCell
+            : heightOfCells[indexPath.row].smallCell
     }
-    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }
     
     // Белое заполнение пустой части таблицы
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -132,10 +182,21 @@ extension FAQController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row == selectedIndex ? -1 : indexPath.row
-        let indexPath = [IndexPath(row: indexPath.row, section: 0)]
-        tableView.reloadRows(at: indexPath, with: .automatic)
-        guard let cell = tableView.cellForRow(at: indexPath.first!) as? FAQTableViewCell else { return }
-        cell.arrowImage = selectedIndex == -1 ? "map" : "star"
+        
+        let updateIndexPath = [IndexPath(row: indexPath.row, section: 0), IndexPath(row: lastIndexPath.row, section: 0)]
+        tableView.reloadRows(at: updateIndexPath, with: .automatic)
+        
+        if updateIndexPath.first != updateIndexPath.last {
+        guard let cell = tableView.cellForRow(at: updateIndexPath.first!) as? FAQTableViewCell else { return }
+        cell.arrowImage = indexPath.row == selectedIndex ? "arrowtriangle.up.fill" : "arrowtriangle.down.fill"
+        
+        guard let cell = tableView.cellForRow(at: updateIndexPath.last!) as? FAQTableViewCell else { return }
+            cell.arrowImage = indexPath.row == lastIndexPath.row ? "arrowtriangle.up.fill" : "arrowtriangle.down.fill"
+        } else {
+            guard let cell = tableView.cellForRow(at: updateIndexPath.first!) as? FAQTableViewCell else { return }
+            cell.arrowImage = indexPath.row == selectedIndex ? "arrowtriangle.up.fill" : "arrowtriangle.down.fill"
+        }
+        lastIndexPath = indexPath
     }
 }
 

@@ -341,7 +341,7 @@ extension CurrentCityController: ButtonsCollectionViewCellDelegate {
     }
     
     func faqHandler() {
-        print("для первой версии недоступно")
+        router?.routeToFAQVC()
     }
     
     func rentAutoHandler() {

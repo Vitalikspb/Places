@@ -89,7 +89,7 @@ class FavouritesTopCollectionViewCell: UICollectionViewCell {
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientView.layer.mask = maskLayer
         
-        self.backgroundColor = .red
+        self.backgroundColor = .white
         contentView.standartShadow(cornerRadius: 8)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapFavouriteHandle))

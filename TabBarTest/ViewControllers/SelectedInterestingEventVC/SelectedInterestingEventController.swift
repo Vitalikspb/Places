@@ -144,6 +144,7 @@ extension SelectedInterestingEventController: SelectedInterestingEventDisplayLog
         title = viewModel.event.nameEvent
         modelImage = viewModel.event.image
         mainTextView.text = viewModel.event.mainText
+        dateLabel.text = viewModel.event.date
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.collectionView.reloadData()

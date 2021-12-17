@@ -128,6 +128,10 @@ class ExibitionsTableViewCell: UITableViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = .white
+        self.selectedBackgroundView = bgColorView
+        
         let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 50),
                                 byRoundingCorners: [.bottomLeft, .bottomRight],
                                 cornerRadii: CGSize(width: 8, height: 8))

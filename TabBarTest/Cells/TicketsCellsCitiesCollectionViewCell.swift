@@ -125,7 +125,6 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
         
         
         self.backgroundColor = .white
-        self.backgroundColor = .red
         contentView.standartShadow(cornerRadius: 8)
         
         

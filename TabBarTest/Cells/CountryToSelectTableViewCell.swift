@@ -66,7 +66,7 @@ class CountryToSelectTableViewCell: UITableViewCell {
         // Для обрезания длинного текста описания события
         self.clipsToBounds = true
         let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor(named: "white_base")
+        bgColorView.backgroundColor = .white
         self.selectedBackgroundView = bgColorView
         
         let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width-32, height: 50),
@@ -80,7 +80,7 @@ class CountryToSelectTableViewCell: UITableViewCell {
         gradientView.layer.mask = maskLayer
         
         self.backgroundColor = .white
-        contentView.standartShadow(cornerRadius: 8)
+        
         
         contentView.addSubview(mainImageView)
         contentView.addSubview(gradientView)

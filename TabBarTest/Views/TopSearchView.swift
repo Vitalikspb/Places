@@ -36,9 +36,9 @@ class TopSearchView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        
         self.isUserInteractionEnabled = true
         self.backgroundColor = .white
+        self.layer.cornerRadius = 30
         self.standartShadow(cornerRadius: 30)
         
         self.addSubview(titleImage)

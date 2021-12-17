@@ -17,23 +17,24 @@ protocol RentAutoDataStore {
 }
 
 class RentAutoInteractor: RentAutoBussinessLogic, RentAutoDataStore {
+    var rentsImage: UIImage = UIImage(named: "hub3")!
+    
     
     var rentsName = ""
-    var rentsImage = UIImage(named: "gear")!
     var presenter: RentAutoPresentationLogic?
     
     func showRentAuto() {
         // тут запрашиваем у базы всю инфу по текущему городу
-        let rentAuto = [RentAutoModels.RentAutoModel(name: "AVIS", image: UIImage(named: "gear")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.RentAutoModel(name: "Hertz", image: UIImage(named: "gear")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.RentAutoModel(name: "Europcar", image: UIImage(named: "gear")!, url: URL(string: "https://RentAuto.ru/")!)]
+        let rentAuto = [RentAutoModels.RentAutoModel(name: "AVIS", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
+                        RentAutoModels.RentAutoModel(name: "Hertz", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
+                        RentAutoModels.RentAutoModel(name: "Europcar", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!)]
         
-        let rentTaxi = [RentAutoModels.rentTaxi(name: "UBER", image: UIImage(named: "gear")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.rentTaxi(name: "Яндекс", image: UIImage(named: "gear")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.rentTaxi(name: "Ситимобил", image: UIImage(named: "gear")!, url: URL(string: "https://RentAuto.ru/")!)]
+        let rentTaxi = [RentAutoModels.RentTaxi(name: "UBER", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
+                        RentAutoModels.RentTaxi(name: "Яндекс", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
+                        RentAutoModels.RentTaxi(name: "Ситимобил", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!)]
         
-        presenter?.presentRentAuto(response: RentAutoModels.RentAuto.ViewModel(rentsService: [
-            RentAutoModels.serviceAuto(rents: rentAuto, taxi: rentTaxi)
-        ]))
+        presenter?.presentRentAuto(response: RentAutoModels.RentAuto.ViewModel(rentsService:
+            RentAutoModels.ServiceAuto(rents: rentAuto, taxi: rentTaxi)
+        ))
     }
 }

@@ -95,7 +95,7 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell {
         favouriteFlag.addGestureRecognizer(tap)
         favouriteFlag.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
         
-        self.backgroundColor = .red
+        self.backgroundColor = .white
         contentView.standartShadow(cornerRadius: 8)
         
         contentView.addSubview(sightImageView)

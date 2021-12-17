@@ -20,7 +20,7 @@ class RentAutoTableViewCell: UITableViewCell {
     }()
     private let nameRentLabel: UILabel = {
         let title = UILabel()
-        title.textColor = .white
+        title.textColor = .black
         title.contentMode = .center
         title.textAlignment = .left
         title.backgroundColor = .clear
@@ -29,7 +29,7 @@ class RentAutoTableViewCell: UITableViewCell {
     }()
     private let arrowImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(systemName: "gear")
+        image.image = UIImage(systemName: "arrowtriangle.forward.fill")
         image.contentMode = .scaleAspectFit
         image.tintColor = .lightGray
         return image
@@ -67,6 +67,9 @@ class RentAutoTableViewCell: UITableViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = .white
+        self.selectedBackgroundView = bgColorView
         
         contentView.addSubview(imageRentImageView)
         contentView.addSubview(nameRentLabel)
@@ -75,12 +78,12 @@ class RentAutoTableViewCell: UITableViewCell {
         imageRentImageView.anchor(top: contentView.topAnchor,
                                   left: contentView.leftAnchor,
                                   bottom: contentView.bottomAnchor,
-                                  right: nameRentLabel.rightAnchor,
-                                  paddingTop: 2,
-                                  paddingLeft: 2,
-                                  paddingBottom: 2,
+                                  right: nameRentLabel.leftAnchor,
+                                  paddingTop: 4,
+                                  paddingLeft: 16,
+                                  paddingBottom: 4,
                                   paddingRight: 16,
-                                  width: 76, height: 76)
+                                  width: 72, height: 72)
         nameRentLabel.anchor(top: contentView.topAnchor,
                              left: nil,
                              bottom: contentView.bottomAnchor,
@@ -88,7 +91,7 @@ class RentAutoTableViewCell: UITableViewCell {
                              paddingTop: 0,
                              paddingLeft: 0,
                              paddingBottom: 0,
-                             paddingRight: 32,
+                             paddingRight: 16,
                              width: 0, height: 0)
         arrowImageView.anchor(top: contentView.topAnchor,
                               left: nil,

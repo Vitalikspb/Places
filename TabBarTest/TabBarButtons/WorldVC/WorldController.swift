@@ -102,7 +102,8 @@ class WorldController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = .white
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
         view.addSubview(tableView)
         
@@ -141,8 +142,6 @@ extension WorldController: WorldDisplayLogic {
 
 extension WorldController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("count: \(filteredTableData.country.count)")
-        
         return filteredTableData.country.count
     }
     
@@ -168,17 +167,10 @@ extension WorldController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let countryName = filteredTableData.country[indexPath.row].name
-        print(countryName)
         currentCity = countryName
         router?.dataStore?.currentCity = countryName
         router?.routeToCountryVC()
     }
-    
-    // MARK: - TODO удалить если работает tableView.keyboardDismissMode = .onDrag (101)
-    
-//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        if searchBar.resignFirstResponder()
-//    }
 }
 
 // MARK: - UISearchBarDelegate
@@ -203,7 +195,6 @@ extension WorldController: UISearchBarDelegate {
         isSearch = false
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print("searchText \(searchText)")
         let countSymbol = searchText.count
         if countSymbol != 0 {
             filteredTableData.country.removeAll()

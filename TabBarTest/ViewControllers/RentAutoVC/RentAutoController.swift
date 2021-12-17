@@ -15,7 +15,12 @@ class RentAutoController: UIViewController {
 
     
     // MARK: - UI Properties
-    
+    private let topSeparator: UIView = {
+       let view = UIView()
+        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 2
+        return view
+    }()
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
     
@@ -31,8 +36,9 @@ class RentAutoController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .white
-        setupUI()
+        
         interactor?.showRentAuto()
+        setupUI()
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -66,7 +72,6 @@ class RentAutoController: UIViewController {
     }
     
     private func setupUI() {
-        title = "Аренда автомобилей"
         tableView.register(RentAutoTableViewCell.self,
                            forCellReuseIdentifier: RentAutoTableViewCell.identifier)
 
@@ -75,16 +80,27 @@ class RentAutoController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
+        tableView.allowsSelection = true
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
+        view.addSubview(topSeparator)
         view.addSubview(tableView)
-        
-        tableView.anchor(top: view.topAnchor,
+        topSeparator.centerX(inView: view)
+        topSeparator.anchor(top: view.topAnchor,
+                            left: nil,
+                            bottom: nil,
+                            right: nil,
+                            paddingTop: 10,
+                            paddingLeft: 0,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 100, height: 4)
+        tableView.anchor(top: topSeparator.bottomAnchor,
                          left: view.leftAnchor,
                          bottom: view.bottomAnchor,
                          right: view.rightAnchor,
-                         paddingTop: 0,
+                         paddingTop: 10,
                          paddingLeft: 0,
                          paddingBottom: 0,
                          paddingRight: 0,
@@ -101,15 +117,15 @@ extension RentAutoController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? viewModel.rentsService[section].rents.count : viewModel.rentsService[section].taxi.count
+        return section == 0 ? viewModel.rentsService.rents.count : viewModel.rentsService.taxi.count
     }
     // MARK: - заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: RentAutoTableViewCell.identifier, for: indexPath) as? RentAutoTableViewCell else { return UITableViewCell() }
         
-        let modelRent = viewModel.rentsService[indexPath.section].rents[indexPath.row]
-        let modelTaxi = viewModel.rentsService[indexPath.section].taxi[indexPath.row]
+        let modelRent = viewModel.rentsService.rents[indexPath.row]
+        let modelTaxi = viewModel.rentsService.taxi[indexPath.row]
         
         switch indexPath.section {
         case 0: cell.configureCell(name: modelRent.name, image: modelRent.image)
@@ -139,9 +155,9 @@ extension RentAutoController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         indexPath.section == 0
         ?
-        print("выбран: \(viewModel.rentsService[indexPath.section].rents[indexPath.row].name)")
+        print("выбран: \(viewModel.rentsService.rents[indexPath.row].name)")
         :
-        print("выбран: \(viewModel.rentsService[indexPath.section].taxi[indexPath.row].name)")
+        print("выбран: \(viewModel.rentsService.taxi[indexPath.row].name)")
     }
 }
 
@@ -158,4 +174,3 @@ extension RentAutoController: RentAutoDisplayLogic {
         }
     }
 }
-

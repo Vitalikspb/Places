@@ -81,7 +81,7 @@ class SightCollectionViewCell: UICollectionViewCell {
                                 cornerRadii: CGSize(width: 8, height: 8))
         let maskLayer = CAShapeLayer()
         maskLayer.path = path.cgPath
-        gradientView.colors = [UIColor.clear, UIColor.red]
+        gradientView.colors = [UIColor.clear, UIColor.black]
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
         gradientView.layer.mask = maskLayer
