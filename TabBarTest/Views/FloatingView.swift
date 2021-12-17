@@ -155,7 +155,7 @@ class FloatingView: UIView {
                         width: 0,
                         height: 0)
         configureGestureRecognizer()
-        self.standartShadow(view: self)
+        self.standartShadow(cornerRadius: 8)
     }
     
     

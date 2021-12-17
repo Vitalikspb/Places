@@ -75,6 +75,9 @@ class InterestingEventsTableViewCell: UITableViewCell {
     private func setupUI() {
         // Для обрезания длинного текста описания события
         self.clipsToBounds = true
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor(named: "white_base")
+        self.selectedBackgroundView = bgColorView
         
         contentView.addSubview(titleLabel)
         contentView.addSubview(mainImageView)

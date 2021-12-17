@@ -62,9 +62,8 @@ class ScrollViewOnMap: UIScrollView {
         
         [searchFilter, sightFilter, transportFilter,
          leisureFilter, marketFilter, beachFilter, worshipFilter].forEach {
-            $0.layer.cornerRadius = 18
             $0.backgroundColor = UIColor.white
-            $0.standartShadow(view: $0)
+            $0.standartShadow(cornerRadius: 18)
         }
         
         

@@ -61,11 +61,21 @@ extension UIView {
         }
     }
     
-    func standartShadow(view: UIView) {
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.60
-        view.layer.shadowOffset = CGSize(width: 0, height: 1)
-        view.layer.shadowRadius = 2
+    func standartShadow(cornerRadius: CGFloat) {
+        layer.masksToBounds = false
+        layer.shadowRadius = 2
+        layer.shadowOpacity = 0.60
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowColor = UIColor.black.cgColor
+        
+        let roundedRect = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius)
+        layer.shadowPath = roundedRect.cgPath
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
+    }
+    
+    func updateShadow(cornerRadius: CGFloat) {
+        layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius).cgPath
     }
 }
 

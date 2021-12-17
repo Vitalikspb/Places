@@ -16,10 +16,12 @@ protocol IntrestingEventsDataStore {
     var name: String { get set }
     var image: [UIImage] { get set }
     var description: String { get set }
+    var date: String { get set }
 }
 
 class IntrestingEventsInteractor: IntrestingEventsBussinessLogic, IntrestingEventsDataStore {
     
+    var date: String = ""
     var currentCity: String = ""
     var image: [UIImage] = []
     var name: String = ""

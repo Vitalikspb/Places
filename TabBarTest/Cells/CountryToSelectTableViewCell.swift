@@ -55,11 +55,19 @@ class CountryToSelectTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        contentView.updateShadow(cornerRadius: 8)
+    }
+    
     // MARK: - Helper functions
     
     private func setupUI() {
         // Для обрезания длинного текста описания события
         self.clipsToBounds = true
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor(named: "white_base")
+        self.selectedBackgroundView = bgColorView
         
         let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width-32, height: 50),
                                 byRoundingCorners: [.bottomLeft, .bottomRight],
@@ -72,8 +80,7 @@ class CountryToSelectTableViewCell: UITableViewCell {
         gradientView.layer.mask = maskLayer
         
         self.backgroundColor = .white
-        self.layer.cornerRadius = 8
-        self.standartShadow(view: self)
+        contentView.standartShadow(cornerRadius: 8)
         
         contentView.addSubview(mainImageView)
         contentView.addSubview(gradientView)

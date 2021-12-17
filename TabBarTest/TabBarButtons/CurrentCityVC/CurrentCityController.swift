@@ -49,7 +49,6 @@ class CurrentCityController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .white
-//        setupClean()
         setupUI()
         interactor?.showCity()
     }
@@ -342,15 +341,15 @@ extension CurrentCityController: ButtonsCollectionViewCellDelegate {
     }
     
     func faqHandler() {
-        
+        print("для первой версии недоступно")
     }
     
     func rentAutoHandler() {
-        
+        router?.routeToRentAutoVC()
     }
     
     func chatHandler() {
-        
+        print("для первой версии недоступно")
     }
     
     

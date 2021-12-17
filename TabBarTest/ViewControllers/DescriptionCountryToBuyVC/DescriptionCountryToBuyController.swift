@@ -315,24 +315,26 @@ extension DescriptionCountryToBuyController: SightTableViewCellDelegate {
 extension DescriptionCountryToBuyController: ButtonsCollectionViewCellDelegate {
     // открываем экран списка любимых/избранных достопримечательностей
     func favouritesHandler() {
+        print("Нужно купить платную версию")
     }
     
     func eventsHandler() {
-        
+        print("Нужно купить платную версию")
     }
     
     func ticketHandler() {
-        
+        print("Нужно купить платную версию")
     }
     
     func faqHandler() {
-        
+        print("для первой версии недоступно")
     }
     
     func rentAutoHandler() {
-        
+        print("Нужно купить платную версию")
     }
     
     func chatHandler() {
+        print("для первой версии недоступно")
     }
 }

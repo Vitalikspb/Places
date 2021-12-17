@@ -45,22 +45,16 @@ class InterestingEventsCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        contentView.updateShadow(cornerRadius: 8)
+    }
+    
     // MARK: - Helper functions
     
     private func setupUI() {
-        
-        // TODO
-//        let path = UIBezierPath(roundedRect: CGRect(x: 0,
-//                                                    y: 0,
-//                                                    width: contentView.frame.width,
-//                                                    height: 50),
-//                                byRoundingCorners: [.bottomLeft, .bottomRight],
-//                                cornerRadii: CGSize(width: 8, height: 8))
-//        let maskLayer = CAShapeLayer()
-//        maskLayer.path = path.cgPath
         backgroundColor = .white
-        layer.cornerRadius = 8
-        standartShadow(view: self)
+        contentView.standartShadow(cornerRadius: 8)
         
         contentView.addSubview(mainImageView)
         

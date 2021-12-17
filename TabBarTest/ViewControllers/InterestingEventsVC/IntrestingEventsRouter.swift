@@ -44,5 +44,6 @@ class IntrestingEventsRouter: NSObject, IntrestingEventsRoutingLogic, Intresting
         destination.name = source.name
         destination.image = source.image
         destination.description = source.description
+        destination.date = source.date
     }
 }

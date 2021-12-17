@@ -29,9 +29,19 @@ class SelectedInterestingEventController: UIViewController {
     
     private let collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: UICollectionViewLayout.init())
+    private let dateLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = .black
+        label.textAlignment = .left
+        label.font = UIFont.init(name: "GillSans-Semibold", size: 15)
+        label.text = "00-00-0000"
+        return label
+    }()
     private let mainTextView: UITextView = {
        let textView = UITextView()
         textView.backgroundColor = .white
+        textView.isUserInteractionEnabled = false
+        textView.font = UIFont.init(name: "GillSans-Regular", size: 15)
         return textView
     }()
 
@@ -90,16 +100,26 @@ class SelectedInterestingEventController: UIViewController {
         
         view.addSubview(collectionView)
         view.addSubview(mainTextView)
+        view.addSubview(dateLabel)
         
         collectionView.anchor(top: view.topAnchor,
                          left: view.leftAnchor,
-                         bottom: mainTextView.topAnchor,
+                         bottom: dateLabel.topAnchor,
                          right: view.rightAnchor,
                          paddingTop: 16,
                          paddingLeft: 0,
                          paddingBottom: 0,
                          paddingRight: 0,
                          width: 0, height: 280)
+        dateLabel.anchor(top: nil,
+                          left: view.leftAnchor,
+                          bottom: mainTextView.topAnchor,
+                          right: view.rightAnchor,
+                          paddingTop: 0,
+                          paddingLeft: 16,
+                          paddingBottom: 0,
+                          paddingRight: 16,
+                          width: 0, height: 25)
         mainTextView.anchor(top: nil,
                             left: view.leftAnchor,
                             bottom: view.bottomAnchor,

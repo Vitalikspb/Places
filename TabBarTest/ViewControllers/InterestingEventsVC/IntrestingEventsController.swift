@@ -94,7 +94,7 @@ class IntrestingEventsController: UIViewController {
 extension IntrestingEventsController: IntrestingEventsDisplayLogic {
     func displayIntrestingEvents(viewModel: IntrestingEventsModels.IntrestingEvents.ViewModel) {
         data = viewModel
-        title = "Интересные события в \(data.country)"
+        title = "События в \(data.country)"
         tableView.reloadData()
     }
 }

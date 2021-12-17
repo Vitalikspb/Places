@@ -71,6 +71,11 @@ class FavouritesTopCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        contentView.updateShadow(cornerRadius: 8)
+    }
+    
     // MARK: - Helper functions
     
     private func setupUI() {
@@ -85,8 +90,7 @@ class FavouritesTopCollectionViewCell: UICollectionViewCell {
         gradientView.layer.mask = maskLayer
         
         self.backgroundColor = .red
-        self.layer.cornerRadius = 8
-        self.standartShadow(view: self)
+        contentView.standartShadow(cornerRadius: 8)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapFavouriteHandle))
         favouriteFlag.isUserInteractionEnabled = true

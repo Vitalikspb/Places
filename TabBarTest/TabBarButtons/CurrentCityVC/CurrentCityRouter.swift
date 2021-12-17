@@ -12,6 +12,7 @@ protocol CurrentCityRoutingLogic {
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
     func routeToExibitionVC()
+    func routeToRentAutoVC()
 }
 
 protocol CurrentCityDataPassing {
@@ -24,6 +25,11 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     var dataStore: CurrentCityDataStore?
     
     // MARK: - Роутинг
+    // показать модальный экран со списком компаний аренды автомобилей
+    func routeToRentAutoVC() {
+        let destination: RentAutoController = RentAutoController.loadFromStoryboard()
+        presentModalRentAuto(source: viewController!, destination: destination)
+    }
     // на экран сохраненных достопримечательностей
     func routeToFavouritesVC() {
         let destinationVC: FavouritesController = FavouritesController.loadFromStoryboard()
@@ -68,6 +74,10 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     
     func navigateToExibitions(source: CurrentCityController!, destination: ExibitionsController) {
         source.navigationController?.pushViewController(destination, animated: true)
+    }
+    
+    func presentModalRentAuto(source: CurrentCityController!, destination: RentAutoController) {
+        source.present(destination, animated: true, completion: nil)
     }
     
     // MARK: - Передача данных

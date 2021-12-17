@@ -93,6 +93,11 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        contentView.updateShadow(cornerRadius: 8)
+    }
+    
     // MARK: - Helper functions
     
     private func setupUI() {
@@ -109,8 +114,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         moveToChoosenCityButton.addTarget(self, action: #selector(moveToMapViewHandle), for: .touchUpInside)
         
         self.backgroundColor = .red
-        self.layer.cornerRadius = 8
-        self.standartShadow(view: self)
+        contentView.standartShadow(cornerRadius: 8)
         
         contentView.addSubview(image)
         contentView.addSubview(gradientView)

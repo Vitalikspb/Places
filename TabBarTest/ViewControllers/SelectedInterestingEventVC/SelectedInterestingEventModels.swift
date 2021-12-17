@@ -13,6 +13,7 @@ enum SelectedInterestingEventViewModel {
         let nameEvent: String
         let mainText: String
         let image: [UIImage]
+        let date: String
     }
     
     enum EventModels {

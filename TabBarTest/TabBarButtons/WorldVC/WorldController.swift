@@ -15,6 +15,7 @@ class WorldController: UIViewController {
     
     // MARK: - UI Properties
     
+    private lazy var searchBar: UISearchBar = UISearchBar()
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
     // MARK: - Public Properties
@@ -85,8 +86,16 @@ class WorldController: UIViewController {
     }
     
     private func setupUI() {
+        searchBar.searchBarStyle = UISearchBar.Style.default
+        searchBar.placeholder = "Поиск страны"
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        searchBar.backgroundImage = UIImage()
+        searchBar.delegate = self
+        tableView.tableHeaderView = searchBar
         tableView.register(CountryToSelectTableViewCell.self,
                            forCellReuseIdentifier: CountryToSelectTableViewCell.identifier)
+        tableView.keyboardDismissMode = .onDrag
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -118,6 +127,9 @@ extension WorldController: WorldDisplayLogic {
     func displayAllCities(viewModel: WorldViewModels.AllCountriesInTheWorld.ViewModel) {
         self.viewModel = viewModel
         filteredTableData = viewModel
+        
+        print("count: \(filteredTableData.country.count)")
+        
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()
@@ -129,6 +141,8 @@ extension WorldController: WorldDisplayLogic {
 
 extension WorldController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("count: \(filteredTableData.country.count)")
+        
         return filteredTableData.country.count
     }
     
@@ -159,6 +173,12 @@ extension WorldController: UITableViewDelegate, UITableViewDataSource {
         router?.dataStore?.currentCity = countryName
         router?.routeToCountryVC()
     }
+    
+    // MARK: - TODO удалить если работает tableView.keyboardDismissMode = .onDrag (101)
+    
+//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//        if searchBar.resignFirstResponder()
+//    }
 }
 
 // MARK: - UISearchBarDelegate

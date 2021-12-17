@@ -69,7 +69,7 @@ class WeatherView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
  
-        self.standartShadow(view: self)
+        self.standartShadow(cornerRadius: 8)
         
         self.addSubview(shadowView)
         shadowView.addSubview(weatherImage)

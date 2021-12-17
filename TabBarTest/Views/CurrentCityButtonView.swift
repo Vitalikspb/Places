@@ -30,10 +30,7 @@ class CurrentCityButtonView: UIView {
         super.init(frame: frame)
  
         self.backgroundColor = .white
-        self.layer.cornerRadius = 30
-        
-        self.standartShadow(view: self)
-        
+        self.standartShadow(cornerRadius: 30)
         self.addSubview(showCurrentCityButton)
         
         showCurrentCityButton.anchor(top: topAnchor,

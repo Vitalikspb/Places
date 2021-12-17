@@ -39,9 +39,7 @@ class TopSearchView: UIView {
         
         self.isUserInteractionEnabled = true
         self.backgroundColor = .white
-        self.layer.cornerRadius = 30
-        
-        self.standartShadow(view: self)
+        self.standartShadow(cornerRadius: 30)
         
         self.addSubview(titleImage)
         self.addSubview(inputTextField)
