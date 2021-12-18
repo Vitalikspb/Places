@@ -510,7 +510,6 @@ extension MapController: CLLocationManagerDelegate {
             myCurrentLongitude = location.coordinate.longitude
             cameraLatitude = myCurrentLatitude
             cameraLongitude = myCurrentLongitude
-            
             WeatherAPI().loadCurrentWeather(latitude: myCurrentLatitude,
                                             longitude: myCurrentLongitude) { temp, image in
                 
@@ -531,14 +530,26 @@ extension MapController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if CLLocationManager.locationServicesEnabled() {
-            switch(CLLocationManager.authorizationStatus()) {
-            case .notDetermined, .restricted, .denied:
-                showAlert(Constants.Errors.allowLocationPermision)
-                hideWeatherView()
-            case .authorizedAlways, .authorizedWhenInUse:
-                break
-            @unknown default:
-                break
+            if #available(iOS 14.0, *) {
+                switch(locationManager.authorizationStatus) {
+                case .notDetermined, .restricted, .denied:
+                    showAlert(Constants.Errors.allowLocationPermision)
+                    hideWeatherView()
+                case .authorizedAlways, .authorizedWhenInUse:
+                    break
+                @unknown default:
+                    break
+                }
+            } else {
+                switch(CLLocationManager.authorizationStatus()) {
+                case .notDetermined, .restricted, .denied:
+                    showAlert(Constants.Errors.allowLocationPermision)
+                    hideWeatherView()
+                case .authorizedAlways, .authorizedWhenInUse:
+                    break
+                @unknown default:
+                    break
+                }
             }
         } else {
             showAlert(Constants.Errors.allowLocationOnDevice)

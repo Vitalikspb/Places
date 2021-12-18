@@ -78,7 +78,7 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     }
     
     func navigateToExibitions(source: CurrentCityController!, destination: ExibitionsController) {
-        source.navigationController?.pushViewController(destination, animated: true)
+        source.present(destination, animated: true, completion: nil)
     }
     
     func presentModalRentAuto(source: CurrentCityController!, destination: RentAutoController) {

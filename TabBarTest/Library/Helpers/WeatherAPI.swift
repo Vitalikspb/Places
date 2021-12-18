@@ -21,9 +21,8 @@ class WeatherAPI {
 
         UserDefaults.standard.set(myCurrentLatitude, forKey: UserDefaults.currentLatitude)
         UserDefaults.standard.set(myCurrentLongitude, forKey: UserDefaults.currentLongitude)
-        
-        URLSession.shared.dataTask(with: wheatherUrl) { [weak self] (data, response, error) in
-            guard let self = self else { return }
+
+        URLSession.shared.dataTask(with: wheatherUrl) {  (data, response, error) in
             guard let data = data, error == nil else {
                 print("Error fetch request of weather")
                 return
@@ -34,7 +33,7 @@ class WeatherAPI {
                     completion("\(Int(forecast.main.temp))\(self.unit)", image)
                 }
             } catch let error {
-                print(error)
+                print("error weather location: \(error)")
             }
         }.resume()
     }
@@ -48,8 +47,7 @@ class WeatherAPI {
         UserDefaults.standard.set(myCurrentLatitude, forKey: UserDefaults.currentLatitude)
         UserDefaults.standard.set(myCurrentLongitude, forKey: UserDefaults.currentLongitude)
         
-        URLSession.shared.dataTask(with: wheatherUrl) { [weak self] (data, response, error) in
-            guard let self = self else { return }
+        URLSession.shared.dataTask(with: wheatherUrl) { (data, response, error) in
             guard let data = data, error == nil else {
                 print("Error fetch request of weather")
                 return

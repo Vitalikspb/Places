@@ -1,23 +1,22 @@
 //
-//  FAQModels.swift
+//  HelperMapsModels.swift
 //  TabBarTest
 //
-//  Created by ViceCode on 17.12.2021.
+//  Created by VITALIY SVIRIDOV on 18.12.2021.
 //
-
-import Foundation
 
 import Foundation
 import UIKit
 
-enum FAQModels {
+enum HelperMapsModels {
     
-    struct FAQModel {
-        var question: String
-        var answer: String
+    struct HelperMapsModel {
+        let name: String
+        let image: UIImage
+        let url: URL
     }
 
-    enum RentAuto {
+    enum HelperMaps {
 
         // передаем в интерактор
         struct Request { }
@@ -27,7 +26,7 @@ enum FAQModels {
         
         // посылаем все описание текущего города который выбрали из вкладки CountyTab
         struct ViewModel {
-            var FAQModel: [FAQModel]
+            var helperMapsModel: [HelperMapsModel]
         }
     }
 }

@@ -1,28 +1,28 @@
 //
-//  RentAutoInteractor.swift
+//  HelperMapsInteractor.swift
 //  TabBarTest
 //
-//  Created by ViceCode on 17.12.2021.
+//  Created by VITALIY SVIRIDOV on 18.12.2021.
 //
 
 import UIKit
 
-protocol RentAutoBussinessLogic {
-    func showRentAuto()
+protocol HelperMapsBussinessLogic {
+    func showHelperMaps()
 }
 
-protocol RentAutoDataStore {
-    var rentsName: String { get set }
-    var rentsImage: UIImage { get set }
+protocol HelperMapsDataStore {
+    var mapName: String { get set }
+    var mapImage: UIImage { get set }
 }
 
-class RentAutoInteractor: RentAutoBussinessLogic, RentAutoDataStore {
+class HelperMapsInteractor: HelperMapsBussinessLogic, HelperMapsDataStore {
     
-    var rentsImage: UIImage = UIImage(named: "hub3")!
-    var rentsName = ""
-    var presenter: RentAutoPresentationLogic?
+    var mapName: String = ""
+    var mapImage: UIImage = UIImage(named: "hub3")!
+    var presenter: HelperMapsPresentationLogic?
     
-    func showRentAuto() {
+    func showHelperMaps() {
         // тут запрашиваем у базы всю инфу по текущему городу
         let rentAuto = [RentAutoModels.RentAutoModel(name: "AVIS", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
                         RentAutoModels.RentAutoModel(name: "Hertz", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
@@ -32,8 +32,6 @@ class RentAutoInteractor: RentAutoBussinessLogic, RentAutoDataStore {
                         RentAutoModels.RentTaxi(name: "Яндекс", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
                         RentAutoModels.RentTaxi(name: "Ситимобил", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!)]
         
-        presenter?.presentRentAuto(response: RentAutoModels.RentAuto.ViewModel(rentsService:
-            RentAutoModels.ServiceAuto(rents: rentAuto, taxi: rentTaxi)
-        ))
+        presenter.presentHelperMaps
     }
 }

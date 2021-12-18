@@ -138,7 +138,7 @@ extension WorldController: WorldDisplayLogic {
     }
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension WorldController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -158,12 +158,12 @@ extension WorldController: UITableViewDelegate, UITableViewDataSource {
         return 240
     }
     
-    // Белое заполнение пустой части таблицы
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let view = UIView()
-//        view.backgroundColor = .white
-//        return view
-//    }
+//     Белое заполнение пустой части таблицы
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let countryName = filteredTableData.country[indexPath.row].name

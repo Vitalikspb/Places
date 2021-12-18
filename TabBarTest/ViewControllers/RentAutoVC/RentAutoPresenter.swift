@@ -18,6 +18,4 @@ final class RentAutoPresenter: RentAutoPresentationLogic {
     func presentRentAuto(response: RentAutoModels.RentAuto.ViewModel) {
         rentAutoController?.displayRentAuto(viewModel: response)
     }
-    
-    
 }
