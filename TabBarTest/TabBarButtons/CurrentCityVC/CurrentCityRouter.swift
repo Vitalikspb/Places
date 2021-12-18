@@ -33,7 +33,6 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         presentModalRentAuto(source: viewController!, destination: destination)
     }
     func routeToFAQVC() {
-        
         let destinationVC: FAQController = FAQController.loadFromStoryboard()
         var destinationDS = destinationVC.router!.dataStore!
         passDataToFaq(source: dataStore!, destination: &destinationDS)

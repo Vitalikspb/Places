@@ -5,17 +5,41 @@
 //  Created by VITALIY SVIRIDOV on 18.12.2021.
 //
 
-import Foundation
+import UIKit
 
 protocol HelperMapsRoutingLogic {
+    func routeToMapImageVC()
 }
 
 protocol HelperMapsDataPassing {
-    var dataStore: HelperMapsDataStore? { get }
+    var dataStore: HelperMapsDataStore? { get set }
 }
 
 class HelperMapsRouter: NSObject, HelperMapsRoutingLogic, HelperMapsDataPassing {
-    var dataStore: HelperMapsDataStore?
-    weak var viewController: HelperMapsController?
     
+    weak var viewController: HelperMapsController?
+    var dataStore: HelperMapsDataStore?
+    
+    // MARK: - Роутинг
+
+    func routeToMapImageVC() {
+        let destinationVC: MapImageController = MapImageController.loadFromStoryboard()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToMapImage(source: dataStore!, destination: &destinationDS)
+        navigateToMapImage(source: viewController!, destination: destinationVC)
+    }
+
+    // MARK: - Навигация
+    
+    
+    func navigateToMapImage(source: HelperMapsController, destination: MapImageController) {
+        source.navigationController?.pushViewController(destination, animated: true)
+    }
+    
+    // MARK: - Передача данных
+
+    func passDataToMapImage(source: HelperMapsDataStore, destination: inout MapImageDataStore) {
+        destination.nameOfMap = source.name
+        destination.stringURLOfMap = source.stringURL
+    }
 }

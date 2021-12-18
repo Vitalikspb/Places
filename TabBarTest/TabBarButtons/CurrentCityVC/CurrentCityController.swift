@@ -270,12 +270,6 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         default: return 50
         }
     }
-    // MARK: - белое заполнение пустой части таблицы
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let view = UIView()
-//        view.backgroundColor = .red
-//        return view
-//    }
 }
 
 // MARK: - CountryDescriptionTableViewCellDelegate

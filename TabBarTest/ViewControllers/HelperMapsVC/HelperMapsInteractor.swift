@@ -13,12 +13,19 @@ protocol HelperMapsBussinessLogic {
 
 protocol HelperMapsDataStore {
     var currentCity: String { get set }
+    var preImage: String { get set }
+    var name: String { get set }
+    var stringURL: String { get set }
 }
 
 class HelperMapsInteractor: HelperMapsBussinessLogic, HelperMapsDataStore {
     
     var currentCity: String = ""
-    var mapImage: UIImage = UIImage(named: "hub3")!
+    
+    var preImage: String = ""
+    var name: String = ""
+    var stringURL: String = ""
+    
     var presenter: HelperMapsPresentationLogic?
     
     func showHelperMaps() {
@@ -28,16 +35,16 @@ class HelperMapsInteractor: HelperMapsBussinessLogic, HelperMapsDataStore {
                 currentCity: currentCity, helperMapsModel: [
                     HelperMapsModels.HelperMapsModel(
                         name: "Карта метро",
-                        image: mapImage,
-                        url: URL(string: "https://mySite.ru/France/MetroMap/metromap.jpg")!),
+                        image: UIImage(named: "hub3")!,
+                        url: "hub3"),
                     HelperMapsModels.HelperMapsModel(
                         name: "Карта автобусов",
-                        image: mapImage,
-                        url: URL(string: "https://mySite.ru/France/AutobusMap/autobusmap.jpg")!),
+                        image: UIImage(named: "hub3")!,
+                        url: "hub3"),
                     HelperMapsModels.HelperMapsModel(
                         name: "Карта центра города",
-                        image: mapImage,
-                        url: URL(string: "https://mySite.ru/France/CenterMap/centermap.jpg")!),
+                        image: UIImage(named: "hub3")!,
+                        url: "hub3"),
                 ]
             )
         )

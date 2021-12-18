@@ -143,7 +143,9 @@ extension HelperMapsController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("выбран: \(viewModel.helperMapsModel[indexPath.row].name)")
+        router?.dataStore?.stringURL = viewModel.helperMapsModel[indexPath.row].url
+        router?.dataStore?.name = viewModel.helperMapsModel[indexPath.row].name
+        router?.routeToMapImageVC()
     }
 }
 
