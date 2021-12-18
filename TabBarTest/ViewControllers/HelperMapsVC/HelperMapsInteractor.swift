@@ -12,26 +12,34 @@ protocol HelperMapsBussinessLogic {
 }
 
 protocol HelperMapsDataStore {
-    var mapName: String { get set }
-    var mapImage: UIImage { get set }
+    var currentCity: String { get set }
 }
 
 class HelperMapsInteractor: HelperMapsBussinessLogic, HelperMapsDataStore {
     
-    var mapName: String = ""
+    var currentCity: String = ""
     var mapImage: UIImage = UIImage(named: "hub3")!
     var presenter: HelperMapsPresentationLogic?
     
     func showHelperMaps() {
         // тут запрашиваем у базы всю инфу по текущему городу
-        let rentAuto = [RentAutoModels.RentAutoModel(name: "AVIS", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.RentAutoModel(name: "Hertz", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.RentAutoModel(name: "Europcar", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!)]
-        
-        let rentTaxi = [RentAutoModels.RentTaxi(name: "UBER", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.RentTaxi(name: "Яндекс", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.RentTaxi(name: "Ситимобил", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!)]
-        
-        presenter.presentHelperMaps
+        presenter?.presentHelperMaps(
+            response: HelperMapsModels.HelperMaps.ViewModel(
+                currentCity: currentCity, helperMapsModel: [
+                    HelperMapsModels.HelperMapsModel(
+                        name: "Карта метро",
+                        image: mapImage,
+                        url: URL(string: "https://mySite.ru/France/MetroMap/metromap.jpg")!),
+                    HelperMapsModels.HelperMapsModel(
+                        name: "Карта автобусов",
+                        image: mapImage,
+                        url: URL(string: "https://mySite.ru/France/AutobusMap/autobusmap.jpg")!),
+                    HelperMapsModels.HelperMapsModel(
+                        name: "Карта центра города",
+                        image: mapImage,
+                        url: URL(string: "https://mySite.ru/France/CenterMap/centermap.jpg")!),
+                ]
+            )
+        )
     }
 }

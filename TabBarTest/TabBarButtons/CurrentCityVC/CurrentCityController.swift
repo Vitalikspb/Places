@@ -271,11 +271,11 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     // MARK: - белое заполнение пустой части таблицы
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let view = UIView()
+//        view.backgroundColor = .red
+//        return view
+//    }
 }
 
 // MARK: - CountryDescriptionTableViewCellDelegate
@@ -349,7 +349,7 @@ extension CurrentCityController: ButtonsCollectionViewCellDelegate {
     }
     
     func chatHandler() {
-        print("для первой версии недоступно")
+        router?.routeToHelperMapsVC()
     }
     
     

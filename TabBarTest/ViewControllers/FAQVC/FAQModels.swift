@@ -27,6 +27,7 @@ enum FAQModels {
         
         // посылаем все описание текущего города который выбрали из вкладки CountyTab
         struct ViewModel {
+            var currentCity: String
             var FAQModel: [FAQModel]
         }
     }

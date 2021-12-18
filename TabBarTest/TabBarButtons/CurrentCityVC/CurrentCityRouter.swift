@@ -14,6 +14,7 @@ protocol CurrentCityRoutingLogic {
     func routeToExibitionVC()
     func routeToRentAutoVC()
     func routeToFAQVC()
+    func routeToHelperMapsVC()
 }
 
 protocol CurrentCityDataPassing {
@@ -32,8 +33,18 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         presentModalRentAuto(source: viewController!, destination: destination)
     }
     func routeToFAQVC() {
-        let destination: FAQController = FAQController.loadFromStoryboard()
-        presentModalFaq(source: viewController!, destination: destination)
+        
+        let destinationVC: FAQController = FAQController.loadFromStoryboard()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToFaq(source: dataStore!, destination: &destinationDS)
+        navigateToFaq(source: viewController!, destination: destinationVC)
+    }
+    // TODO - доделать роутинг
+    func routeToHelperMapsVC() {
+        let destinationVC: HelperMapsController = HelperMapsController.loadFromStoryboard()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToHelperMaps(source: dataStore!, destination: &destinationDS)
+        navigateToHelperMaps(source: viewController!, destination: destinationVC)
     }
     // на экран сохраненных достопримечательностей
     func routeToFavouritesVC() {
@@ -78,14 +89,16 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     }
     
     func navigateToExibitions(source: CurrentCityController!, destination: ExibitionsController) {
-        source.present(destination, animated: true, completion: nil)
+        source.navigationController?.pushViewController(destination, animated: true)
     }
-    
+    func navigateToHelperMaps(source: CurrentCityController, destination: HelperMapsController) {
+        source.navigationController?.pushViewController(destination, animated: true)
+    }
     func presentModalRentAuto(source: CurrentCityController!, destination: RentAutoController) {
         source.present(destination, animated: true, completion: nil)
     }
-    func presentModalFaq(source: CurrentCityController!, destination: FAQController) {
-        source.present(destination, animated: true, completion: nil)
+    func navigateToFaq(source: CurrentCityController!, destination: FAQController) {
+        source.navigationController?.pushViewController(destination, animated: true)
     }
     
     // MARK: - Передача данных
@@ -98,6 +111,12 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     }
     
     func passDataToExibitions(source: CurrentCityDataStore, destination: inout ExibitionsDataStore) {
+        destination.currentCity = source.currentCity
+    }
+    func passDataToHelperMaps(source: CurrentCityDataStore, destination: inout HelperMapsDataStore) {
+        destination.currentCity = source.currentCity
+    }
+    func passDataToFaq(source: CurrentCityDataStore, destination: inout FAQDataStore) {
         destination.currentCity = source.currentCity
     }
 }

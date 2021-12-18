@@ -8,7 +8,7 @@
 import UIKit
 
 protocol HelperMapsDisplayLogic: AnyObject {
-    func displayHelperMaps(viewModel: RentAutoModels.RentAuto.ViewModel)
+    func displayHelperMaps(viewModel: HelperMapsModels.HelperMaps.ViewModel)
 }
 
 class HelperMapsController: UIViewController {
@@ -28,7 +28,7 @@ class HelperMapsController: UIViewController {
     
     var interactor: HelperMapsBussinessLogic?
     var router: (NSObjectProtocol & HelperMapsRoutingLogic & HelperMapsDataPassing)?
-    var viewModel: RentAutoModels.RentAuto.ViewModel!
+    var viewModel: HelperMapsModels.HelperMaps.ViewModel!
 
     // MARK: - Lifecycle
     
@@ -113,25 +113,19 @@ class HelperMapsController: UIViewController {
 extension HelperMapsController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? viewModel.rentsService.rents.count : viewModel.rentsService.taxi.count
+        return viewModel.helperMapsModel.count
     }
     // MARK: - заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: RentAutoTableViewCell.identifier, for: indexPath) as? RentAutoTableViewCell else { return UITableViewCell() }
         
-        let modelRent = viewModel.rentsService.rents[indexPath.row]
-        let modelTaxi = viewModel.rentsService.taxi[indexPath.row]
-        
-        switch indexPath.section {
-        case 0: cell.configureCell(name: modelRent.name, image: modelRent.image)
-        case 1: cell.configureCell(name: modelTaxi.name, image: modelTaxi.image)
-        default: break
-        }
+        let currentModel = viewModel.helperMapsModel[indexPath.row]
+        cell.configureCell(name: currentModel.name, image: currentModel.image)
         
         return cell
     }
@@ -139,10 +133,6 @@ extension HelperMapsController: UITableViewDelegate, UITableViewDataSource {
     // Высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Аренда автомобиля" : "Такси"
     }
     
     // Белое заполнение пустой части таблицы
@@ -153,11 +143,7 @@ extension HelperMapsController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        indexPath.section == 0
-        ?
-        print("выбран: \(viewModel.rentsService.rents[indexPath.row].name)")
-        :
-        print("выбран: \(viewModel.rentsService.taxi[indexPath.row].name)")
+        print("выбран: \(viewModel.helperMapsModel[indexPath.row].name)")
     }
 }
 
@@ -166,8 +152,9 @@ extension HelperMapsController: HelperMapsDisplayLogic {
     // показ информации о текущем городе
     // отображение обновленной таблицы после заполнения в интеракторе данными модели
     // пока что не работает т.к нету модели
-    func displayHelperMaps(viewModel: RentAutoModels.RentAuto.ViewModel) {
+    func displayHelperMaps(viewModel: HelperMapsModels.HelperMaps.ViewModel) {
         self.viewModel = viewModel
+        title = self.viewModel.currentCity
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()

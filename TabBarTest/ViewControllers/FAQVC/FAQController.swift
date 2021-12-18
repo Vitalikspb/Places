@@ -207,6 +207,7 @@ extension FAQController: FAQDisplayLogic {
     // пока что не работает т.к нету модели
     func displayFAQ(viewModel: FAQModels.RentAuto.ViewModel) {
         self.viewModel = viewModel
+        title = self.viewModel.currentCity
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()

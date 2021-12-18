@@ -12,14 +12,12 @@ protocol FAQBussinessLogic {
 }
 
 protocol FAQDataStore {
-    var questing: String { get set }
-    var answer: String { get set }
+    var currentCity: String { get set }
 }
 
 class FAQInteractor: FAQBussinessLogic, FAQDataStore {
-
-    var questing: String = ""
-    var answer: String = ""
+    
+    var currentCity: String = ""
     var presenter: FAQPresentationLogic?
     
     func showFAQ() {
@@ -27,7 +25,7 @@ class FAQInteractor: FAQBussinessLogic, FAQDataStore {
 
         
         presenter?.presentFAQ(response: FAQModels.RentAuto.ViewModel(
-            FAQModel: [
+                                currentCity: currentCity, FAQModel: [
                 FAQModels.FAQModel(question: "Как добраться от аэропорта до центра?", answer: "Надо выйти из аэропорта, сесть на 15 автобус до центра"),
                 FAQModels.FAQModel(question: "Есть ли в городе метро Есть ли в городе метро Есть ли в городе метро", answer: "Время работы в основном с 09:00 до 22:00 Время работы в основном с 09:00 до 22:00 Время работы в основном с 09:00 до 22:00 Время работы в основном с 09:00 до 22:00"),
                 FAQModels.FAQModel(question: "Во сколько закрываются торговые комплексы", answer: "Yes")

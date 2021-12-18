@@ -26,6 +26,7 @@ enum HelperMapsModels {
         
         // посылаем все описание текущего города который выбрали из вкладки CountyTab
         struct ViewModel {
+            var currentCity: String
             var helperMapsModel: [HelperMapsModel]
         }
     }
