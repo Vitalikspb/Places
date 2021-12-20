@@ -142,17 +142,15 @@ class MapController: UIViewController {
     }
     
     // MARK: - Helper Functions
+    
+    // Определение текущего языка приложения
     private func setupLang() {
         let langStr = Locale.current.languageCode
-        print(langStr)
-        
         userDefault.set(langStr, forKey: UserDefaults.currentLang)
+        
     }
     
     private func setupUI() {
-        
-        
-        
         topScrollView.onMapdelegate = self
         topSearchView.alpha = 0
         topSearchView.topSearchDelegate = self
@@ -162,7 +160,7 @@ class MapController: UIViewController {
         floatingView.delegate = self
         buttonsView.actionButtonDelegate = self
         
-        //        showCurrentCityView.delegate = self
+//        showCurrentCityView.delegate = self
         
         mapView.delegate = self
         mapView.settings.compassButton = true

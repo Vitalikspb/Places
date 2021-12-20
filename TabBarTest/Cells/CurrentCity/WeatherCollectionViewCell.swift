@@ -283,6 +283,13 @@ class WeatherCollectionViewCell: UITableViewCell {
                     }
                 }
             })
+        print("configure")
+        
+        WeatherAPI().descriptionCurrentWeatherForSevenDays(latitude: latitude, longitude: longitude) { weatherSevernDays in
+            print("Completions weather 7 days")
+            print(weatherSevernDays)
+            
+        }
     }
     
     private func utcToLocal(dateStr: String, complection: (String)->Void) {

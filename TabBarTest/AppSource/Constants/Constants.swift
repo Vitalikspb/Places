@@ -33,7 +33,8 @@ enum Constants {
     
     // MARK: - Weather Map
     static let APIKEY = "8a8dd7602db62946ca2c5ab51405a786"
-    static let BASEURL = "https://api.openweathermap.org/data/2.5/weather?"
+    static let BaseURLCurrentDay = "https://api.openweathermap.org/data/2.5/weather?"
+    static let BaseURLSevenDays = "https://api.openweathermap.org/data/2.5/onecall?"
     static let weatherIconUrl = "https://openweathermap.org/img/wn/"
     static let weatherIconUrlEnd = "@2x.png"
     

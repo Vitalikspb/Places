@@ -9,7 +9,67 @@ import Foundation
 
 // для карты текущая погода на 7 дней по месторасположению
 struct CurrentWeatherForSevenDays: Decodable {
-    let weathers: [CurrentWeather]
+    let lat: Double
+    let lon: Double
+    let timezone: String
+    let timezone_offset: Int
+    let current: CurrentWeatherDescriptionOfFirstDay
+    let daily: [WeatherSevenDayOfSeven]
+}
+
+struct CurrentWeatherDescriptionOfFirstDay: Decodable {
+    let dt: Int
+    let sunrise: Int
+    let sunset: Int
+    let temp: Double
+    let feels_like: Double
+    let pressure: Double
+    let humidity: Double
+    let dew_point: Double
+    let uvi: Double
+    let clouds: Int
+    let visibility: Int
+    let wind_speed: Double
+    let wind_deg: Int
+    let weather: [WeatherWeather]
+}
+
+struct TempDescriptions: Decodable {
+    let day: Double
+    let min: Double
+    let max: Double
+    let night: Double
+    let eve: Double
+    let morn: Double
+}
+
+struct FeelsLikeDescriptions: Decodable {
+    let day: Double
+    let night: Double
+    let eve: Double
+    let morn: Double
+}
+
+struct WeatherSevenDayOfSeven: Decodable {
+    let dt: Int
+    let sunrise: Int
+    let sunset: Int
+    let moonrise: Int
+    let moonset: Int
+    let moon_phase: Double
+    let temp: TempDescriptions
+    let feels_like: FeelsLikeDescriptions
+    let pressure: Double
+    let humidity: Double
+    let dew_point: Double
+    let wind_speed: Double
+    let wind_deg: Int
+    let wind_gust: Double
+    let weather: [WeatherWeather]
+    let clouds: Int
+    let pop: Double
+    let snow: Double?
+    let uvi: Double
 }
 
 // для карты текущая погода по месторасположению

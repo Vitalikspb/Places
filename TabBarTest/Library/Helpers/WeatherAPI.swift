@@ -9,6 +9,20 @@ import Foundation
 import UIKit
 import CoreLocation
 
+struct CurrentWeatherSevenDays {
+    var currentWeather: CurrentWeatherOfSevenDays
+    var sevenDaysWeather: [WeatherSevenDays]
+}
+
+struct CurrentWeatherOfSevenDays {
+    var todayTemp: Double
+    var imageWeather: UIImage
+    var description: String
+    var feelsLike: String
+    var sunrise: Int
+    var sunset: Int
+}
+
 struct WeatherSevenDays {
     var dayOfWeek: String
     var tempFrom: String
@@ -24,7 +38,7 @@ class WeatherAPI {
     func loadCurrentWeather(latitude myCurrentLatitude: CLLocationDegrees,
                             longitude myCurrentLongitude: CLLocationDegrees,
                             completion: @escaping(String, UIImage?)->Void) {
-        let url = "\(Constants.BASEURL)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&appid=\(Constants.APIKEY)&units=metric"
+        let url = "\(Constants.BaseURLCurrentDay)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&appid=\(Constants.APIKEY)&units=metric"
         guard let wheatherUrl = URL(string: url) else { return }
 
         UserDefaults.standard.set(myCurrentLatitude, forKey: UserDefaults.currentLatitude)
@@ -51,12 +65,9 @@ class WeatherAPI {
                             longitude myCurrentLongitude: CLLocationDegrees,
                             completion: @escaping(String, String, UIImage?, String, String, String)->Void) {
         let curLang = "&lang=\(UserDefaults.standard.string(forKey: UserDefaults.currentLang) ?? "")"
-        let url = "\(Constants.BASEURL)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&appid=\(Constants.APIKEY)&units=metric\(curLang)"
+        let url = "\(Constants.BaseURLCurrentDay)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&appid=\(Constants.APIKEY)&units=metric\(curLang)"
         guard let wheatherUrl = URL(string: url) else { return }
 
-        UserDefaults.standard.set(myCurrentLatitude, forKey: UserDefaults.currentLatitude)
-        UserDefaults.standard.set(myCurrentLongitude, forKey: UserDefaults.currentLongitude)
-        
         URLSession.shared.dataTask(with: wheatherUrl) { (data, response, error) in
             guard let data = data, error == nil else {
                 print("Error fetch request of weather")
@@ -82,36 +93,39 @@ class WeatherAPI {
     func descriptionCurrentWeatherForSevenDays(latitude myCurrentLatitude: CLLocationDegrees,
                             longitude myCurrentLongitude: CLLocationDegrees,
                             completion: @escaping([WeatherSevenDays])->Void) {
-        let curLang = "&lang=\(UserDefaults.standard.string(forKey: UserDefaults.currentLang) ?? "")"
-        let countOfWeatherDays = 7
-        let url = "\(Constants.BASEURL)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&cnt=\(countOfWeatherDays)&appid=\(Constants.APIKEY)&units=metric&lang=\(curLang)"
-        guard let wheatherUrl = URL(string: url) else { return }
+        let curLang = "\(UserDefaults.standard.string(forKey: UserDefaults.currentLang) ?? "")"
+        let excludeOptions = "minutely,hourly,alerts"
+        let metricOptions = "metric"
+        let url = "\(Constants.BaseURLSevenDays)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&exclude=\(excludeOptions)&appid=\(Constants.APIKEY)&units=\(metricOptions)&lang=\(curLang)"
+        print(url)
         
-        UserDefaults.standard.set(myCurrentLatitude, forKey: UserDefaults.currentLatitude)
-        UserDefaults.standard.set(myCurrentLongitude, forKey: UserDefaults.currentLongitude)
+//        https://api.openweathermap.org/data/2.5/onecall?lat=59.939634&lon=30.3104843&exclude=minutely,hourly&units=metric&appid=8a8dd7602db62946ca2c5ab51405a786&lang=ru
         
-        URLSession.shared.dataTask(with: wheatherUrl) { (data, response, error) in
+        guard let wheatherURL = URL(string: url) else { return }
+
+        URLSession.shared.dataTask(with: wheatherURL) { (data, response, error) in
             guard let data = data, error == nil else {
                 print("Error fetch request of weather")
                 return
             }
             do {
+                
                 let forecast = try JSONDecoder().decode(CurrentWeatherForSevenDays.self, from: data)
                 print(forecast)
                 
                 var weatherSevenDays: [WeatherSevenDays]!
                 
-                for (ind,val) in forecast.weathers.enumerated() {
-                    self.loadIconsFromApiForSevenDays(with: val.weather[ind].icon) { image in
-                        weatherSevenDays.append(WeatherSevenDays(
-                            dayOfWeek: "thuesday",
-                            tempFrom: "-11",
-                            tempTo: "+5",
-                            image: image ?? UIImage(),
-                            description: val.weather[ind].description))
-                    }
-                    
-                }
+//                for (ind,val) in forecast.weathers.enumerated() {
+//                    self.loadIconsFromApiForSevenDays(with: val.weather[ind].icon) { image in
+//                        weatherSevenDays.append(WeatherSevenDays(
+//                            dayOfWeek: "thuesday",
+//                            tempFrom: "-11",
+//                            tempTo: "+5",
+//                            image: image ?? UIImage(),
+//                            description: val.weather[ind].description))
+//                    }
+//
+//                }
                 completion(weatherSevenDays)
             } catch let error {
                 print(error)
