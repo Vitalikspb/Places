@@ -45,16 +45,12 @@ class InterestingEventsCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        contentView.updateShadow(cornerRadius: 8)
-    }
-    
     // MARK: - Helper functions
     
     private func setupUI() {
         backgroundColor = .white
-        contentView.standartShadow(cornerRadius: 8)
+        self.layer.cornerRadius = 8
+        self.clipsToBounds = true
         
         contentView.addSubview(mainImageView)
         

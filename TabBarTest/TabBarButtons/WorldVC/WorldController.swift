@@ -22,7 +22,6 @@ class WorldController: UIViewController {
     
     var interactor: WorldBussinessLogic?
     var router: (NSObjectProtocol & WorldRoutingLogic & WorldDataPassing)?
-    var currentCity: String = ""
     
     // MARK: - Private Properties
     
@@ -128,9 +127,6 @@ extension WorldController: WorldDisplayLogic {
     func displayAllCities(viewModel: WorldViewModels.AllCountriesInTheWorld.ViewModel) {
         self.viewModel = viewModel
         filteredTableData = viewModel
-        
-        print("count: \(filteredTableData.country.count)")
-        
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()
@@ -160,7 +156,6 @@ extension WorldController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let countryName = filteredTableData.country[indexPath.row].name
-        currentCity = countryName
         router?.dataStore?.currentCity = countryName
         router?.routeToCountryVC()
     }

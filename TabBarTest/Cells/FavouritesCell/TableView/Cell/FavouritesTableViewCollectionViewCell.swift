@@ -72,11 +72,6 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        contentView.updateShadow(cornerRadius: 8)
-    }
-    
     // MARK: - Helper functions
     
     private func setupUI() {
@@ -96,7 +91,8 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell {
         favouriteFlag.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
         
         self.backgroundColor = .white
-        contentView.standartShadow(cornerRadius: 8)
+        self.layer.cornerRadius = 8
+        self.clipsToBounds = true
         
         contentView.addSubview(sightImageView)
         contentView.addSubview(gradientView)
