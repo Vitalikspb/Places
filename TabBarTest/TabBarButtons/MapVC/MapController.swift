@@ -96,6 +96,7 @@ class MapController: UIViewController {
         setupClean()
         setupUI()
         // вызываем только 1 раз для заполнения массива маркерами
+        setupLang()
         interactor?.appendAllMarkers()
         addDefaultMarkers()
         setupLocationManager()
@@ -141,6 +142,12 @@ class MapController: UIViewController {
     }
     
     // MARK: - Helper Functions
+    private func setupLang() {
+        let langStr = Locale.current.languageCode
+        print(langStr)
+        
+        userDefault.set(langStr, forKey: UserDefaults.currentLang)
+    }
     
     private func setupUI() {
         

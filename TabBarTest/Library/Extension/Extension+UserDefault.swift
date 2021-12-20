@@ -8,6 +8,9 @@ import Foundation
 
 extension UserDefaults {
     
+    // текущий язык приложения
+    static var currentLang: String { "currentLang" }
+    
     // текущее местоположение для вкладки Страна
     static var currentLocation: String { "currentLocation" }
     
