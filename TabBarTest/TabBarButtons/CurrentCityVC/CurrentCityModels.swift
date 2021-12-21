@@ -25,6 +25,7 @@ enum CurrentCityViewModel {
         
         // посылаем все города для отображения на экране
         struct ViewModel {
+            var weather: CurrentWeatherSevenDays
             var cities: CityModel
         }
     }

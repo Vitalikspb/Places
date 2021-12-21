@@ -1,24 +1,15 @@
 //
-//  CountryDescriptionTableViewCell.swift
+//  HeaderFullWeather.swift
 //  TabBarTest
 //
 //
 
 import UIKit
-import CoreLocation
 
-protocol WeatherCollectionViewCellDelegate: AnyObject {
-    func showFullWeather()
-}
-
-class WeatherCollectionViewCell: UITableViewCell {
+class HeaderFullWeather: UIView {
     
-    // MARK: - Private Properties
-    private let mainView: UIView = {
-       let view = UIView()
-        view.backgroundColor = UIColor(red: 1.0/255, green: 1.0/255, blue: 1.0/255, alpha: 0.1)
-        return view
-    }()
+    
+    // MARK: - UI properties
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -129,64 +120,33 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.text = "00:00"
         return label
     }()
-    let fullWeatherButtons: UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .clear
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.init(name: "GillSans-semibold", size: 16)
-        button.setTitle("Погода на 7 дней", for: .normal)
-        return button
-    }()
-    // MARK: -  Public Properties
-    
-    static let identifier = "WeatherCollectionViewCell"
-    weak var delegate: WeatherCollectionViewCellDelegate?
-    
+
     // MARK: - LifeCycle
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupUI()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupUI()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setupUI()
-        
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
+    // MARK: - Static function
     
     
     // MARK: - Helper functions
     
     private func setupUI() {
         self.backgroundColor = .clear
-        
-        mainView.layer.cornerRadius = 10
-        
-        fullWeatherButtons.addTarget(self, action: #selector(fullWeatherTapped), for: .touchUpInside)
-        
-        contentView.addSubview(mainView)
-        mainView.addSubview(titleLabel)
-        mainView.addSubview(todayLabel)
-        mainView.addSubview(curTempLabel)
-        mainView.addSubview(curImageLabel)
-        mainView.addSubview(descriptionLabel)
-        mainView.addSubview(tempFeelsLikeLabel)
-        mainView.addSubview(mainStackView)
-        mainView.addSubview(fullWeatherButtons)
+
+        self.addSubview(titleLabel)
+        self.addSubview(todayLabel)
+        self.addSubview(curTempLabel)
+        self.addSubview(curImageLabel)
+        self.addSubview(descriptionLabel)
+        self.addSubview(tempFeelsLikeLabel)
+        self.addSubview(mainStackView)
         
         mainStackView.addArrangedSubview(sunriseStackView)
         mainStackView.addArrangedSubview(sunsetStackView)
@@ -194,28 +154,18 @@ class WeatherCollectionViewCell: UITableViewCell {
         sunriseStackView.addArrangedSubview(sunriseTimeLabel)
         sunsetStackView.addArrangedSubview(sunsetLabel)
         sunsetStackView.addArrangedSubview(sunsetTimeLabel)
-        
-        mainView.anchor(top: contentView.topAnchor,
-                        left: contentView.leftAnchor,
-                        bottom: contentView.bottomAnchor,
-                        right: contentView.rightAnchor,
-                        paddingTop: 10,
-                        paddingLeft: 16,
-                        paddingBottom: 0,
-                        paddingRight: 16,
-                        width: 0, height: 0)
-        
-        titleLabel.anchor(top: mainView.topAnchor,
-                          left: mainView.leftAnchor,
+
+        titleLabel.anchor(top: self.topAnchor,
+                          left: self.leftAnchor,
                           bottom: nil,
-                          right: mainView.rightAnchor,
+                          right: self.rightAnchor,
                           paddingTop: 10,
                           paddingLeft: 16,
                           paddingBottom: 0,
                           paddingRight: 0,
                           width: 0, height: 20)
         todayLabel.anchor(top: titleLabel.bottomAnchor,
-                          left: mainView.leftAnchor,
+                          left: self.leftAnchor,
                           bottom: nil,
                           right: curTempLabel.leftAnchor,
                           paddingTop: 8,
@@ -245,9 +195,9 @@ class WeatherCollectionViewCell: UITableViewCell {
                              width: 30,
                              height: 30)
         descriptionLabel.anchor(top: todayLabel.bottomAnchor,
-                                left: mainView.leftAnchor,
+                                left: self.leftAnchor,
                                 bottom: nil,
-                                right: mainView.rightAnchor,
+                                right: self.rightAnchor,
                                 paddingTop: 8,
                                 paddingLeft: 16,
                                 paddingBottom: 0,
@@ -255,9 +205,9 @@ class WeatherCollectionViewCell: UITableViewCell {
                                 width: 0,
                                 height: 25)
         tempFeelsLikeLabel.anchor(top: descriptionLabel.bottomAnchor,
-                                  left: mainView.leftAnchor,
+                                  left: self.leftAnchor,
                                   bottom: nil,
-                                  right: mainView.rightAnchor,
+                                  right: self.rightAnchor,
                                   paddingTop: 8,
                                   paddingLeft: 16,
                                   paddingBottom: 0,
@@ -265,75 +215,25 @@ class WeatherCollectionViewCell: UITableViewCell {
                                   width: 0,
                                   height: 25)
         mainStackView.anchor(top: tempFeelsLikeLabel.bottomAnchor,
-                             left: mainView.leftAnchor,
+                             left: self.leftAnchor,
                              bottom: nil,
-                             right: mainView.rightAnchor,
+                             right: self.rightAnchor,
                              paddingTop: 0,
                              paddingLeft: 16,
                              paddingBottom: 0,
                              paddingRight: 16,
                              width: 0,
                              height: 50)
-        fullWeatherButtons.anchor(top: mainStackView.bottomAnchor,
-                                  left: mainView.leftAnchor,
-                                  bottom: mainView.bottomAnchor,
-                                  right: mainView.rightAnchor,
-                                  paddingTop: 0,
-                                  paddingLeft: 16,
-                                  paddingBottom: 10,
-                                  paddingRight: 16,
-                                  width: 0,
-                                  height: 35)
     }
     
-    func configureCell(city: String,
-                       latitude: CLLocationDegrees,
-                       longitude: CLLocationDegrees) {
-        titleLabel.text = Constants.Cells.weatherInCity + city
-        // координаты берутся из структуры города для теста питер - 59.9396340, 30.3104843
-//        WeatherAPI().descriptionCurrentWeather(
-//            latitude: latitude,
-//            longitude: longitude,
-//            completion: { [weak self] temp, feelsLike, image, description, sunrise, sunset in
-//                guard let self = self else { return }
-//                DispatchQueue.main.async {
-//                    self.curTempLabel.text = temp
-//                    self.tempFeelsLikeLabel.text = Constants.Cells.weatherFellsLike + feelsLike
-//                    self.curImageLabel.image = image!
-//                    self.descriptionLabel.text = description
-//                    self.utcToLocal(dateStr: sunrise) { currentTime in
-//                        self.sunriseTimeLabel.text = currentTime
-//                    }
-//                    self.utcToLocal(dateStr: sunset) { currentTime in
-//                        self.sunsetTimeLabel.text = currentTime
-//                    }
-//                }
-//            })
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
-    @objc func fullWeatherTapped() {
-        // Здесь надо передать полученную структуру погоды на основной экран погоды
-        print("Show 7 days weather")
-        delegate?.showFullWeather()
-    }
-    
-    
-    private func utcToLocal(dateStr: String, complection: (String)->Void) {
-        let dateFormatter = DateFormatter()
-        let date = Date(timeIntervalSince1970: Double(dateStr)!)
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "HH:mm"
-        complection(dateFormatter.string(from: date))
-        
+    func configureUI(title: String = "Weather", today: String, curTemp: String, curImage: UIImage, description: String, feelsLike: String, sunrise: String, sunset: String) {
+        titleLabel.text = title
+        todayLabel.text = today
+        curTempLabel.text = curTemp
+        curImageLabel.image = curImage
+        descriptionLabel.text = description
+        tempFeelsLikeLabel.text = feelsLike
+        sunriseLabel.text = sunrise
+        sunsetLabel.text = sunset
     }
 }

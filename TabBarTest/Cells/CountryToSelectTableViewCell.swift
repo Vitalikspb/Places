@@ -55,11 +55,6 @@ class CountryToSelectTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        contentView.updateShadow(cornerRadius: 8)
-    }
-    
     // MARK: - Helper functions
     
     private func setupUI() {

@@ -23,6 +23,18 @@ class CurrentCityController: UIViewController {
     
     private var titleName: String = ""
     var viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(
+        weather: CurrentWeatherSevenDays(
+            currentWeather: CurrentWeatherOfSevenDays(todayTemp: 0.0,
+                                                      imageWeather: UIImage(),
+                                                      description: "",
+                                                      feelsLike: 0.0,
+                                                      sunrise: 0,
+                                                      sunset: 0),
+            sevenDaysWeather: [WeatherSevenDays(dayOfWeek: 0,
+                                                tempFrom: 0.0,
+                                                tempTo: 0.0,
+                                                image: UIImage(),
+                                                description: "")]),
         cities: CurrentCityViewModel.CityModel(name: "", image: UIImage(named: "hub3")!))
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
@@ -50,7 +62,8 @@ class CurrentCityController: UIViewController {
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .white
         setupUI()
-        interactor?.showCity()
+        // загружаем данные по текущему городу
+        interactor?.showCity(lat: 59.9396340, lon: 30.3104843)
     }
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -202,7 +215,11 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             // Погода
         case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
-            cell.configureCell(city: titleName, latitude: 59.9396340, longitude: 30.3104843)
+            // MARK: - TODO Координаты берутся из модели
+            let lat = 59.9396340
+            let lon = 30.3104843
+            cell.configureCell(city: titleName, latitude: lat, longitude: lon)
+            cell.delegate = self
             return cell
             
             // Выбор редакции
@@ -260,7 +277,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 5,10: return 230
             
             // Погода
-        case 6: return 200
+        case 6: return 250
             
             // Обязательно к просмотру
             // Интересные места по близости
@@ -344,6 +361,12 @@ extension CurrentCityController: ButtonsCollectionViewCellDelegate {
     
     func chatHandler() {
         router?.routeToHelperMapsVC()
+    }
+}
+
+extension CurrentCityController: WeatherCollectionViewCellDelegate {
+    func showFullWeather() {
+        router?.routeToFullWeatherVC()
     }
     
     

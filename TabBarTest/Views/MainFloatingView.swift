@@ -18,13 +18,7 @@ class MainFloatingView: UIView {
     var stateFloatingFullView: Bool = false
     
     // MARK: - UI properties
-    
-    let mainView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
-    
+
     let indicatorView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray

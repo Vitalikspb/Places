@@ -15,6 +15,7 @@ protocol CurrentCityRoutingLogic {
     func routeToRentAutoVC()
     func routeToFAQVC()
     func routeToHelperMapsVC()
+    func routeToFullWeatherVC()
 }
 
 protocol CurrentCityDataPassing {
@@ -27,6 +28,14 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     var dataStore: CurrentCityDataStore?
     
     // MARK: - Роутинг
+    
+    func routeToFullWeatherVC() {
+        let destinationVC: WeatherController = WeatherController.loadFromStoryboard()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToFullWeather(source: dataStore!, destination: &destinationDS)
+        navigateToFullWeather(source: viewController!, destination: destinationVC)
+    }
+    
     // показать модальный экран со списком компаний аренды автомобилей
     func routeToRentAutoVC() {
         let destination: RentAutoController = RentAutoController.loadFromStoryboard()
@@ -73,6 +82,11 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     }
 
     // MARK: - Навигация
+    
+    func navigateToFullWeather(source: CurrentCityController, destination: WeatherController) {
+        source.present(destination, animated: true, completion: nil)
+    }
+    
     // открыть избранное
     func navigateToFavourites(source: CurrentCityController, destination: FavouritesController) {
         source.navigationController?.pushViewController(destination, animated: true)
@@ -101,6 +115,12 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     }
     
     // MARK: - Передача данных
+    
+    func passDataToFullWeather(source: CurrentCityDataStore, destination: inout WeatherDataStore) {
+        destination.currentCity = source.currentCity
+        destination.currentWeather = source.currentWeather
+    }
+    
     func passDataToIntrestingEvents(source: CurrentCityDataStore, destination: inout IntrestingEventsDataStore) {
         destination.currentCity = source.currentCity
     }
