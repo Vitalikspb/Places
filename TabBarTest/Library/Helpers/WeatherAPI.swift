@@ -108,7 +108,6 @@ class WeatherAPI {
             }
             do {
                 let forecast = try JSONDecoder().decode(CurrentWeatherForSevenDays.self, from: data)
-                print(forecast)
                 // возвращаем погоду с описанием на 7 дней кроме рассвета и заката, текущего дня все полостью описание
                 
                 var currentWeatherOfSevenDays: CurrentWeatherOfSevenDays!

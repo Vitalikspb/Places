@@ -21,6 +21,7 @@ enum DescriptionCountryToBuyViewModel {
         // посылаем все описание текущего города который выбрали из вкладки CountyTab
         struct ViewModel {
             var city: String
+            var weather: CurrentWeatherSevenDays
         }
     }
 }

@@ -12,7 +12,6 @@ protocol CurrentCityBussinessLogic {
 }
 
 protocol CurrentCityDataStore {
-    var city: [String] { get set }
     var currentCity: String { get set }
     var currentWeather: CurrentWeatherSevenDays { get set }
 }
@@ -31,7 +30,6 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
                                             image: UIImage(),
                                             description: "")])
     var currentCity: String = ""
-    var city: [String] = ["Текущий", "Москва", "Санкт-Петербург", "Сочи", "Омск", "Краснодар", "Саратов"]
     
     var presenter: CurrentCityPresentationLogic?
     

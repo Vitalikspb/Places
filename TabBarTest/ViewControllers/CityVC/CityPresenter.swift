@@ -8,14 +8,14 @@
 import Foundation
 
 protocol CityPresentationLogic {
-    func presentCity(response: String)
+    func presentCity(response: CityViewModel.CurrentCity.ViewModel)
 }
 
 final class CityPresenter: CityPresentationLogic {
+    
     weak var cityController: CityController?
     
-    func presentCity(response: String) {
+    func presentCity(response: CityViewModel.CurrentCity.ViewModel) {
         cityController?.displayCurrentCity(viewModel: response)
     }
-    
 }

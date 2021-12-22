@@ -8,7 +8,7 @@
 import UIKit
 
 protocol DescriptionCountryToBuyDisplayLogic: AnyObject {
-    func displayCurrentCountry(viewModel: String)
+    func displayCurrentCountry(viewModel: DescriptionCountryToBuyViewModel.CurrentCountry.ViewModel)
 }
 
 class DescriptionCountryToBuyController: UIViewController {
@@ -18,13 +18,27 @@ class DescriptionCountryToBuyController: UIViewController {
     
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
-    
     // MARK: - Public Properties
     
     var interactor: DescriptionCountryToBuyBussinessLogic?
     var router: (NSObjectProtocol & DescriptionCountryToBuyRoutingLogic & DescriptionCountryToBuyDataPassing)?
-    var viewModel: String = ""
-    
+    var viewModel = DescriptionCountryToBuyViewModel.CurrentCountry.ViewModel(
+        city: "",
+        weather: CurrentWeatherSevenDays(
+            
+            currentWeather: CurrentWeatherOfSevenDays(todayTemp: 0.0,
+                                                      imageWeather: UIImage(),
+                                                      description: "",
+                                                      feelsLike: 0.0,
+                                                      sunrise: 0,
+                                                      sunset: 0),
+            sevenDaysWeather: [WeatherSevenDays(dayOfWeek: 0,
+                                                tempFrom: 0.0,
+                                                tempTo: 0.0,
+                                                image: UIImage(),
+                                                description: "")]
+        )
+    )
     //MARK: - Private properties
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
@@ -192,7 +206,14 @@ extension DescriptionCountryToBuyController: UITableViewDelegate, UITableViewDat
             // Погода
         case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
-            cell.configureCell(city: titleName, latitude: 59.9396340, longitude: 30.3104843)
+            cell.configureCell(city: titleName,
+                               today: viewModel.weather.currentWeather.todayTemp,
+                               curTemp: viewModel.weather.currentWeather.todayTemp,
+                               curImage: viewModel.weather.currentWeather.imageWeather,
+                               description: viewModel.weather.currentWeather.description,
+                               feelLike: viewModel.weather.currentWeather.feelsLike,
+                               sunrise: viewModel.weather.currentWeather.sunrise,
+                               sunset: viewModel.weather.currentWeather.sunset)
             return cell
             
             // Выбор редакции
@@ -265,8 +286,9 @@ extension DescriptionCountryToBuyController: UITableViewDelegate, UITableViewDat
 
 // MARK: - CountryDisplayLogic
 extension DescriptionCountryToBuyController: DescriptionCountryToBuyDisplayLogic {
-    func displayCurrentCountry(viewModel: String) {
-        title = viewModel
+    func displayCurrentCountry(viewModel: DescriptionCountryToBuyViewModel.CurrentCountry.ViewModel) {
+        title = viewModel.city
+        self.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()

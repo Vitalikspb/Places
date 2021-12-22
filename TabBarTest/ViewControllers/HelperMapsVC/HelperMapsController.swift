@@ -13,7 +13,6 @@ protocol HelperMapsDisplayLogic: AnyObject {
 
 class HelperMapsController: UIViewController {
 
-    
     // MARK: - UI Properties
     private let topSeparator: UIView = {
        let view = UIView()
@@ -72,8 +71,8 @@ class HelperMapsController: UIViewController {
     }
     
     private func setupUI() {
-        tableView.register(RentAutoTableViewCell.self,
-                           forCellReuseIdentifier: RentAutoTableViewCell.identifier)
+        tableView.register(HelperMapsTableViewCell.self,
+                           forCellReuseIdentifier: HelperMapsTableViewCell.identifier)
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -122,7 +121,7 @@ extension HelperMapsController: UITableViewDelegate, UITableViewDataSource {
     // MARK: - заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: RentAutoTableViewCell.identifier, for: indexPath) as? RentAutoTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: HelperMapsTableViewCell.identifier, for: indexPath) as? HelperMapsTableViewCell else { return UITableViewCell() }
         
         let currentModel = viewModel.helperMapsModel[indexPath.row]
         cell.configureCell(name: currentModel.name, image: currentModel.image)

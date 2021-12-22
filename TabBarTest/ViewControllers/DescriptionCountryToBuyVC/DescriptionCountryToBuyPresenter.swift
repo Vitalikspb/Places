@@ -8,14 +8,14 @@
 import Foundation
 
 protocol DescriptionCountryToBuyPresentationLogic {
-    func presentCountry(response: String)
+    func presentCountry(response: DescriptionCountryToBuyViewModel.CurrentCountry.ViewModel)
 }
 
 final class DescriptionCountryToBuyPresenter: DescriptionCountryToBuyPresentationLogic {
     
     weak var descriptionCountryToBuyController: DescriptionCountryToBuyController?
     
-    func presentCountry(response: String) {
+    func presentCountry(response: DescriptionCountryToBuyViewModel.CurrentCountry.ViewModel) {
         descriptionCountryToBuyController?.displayCurrentCountry(viewModel: response)
     }
 }

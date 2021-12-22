@@ -81,6 +81,9 @@
 		C24A7EA22771DCFB00D4751F /* WeatherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EA12771DCFB00D4751F /* WeatherModels.swift */; };
 		C24A7EA42771ED7400D4751F /* FullWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EA32771ED7400D4751F /* FullWeatherTableViewCell.swift */; };
 		C24A7EA62771F5F000D4751F /* HeaderFullWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EA52771F5F000D4751F /* HeaderFullWeather.swift */; };
+		C24A7EAC27731DA200D4751F /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EAB27731DA200D4751F /* TimeFormatter.swift */; };
+		C24A7EAE277339A600D4751F /* RentAutoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EAD277339A600D4751F /* RentAutoCollectionViewCell.swift */; };
+		C24A7EB027733BBC00D4751F /* HelperMapsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EAF27733BBC00D4751F /* HelperMapsTableViewCell.swift */; };
 		C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25448792706ED32000B9439 /* ModelWeather.swift */; };
 		C254487C2706F52E000B9439 /* Extension+CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487B2706F52E000B9439 /* Extension+CLLocation.swift */; };
 		C254487E27070753000B9439 /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487D27070753000B9439 /* FloatingView.swift */; };
@@ -144,7 +147,6 @@
 		C2A0C22E276CA7DF0023BF60 /* RentAutoWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A0C22D276CA7DF0023BF60 /* RentAutoWorker.swift */; };
 		C2A0C230276CA7E90023BF60 /* RentAutoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A0C22F276CA7E90023BF60 /* RentAutoPresenter.swift */; };
 		C2A0C232276CA7F20023BF60 /* RentAutoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A0C231276CA7F20023BF60 /* RentAutoModels.swift */; };
-		C2A0C234276CAE260023BF60 /* RentAutoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A0C233276CAE260023BF60 /* RentAutoTableViewCell.swift */; };
 		C2A0C237276CD6040023BF60 /* FAQController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2A0C236276CD6040023BF60 /* FAQController.storyboard */; };
 		C2A0C239276CD6220023BF60 /* FAQController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A0C238276CD6220023BF60 /* FAQController.swift */; };
 		C2A0C23B276CD6540023BF60 /* FAQInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A0C23A276CD6540023BF60 /* FAQInteractor.swift */; };
@@ -244,6 +246,9 @@
 		C24A7EA12771DCFB00D4751F /* WeatherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModels.swift; sourceTree = "<group>"; };
 		C24A7EA32771ED7400D4751F /* FullWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullWeatherTableViewCell.swift; sourceTree = "<group>"; };
 		C24A7EA52771F5F000D4751F /* HeaderFullWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderFullWeather.swift; sourceTree = "<group>"; };
+		C24A7EAB27731DA200D4751F /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
+		C24A7EAD277339A600D4751F /* RentAutoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentAutoCollectionViewCell.swift; sourceTree = "<group>"; };
+		C24A7EAF27733BBC00D4751F /* HelperMapsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperMapsTableViewCell.swift; sourceTree = "<group>"; };
 		C25448792706ED32000B9439 /* ModelWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWeather.swift; sourceTree = "<group>"; };
 		C254487B2706F52E000B9439 /* Extension+CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CLLocation.swift"; sourceTree = "<group>"; };
 		C254487D27070753000B9439 /* FloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingView.swift; sourceTree = "<group>"; };
@@ -307,7 +312,6 @@
 		C2A0C22D276CA7DF0023BF60 /* RentAutoWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentAutoWorker.swift; sourceTree = "<group>"; };
 		C2A0C22F276CA7E90023BF60 /* RentAutoPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentAutoPresenter.swift; sourceTree = "<group>"; };
 		C2A0C231276CA7F20023BF60 /* RentAutoModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentAutoModels.swift; sourceTree = "<group>"; };
-		C2A0C233276CAE260023BF60 /* RentAutoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentAutoTableViewCell.swift; sourceTree = "<group>"; };
 		C2A0C236276CD6040023BF60 /* FAQController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FAQController.storyboard; sourceTree = "<group>"; };
 		C2A0C238276CD6220023BF60 /* FAQController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQController.swift; sourceTree = "<group>"; };
 		C2A0C23A276CD6540023BF60 /* FAQInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQInteractor.swift; sourceTree = "<group>"; };
@@ -445,6 +449,7 @@
 			children = (
 				5396A4922706377C0044D759 /* InternetConnection.swift */,
 				53EF561E270F720E00CD3786 /* WeatherAPI.swift */,
+				C24A7EAB27731DA200D4751F /* TimeFormatter.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -625,8 +630,9 @@
 		C259AA1C27215B7A00B03921 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C24A7EAD277339A600D4751F /* RentAutoCollectionViewCell.swift */,
+				C24A7EAF27733BBC00D4751F /* HelperMapsTableViewCell.swift */,
 				C2A0C244276CDA5E0023BF60 /* FAQTableViewCell.swift */,
-				C2A0C233276CAE260023BF60 /* RentAutoTableViewCell.swift */,
 				C26BFE7F276A2B4000ABD119 /* ExibitionsTableViewCell.swift */,
 				C26BFE5F2769E3F600ABD119 /* CountryToSelectTableViewCell.swift */,
 				C2C985EA2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift */,
@@ -1001,6 +1007,7 @@
 				C26BFE7A276A262C00ABD119 /* ExibitionsWorker.swift in Sources */,
 				C2CA35D426FDCDAF00795EF6 /* AppDelegate.swift in Sources */,
 				C26BFE76276A261D00ABD119 /* ExibitionsInteractor.swift in Sources */,
+				C24A7EB027733BBC00D4751F /* HelperMapsTableViewCell.swift in Sources */,
 				53EF4D22270E2A7B008CB1B2 /* MapModels.swift in Sources */,
 				C24A7EA22771DCFB00D4751F /* WeatherModels.swift in Sources */,
 				C2A0C232276CA7F20023BF60 /* RentAutoModels.swift in Sources */,
@@ -1027,6 +1034,7 @@
 				C2588FA3270307980014CCDC /* Extension+UILabel.swift in Sources */,
 				C26BFE412768A00200ABD119 /* WorldInteractor.swift in Sources */,
 				C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */,
+				C24A7EAC27731DA200D4751F /* TimeFormatter.swift in Sources */,
 				53403D68275FF1B5004087F7 /* FavouritesTableViewCell.swift in Sources */,
 				53F0D7AE275E98990087A9BB /* FavouritesModels.swift in Sources */,
 				C2A0C21C276B46730023BF60 /* DescriptionCountryToBuyWorker.swift in Sources */,
@@ -1040,7 +1048,6 @@
 				5397795B27443866006644D3 /* CountryDescriptionTableViewCell.swift in Sources */,
 				5397795D27443872006644D3 /* CountryPhotosTableViewCell.swift in Sources */,
 				C2A0C23F276CD6640023BF60 /* FAQWorker.swift in Sources */,
-				C2A0C234276CAE260023BF60 /* RentAutoTableViewCell.swift in Sources */,
 				C26BFE572768D7D900ABD119 /* IntrestingEventsWorker.swift in Sources */,
 				C26BFE512768D7BB00ABD119 /* IntrestingEventsController.swift in Sources */,
 				C2588FA527030D6E0014CCDC /* FilterView.swift in Sources */,
@@ -1055,6 +1062,7 @@
 				C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */,
 				5397795627442BC4006644D3 /* AvailableCities.swift in Sources */,
 				53F3E2F2273FD7D7004B278E /* CityController.swift in Sources */,
+				C24A7EAE277339A600D4751F /* RentAutoCollectionViewCell.swift in Sources */,
 				C26BFE78276A262400ABD119 /* ExibitionsRouter.swift in Sources */,
 				5323BA18274D509700F6BA5E /* TicketCollectionViewCell.swift in Sources */,
 				C26BFE432768A00E00ABD119 /* WorldWorker.swift in Sources */,

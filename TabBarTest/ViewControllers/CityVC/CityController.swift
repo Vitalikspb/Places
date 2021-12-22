@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CityDisplayLogic: AnyObject {
-    func displayCurrentCity(viewModel: String)
+    func displayCurrentCity(viewModel: CityViewModel.CurrentCity.ViewModel)
 }
 
 class CityController: UIViewController {
@@ -17,29 +17,36 @@ class CityController: UIViewController {
     // MARK: - UI Properties
     
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
+    var currentCity: String = ""
     
+    // MARK: - Private Properties
     
-    // MARK: - Public Properties
-    
+    private var titleName: String = ""
     var interactor: CityBussinessLogic?
-    var router: (NSObjectProtocol & CityRoutingLogic & CityDataPassing)?
-    var viewModel: String = ""
     
+    var router: (NSObjectProtocol & CityRoutingLogic & CityDataPassing)?
+    var viewModel = CityViewModel.CurrentCity.ViewModel(
+        city: "",
+        weather: CurrentWeatherSevenDays(
+            
+            currentWeather: CurrentWeatherOfSevenDays(todayTemp: 0.0,
+                                                      imageWeather: UIImage(),
+                                                      description: "",
+                                                      feelsLike: 0.0,
+                                                      sunrise: 0,
+                                                      sunset: 0),
+            sevenDaysWeather: [WeatherSevenDays(dayOfWeek: 0,
+                                                tempFrom: 0.0,
+                                                tempTo: 0.0,
+                                                image: UIImage(),
+                                                description: "")]
+        )
+    )
     //MARK: - Private properties
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
-    private struct DescriptionWeather {
-        var temp: String
-        var feelsLike: String
-        var image: UIImage
-        var description: String
-        var sunrise: String
-        var sunset: String
-    }
-    private var currentWeather: DescriptionWeather!
     private var descriptionHeightCell: CGFloat = 0
-    private var titleName: String = ""
 
     // MARK: - Lifecycle
     
@@ -185,7 +192,14 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             // Погода
         case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
-            cell.configureCell(city: titleName, latitude: 59.9396340, longitude: 30.3104843)
+            cell.configureCell(city: titleName,
+                               today: viewModel.weather.currentWeather.todayTemp,
+                               curTemp: viewModel.weather.currentWeather.todayTemp,
+                               curImage: viewModel.weather.currentWeather.imageWeather,
+                               description: viewModel.weather.currentWeather.description,
+                               feelLike: viewModel.weather.currentWeather.feelsLike,
+                               sunrise: viewModel.weather.currentWeather.sunrise,
+                               sunset: viewModel.weather.currentWeather.sunset)
             return cell
             
             // Выбор редакции
@@ -261,8 +275,9 @@ extension CityController: CityDisplayLogic {
     // показ информации о текущем городе
     // отображение обновленной таблицы после заполнения в интеракторе данными модели
     // пока что не работает т.к нету модели
-    func displayCurrentCity(viewModel: String) {
-        title = viewModel
+    func displayCurrentCity(viewModel: CityViewModel.CurrentCity.ViewModel) {
+        title = viewModel.city
+        self.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()

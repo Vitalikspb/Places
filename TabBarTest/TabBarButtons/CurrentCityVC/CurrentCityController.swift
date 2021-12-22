@@ -39,15 +39,15 @@ class CurrentCityController: UIViewController {
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
-    private struct DescriptionWeather {
-        var temp: String
-        var feelsLike: String
-        var image: UIImage
-        var description: String
-        var sunrise: String
-        var sunset: String
-    }
-    private var currentWeather: DescriptionWeather!
+//    private struct DescriptionWeather {
+//        var temp: String
+//        var feelsLike: String
+//        var image: UIImage
+//        var description: String
+//        var sunrise: String
+//        var sunset: String
+//    }
+//    private var currentWeather: DescriptionWeather!
     private var descriptionHeightCell: CGFloat = 0
     
     
@@ -216,9 +216,14 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
             // MARK: - TODO Координаты берутся из модели
-            let lat = 59.9396340
-            let lon = 30.3104843
-            cell.configureCell(city: titleName, latitude: lat, longitude: lon)
+            cell.configureCell(city: titleName,
+                               today: viewModel.weather.currentWeather.todayTemp,
+                               curTemp: viewModel.weather.currentWeather.todayTemp,
+                               curImage: viewModel.weather.currentWeather.imageWeather,
+                               description: viewModel.weather.currentWeather.description,
+                               feelLike: viewModel.weather.currentWeather.feelsLike,
+                               sunrise: viewModel.weather.currentWeather.sunrise,
+                               sunset: viewModel.weather.currentWeather.sunset)
             cell.delegate = self
             return cell
             

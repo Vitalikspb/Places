@@ -6,7 +6,7 @@
 
 import UIKit
 
-class RentAutoTableViewCell: UITableViewCell {
+class HelperMapsTableViewCell: UITableViewCell {
     
     // MARK: - Private properties
     
@@ -37,7 +37,7 @@ class RentAutoTableViewCell: UITableViewCell {
     
     // MARK: - Public properties
     
-    static let identifier = "RentAutoTableViewCell"
+    static let identifier = "HelperMapsTableViewCell"
     
     // MARK: - Lifecycle
     

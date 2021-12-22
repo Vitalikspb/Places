@@ -286,40 +286,19 @@ class WeatherCollectionViewCell: UITableViewCell {
                                   height: 35)
     }
     
-    func configureCell(city: String,
-                       latitude: CLLocationDegrees,
-                       longitude: CLLocationDegrees) {
+    func configureCell(city: String, today: Double, curTemp: Double, curImage: UIImage, description: String, feelLike: Double, sunrise: Int,  sunset: Int) {
         titleLabel.text = Constants.Cells.weatherInCity + city
-        // координаты берутся из структуры города для теста питер - 59.9396340, 30.3104843
-//        WeatherAPI().descriptionCurrentWeather(
-//            latitude: latitude,
-//            longitude: longitude,
-//            completion: { [weak self] temp, feelsLike, image, description, sunrise, sunset in
-//                guard let self = self else { return }
-//                DispatchQueue.main.async {
-//                    self.curTempLabel.text = temp
-//                    self.tempFeelsLikeLabel.text = Constants.Cells.weatherFellsLike + feelsLike
-//                    self.curImageLabel.image = image!
-//                    self.descriptionLabel.text = description
-//                    self.utcToLocal(dateStr: sunrise) { currentTime in
-//                        self.sunriseTimeLabel.text = currentTime
-//                    }
-//                    self.utcToLocal(dateStr: sunset) { currentTime in
-//                        self.sunsetTimeLabel.text = currentTime
-//                    }
-//                }
-//            })
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        todayLabel.text = "today \(today)"
+        curTempLabel.text = "\(curTemp)"
+        curImageLabel.image = curImage
+        descriptionLabel.text = description
+        tempFeelsLikeLabel.text = "\(feelLike)"
+        TimeFormatter.utcToLocal(dateStr: "\(sunrise)", complection: { sunriseString in
+            sunriseLabel.text = sunriseString
+        })
+        TimeFormatter.utcToLocal(dateStr: "\(sunset)", complection: { sunsetString in
+            sunsetLabel.text = sunsetString
+        })
     }
     @objc func fullWeatherTapped() {
         // Здесь надо передать полученную структуру погоды на основной экран погоды
@@ -327,13 +306,4 @@ class WeatherCollectionViewCell: UITableViewCell {
         delegate?.showFullWeather()
     }
     
-    
-    private func utcToLocal(dateStr: String, complection: (String)->Void) {
-        let dateFormatter = DateFormatter()
-        let date = Date(timeIntervalSince1970: Double(dateStr)!)
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "HH:mm"
-        complection(dateFormatter.string(from: date))
-        
-    }
 }
