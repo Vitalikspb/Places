@@ -84,6 +84,8 @@
 		C24A7EAC27731DA200D4751F /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EAB27731DA200D4751F /* TimeFormatter.swift */; };
 		C24A7EAE277339A600D4751F /* RentAutoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EAD277339A600D4751F /* RentAutoCollectionViewCell.swift */; };
 		C24A7EB027733BBC00D4751F /* HelperMapsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EAF27733BBC00D4751F /* HelperMapsTableViewCell.swift */; };
+		C24A7EB22773590300D4751F /* BottomCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EB12773590300D4751F /* BottomCollectionView.swift */; };
+		C24A7EB427735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EB327735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift */; };
 		C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25448792706ED32000B9439 /* ModelWeather.swift */; };
 		C254487C2706F52E000B9439 /* Extension+CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487B2706F52E000B9439 /* Extension+CLLocation.swift */; };
 		C254487E27070753000B9439 /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487D27070753000B9439 /* FloatingView.swift */; };
@@ -249,6 +251,8 @@
 		C24A7EAB27731DA200D4751F /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		C24A7EAD277339A600D4751F /* RentAutoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentAutoCollectionViewCell.swift; sourceTree = "<group>"; };
 		C24A7EAF27733BBC00D4751F /* HelperMapsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperMapsTableViewCell.swift; sourceTree = "<group>"; };
+		C24A7EB12773590300D4751F /* BottomCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCollectionView.swift; sourceTree = "<group>"; };
+		C24A7EB327735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCollectionViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		C25448792706ED32000B9439 /* ModelWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWeather.swift; sourceTree = "<group>"; };
 		C254487B2706F52E000B9439 /* Extension+CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CLLocation.swift"; sourceTree = "<group>"; };
 		C254487D27070753000B9439 /* FloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingView.swift; sourceTree = "<group>"; };
@@ -623,6 +627,7 @@
 				53403D6C2763C402004087F7 /* FavouritesTopView.swift */,
 				532A231E276E37DF001CFAEC /* ImageScrollView.swift */,
 				C24A7EA52771F5F000D4751F /* HeaderFullWeather.swift */,
+				C24A7EB12773590300D4751F /* BottomCollectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -630,6 +635,7 @@
 		C259AA1C27215B7A00B03921 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C24A7EB327735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift */,
 				C24A7EAD277339A600D4751F /* RentAutoCollectionViewCell.swift */,
 				C24A7EAF27733BBC00D4751F /* HelperMapsTableViewCell.swift */,
 				C2A0C244276CDA5E0023BF60 /* FAQTableViewCell.swift */,
@@ -977,6 +983,7 @@
 				C26BFE69276A1C0D00ABD119 /* SelectedInterestingEventRouter.swift in Sources */,
 				C2588FA7270325770014CCDC /* Constants.swift in Sources */,
 				C2A0C239276CD6220023BF60 /* FAQController.swift in Sources */,
+				C24A7EB22773590300D4751F /* BottomCollectionView.swift in Sources */,
 				C24A7E982771DCCE00D4751F /* WeatherController.swift in Sources */,
 				5323BA1A274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift in Sources */,
 				532A230D276E08AB001CFAEC /* HelperMapsInteractor.swift in Sources */,
@@ -1068,6 +1075,7 @@
 				C26BFE432768A00E00ABD119 /* WorldWorker.swift in Sources */,
 				5323BA16274D3DBE00F6BA5E /* SightCollectionViewCell.swift in Sources */,
 				C26BFE452768A01B00ABD119 /* WorldPresenter.swift in Sources */,
+				C24A7EB427735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift in Sources */,
 				53F3E2FE273FDD4D004B278E /* CurrentCityRouter.swift in Sources */,
 				C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */,
 				C26BFE7C276A263500ABD119 /* ExibitionsPresenter.swift in Sources */,

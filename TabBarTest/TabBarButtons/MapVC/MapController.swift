@@ -84,6 +84,11 @@ class MapController: UIViewController {
                                                                     y: 0,
                                                                     width: UIScreen.main.bounds.width,
                                                                     height: 60))
+    private let bottomCollectionView = BottomCollectionView(frame: CGRect(x: 0,
+                                                                          y: 0,
+                                                                          width: UIScreen.main.bounds.width,
+                                                                          height: 160))
+    
     //    private let showCurrentCityView = CurrentCityButtonView(frame: CGRect(x: 0,
     //                                                                          y: 0,
     //                                                                          width: 60,
@@ -116,7 +121,7 @@ class MapController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // проверяем было ли нажатие на кнопку карты на экране Страны и делаем анимацию камеры и переход на нужные координаты
+        // проверяем было ли нажатие на кнопку "карты" на экране Страны и делаем анимацию камеры и переход на нужные координаты
         show = userDefault.bool(forKey: UserDefaults.showSelectedCity)
         if show {
             let latitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLatitude)
@@ -127,13 +132,13 @@ class MapController: UIViewController {
             userDefault.set(false, forKey: UserDefaults.showSelectedCity)
         }
         
-        // проверяем было ли нажатие на кнопку Места на экране Страны и делаем анимацию камеры и переход на нужные координаты
+        // проверяем было ли нажатие на кнопку "Места" на экране Страны и делаем анимацию камеры и переход на нужные координаты
         show = userDefault.bool(forKey: UserDefaults.showSelectedSight)
         if show {
             userDefault.set(false, forKey: UserDefaults.showSelectedSight)
             guard let name = userDefault.string(forKey: UserDefaults.showSelectedSightName),
                   let marker = interactor?.fetchSelectedSightWithAllMarkers(withName: name) else { return }
-            showMarkerSightWithAnimating(marker: marker)
+            showMarkerSightWithAnimating(marker: marker, showFloatingViewMark: true)
         }
     }
     
@@ -147,7 +152,6 @@ class MapController: UIViewController {
     private func setupLang() {
         let langStr = Locale.current.languageCode
         userDefault.set(langStr, forKey: UserDefaults.currentLang)
-        
     }
     
     private func setupUI() {
@@ -159,6 +163,8 @@ class MapController: UIViewController {
         
         floatingView.delegate = self
         buttonsView.actionButtonDelegate = self
+        
+        bottomCollectionView.delegate = self
         
 //        showCurrentCityView.delegate = self
         
@@ -181,6 +187,7 @@ class MapController: UIViewController {
         view.addSubview(weatherView)
         view.addSubview(floatingView)
         view.addSubview(buttonsView)
+        view.addSubview(bottomCollectionView)
         //        view.addSubview(showCurrentCityView)
         
         topScrollView.anchor(top: view.layoutMarginsGuide.topAnchor,
@@ -220,6 +227,16 @@ class MapController: UIViewController {
                            paddingRight: 0,
                            width: 0,
                            height: 80)
+        bottomCollectionView.anchor(top: nil,
+                                    left: view.leftAnchor,
+                                    bottom: view.layoutMarginsGuide.bottomAnchor,
+                                    right: view.rightAnchor,
+                                    paddingTop: 0,
+                                    paddingLeft: 0,
+                                    paddingBottom: 0,
+                                    paddingRight: 0,
+                                    width: 0,
+                                    height: 160)
         //        showCurrentCityView.anchor(top: topScrollView.bottomAnchor,
         //                                   left: nil,
         //                                   bottom: nil,
@@ -231,6 +248,15 @@ class MapController: UIViewController {
         //                                   width: 60,
         //                                   height: 60)
         buttonsView.alpha = 0
+    }
+    
+    // Показываем нижнее вью с коллекцией маркеров
+    func bottomCollectionViewShow() {
+        bottomCollectionView.alpha = 1
+    }
+    // Скрываем нижнее вью с коллекцией маркеров
+    func bottomCollectionViewhide() {
+        bottomCollectionView.alpha = 0
     }
     
     // сохраняем текущее местоположение в виде Страны и Города
@@ -356,14 +382,14 @@ class MapController: UIViewController {
         }
     }
     
-    private func showMarkerSightWithAnimating(marker: GMSMarker) {
+    private func showMarkerSightWithAnimating(marker: GMSMarker, showFloatingViewMark: Bool) {
         // делаем запрос на данные для floatinView
         if let nameLocation = marker.title {
             interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
             animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
                                  longitude: marker.position.longitude,
                                  from: .mapViewZoom)
-            selectMark = true
+            selectMark = showFloatingViewMark
         }
     }
 }
@@ -395,7 +421,7 @@ extension MapController: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         
         // делаем запрос на данные для floatinView
-        showMarkerSightWithAnimating(marker: marker)
+        showMarkerSightWithAnimating(marker: marker, showFloatingViewMark: true)
         return true
     }
     
@@ -566,7 +592,9 @@ extension MapController: CLLocationManagerDelegate {
 
 // MARK: - FloatingViewDelegate
 extension MapController: FloatingViewDelegate {
+    
     func floatingPanelFullScreen() {
+        bottomCollectionViewhide()
         buttonsView.alpha = 1
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
@@ -575,6 +603,7 @@ extension MapController: FloatingViewDelegate {
     }
     
     func floatingPanelPatriallyScreen() {
+        bottomCollectionViewhide()
         let originYButtonsView = buttonsView.frame.origin.y
         UIView.animate(withDuration: 0.3) { [weak self] in
             guard let self = self else { return }
@@ -591,6 +620,7 @@ extension MapController: FloatingViewDelegate {
     }
     
     func floatingPanelIsHidden() {
+        bottomCollectionViewShow()
         UIView.animate(withDuration: 0.35) { [weak self] in
             guard let self = self else { return }
             self.tabBarController?.tabBar.alpha = 1
@@ -681,5 +711,15 @@ extension MapController: MapDisplayLogic {
 extension MapController: CurrentCityButtonViewDelegate {
     func showCurrentCityViewController() {
         router?.routeToCityVC()
+    }
+}
+
+// MARK: - BottomCollectionViewDelegate
+
+extension MapController: BottomCollectionViewDelegate {
+    func showSight(nameSight: String) {
+        print(nameSight)
+        guard let marker = interactor?.fetchSelectedSightWithAllMarkers(withName: nameSight) else { return }
+        showMarkerSightWithAnimating(marker: marker, showFloatingViewMark: false)
     }
 }
