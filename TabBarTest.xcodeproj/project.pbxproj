@@ -86,6 +86,8 @@
 		C24A7EB027733BBC00D4751F /* HelperMapsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EAF27733BBC00D4751F /* HelperMapsTableViewCell.swift */; };
 		C24A7EB22773590300D4751F /* BottomCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EB12773590300D4751F /* BottomCollectionView.swift */; };
 		C24A7EB427735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EB327735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift */; };
+		C24A7EE927746F6300D4751F /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EE827746F6300D4751F /* SectionHeader.swift */; };
+		C24A7EEB27746F8100D4751F /* WorldCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EEA27746F8100D4751F /* WorldCollectionViewCell.swift */; };
 		C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25448792706ED32000B9439 /* ModelWeather.swift */; };
 		C254487C2706F52E000B9439 /* Extension+CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487B2706F52E000B9439 /* Extension+CLLocation.swift */; };
 		C254487E27070753000B9439 /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487D27070753000B9439 /* FloatingView.swift */; };
@@ -253,6 +255,8 @@
 		C24A7EAF27733BBC00D4751F /* HelperMapsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperMapsTableViewCell.swift; sourceTree = "<group>"; };
 		C24A7EB12773590300D4751F /* BottomCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCollectionView.swift; sourceTree = "<group>"; };
 		C24A7EB327735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCollectionViewCollectionViewCell.swift; sourceTree = "<group>"; };
+		C24A7EE827746F6300D4751F /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		C24A7EEA27746F8100D4751F /* WorldCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldCollectionViewCell.swift; sourceTree = "<group>"; };
 		C25448792706ED32000B9439 /* ModelWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWeather.swift; sourceTree = "<group>"; };
 		C254487B2706F52E000B9439 /* Extension+CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CLLocation.swift"; sourceTree = "<group>"; };
 		C254487D27070753000B9439 /* FloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingView.swift; sourceTree = "<group>"; };
@@ -536,6 +540,15 @@
 			path = WeatherVC;
 			sourceTree = "<group>";
 		};
+		C24A7EE727746F4700D4751F /* World */ = {
+			isa = PBXGroup;
+			children = (
+				C24A7EE827746F6300D4751F /* SectionHeader.swift */,
+				C24A7EEA27746F8100D4751F /* WorldCollectionViewCell.swift */,
+			);
+			path = World;
+			sourceTree = "<group>";
+		};
 		C25448782706ED21000B9439 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -635,6 +648,7 @@
 		C259AA1C27215B7A00B03921 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C24A7EE727746F4700D4751F /* World */,
 				C24A7EB327735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift */,
 				C24A7EAD277339A600D4751F /* RentAutoCollectionViewCell.swift */,
 				C24A7EAF27733BBC00D4751F /* HelperMapsTableViewCell.swift */,
@@ -974,6 +988,7 @@
 				532A2313276E2C1B001CFAEC /* MapImageController.swift in Sources */,
 				C2A0C21A276B466C0023BF60 /* DescriptionCountryToBuyRouter.swift in Sources */,
 				C26BFE6D276A1C1D00ABD119 /* SelectedInterestingEventPresenter.swift in Sources */,
+				C24A7EEB27746F8100D4751F /* WorldCollectionViewCell.swift in Sources */,
 				C24A7EA62771F5F000D4751F /* HeaderFullWeather.swift in Sources */,
 				C2186D8A272C0B05001889AF /* FloatingViewFirstTableViewCell.swift in Sources */,
 				53EF4D1E270E2A60008CB1B2 /* MapPresenter.swift in Sources */,
@@ -1107,6 +1122,7 @@
 				C26BFE7E276A263C00ABD119 /* ExibitionsModels.swift in Sources */,
 				532A231F276E37DF001CFAEC /* ImageScrollView.swift in Sources */,
 				C2CA35F226FE1DA800795EF6 /* MapController.swift in Sources */,
+				C24A7EE927746F6300D4751F /* SectionHeader.swift in Sources */,
 				C2A0C241276CD66C0023BF60 /* FAQPresenter.swift in Sources */,
 				53F3E2F6273FD7F2004B278E /* CityWorker.swift in Sources */,
 				53EF561F270F720E00CD3786 /* WeatherAPI.swift in Sources */,
