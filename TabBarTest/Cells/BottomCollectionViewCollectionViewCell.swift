@@ -21,7 +21,7 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
     }()
     private let sightNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .black
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
@@ -30,7 +30,7 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
     }()
     private let sightTypeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .black
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
@@ -71,13 +71,13 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
 
         sightImageView.anchor(top: contentView.topAnchor,
                               left: contentView.leftAnchor,
-                              bottom: contentView.topAnchor,
+                              bottom: contentView.bottomAnchor,
                               right: nil,
-                              paddingTop: 8,
-                              paddingLeft: 16,
-                              paddingBottom: 0,
+                              paddingTop: 10,
+                              paddingLeft: 10,
+                              paddingBottom: 10,
                               paddingRight: 0,
-                              width: 160, height: 0)
+                              width: 90, height: 0)
         sightTypeLabel.anchor(top: contentView.topAnchor,
                               left: sightImageView.rightAnchor,
                               bottom: nil,
@@ -89,7 +89,7 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
                               width: 0, height: 40)
         sightNameLabel.anchor(top: sightTypeLabel.bottomAnchor,
                               left: sightImageView.rightAnchor,
-                              bottom: contentView.topAnchor,
+                              bottom: nil,
                               right: contentView.rightAnchor,
                               paddingTop: 16,
                               paddingLeft: 8,

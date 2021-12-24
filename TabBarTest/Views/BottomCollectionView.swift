@@ -50,6 +50,7 @@ class BottomCollectionView: UIView {
     }
     
     private func configureUI() {
+        self.backgroundColor = .clear
         let data = [BottomCollectionViewModel(type: "Музей",
                                               image: UIImage(named: "hub3")!,
                                               nameOfSight: "Русский музей"),
@@ -74,7 +75,6 @@ class BottomCollectionView: UIView {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.setCollectionViewLayout(layout, animated: true)
-        collectionView.isPagingEnabled = true
 
         self.addSubview(collectionView)
         collectionView.addConstraintsToFillView(view: self)
@@ -106,13 +106,19 @@ extension BottomCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         delegate?.showSight(nameSight: dataModel[indexPath.row].nameOfSight)
     }
     
+    // Размер ячейки
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width-120,
+                      height: 110)
+    }
+    
     // Отступы от краев экрана на крайних ячейках
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
     }
     
     // Расстояние между ячейками - белый отступ
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 16
+        return 12
     }
 }

@@ -87,7 +87,7 @@ class MapController: UIViewController {
     private let bottomCollectionView = BottomCollectionView(frame: CGRect(x: 0,
                                                                           y: 0,
                                                                           width: UIScreen.main.bounds.width,
-                                                                          height: 160))
+                                                                          height: 120))
     
     //    private let showCurrentCityView = CurrentCityButtonView(frame: CGRect(x: 0,
     //                                                                          y: 0,
@@ -233,10 +233,10 @@ class MapController: UIViewController {
                                     right: view.rightAnchor,
                                     paddingTop: 0,
                                     paddingLeft: 0,
-                                    paddingBottom: 0,
+                                    paddingBottom: 5,
                                     paddingRight: 0,
                                     width: 0,
-                                    height: 160)
+                                    height: 120)
         //        showCurrentCityView.anchor(top: topScrollView.bottomAnchor,
         //                                   left: nil,
         //                                   bottom: nil,
