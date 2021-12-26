@@ -10,8 +10,10 @@ import GoogleMaps
 
 protocol MapBussinessLogic {
     func showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request)
+    func showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request)
     func fetchAllTestMarkers(request: MapViewModel.FilterName)
     func fetchSelectedSightWithAllMarkers(withName name: String) -> GMSMarker?
+    
     func appendAllMarkers()
 }
 
@@ -218,5 +220,15 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
 //            для теста пока нету кор даты пока что только название
             presenter?.presentChoosenDestinationView(response: mapMarkers)
         }
+    }
+    
+    func showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request) {
+        //        здесь берем данные из базы по конкретному названию маркера из данной страны и текущего города
+                if request.marker == "Эрмитаж" {
+        //            когда нашли нужное место с его данными - передаем в перентер
+        //            изменить модель response для дальнейшего отображения
+        //            для теста пока нету кор даты пока что только название
+                    presenter?.presentSelectedDestinationView(response: mapMarkers)
+                }
     }
 }

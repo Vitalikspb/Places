@@ -21,6 +21,7 @@ class WorldController: UIViewController {
     struct ItemData: Hashable {
         let name: String
         let subName: String
+        let imageCity: UIImage
     }
     struct titleSection: Hashable {
         let name: String
@@ -28,36 +29,35 @@ class WorldController: UIViewController {
     }
     var dataSource: UICollectionViewDiffableDataSource<titleSection, ItemData>?
     var rentsService = [
-        ServiceAuto(titlesec: titleSection(name: "Section1", subName: "subTitle1"),
-                                   items: [ItemData(name: "name1", subName: "sub name1"),
-                                           ItemData(name: "name2", subName: "sub name2"),
-                                           ItemData(name: "name3", subName: "sub name3"),
-                                           ItemData(name: "name4", subName: "sub name4"),
-                                           ItemData(name: "name5", subName: "sub name5"),
-                                           ItemData(name: "name6", subName: "sub name6"),
-                                           ItemData(name: "name7", subName: "sub name7"),
-                                           ItemData(name: "name8", subName: "sub name8"),
-                                           ItemData(name: "name9", subName: "sub name9")]),
-        ServiceAuto(titlesec: titleSection(name: "Section2", subName: "subTitle2"),
-                                   items: [ItemData(name: "name1-2", subName: "sub name1-2"),
-                                           ItemData(name: "name2-2", subName: "sub name2-2"),
-                                           ItemData(name: "name3-2", subName: "sub name3-2"),
-                                           ItemData(name: "name4-2", subName: "sub name4-2"),
-                                           ItemData(name: "name5-2", subName: "sub name5-2"),
-                                           ItemData(name: "name6-2", subName: "sub name6-2"),
-                                           ItemData(name: "name7-2", subName: "sub name7-2"),
-                                           ItemData(name: "name8-2", subName: "sub name8-2"),
-                                           ItemData(name: "name9-2", subName: "sub name9-2")]),
-        ServiceAuto(titlesec: titleSection(name: "Section3", subName: "subTitle3"),
-                                   items: [ItemData(name: "name1-3", subName: "sub name1-3"),
-                                           ItemData(name: "name2-3", subName: "sub name2-3"),
-                                           ItemData(name: "name3-3", subName: "sub name3-3"),
-                                           ItemData(name: "name4-3", subName: "sub name4-3"),
-                                           ItemData(name: "name5-3", subName: "sub name5-3"),
-                                           ItemData(name: "name6-3", subName: "sub name6-3"),
-                                           ItemData(name: "name7-3", subName: "sub name7-3"),
-                                           ItemData(name: "name8-3", subName: "sub name8-3"),
-                                           ItemData(name: "name9-3", subName: "sub name9-3")]),
+        ServiceAuto(titlesec: titleSection(name: "Россия", subName: "Все города"),
+                    items: [ItemData(name: "Санкт-Петерубрг", subName: "Более 454 мест", imageCity: UIImage(named: "hub3")!),
+                            ItemData(name: "Москва", subName: "Более 234 мест", imageCity: UIImage(named: "hub3")!),
+                            ItemData(name: "Краснодар", subName: "Более 231 мест", imageCity: UIImage(named: "hub3")!),
+                            ItemData(name: "Сочи", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!),
+                            ItemData(name: "Уфа", subName: "Более 156 мест", imageCity: UIImage(named: "hub3")!),
+                            ItemData(name: "Пенза", subName: "Более 132 мест", imageCity: UIImage(named: "hub3")!),
+                            ItemData(name: "Норильск", subName: "Более 95 мест", imageCity: UIImage(named: "hub3")!),
+                            ItemData(name: "Южно-Сахалинск", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!)]),
+        ServiceAuto(titlesec: titleSection(name: "Франция", subName: "Все города"),
+                    items: [ItemData(name: "Париж", subName: "Более 112 мест", imageCity: UIImage(named: "hub3")!),
+                            ItemData(name: "Ажен", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!),
+                            ItemData(name: "Калаис", subName: "Более 134 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Каен", subName: "Более 154 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Шанелл", subName: "Более 164 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Капентрасс", subName: "Более 131 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Блойс", subName: "Более 141 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Еус", subName: "Более 131 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Метз", subName: "Более 98 мест", imageCity: UIImage(named: "hub3")!)]),
+        ServiceAuto(titlesec: titleSection(name: "США", subName: "Все города"),
+                    items: [ItemData(name: "Чикаго", subName: "Более 67 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Лос-Анджелес", subName: "Более 87 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Хьюстон", subName: "Более 56 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Финикс", subName: "Более 134 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Филадельфия", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Сан-Антонио", subName: "Более 152 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Сан-Диего", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Даллас", subName: "Более 90 мест", imageCity: UIImage(named: "hub3")!),
+                                           ItemData(name: "Сан-Хосе", subName: "Более 87 мест", imageCity: UIImage(named: "hub3")!)]),
     ]
     // MARK: - TODO удалить
     
@@ -159,8 +159,8 @@ class WorldController: UIViewController {
             guard let section = self?.dataSource?.snapshot().sectionIdentifier(containingItem: firstApp) else { return nil }
             if section.name.isEmpty { return nil }
 
-            sectionHeader.title.text = section.name
-            sectionHeader.subtitle.text = section.subName
+            sectionHeader.countryNameLabel.text = section.name
+            sectionHeader.subTitleLabel.text = section.subName
             return sectionHeader
         }
     }
@@ -172,8 +172,9 @@ extension WorldController {
         let reusableview = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier, for: indexPath) as! SectionHeader
             reusableview.frame = CGRect(x: 0 , y: 0, width: self.view.frame.width, height: 80)
 
-        reusableview.title.text = rentsService[indexPath.section].titlesec.name
-        reusableview.subtitle.text = rentsService[indexPath.section].titlesec.subName
+        reusableview.countryNameLabel.text = rentsService[indexPath.section].titlesec.name
+        reusableview.subTitleLabel.text = rentsService[indexPath.section].titlesec.subName
+        reusableview.delegate = self
                 return reusableview
     }
     
@@ -223,9 +224,10 @@ extension WorldController: UICollectionViewDelegate, UICollectionViewDataSource 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorldCollectionViewCell.identifier, for: indexPath) as? WorldCollectionViewCell else { return UICollectionViewCell() }
 
-        cell.configureCell(title: rentsService[indexPath.section].items[indexPath.row].name,
-                           subtitle: rentsService[indexPath.section].items[indexPath.row].subName)
-
+        cell.configureCell(type: rentsService[indexPath.section].items[indexPath.row].name,
+                           name: rentsService[indexPath.section].items[indexPath.row].subName,
+                           image: rentsService[indexPath.section].items[indexPath.row].imageCity)
+        cell.delegate = self
         return cell
     }
     
@@ -295,5 +297,18 @@ extension WorldController: UISearchBarDelegate {
     
 }
 
+// MARK: - WorldCollectionViewCellDelegate
 
+extension WorldController: WorldCollectionViewCellDelegate {
+    func showSelected(show: String) {
+        print("Show selected: \(show)")
+    }
+}
 
+// MARK: - SectionHeaderDelegate
+
+extension WorldController: SectionHeaderDelegate {
+    func showCountyToBuy(countryName: String) {
+        print("show County To Buy: \(countryName)")
+    }
+}

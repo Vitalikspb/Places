@@ -10,7 +10,10 @@ import GoogleMaps
 import CoreLocation
 
 protocol MapDisplayLogic: AnyObject {
+    // выбран маркер и показывается floating view
     func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel)
+    // выбран маркер и только выделен
+    func displaySelectedDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel)
     func displayMarkers(filter: [GMSMarker])
     func displayFetchedMarkersFromSearchView(withString: String)
 }
@@ -61,6 +64,7 @@ class MapController: UIViewController {
     private var currentCountry: String = ""
     private var selectMark: Bool = false
     private var selectedFilter: Bool = false
+    private var selectMarkFromBottomView: Bool = false
     
     // MARK: - UI Properties
     
@@ -166,7 +170,7 @@ class MapController: UIViewController {
         
         bottomCollectionView.delegate = self
         
-//        showCurrentCityView.delegate = self
+        //        showCurrentCityView.delegate = self
         
         mapView.delegate = self
         mapView.settings.compassButton = true
@@ -252,7 +256,9 @@ class MapController: UIViewController {
     
     // Показываем нижнее вью с коллекцией маркеров
     func bottomCollectionViewShow() {
-        bottomCollectionView.alpha = 1
+        UIView.animate(withDuration: 0.5) {
+            self.bottomCollectionView.alpha = 1
+        }
     }
     // Скрываем нижнее вью с коллекцией маркеров
     func bottomCollectionViewhide() {
@@ -392,6 +398,16 @@ class MapController: UIViewController {
             selectMark = showFloatingViewMark
         }
     }
+    private func showSelectMarkerSightWithAnimating(marker: GMSMarker, showFloatingViewMark: Bool) {
+        // делаем запрос на данные для floatinView
+        if let nameLocation = marker.title {
+            interactor?.showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
+            animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
+                                 longitude: marker.position.longitude,
+                                 from: .mapViewZoom)
+            selectMark = showFloatingViewMark
+        }
+    }
 }
 
 // MARK: - GMSMapViewDelegate
@@ -430,9 +446,10 @@ extension MapController: GMSMapViewDelegate {
         hideTopSearchView()
         floatingView.hideFloatingView()
         showScrollAndWeatherView()
-        if selectMark {
+        if selectMark || selectMarkFromBottomView {
             addDefaultMarkers()
             selectMark = false
+            selectMarkFromBottomView = false
         }
     }
     
@@ -699,11 +716,20 @@ extension MapController: MapDisplayLogic {
                 self.floatingView.showFloatingView()
             }
             UIView.animate(withDuration: 0.5) {
+                self.bottomCollectionView.alpha = 0
                 self.topScrollView.alpha = 0
                 self.weatherView.alpha = 0
             }
         }
     }
+    // при нажатии на ячейку на collection bottom view на экране
+    func displaySelectedDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel) {
+        mapView.clear()
+        viewModel.markers.forEach {
+            $0.map = mapView
+        }
+    }
+    
 }
 
 // MARK: - CurrentCityButtonViewDelegate
@@ -719,7 +745,10 @@ extension MapController: CurrentCityButtonViewDelegate {
 extension MapController: BottomCollectionViewDelegate {
     func showSight(nameSight: String) {
         print(nameSight)
+        addDefaultMarkers()
+        selectMark = false
+        selectMarkFromBottomView = true
         guard let marker = interactor?.fetchSelectedSightWithAllMarkers(withName: nameSight) else { return }
-        showMarkerSightWithAnimating(marker: marker, showFloatingViewMark: false)
+        showSelectMarkerSightWithAnimating(marker: marker, showFloatingViewMark: false)
     }
 }

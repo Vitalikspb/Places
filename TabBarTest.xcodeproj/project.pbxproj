@@ -648,7 +648,6 @@
 		C259AA1C27215B7A00B03921 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C24A7EE727746F4700D4751F /* World */,
 				C24A7EB327735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift */,
 				C24A7EAD277339A600D4751F /* RentAutoCollectionViewCell.swift */,
 				C24A7EAF27733BBC00D4751F /* HelperMapsTableViewCell.swift */,
@@ -660,6 +659,7 @@
 				5323BA15274D3DBE00F6BA5E /* SightCollectionViewCell.swift */,
 				5323BA19274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift */,
 				538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */,
+				C24A7EE727746F4700D4751F /* World */,
 				C2A0C221276B85E00023BF60 /* SelectedInterestingEventCell */,
 				C26BFE5C2768DC2500ABD119 /* InterestingEvents */,
 				5397795927443147006644D3 /* CurrentCity */,

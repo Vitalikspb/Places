@@ -1,34 +1,60 @@
 //
-//  RentAutoCollectionViewCell.swift
-//  DiffableDataSource
+//  WorldCollectionViewCell.swift
+//  TabBarTest
 //
-//  Created by ViceCode on 23.12.2021.
-
+//
 
 import UIKit
+
+protocol WorldCollectionViewCellDelegate: AnyObject {
+    func showSelected(show: String)
+}
 
 class WorldCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI properties
-    private let titleLabel: UILabel = {
+    
+    private let sightImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .white
+        return imageView
+    }()
+
+    private let cityNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.contentMode = .center
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
         return label
     }()
-    private let subtitleLabel: UILabel = {
+    private let citySightCountLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .lightGray
+        label.contentMode = .center
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans", size: 14)
         return label
+    }()
+    let showSelectedCityButton: UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .clear
+        button.contentMode = .right
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.init(name: "GillSans-Semibold", size: 15)
+        button.setTitle("Посмотреть", for: .normal)
+        return button
     }()
     
     // MARK: - Public properties
     
     static let identifier = "WorldCollectionViewCell"
-    
+    weak var delegate: WorldCollectionViewCellDelegate?
     
     // MARK: - LifeCycle
     
@@ -49,38 +75,65 @@ class WorldCollectionViewCell: UICollectionViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        // Для обрезания длинного текста описания события
+        self.backgroundColor = .white
+        self.layer.cornerRadius = 8
         self.clipsToBounds = true
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = .white
-        self.selectedBackgroundView = bgColorView
         
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(subtitleLabel)
-        titleLabel.anchor(top: contentView.topAnchor,
-                          left: contentView.leftAnchor,
-                          bottom: subtitleLabel.topAnchor,
-                          right: contentView.rightAnchor,
-                          paddingTop: 8,
-                          paddingLeft: 8,
-                          paddingBottom: 8,
-                          paddingRight: 8,
-                          width: 0,
-                          height: 25)
-        subtitleLabel.anchor(top: nil,
-                             left: contentView.leftAnchor,
-                             bottom: contentView.bottomAnchor,
-                             right: contentView.rightAnchor,
-                             paddingTop: 0,
-                             paddingLeft: 8,
-                             paddingBottom: 8,
-                             paddingRight: 8,
-                             width: 0, height: 25)
+        contentView.addSubview(sightImageView)
+        contentView.addSubview(citySightCountLabel)
+        contentView.addSubview(cityNameLabel)
+        contentView.addSubview(showSelectedCityButton)
         
+        showSelectedCityButton.addTarget(self, action: #selector(handleTapShowSelectedCity), for: .touchUpInside)
+        
+        sightImageView.anchor(top: contentView.topAnchor,
+                              left: contentView.leftAnchor,
+                              bottom: contentView.bottomAnchor,
+                              right: nil,
+                              paddingTop: 8,
+                              paddingLeft: 0,
+                              paddingBottom: 8,
+                              paddingRight: 0,
+                              width: 60, height: 0)
+        cityNameLabel.anchor(top: contentView.topAnchor,
+                              left: sightImageView.rightAnchor,
+                              bottom: nil,
+                              right: showSelectedCityButton.leftAnchor,
+                              paddingTop: 16,
+                              paddingLeft: 8,
+                              paddingBottom: 0,
+                              paddingRight: 8,
+                              width: 0, height: 0)
+        citySightCountLabel.anchor(top: cityNameLabel.bottomAnchor,
+                              left: sightImageView.rightAnchor,
+                              bottom: nil,
+                              right: showSelectedCityButton.leftAnchor,
+                              paddingTop: 8,
+                              paddingLeft: 8,
+                              paddingBottom: 16,
+                              paddingRight: 8,
+                              width: 0, height: 0)
+        
+        showSelectedCityButton.centerY(inView: contentView)
+        showSelectedCityButton.anchor(top: nil,
+                                left: nil,
+                                bottom: nil,
+                                right: contentView.rightAnchor,
+                                paddingTop: 0,
+                                paddingLeft: 0,
+                                paddingBottom: 0,
+                                paddingRight: 8,
+                                width: 110, height: 60)
+    }
+    func configureCell(type: String, name: String, image: UIImage) {
+        cityNameLabel.text = type
+        citySightCountLabel.text = name
+        sightImageView.image = image
     }
     
-    func configureCell(title: String, subtitle: String) {
-        titleLabel.text = title
-        subtitleLabel.text = subtitle
+    @objc func handleTapShowSelectedCity() {
+        print(cityNameLabel.text ?? "")
+        delegate?.showSelected(show: cityNameLabel.text ?? "")
     }
 }
+

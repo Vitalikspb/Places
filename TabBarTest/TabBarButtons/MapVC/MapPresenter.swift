@@ -10,6 +10,7 @@ import GoogleMaps
 
 protocol MapPresentationLogic {
     func presentChoosenDestinationView(response: [GMSMarker])
+    func presentSelectedDestinationView(response: [GMSMarker])
     func presentAllMarkers(response: [GMSMarker])
 }
 
@@ -18,6 +19,10 @@ final class MapPresenter: MapPresentationLogic {
     
     func presentChoosenDestinationView(response: [GMSMarker]) {
         mapController?.displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel(markers: response))
+    }
+    
+    func presentSelectedDestinationView(response: [GMSMarker]) {
+        mapController?.displaySelectedDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel(markers: response))
     }
     
     func presentAllMarkers(response: [GMSMarker]) {
