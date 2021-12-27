@@ -21,7 +21,7 @@ class WeatherController: UIViewController {
         view.layer.cornerRadius = 2
         return view
     }()
-    private let headerFullWeather = HeaderFullWeather()
+    private let headerFullWeather = HeaderFullWeather(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 210))
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
     
@@ -83,6 +83,7 @@ class WeatherController: UIViewController {
                                       feelsLike: "\(viewModel.weather.currentWeather.feelsLike)",
                                       sunrise: "\(viewModel.weather.currentWeather.sunrise)",
                                       sunset: "\(viewModel.weather.currentWeather.sunset)")
+        headerFullWeather.backgroundColor = .red
         tableView.tableHeaderView = headerFullWeather
         tableView.delegate = self
         tableView.dataSource = self
@@ -138,6 +139,8 @@ extension WeatherController: UITableViewDelegate, UITableViewDataSource {
                            maxTemp: viewModel.weather.sevenDaysWeather[indexPath.row].tempTo,
                            image: viewModel.weather.sevenDaysWeather[indexPath.row].image,
                            description: viewModel.weather.sevenDaysWeather[indexPath.row].description)
+        print("dayOfWeek: \(viewModel.weather.sevenDaysWeather[indexPath.row].dayOfWeek)")
+        print("description: \(viewModel.weather.sevenDaysWeather[indexPath.row].description)")
         return cell
     }
     

@@ -91,7 +91,7 @@ class HeaderFullWeather: UIView {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "00:00"
+        label.text = "Рассвет"
         return label
     }()
     let sunsetStackView: UIStackView = {
@@ -117,10 +117,10 @@ class HeaderFullWeather: UIView {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "00:00"
+        label.text = "Закат"
         return label
     }()
-
+    
     // MARK: - LifeCycle
     
     override init(frame: CGRect) {
@@ -139,7 +139,7 @@ class HeaderFullWeather: UIView {
     
     private func setupUI() {
         self.backgroundColor = .clear
-
+        
         self.addSubview(titleLabel)
         self.addSubview(todayLabel)
         self.addSubview(curTempLabel)
@@ -154,7 +154,7 @@ class HeaderFullWeather: UIView {
         sunriseStackView.addArrangedSubview(sunriseTimeLabel)
         sunsetStackView.addArrangedSubview(sunsetLabel)
         sunsetStackView.addArrangedSubview(sunsetTimeLabel)
-
+        
         titleLabel.anchor(top: self.topAnchor,
                           left: self.leftAnchor,
                           bottom: nil,
@@ -226,7 +226,7 @@ class HeaderFullWeather: UIView {
                              height: 50)
     }
     
-    func configureUI(title: String = "Weather", today: String, curTemp: String, curImage: UIImage, description: String, feelsLike: String, sunrise: String, sunset: String) {
+    func configureUI(title: String = "titleWeather", today: String, curTemp: String, curImage: UIImage, description: String, feelsLike: String, sunrise: String, sunset: String) {
         titleLabel.text = title
         todayLabel.text = today
         curTempLabel.text = curTemp

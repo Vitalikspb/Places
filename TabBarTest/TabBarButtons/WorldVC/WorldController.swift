@@ -46,8 +46,8 @@ class WorldController: UIViewController {
         setupClean()
         setupUI()
         title = "Страны"
-        viewModel.model.removeAll()
-        filteredTableData.model.removeAll()
+//        viewModel.model.removeAll()
+//        filteredTableData.model.removeAll()
         // в интеракторе создаем большую модель для заполнения всех ячеек таблицы,
         // заголовка, погоды и всей остальой инфорамции
         interactor?.showCity()
