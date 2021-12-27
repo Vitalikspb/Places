@@ -10,11 +10,19 @@ import UIKit
 
 enum WorldViewModels {
     
-    struct WorldModel {
-        let name: String
-        let image: UIImage
+    struct WorldViewModel: Hashable {
+        var titlesec: TitleSection
+        var items: [ItemData]
     }
-    
+    struct ItemData: Hashable {
+        let name: String
+        let subName: String
+        let imageCity: UIImage
+    }
+    struct TitleSection: Hashable {
+        let name: String
+        let subName: String
+    }
     enum AllCountriesInTheWorld {
 
         // передаем в интерактор
@@ -25,7 +33,7 @@ enum WorldViewModels {
         
         // посылаем все города для отображения на экране
         struct ViewModel {
-            var country: [WorldModel]
+            var model: [WorldViewModel]
         }
     }
 }

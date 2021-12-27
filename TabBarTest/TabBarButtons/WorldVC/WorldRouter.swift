@@ -9,6 +9,7 @@ import UIKit
 
 protocol WorldRoutingLogic {
     func routeToCountryVC()
+    func routeToCityVC()
 }
 
 protocol WorldDataPassing {
@@ -29,7 +30,15 @@ class WorldRouter: NSObject, WorldRoutingLogic, WorldDataPassing {
         passDataToLeadMore(source: dataStore!, destination: &destinationDS)
         navigateToViewContact(source: viewController!, destination: destinationVC)
     }
-
+    
+    // на экран выбранного города
+    func routeToCityVC() {
+        let destinationVC: CityController = CityController.loadFromStoryboard()
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToLeadMore(source: dataStore!, destination: &destinationDS)
+        navigateToViewContact(source: viewController!, destination: destinationVC)
+    }
+    
     // MARK: - Навигация
     
     // открыть следующий город по тыку на ячееке с городами
@@ -37,10 +46,19 @@ class WorldRouter: NSObject, WorldRoutingLogic, WorldDataPassing {
         source.navigationController?.pushViewController(destination, animated: true)
     }
     
+    // открыть следующий город по тыку на ячееке с городами
+    func navigateToViewContact(source: WorldController, destination: CityController) {
+        source.navigationController?.pushViewController(destination, animated: true)
+    }
+    
     // MARK: - Передача данных
     
     func passDataToLeadMore(source: WorldDataStore, destination: inout DescriptionCountryToBuyDataStore) {
         destination.currentCountry = source.currentCity
+    }
+    
+    func passDataToLeadMore(source: WorldDataStore, destination: inout CityDataStore) {
+        destination.currentCity = source.currentCity
     }
 }
 
