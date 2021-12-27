@@ -51,9 +51,11 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
     }
     
     func updateWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        WeatherAPI().descriptionCurrentWeatherForSevenDays(latitude: latitude, longitude: longitude) { [weak self] weatherSevernDays in
-            guard let self = self else { return }
-            self.currentWeather = weatherSevernDays
+        DispatchQueue.main.async {
+            WeatherAPI().descriptionCurrentWeatherForSevenDays(latitude: latitude, longitude: longitude) { [weak self] weatherSevernDays in
+                guard let self = self else { return }
+                self.currentWeather = weatherSevernDays
+            }
         }
     }
 }
