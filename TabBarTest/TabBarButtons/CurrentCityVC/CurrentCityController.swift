@@ -9,6 +9,7 @@ import UIKit
 
 protocol CurrentCityDisplayLogic: AnyObject {
     func displayAllCities(viewModel: CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel)
+    func updateWeather(viewModel: CurrentCityViewModel.WeatherCurrentCountry.ViewModel)
 }
 
 class CurrentCityController: UIViewController {
@@ -20,7 +21,6 @@ class CurrentCityController: UIViewController {
     var currentCity: String = ""
     
     // MARK: - Private Properties
-    
     private var titleName: String = ""
     var viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(
         weather: CurrentWeatherSevenDays(
@@ -64,6 +64,7 @@ class CurrentCityController: UIViewController {
         setupUI()
         // загружаем данные по текущему городу
         interactor?.showCity(lat: 59.9396340, lon: 30.3104843)
+        
     }
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -84,7 +85,6 @@ class CurrentCityController: UIViewController {
         router?.dataStore?.currentCity = currentCity
     }
     
-    
     // MARK: - Helper Functions
     
     // Настройка архитектуры Clean Swift
@@ -96,7 +96,7 @@ class CurrentCityController: UIViewController {
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
-        presenter.CurrentCityController = viewController
+        presenter.currentCityController = viewController
         router.viewController = viewController
         router.dataStore = interactor
     }
@@ -133,16 +133,8 @@ class CurrentCityController: UIViewController {
         tableView.allowsSelection = false
         
         view.addSubview(tableView)
-        
-        tableView.anchor(top: view.topAnchor,
-                         left: view.leftAnchor,
-                         bottom: view.bottomAnchor,
-                         right: view.rightAnchor,
-                         paddingTop: 0,
-                         paddingLeft: 0,
-                         paddingBottom: 0,
-                         paddingRight: 0,
-                         width: 0, height: 0)
+    
+        tableView.addConstraintsToFillView(view: view)
     }
     
 }
@@ -157,6 +149,14 @@ extension CurrentCityController: CurrentCityDisplayLogic {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()
+        }
+    }
+    // Обновить ячейку погоды после того как произошла загрузка с интернета данных
+    func updateWeather(viewModel: CurrentCityViewModel.WeatherCurrentCountry.ViewModel) {
+        self.viewModel.weather = viewModel.weather
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.tableView.reloadRows(at: [IndexPath(row: 6, section: 0)], with: .automatic)
         }
     }
 }
@@ -217,11 +217,10 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
             // MARK: - TODO Координаты берутся из модели
             cell.configureCell(city: titleName,
-                               today: viewModel.weather.currentWeather.todayTemp,
-                               curTemp: viewModel.weather.currentWeather.todayTemp,
+                               curTemp: Int(viewModel.weather.currentWeather.todayTemp),
                                curImage: viewModel.weather.currentWeather.imageWeather,
                                description: viewModel.weather.currentWeather.description,
-                               feelLike: viewModel.weather.currentWeather.feelsLike,
+                               feelLike: Int(viewModel.weather.currentWeather.feelsLike),
                                sunrise: viewModel.weather.currentWeather.sunrise,
                                sunset: viewModel.weather.currentWeather.sunset)
             cell.delegate = self
@@ -376,8 +375,4 @@ extension CurrentCityController: WeatherCollectionViewCellDelegate {
     
     
 }
-
-
-
-
 

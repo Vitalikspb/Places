@@ -207,11 +207,10 @@ extension DescriptionCountryToBuyController: UITableViewDelegate, UITableViewDat
         case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
             cell.configureCell(city: titleName,
-                               today: viewModel.weather.currentWeather.todayTemp,
-                               curTemp: viewModel.weather.currentWeather.todayTemp,
+                               curTemp: Int(viewModel.weather.currentWeather.todayTemp),
                                curImage: viewModel.weather.currentWeather.imageWeather,
                                description: viewModel.weather.currentWeather.description,
-                               feelLike: viewModel.weather.currentWeather.feelsLike,
+                               feelLike: Int(viewModel.weather.currentWeather.feelsLike),
                                sunrise: viewModel.weather.currentWeather.sunrise,
                                sunset: viewModel.weather.currentWeather.sunset)
             return cell

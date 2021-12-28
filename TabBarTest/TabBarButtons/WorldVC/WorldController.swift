@@ -77,6 +77,7 @@ class WorldController: UIViewController {
     }
     
     private func setupUI() {
+        // поисковая строка
         searchBar.searchBarStyle = UISearchBar.Style.default
         searchBar.placeholder = "Поиск города"
         searchBar.sizeToFit()
@@ -84,6 +85,7 @@ class WorldController: UIViewController {
         searchBar.backgroundImage = UIImage()
         searchBar.delegate = self
         
+        // коллекшн вью
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .systemBackground
@@ -98,6 +100,7 @@ class WorldController: UIViewController {
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.allowsSelection = false
         
         view.addSubview(searchBar)
         view.addSubview(collectionView)
@@ -124,6 +127,7 @@ class WorldController: UIViewController {
                               width: 0,
                               height: 0)
         
+        // Настраиваем дата сорс и хедер для коллекшн вью
         dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.reuseIdentifier, for: indexPath) as? SectionHeader else {
                 return nil
@@ -138,32 +142,32 @@ class WorldController: UIViewController {
             return sectionHeader
         }
     }
-    
 }
 
+// MARK: - UICollectionViewDiffableDataSource
+
 extension WorldController {
+    // Настройка хедера в секции
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let reusableview = collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier, for: indexPath) as! SectionHeader
         reusableview.frame = CGRect(x: 0 , y: 0, width: self.view.frame.width, height: 80)
-        
         reusableview.countryNameLabel.text = filteredTableData.model[indexPath.section].titlesec.name
         reusableview.subTitleLabel.text = filteredTableData.model[indexPath.section].titlesec.subName
         reusableview.delegate = self
         return reusableview
     }
-    
+    // Настройка секции
     func createCompositionalLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
             self.createMediumTableSection()
         }
-        
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 20
         layout.configuration = config
         return layout
     }
-    
+    // Настройка лейаута секции
     func createMediumTableSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.33))
         
@@ -181,13 +185,15 @@ extension WorldController {
         
         return layoutSection
     }
-    
+    // Настройка лейаута хедера
     func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(80))
         let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         return layoutSectionHeader
     }
 }
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension WorldController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -200,17 +206,13 @@ extension WorldController: UICollectionViewDelegate, UICollectionViewDataSource 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorldCollectionViewCell.identifier, for: indexPath) as? WorldCollectionViewCell else { return UICollectionViewCell() }
-        
         cell.configureCell(type: filteredTableData.model[indexPath.section].items[indexPath.row].name,
                            name: filteredTableData.model[indexPath.section].items[indexPath.row].subName,
                            image: filteredTableData.model[indexPath.section].items[indexPath.row].imageCity)
         cell.delegate = self
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("выбран: \(filteredTableData.model[indexPath.section].items[indexPath.row].name)")
-    }
+
 }
 
 // MARK: - CountryDisplayLogic
@@ -285,6 +287,7 @@ extension WorldController: UISearchBarDelegate {
 // MARK: - WorldCollectionViewCellDelegate
 
 extension WorldController: WorldCollectionViewCellDelegate {
+    // нажимаем на пноку показа города
     func showSelected(show: String) {
         router?.dataStore?.currentCity = show
         router?.routeToCityVC()
@@ -294,6 +297,7 @@ extension WorldController: WorldCollectionViewCellDelegate {
 // MARK: - SectionHeaderDelegate
 
 extension WorldController: SectionHeaderDelegate {
+    // нажимаем на пноку показа страны
     func showCountyToBuy(countryName: String) {
         router?.dataStore?.currentCity = countryName
         router?.routeToCountryVC()

@@ -47,7 +47,6 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         passDataToFaq(source: dataStore!, destination: &destinationDS)
         navigateToFaq(source: viewController!, destination: destinationVC)
     }
-    // TODO - доделать роутинг
     func routeToHelperMapsVC() {
         let destinationVC: HelperMapsController = HelperMapsController.loadFromStoryboard()
         var destinationDS = destinationVC.router!.dataStore!

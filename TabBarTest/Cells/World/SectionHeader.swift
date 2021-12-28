@@ -55,6 +55,9 @@ class SectionHeader: UICollectionReusableView {
         addSubview(subTitleLabel)
         addSubview(showSelectedCityButton)
         
+        showSelectedCityButton.layer.cornerRadius = 30
+        showSelectedCityButton.layer.borderWidth = 2
+        showSelectedCityButton.layer.borderColor = UIColor.lightGray.cgColor
         showSelectedCityButton.addTarget(self, action: #selector(handleSelectCountry), for: .touchUpInside)
         
         separatorView.anchor(top: self.topAnchor,

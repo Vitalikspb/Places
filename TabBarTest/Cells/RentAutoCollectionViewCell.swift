@@ -9,6 +9,7 @@ import UIKit
 class RentAutoCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI properties
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black

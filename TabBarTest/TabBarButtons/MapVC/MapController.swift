@@ -14,7 +14,9 @@ protocol MapDisplayLogic: AnyObject {
     func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel)
     // выбран маркер и только выделен
     func displaySelectedDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel)
+    // показываем все маркеры
     func displayMarkers(filter: [GMSMarker])
+    // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String)
 }
 
@@ -174,6 +176,7 @@ class MapController: UIViewController {
         
         mapView.delegate = self
         mapView.settings.compassButton = true
+        // MARK: - TODO удалить стандартную кнопку гугла и добавить свою
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
         mapView.frame = view.frame
@@ -273,7 +276,6 @@ class MapController: UIViewController {
                   let city = city,
                   let country = country,
                   error == nil
-            //                  ,self.tabBarController?.tabBar.items?[1].title != country
             else { return }
             self.userDefault.set("\(country)", forKey: UserDefaults.currentLocation)
             // MARK: - TODO - сделать сравнение текущего города если в структуре у этого города есть метки тогда отображаем кнопку на карте - переход на достопримечательности текущего города, если нету меток тогда не записываем в юзер дефолт и не показываем кнопку перехода.

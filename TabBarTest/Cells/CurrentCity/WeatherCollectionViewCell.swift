@@ -135,6 +135,9 @@ class WeatherCollectionViewCell: UITableViewCell {
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.init(name: "GillSans-semibold", size: 16)
         button.setTitle("Погода на 7 дней", for: .normal)
+        button.layer.cornerRadius = 18
+        button.layer.borderWidth = 2
+        button.layer.borderColor = UIColor.lightGray.cgColor
         return button
     }()
     // MARK: -  Public Properties
@@ -283,26 +286,24 @@ class WeatherCollectionViewCell: UITableViewCell {
                                   paddingBottom: 10,
                                   paddingRight: 16,
                                   width: 0,
-                                  height: 35)
+                                  height: 36)
     }
     
-    func configureCell(city: String, today: Double, curTemp: Double, curImage: UIImage, description: String, feelLike: Double, sunrise: Int,  sunset: Int) {
+    func configureCell(city: String, curTemp: Int, curImage: UIImage, description: String, feelLike: Int, sunrise: Int,  sunset: Int) {
         titleLabel.text = Constants.Cells.weatherInCity + city
-        todayLabel.text = "today \(today)"
         curTempLabel.text = "\(curTemp)"
         curImageLabel.image = curImage
-        descriptionLabel.text = description
-        tempFeelsLikeLabel.text = "\(feelLike)"
-        TimeFormatter.utcToLocal(dateStr: "\(sunrise)", complection: { sunriseString in
-            sunriseLabel.text = sunriseString
+        descriptionLabel.text = "\(description)"
+        tempFeelsLikeLabel.text = "Ощущается как: \(feelLike)"
+        TimeFormatter.utcToLocalTime(dateStr: "\(sunrise)", complection: { sunriseString in
+            sunriseTimeLabel.text = sunriseString
         })
-        TimeFormatter.utcToLocal(dateStr: "\(sunset)", complection: { sunsetString in
-            sunsetLabel.text = sunsetString
+        TimeFormatter.utcToLocalTime(dateStr: "\(sunset)", complection: { sunsetString in
+            sunsetTimeLabel.text = sunsetString
         })
     }
+    
     @objc func fullWeatherTapped() {
-        // Здесь надо передать полученную структуру погоды на основной экран погоды
-        print("Show 7 days weather")
         delegate?.showFullWeather()
     }
     

@@ -8,13 +8,18 @@ import Foundation
 
 protocol CurrentCityPresentationLogic {
     func presentAllMarkers(response: CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel)
+    func updateWeather(response: CurrentCityViewModel.WeatherCurrentCountry.ViewModel)
 }
 
 final class CurrentCityPresenter: CurrentCityPresentationLogic {
-    weak var CurrentCityController: CurrentCityController?
+    weak var currentCityController: CurrentCityController?
     
     func presentAllMarkers(response: CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel) {
-        CurrentCityController?.displayAllCities(viewModel: response)
+        currentCityController?.displayAllCities(viewModel: response)
+    }
+    
+    func updateWeather(response: CurrentCityViewModel.WeatherCurrentCountry.ViewModel) {
+        currentCityController?.updateWeather(viewModel: response)
     }
     
 }

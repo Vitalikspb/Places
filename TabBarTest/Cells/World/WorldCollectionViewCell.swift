@@ -84,6 +84,9 @@ class WorldCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(cityNameLabel)
         contentView.addSubview(showSelectedCityButton)
         
+        showSelectedCityButton.layer.cornerRadius = 30
+        showSelectedCityButton.layer.borderWidth = 2
+        showSelectedCityButton.layer.borderColor = UIColor.lightGray.cgColor
         showSelectedCityButton.addTarget(self, action: #selector(handleTapShowSelectedCity), for: .touchUpInside)
         
         sightImageView.anchor(top: contentView.topAnchor,

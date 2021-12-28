@@ -8,33 +8,12 @@
 import Foundation
 import UIKit
 import CoreLocation
-import SwiftUI
-
-struct CurrentWeatherSevenDays {
-    var currentWeather: CurrentWeatherOfSevenDays
-    var sevenDaysWeather: [WeatherSevenDays]
-}
-
-struct CurrentWeatherOfSevenDays {
-    var todayTemp: Double
-    var imageWeather: UIImage
-    var description: String
-    var feelsLike: Double
-    var sunrise: Int
-    var sunset: Int
-}
-
-struct WeatherSevenDays {
-    var dayOfWeek: Int
-    var tempFrom: Double
-    var tempTo: Double
-    var image: UIImage
-    var description: String
-}
 
 class WeatherAPI {
     
     private let unit = "°"
+    
+    // MARK: - Текущая погода для экрана карты
     // Запрос текущей погоды для экрана карты
     func loadCurrentWeather(latitude myCurrentLatitude: CLLocationDegrees,
                             longitude myCurrentLongitude: CLLocationDegrees,
@@ -60,33 +39,7 @@ class WeatherAPI {
         }.resume()
     }
     
-    // Запрос текущей погоды для текущего города
-    func descriptionCurrentWeather(latitude myCurrentLatitude: CLLocationDegrees,
-                                   longitude myCurrentLongitude: CLLocationDegrees,
-                                   completion: @escaping(String, String, UIImage?, String, String, String)->Void) {
-        let curLang = "&lang=\(UserDefaults.standard.string(forKey: UserDefaults.currentLang) ?? "")"
-        let url = "\(Constants.BaseURLCurrentDay)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&appid=\(Constants.APIKEY)&units=metric\(curLang)"
-        guard let wheatherUrl = URL(string: url) else { return }
-        
-        URLSession.shared.dataTask(with: wheatherUrl) { (data, response, error) in
-            guard let data = data, error == nil else {
-                print("Error fetch request of weather")
-                return
-            }
-            do {
-                let forecast = try JSONDecoder().decode(CurrentWeather.self, from: data)
-                completion("\(Int(forecast.main.temp))\(self.unit)",
-                           "\(Int(forecast.main.feels_like))\(self.unit)",
-                           self.loadIconFromApi(with: forecast.weather[0].icon),
-                           "\(forecast.weather[0].description)",
-                           "\(forecast.sys.sunrise)",
-                           "\(forecast.sys.sunset)")
-            } catch let error {
-                print(error)
-            }
-        }.resume()
-    }
-    
+    // MARK: - Погода на 7 дней
     // Запрос текущей погоды для текущего города на 7 дней
     func descriptionCurrentWeatherForSevenDays(latitude myCurrentLatitude: CLLocationDegrees,
                                                longitude myCurrentLongitude: CLLocationDegrees,
@@ -107,6 +60,7 @@ class WeatherAPI {
             do {
                 let forecast = try JSONDecoder().decode(CurrentWeatherForSevenDays.self, from: data)
                 // возвращаем погоду с описанием на 7 дней кроме рассвета и заката, текущего дня все полостью описание
+                
                 var currentWeatherOfSevenDays: CurrentWeatherOfSevenDays!
                 currentWeatherOfSevenDays = CurrentWeatherOfSevenDays(
                     todayTemp: forecast.current.temp,
@@ -115,14 +69,16 @@ class WeatherAPI {
                     feelsLike: forecast.current.feels_like,
                     sunrise: forecast.current.sunrise,
                     sunset: forecast.current.sunset)
+
                 var weatherSevenDaysArray = [WeatherSevenDays]()
                 forecast.daily.forEach { item in
-                    weatherSevenDaysArray = [WeatherSevenDays(
+                    let weatherSevenDaysArrayTemp = WeatherSevenDays(
                         dayOfWeek: item.dt,
                         tempFrom: item.temp.day,
                         tempTo: item.temp.night,
                         image: self.loadIconFromApi(with: item.weather.first!.icon) ,
-                        description: item.weather.first!.description)]
+                        description: item.weather.first!.description)
+                    weatherSevenDaysArray.append(weatherSevenDaysArrayTemp)
                 }
                 let weatherSevenDays = CurrentWeatherSevenDays(currentWeather: currentWeatherOfSevenDays,
                                                                sevenDaysWeather: weatherSevenDaysArray)
