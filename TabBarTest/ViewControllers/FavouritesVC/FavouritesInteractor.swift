@@ -26,27 +26,27 @@ class FavouritesInteractor: FavouritesBussinessLogic {
         let allFavourites = [
             FavouritesViewModel.FavouritesSight.FavouritesAllCitiesModel(
                 city: "Санкт-Петербург",
-                image: UIImage(named: "hub3")!,
+                image: UIImage(named: "hermitage5")!,
                 nameOfSight: "Эрмитаж",
                 sightFavouritesFlag: true),
             FavouritesViewModel.FavouritesSight.FavouritesAllCitiesModel(
                 city: "Санкт-Петербург",
-                image: UIImage(named: "hub3")!,
+                image: UIImage(named: "museumRusskiy")!,
                 nameOfSight: "Русский музей",
                 sightFavouritesFlag: true),
             FavouritesViewModel.FavouritesSight.FavouritesAllCitiesModel(
                 city: "Москва",
-                image: UIImage(named: "hub3")!,
+                image: UIImage(named: "savered")!,
                 nameOfSight: "Красная площадь",
                 sightFavouritesFlag: true),
             FavouritesViewModel.FavouritesSight.FavouritesAllCitiesModel(
                 city: "Москва",
-                image: UIImage(named: "hub3")!,
+                image: UIImage(named: "savelenin")!,
                 nameOfSight: "Мавзолей",
                 sightFavouritesFlag: true),
             FavouritesViewModel.FavouritesSight.FavouritesAllCitiesModel(
                 city: "Стамбул",
-                image: UIImage(named: "hub3")!,
+                image: UIImage(named: "savebosfor")!,
                 nameOfSight: "Босфор",
                 sightFavouritesFlag: true)
         ]
@@ -59,12 +59,12 @@ class FavouritesInteractor: FavouritesBussinessLogic {
             FavouritesViewModel.FavouritesSight.CitySight(
                 sightType: "Музей",
                 sightName: "Мавзолей",
-                sightImage: UIImage(named: "hub3")!,
+                sightImage: UIImage(named: "savelenin")!,
                 sightFavouritesFlag: true),
             FavouritesViewModel.FavouritesSight.CitySight(
                 sightType: "Музей",
                 sightName: "Красная площадь",
-                sightImage: UIImage(named: "hub3")!,
+                sightImage: UIImage(named: "savered")!,
                 sightFavouritesFlag: true)
         ]
         
@@ -72,12 +72,12 @@ class FavouritesInteractor: FavouritesBussinessLogic {
             FavouritesViewModel.FavouritesSight.CitySight(
                 sightType: "Музей",
                 sightName: "Эрмитаж",
-                sightImage: UIImage(named: "hub3")!,
+                sightImage: UIImage(named: "hermitage5")!,
                 sightFavouritesFlag: true),
             FavouritesViewModel.FavouritesSight.CitySight(
                 sightType: "Музей",
                 sightName: "Русский музей",
-                sightImage: UIImage(named: "hub3")!,
+                sightImage: UIImage(named: "museumRusskiy")!,
                 sightFavouritesFlag: true)
         ]
         
@@ -95,7 +95,7 @@ class FavouritesInteractor: FavouritesBussinessLogic {
             FavouritesViewModel.FavouritesSight.CitySight(
                 sightType: "Музей",
                 sightName: "Босфор",
-                sightImage: UIImage(named: "hub3")!,
+                sightImage: UIImage(named: "savebosfor")!,
                 sightFavouritesFlag: true),
         ]
         let listFavouritesSightTurkish = [

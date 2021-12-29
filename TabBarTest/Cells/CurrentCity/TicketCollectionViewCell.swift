@@ -24,20 +24,7 @@ class TicketCollectionViewCell: UITableViewCell {
     static let identifier = "TicketCollectionViewCell"
     
     // MARK: - Private properties
-    struct TicketExibitions {
-        let name: String
-        let image: UIImage
-        let price: Int
-        let rating: Float
-        let reviews: Int
-    }
-    private var ticketsArray: [TicketExibitions] = [
-        TicketExibitions(name: "Эрмитаж, Санкт-Петербург: билеты и самостоятельная экскурсия", image: UIImage(named: "hub3")!, price: 1060, rating: 4.5, reviews: 79),
-        TicketExibitions(name: "Санкт-Петербург: билет в музей «Гранд Макет Россия»", image: UIImage(named: "hub3")!, price: 6500, rating: 4.5, reviews: 135),
-        TicketExibitions(name: "Санкт-Петербург: билет в музей «Гранд Макет Россия»", image: UIImage(named: "hub3")!, price: 5304, rating: 0, reviews: 0),
-        TicketExibitions(name: "Санкт-Петербург: билет на балет «Лебединое озеро»", image: UIImage(named: "hub3")!, price: 6500, rating: 4.4, reviews: 78),
-        TicketExibitions(name: "Государственный Русский музей: аудиотур на русском", image: UIImage(named: "hub3")!, price: 928, rating: 4.1, reviews: 11)
-    ]
+    var model: [GuideSightsModel] = []
     
     // MARK: - Lifecycle
     
@@ -111,7 +98,7 @@ class TicketCollectionViewCell: UITableViewCell {
 extension TicketCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ticketsArray.count
+        return model.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -120,11 +107,11 @@ extension TicketCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TicketsCellsCitiesCollectionViewCell.identifier, for: indexPath) as? TicketsCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureCell(title: ticketsArray[indexPath.row].name,
-                          image: ticketsArray[indexPath.row].image,
-                          price: ticketsArray[indexPath.row].price,
-                          rating: ticketsArray[indexPath.row].rating,
-                          reviews: ticketsArray[indexPath.row].reviews)
+        cell.configureCell(title: model[indexPath.row].name,
+                          image: model[indexPath.row].image,
+                          price: model[indexPath.row].price,
+                          rating: model[indexPath.row].rating,
+                          reviews: model[indexPath.row].reviews)
         return cell
     }
     

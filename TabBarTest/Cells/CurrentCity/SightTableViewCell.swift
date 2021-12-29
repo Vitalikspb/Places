@@ -25,7 +25,7 @@ class SightTableViewCell: UITableViewCell {
                                           collectionViewLayout: UICollectionViewLayout.init())
     
     // MARK: - Public properties
-    
+    var model: [SightsModel] = []
     static let identifier = "SightTableViewCell"
     weak var delegate: SightTableViewCellDelegate?
     private let layout = UICollectionViewFlowLayout()
@@ -39,21 +39,7 @@ class SightTableViewCell: UITableViewCell {
             layout.itemSize = CGSize(width: sizeCell.width, height: sizeCell.height)
         }
     }
-    
-    // MARK: - Private properties
-    struct MustSeeStruct {
-        let name: String
-        let image: UIImage
-    }
-    private var mustSeeArray: [MustSeeStruct] = [
-        MustSeeStruct(name: "Эрмитаж", image: UIImage(named: "hub3")!),
-        MustSeeStruct(name: "Русский музей", image: UIImage(named: "hub3")!),
-        MustSeeStruct(name: "Купчино", image: UIImage(named: "hub3")!),
-        MustSeeStruct(name: "Петропавловская крепость", image: UIImage(named: "hub3")!),
-        MustSeeStruct(name: "Казанский собор", image: UIImage(named: "hub3")!),
-        MustSeeStruct(name: "Исаакиевский собор", image: UIImage(named: "hub3")!)
-    ]
-    
+
     // MARK: - Lifecycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -134,7 +120,7 @@ class SightTableViewCell: UITableViewCell {
 extension SightTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mustSeeArray.count
+        return model.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -143,8 +129,8 @@ extension SightTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SightCollectionViewCell.identifier, for: indexPath) as? SightCollectionViewCell else { return UICollectionViewCell() }
-        cell.conigureCell(name: mustSeeArray[indexPath.row].name,
-                          image: mustSeeArray[indexPath.row].image)
+        cell.conigureCell(name: model[indexPath.row].name,
+                          image: model[indexPath.row].image)
         return cell
     }
     
@@ -153,7 +139,7 @@ extension SightTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            moveToMapViewHandle(name: mustSeeArray[indexPath.row].name)
+            moveToMapViewHandle(name: model[indexPath.row].name)
     }
 }
 

@@ -84,7 +84,7 @@ class WorldCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(cityNameLabel)
         contentView.addSubview(showSelectedCityButton)
         
-        showSelectedCityButton.layer.cornerRadius = 30
+        showSelectedCityButton.layer.cornerRadius = 12
         showSelectedCityButton.layer.borderWidth = 2
         showSelectedCityButton.layer.borderColor = UIColor.lightGray.cgColor
         showSelectedCityButton.addTarget(self, action: #selector(handleTapShowSelectedCity), for: .touchUpInside)
@@ -116,17 +116,15 @@ class WorldCollectionViewCell: UICollectionViewCell {
                               paddingBottom: 16,
                               paddingRight: 8,
                               width: 0, height: 0)
-        
-        showSelectedCityButton.centerY(inView: contentView)
-        showSelectedCityButton.anchor(top: nil,
+        showSelectedCityButton.anchor(top: contentView.topAnchor,
                                 left: nil,
-                                bottom: nil,
+                                bottom: contentView.bottomAnchor,
                                 right: contentView.rightAnchor,
-                                paddingTop: 0,
+                                paddingTop: 17,
                                 paddingLeft: 0,
-                                paddingBottom: 0,
+                                paddingBottom: 17,
                                 paddingRight: 8,
-                                width: 110, height: 60)
+                                width: 110, height: 0)
     }
     func configureCell(type: String, name: String, image: UIImage) {
         cityNameLabel.text = type

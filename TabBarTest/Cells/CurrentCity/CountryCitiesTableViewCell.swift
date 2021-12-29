@@ -26,11 +26,13 @@ class CountryCitiesTableViewCell: UITableViewCell {
                                           collectionViewLayout: UICollectionViewLayout.init())
     
     // MARK: - Public properties
+    
     weak var delegate: CountryCitiesTableViewCellDelegate?
     static let identifier = "CountryCitiesTableViewCell"
+    var model: [CityArray] = []
     
     // MARK: - Private properties
-    private var citiesAvailable = ["Москва","Санкт-Петербург","Сочи","Краснодар","Гатчина","Cupertino"]
+    
     
     // MARK: - Lifecycle
     
@@ -110,7 +112,7 @@ class CountryCitiesTableViewCell: UITableViewCell {
 extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return citiesAvailable.count
+        return model.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -120,7 +122,8 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier, for: indexPath) as? CountryCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.conigureCell(title: citiesAvailable[indexPath.row], image: UIImage(named: "hub3")!)
+        cell.conigureCell(title: model[indexPath.row].name,
+                          image: model[indexPath.row].image)
         cell.delegate = self
         return cell
     }
@@ -129,7 +132,7 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.showSelectedCityDescription(citiesAvailable[indexPath.row])
+        delegate?.showSelectedCityDescription(model[indexPath.row].name)
     }
 }
 

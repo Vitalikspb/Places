@@ -73,7 +73,7 @@ class RentAutoController: UIViewController {
     }
     
     private func setupUI() {
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         collectionView.register(RentAutoCollectionViewCell.self,
                                 forCellWithReuseIdentifier: RentAutoCollectionViewCell.identifier)
         collectionView.delegate = self

@@ -21,7 +21,33 @@ class CurrentCityController: UIViewController {
     var currentCity: String = ""
     
     // MARK: - Private Properties
+    
     private var titleName: String = ""
+    
+    // MARK: - TODO Удалить когда сделаю загрузку с сервера
+    private var sightsArray: [SightsModel] = [
+        SightsModel(name: "Эрмитаж", image: UIImage(named: "museumHermitage")!, favourite: true),
+        SightsModel(name: "Русский музей", image: UIImage(named: "museumRusskiy")!, favourite: false),
+        SightsModel(name: "Купчино", image: UIImage(named: "kupchino")!, favourite: false),
+        SightsModel(name: "Петропавловская крепость", image: UIImage(named: "petropavlovskaiaKrepost")!, favourite: true),
+        SightsModel(name: "Казанский собор", image: UIImage(named: "kazanskiySobor")!, favourite: true),
+        SightsModel(name: "Исаакиевский собор", image: UIImage(named: "isaakievskiySobor")!, favourite: true)]
+    
+    private var cityArray: [CityArray] = [
+        CityArray(name: "Москва", image: UIImage(named: "moskva")!),
+        CityArray(name: "Санкт-Петербург", image: UIImage(named: "spb")!),
+        CityArray(name: "Сочи", image: UIImage(named: "sochi")!),
+        CityArray(name: "Краснодар", image: UIImage(named: "krasnodar")!),
+        CityArray(name: "Гатчина", image: UIImage(named: "gatchina")!),
+        CityArray(name: "Купертино", image: UIImage(named: "cupertino")!)]
+    
+    private var guidesArray: [GuideSightsModel] = [
+        GuideSightsModel(image: UIImage(named: "hermitage2")!, name: "Эрмитаж, Санкт-Петербург: билеты и самостоятельная экскурсия", price: 1060, rating: 4.5, reviews: 79),
+        GuideSightsModel(image: UIImage(named: "exhbgrandmaket")!, name: "Билет в музей «Гранд Макет Россия»", price: 6500, rating: 4.5, reviews: 1231),
+        GuideSightsModel(image: UIImage(named: "exhbroof")!, name: "Экскурсия по крышам", price: 5305, rating: 0, reviews: 53),
+        GuideSightsModel(image: UIImage(named: "exhblebed")!, name: "Билет на балет «Лебединое озеро»", price: 2341, rating: 4.2, reviews: 46),
+        GuideSightsModel(image: UIImage(named: "exhbrusmuseum")!, name: "Государственный Русский музей: аудиотур на русском", price: 928, rating: 4.1, reviews: 11)
+    ]
     var viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(
         weather: CurrentWeatherSevenDays(
             currentWeather: CurrentWeatherOfSevenDays(todayTemp: 0.0,
@@ -191,6 +217,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.titleCell = Constants.Cells.sightNearMe
             cell.sizeCell = CGSize(width: 230, height: 170)
+            cell.model = sightsArray
             return cell
             
             // кнопки
@@ -203,6 +230,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 4:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
+            cell.model = sightsArray
             cell.titleCell = Constants.Cells.mustSeeSights
             cell.sizeCell = CGSize(width: 200, height: 140)
             return cell
@@ -210,6 +238,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             // Билеты на экскурсии
         case 5:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TicketCollectionViewCell.identifier, for: indexPath) as? TicketCollectionViewCell else { return UITableViewCell() }
+            cell.model = guidesArray
             return cell
             
             // Погода
@@ -229,6 +258,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             // Выбор редакции
         case 7:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+            cell.model = sightsArray
             cell.titleCell = Constants.Cells.chooseOfRedaction
             cell.sizeCell = CGSize(width: 230, height: 170)
             return cell
@@ -237,6 +267,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 8:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
+            cell.model = sightsArray
             cell.titleCell = Constants.Cells.museums
             cell.sizeCell = CGSize(width: 200, height: 140)
             return cell
@@ -245,6 +276,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 9:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
+            cell.model = sightsArray
             cell.titleCell = Constants.Cells.parks
             cell.sizeCell = CGSize(width: 200, height: 140)
             return cell
@@ -252,6 +284,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             // другие города
         case 10:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCitiesTableViewCell.identifier, for: indexPath) as? CountryCitiesTableViewCell else { return UITableViewCell() }
+            cell.model = cityArray
             cell.delegate = self
             return cell
             

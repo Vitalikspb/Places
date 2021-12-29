@@ -88,6 +88,7 @@
 		C24A7EB427735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EB327735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift */; };
 		C24A7EE927746F6300D4751F /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EE827746F6300D4751F /* SectionHeader.swift */; };
 		C24A7EEB27746F8100D4751F /* WorldCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EEA27746F8100D4751F /* WorldCollectionViewCell.swift */; };
+		C24A7EED277C8F3900D4751F /* CellModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24A7EEC277C8F3800D4751F /* CellModels.swift */; };
 		C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25448792706ED32000B9439 /* ModelWeather.swift */; };
 		C254487C2706F52E000B9439 /* Extension+CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487B2706F52E000B9439 /* Extension+CLLocation.swift */; };
 		C254487E27070753000B9439 /* FloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C254487D27070753000B9439 /* FloatingView.swift */; };
@@ -257,6 +258,7 @@
 		C24A7EB327735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCollectionViewCollectionViewCell.swift; sourceTree = "<group>"; };
 		C24A7EE827746F6300D4751F /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		C24A7EEA27746F8100D4751F /* WorldCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldCollectionViewCell.swift; sourceTree = "<group>"; };
+		C24A7EEC277C8F3800D4751F /* CellModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModels.swift; sourceTree = "<group>"; };
 		C25448792706ED32000B9439 /* ModelWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelWeather.swift; sourceTree = "<group>"; };
 		C254487B2706F52E000B9439 /* Extension+CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CLLocation.swift"; sourceTree = "<group>"; };
 		C254487D27070753000B9439 /* FloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingView.swift; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 			children = (
 				C25448792706ED32000B9439 /* ModelWeather.swift */,
 				5397795527442BC4006644D3 /* AvailableCities.swift */,
+				C24A7EEC277C8F3800D4751F /* CellModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1052,6 +1055,7 @@
 				C2588FA1270307280014CCDC /* ScrollViewOnMap.swift in Sources */,
 				532A230C276E08AB001CFAEC /* HelperMapsRouter.swift in Sources */,
 				C2A0C228276CA7BE0023BF60 /* RentAutoController.swift in Sources */,
+				C24A7EED277C8F3900D4751F /* CellModels.swift in Sources */,
 				532A231B276E2C46001CFAEC /* MapImagePresenter.swift in Sources */,
 				C2588FA3270307980014CCDC /* Extension+UILabel.swift in Sources */,
 				C26BFE412768A00200ABD119 /* WorldInteractor.swift in Sources */,

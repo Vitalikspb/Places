@@ -175,9 +175,8 @@ class MapController: UIViewController {
         //        showCurrentCityView.delegate = self
         
         mapView.delegate = self
-        mapView.settings.compassButton = true
-        // MARK: - TODO удалить стандартную кнопку гугла и добавить свою
-        mapView.settings.myLocationButton = true
+        mapView.settings.compassButton = false
+        mapView.settings.myLocationButton = false
         mapView.isMyLocationEnabled = true
         mapView.frame = view.frame
         // убираем с карты все дефолтные метки загрузкой JSON в стиль карты

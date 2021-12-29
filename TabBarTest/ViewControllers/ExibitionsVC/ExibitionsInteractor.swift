@@ -25,35 +25,35 @@ class ExibitionsInteractor: ExibitionsBussinessLogic, ExibitionsDataStore {
         
         let interestingEvent = [
             ExibitionsModels.ExibitionsModel(
-                                    image: UIImage(named: "hub3")!,
+                                    image: UIImage(named: "hermitage5")!,
                                     name: "День в эрмитаже",
                                     reviewsStar: 4,
                                     reviewsCount: 125,
                                     price: 2500,
                                     duration: "5"),
                                 ExibitionsModels.ExibitionsModel(
-                                    image: UIImage(named: "hub3")!,
+                                    image: UIImage(named: "exhbroof")!,
                                     name: "Прогулка по крышам",
                                     reviewsStar: 5,
                                     reviewsCount: 425,
                                     price: 2000,
                                     duration: "2"),
                                 ExibitionsModels.ExibitionsModel(
-                                    image: UIImage(named: "hub3")!,
+                                    image: UIImage(named: "exhbboat")!,
                                     name: "Прогулка по рекам и каналам Санкт-Петербурга",
                                     reviewsStar: 3,
                                     reviewsCount: 89,
                                     price: 3200,
                                     duration: "3"),
                                 ExibitionsModels.ExibitionsModel(
-                                    image: UIImage(named: "hub3")!,
+                                    image: UIImage(named: "exhbmistik")!,
                                     name: "Мистический Санкт-Петербург",
                                     reviewsStar: 5,
                                     reviewsCount: 867,
                                     price: 1500,
                                     duration: "2"),
                                 ExibitionsModels.ExibitionsModel(
-                                    image: UIImage(named: "hub3")!,
+                                    image: UIImage(named: "exhbrusmuseum")!,
                                     name: "Русский музей",
                                     reviewsStar: 5,
                                     reviewsCount: 265,
