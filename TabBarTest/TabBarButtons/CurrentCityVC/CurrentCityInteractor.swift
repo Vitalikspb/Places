@@ -17,6 +17,9 @@ protocol CurrentCityDataStore {
 }
 
 class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
+    
+    // MARK: - Public properties
+    
     var currentWeather: CurrentWeatherSevenDays = CurrentWeatherSevenDays(
         currentWeather: CurrentWeatherOfSevenDays(todayTemp: 0.0,
                                                   imageWeather: UIImage(),
@@ -28,21 +31,18 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
                                             tempFrom: 0.0,
                                             tempTo: 0.0,
                                             image: UIImage(),
-                                            description: "")])
+                                            description: "")]) {
+                                                didSet {
+                                                    let viewModel = CurrentCityViewModel.WeatherCurrentCountry.ViewModel(weather: currentWeather)
+                                                    presenter?.updateWeather(response: viewModel)
+                                                }
+                                            }
     var currentCity: String = ""
-    
     var presenter: CurrentCityPresentationLogic?
     
+    // MARK: - CurrentCityBussinessLogic
+    
     func showCity(lat: CLLocationDegrees, lon: CLLocationDegrees) {
-        //        Здесь создаем модель для текукщего города - заполняем модель все информацией -
-        //        погодой,
-        //        главными картинкам,
-        //        описанием
-        //        ссылками кнопок
-        //        местами
-        //        другими городами
-        //        по этой модели будем заполнять экран а не как сейчас
-        
         let viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(
             weather: currentWeather,
             cities: CurrentCityViewModel.CityModel(name: currentCity, image: UIImage()))
@@ -50,13 +50,15 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
         presenter?.presentAllMarkers(response: viewModel)
     }
     
+    // MARK: - Helper functions
+    
     func updateWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
-        DispatchQueue.main.async {
-            WeatherAPI().descriptionCurrentWeatherForSevenDays(latitude: latitude, longitude: longitude) { [weak self] weatherSevernDays in
-                guard let self = self else { return }
-                self.currentWeather = weatherSevernDays
-            }
+        WeatherAPI().descriptionCurrentWeatherForSevenDays(latitude: latitude, longitude: longitude) { [weak self] weatherSevernDays in
+            guard let self = self else { return }
+            self.currentWeather = weatherSevernDays
+            self.currentWeather.sevenDaysWeather.removeFirst()
         }
     }
 }
+
 

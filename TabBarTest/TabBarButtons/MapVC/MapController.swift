@@ -14,7 +14,9 @@ protocol MapDisplayLogic: AnyObject {
     func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel)
     // выбран маркер и только выделен
     func displaySelectedDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel)
+    // показываем все маркеры
     func displayMarkers(filter: [GMSMarker])
+    // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String)
 }
 
@@ -173,8 +175,8 @@ class MapController: UIViewController {
         //        showCurrentCityView.delegate = self
         
         mapView.delegate = self
-        mapView.settings.compassButton = true
-        mapView.settings.myLocationButton = true
+        mapView.settings.compassButton = false
+        mapView.settings.myLocationButton = false
         mapView.isMyLocationEnabled = true
         mapView.frame = view.frame
         // убираем с карты все дефолтные метки загрузкой JSON в стиль карты
@@ -273,7 +275,6 @@ class MapController: UIViewController {
                   let city = city,
                   let country = country,
                   error == nil
-            //                  ,self.tabBarController?.tabBar.items?[1].title != country
             else { return }
             self.userDefault.set("\(country)", forKey: UserDefaults.currentLocation)
             // MARK: - TODO - сделать сравнение текущего города если в структуре у этого города есть метки тогда отображаем кнопку на карте - переход на достопримечательности текущего города, если нету меток тогда не записываем в юзер дефолт и не показываем кнопку перехода.

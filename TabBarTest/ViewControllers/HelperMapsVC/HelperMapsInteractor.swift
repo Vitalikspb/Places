@@ -35,15 +35,15 @@ class HelperMapsInteractor: HelperMapsBussinessLogic, HelperMapsDataStore {
                 currentCity: currentCity, helperMapsModel: [
                     HelperMapsModels.HelperMapsModel(
                         name: "Карта метро",
-                        image: UIImage(named: "hub3")!,
+                        image: UIImage(named: "mapmetro")!,
                         url: "hub3"),
                     HelperMapsModels.HelperMapsModel(
                         name: "Карта автобусов",
-                        image: UIImage(named: "hub3")!,
+                        image: UIImage(named: "mapbus")!,
                         url: "hub3"),
                     HelperMapsModels.HelperMapsModel(
                         name: "Карта центра города",
-                        image: UIImage(named: "hub3")!,
+                        image: UIImage(named: "mapcenter")!,
                         url: "hub3"),
                 ]
             )

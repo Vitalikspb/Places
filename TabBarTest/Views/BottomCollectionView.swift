@@ -52,16 +52,16 @@ class BottomCollectionView: UIView {
     private func configureUI() {
         self.backgroundColor = .clear
         let data = [BottomCollectionViewModel(type: "Музей",
-                                              image: UIImage(named: "hub3")!,
+                                              image: UIImage(named: "museumRusskiy")!,
                                               nameOfSight: "Русский музей"),
                     BottomCollectionViewModel(type: "Парк",
-                                              image: UIImage(named: "hub3")!,
+                                              image: UIImage(named: "parkMarsovoPole")!,
                                               nameOfSight: "Парк марсово поле"),
                     BottomCollectionViewModel(type: "Музей",
-                                              image: UIImage(named: "hub3")!,
+                                              image: UIImage(named: "museumHermitage")!,
                                               nameOfSight: "Эрмитаж"),
                     BottomCollectionViewModel(type: "Достопримечательность",
-                                              image: UIImage(named: "hub3")!,
+                                              image: UIImage(named: "dostoprimechatelnostPetrPerviy")!,
                                               nameOfSight: "Пямятник Петру 1")]
         dataModel = data
         

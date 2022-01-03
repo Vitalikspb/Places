@@ -106,7 +106,7 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
         let sydneyMarker1 = GMSMarker(
             position: CLLocationCoordinate2D(latitude: 59.9122, longitude: 30.3445))
         sydneyMarker1.title = "Русский музей"
-        sydneyMarker1.icon = UIImage(systemName: "terminal")!
+        sydneyMarker1.icon = UIImage(systemName: "sunrise")!
         
         // Add a custom 'arrow' marker pointing to Melbourne.
         let melbourneMarker = GMSMarker(
@@ -140,7 +140,7 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
         let sydneyMarker = GMSMarker(
             position: CLLocationCoordinate2D(latitude: 59.9422, longitude: 30.3945))
         sydneyMarker.title = "New Point!"
-        sydneyMarker.icon = UIImage(systemName: "terminal")!
+        sydneyMarker.icon = UIImage(systemName: "sunrise")!
         
         // Add a custom 'arrow' marker pointing to Melbourne.
         let melbourneMarker = GMSMarker(
@@ -179,7 +179,7 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
         let sydneyMarker1 = GMSMarker(
             position: CLLocationCoordinate2D(latitude: 59.9122, longitude: 30.3445))
         sydneyMarker1.title = "Русский музей"
-        sydneyMarker1.icon = UIImage(systemName: "terminal")!
+        sydneyMarker1.icon = UIImage(systemName: "sunrise")!
 
         // Add a custom 'arrow' marker pointing to Melbourne.
         let melbourneMarker = GMSMarker(

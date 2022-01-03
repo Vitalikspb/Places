@@ -31,59 +31,34 @@ class IntrestingEventsInteractor: IntrestingEventsBussinessLogic, IntrestingEven
     func showIntrestingEvents() {
         // создаем модель из БД из избранного
         
-        let interestingEvent = [IntrestingEventsModels.IntrestingEventsModel(
-            image: [UIImage(named: "hub3")!,
-                    UIImage(named: "hub3")!,
-                    UIImage(named: "hub3")!
-                   ],
-            name: "Фестиваль масок",
-            descriptions: "Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание ",
-            date: "05.12.2021"),
-                                IntrestingEventsModels.IntrestingEventsModel(
-                                    image: [UIImage(named: "hub3")!,
-                                            UIImage(named: "hub3")!,
-                                            UIImage(named: "hub3")!
-                                           ],
-                                    name: "День народного единства",
-                                    descriptions: "Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание ",
-                                    date: "05.12.2021"),
-                                IntrestingEventsModels.IntrestingEventsModel(
-                                    image: [UIImage(named: "hub3")!],
-                                    name: "Флаг страны",
-                                    descriptions: "Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание ",
-                                    date: "05.12.2021"),IntrestingEventsModels.IntrestingEventsModel(
-                                        image: [UIImage(named: "hub3")!,
-                                                UIImage(named: "hub3")!,
-                                                UIImage(named: "hub3")!,
-                                                UIImage(named: "hub3")!,
-                                                UIImage(named: "hub3")!,
-                                                UIImage(named: "hub3")!,
-                                                UIImage(named: "hub3")!
-                                               ],
-                                        name: "Фестиваль масок",
-                                        descriptions: "Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание ",
-                                        date: "05.12.2021"),
-                                IntrestingEventsModels.IntrestingEventsModel(
-                                    image: [UIImage(named: "hub3")!,
-                                            UIImage(named: "hub3")!,
-                                            UIImage(named: "hub3")!
-                                           ],
-                                    name: "День народного единства",
-                                    descriptions: "Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание ",
-                                    date: "05.12.2021"),
-                                IntrestingEventsModels.IntrestingEventsModel(
-                                    image: [UIImage(named: "hub3")!,
-                                            UIImage(named: "hub3")!,
-                                            UIImage(named: "hub3")!
-                                           ],
-                                    name: "Флаг страны",
-                                    descriptions: "Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание ",
-                                    date: "05.12.2021")
+        let interestingEvent = [
+            IntrestingEventsModels.IntrestingEventsModel(
+                image: [UIImage(named: "eventmaski")!,
+                        UIImage(named: "eventmaski1")!,
+                        UIImage(named: "eventmaski2")!,
+                        UIImage(named: "eventmaski3")!,
+                        UIImage(named: "eventmaski4")!
+                       ],
+                name: "Фестиваль масок",
+                descriptions: "Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание ",
+                date: "05.12.2021"),
+            
+            IntrestingEventsModels.IntrestingEventsModel(
+                image: [UIImage(named: "eventedins")!,
+                        UIImage(named: "eventedins1")!,
+                        UIImage(named: "eventedins2")!
+                       ],
+                name: "День народного единства",
+                descriptions: "Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание ",
+                date: "05.12.2021"),
+            IntrestingEventsModels.IntrestingEventsModel(
+                image: [UIImage(named: "eventflag")!,
+                        UIImage(named: "eventflag1")!,
+                        UIImage(named: "eventflag2")!],
+                name: "Флаг страны",
+                descriptions: "Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание Интересное описание ",
+                date: "05.12.2021")
         ]
-        image = [UIImage(named: "hub3")!,
-                 UIImage(named: "hub3")!,
-                 UIImage(named: "hub3")!
-                ]
         let viewModel = IntrestingEventsModels.IntrestingEvents.ViewModel(
             country: currentCity, events: interestingEvent)
         presenter?.presentIntrestingEvents(response: viewModel)

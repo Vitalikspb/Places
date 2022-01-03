@@ -16,7 +16,14 @@ class FloatingViewSecondTableViewCell: UITableViewCell {
     // MARK: - Public properties
     
     static let identifier = "FloatingViewSecondTableViewCell"
-    
+    var model: [UIImage] = [UIImage(named: "hermitage1")!,
+                            UIImage(named: "hermitage2")!,
+                            UIImage(named: "hermitage3")!,
+                            UIImage(named: "hermitage4")!,
+                            UIImage(named: "hermitage5")!,
+                            UIImage(named: "hermitage6")!,
+                            UIImage(named: "hermitage7")!,
+                            UIImage(named: "hermitage8")!]
     
     // MARK: - Lifecycle
     
@@ -77,7 +84,7 @@ class FloatingViewSecondTableViewCell: UITableViewCell {
 extension FloatingViewSecondTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return model.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -85,8 +92,9 @@ extension FloatingViewSecondTableViewCell: UICollectionViewDelegate, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FloatingCollectionViewCell.identifier, for: indexPath) as? FloatingCollectionViewCell { return cell }
-        return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FloatingCollectionViewCell.identifier, for: indexPath) as? FloatingCollectionViewCell else { return UICollectionViewCell() }
+        cell.image.image = model[indexPath.row]
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

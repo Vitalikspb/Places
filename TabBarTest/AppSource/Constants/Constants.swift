@@ -70,7 +70,7 @@ enum Constants {
         static let rentAuto = "Такси и аренда авто"
         static let chat = "Карты"
         static let weather = "Погода"
-        static let today = "Сегодня"
+        static let today = "Сегодня:"
         static let weatherFellsLike = "Ощущается как "
         static let sunrise = "Восход солнца"
         static let sunset = "Закат солнца"

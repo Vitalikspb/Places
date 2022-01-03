@@ -13,7 +13,7 @@ protocol ConnectivityDelegate {
     func goodInternetConnection()
 }
 
-//MARK: слушатель на интернет
+// MARK: - Слушатель на соединение интернета
 class Connectivity {
     static let shared = Connectivity()
     
@@ -40,6 +40,7 @@ class Connectivity {
         })
 
     }
+    
     func stopNetworkReachabilityObserver() {
         reachabilityManager?.stopListening()
     }

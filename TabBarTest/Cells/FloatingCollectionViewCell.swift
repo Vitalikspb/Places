@@ -15,7 +15,7 @@ class FloatingCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Private properties
     
-    private let image = UIImageView()
+    let image = UIImageView()
     
     // MARK: - LifeCycle
     

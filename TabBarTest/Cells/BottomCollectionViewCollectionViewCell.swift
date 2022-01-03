@@ -97,6 +97,7 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
                               paddingRight: 8,
                               width: 0, height: 40)
     }
+    
     func conigureCell(type: String, name: String, image: UIImage) {
         sightTypeLabel.text = type
         sightNameLabel.text = name

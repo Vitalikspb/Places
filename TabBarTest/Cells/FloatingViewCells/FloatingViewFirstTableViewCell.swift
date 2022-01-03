@@ -13,7 +13,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "Супер интересный музей"
+        label.text = "Эрмитаж"
         label.textAlignment = .left
         label.font = UIFont.init(name: "GillSans-Bold", size: 17)
         return label

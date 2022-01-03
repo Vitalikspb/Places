@@ -15,13 +15,14 @@ class WeatherController: UIViewController {
 
     
     // MARK: - UI Properties
+    
     private let topSeparator: UIView = {
        let view = UIView()
         view.backgroundColor = .lightGray
         view.layer.cornerRadius = 2
         return view
     }()
-    private let headerFullWeather = HeaderFullWeather(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 210))
+    private let headerFullWeather = HeaderFullWeather(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 260))
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
     
@@ -76,14 +77,12 @@ class WeatherController: UIViewController {
         tableView.register(FullWeatherTableViewCell.self,
                            forCellReuseIdentifier: FullWeatherTableViewCell.identifier)
         headerFullWeather.configureUI(title: viewModel.currentCity,
-                                      today: "\(viewModel.weather.currentWeather.todayTemp)",
-                                      curTemp: "\(viewModel.weather.currentWeather.todayTemp)",
+                                      curTemp: "\(Int(viewModel.weather.currentWeather.todayTemp))",
                                       curImage: viewModel.weather.currentWeather.imageWeather,
                                       description: viewModel.weather.currentWeather.description,
-                                      feelsLike: "\(viewModel.weather.currentWeather.feelsLike)",
+                                      feelsLike: "\(Int(viewModel.weather.currentWeather.feelsLike))",
                                       sunrise: "\(viewModel.weather.currentWeather.sunrise)",
                                       sunset: "\(viewModel.weather.currentWeather.sunset)")
-        headerFullWeather.backgroundColor = .red
         tableView.tableHeaderView = headerFullWeather
         tableView.delegate = self
         tableView.dataSource = self
@@ -135,26 +134,17 @@ extension WeatherController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FullWeatherTableViewCell.identifier, for: indexPath) as? FullWeatherTableViewCell else { return UITableViewCell() }
         cell.configureCell(day: viewModel.weather.sevenDaysWeather[indexPath.row].dayOfWeek,
-                           minTemp: viewModel.weather.sevenDaysWeather[indexPath.row].tempFrom,
-                           maxTemp: viewModel.weather.sevenDaysWeather[indexPath.row].tempTo,
+                           minTemp: Int(viewModel.weather.sevenDaysWeather[indexPath.row].tempFrom),
+                           maxTemp: Int(viewModel.weather.sevenDaysWeather[indexPath.row].tempTo),
                            image: viewModel.weather.sevenDaysWeather[indexPath.row].image,
                            description: viewModel.weather.sevenDaysWeather[indexPath.row].description)
-        print("dayOfWeek: \(viewModel.weather.sevenDaysWeather[indexPath.row].dayOfWeek)")
-        print("description: \(viewModel.weather.sevenDaysWeather[indexPath.row].description)")
+
         return cell
     }
     
     // Высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
-    }
-
-    
-    // Белое заполнение пустой части таблицы
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
     }
 }
 

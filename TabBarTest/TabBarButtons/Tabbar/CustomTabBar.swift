@@ -27,8 +27,8 @@ class CustomTaBarVC: UITabBarController, UITabBarControllerDelegate {
 //            print("map button")
         case 1: break
 //            print("country button")
-        case 2:
-            print("World button")
+        case 2: break
+//            print("World button")
         case 3:
             print("Settigns button")
         default:

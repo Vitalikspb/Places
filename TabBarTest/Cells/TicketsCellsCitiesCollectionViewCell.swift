@@ -200,7 +200,7 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
 
     }
     
-    func configureCell(title: String, image: UIImage, price: Int, rating: Float, reviews: Int) {
+    func configureCell(title: String, image: UIImage, price: Int, rating: Double, reviews: Int) {
         cellImage = image
         cellTitle = title
         priceLabel.text = "\(price) Р."

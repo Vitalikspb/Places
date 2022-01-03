@@ -8,35 +8,25 @@ import UIKit
 
 class HeaderFullWeather: UIView {
     
-    
     // MARK: - UI properties
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.textAlignment = .center
+        label.font = UIFont.init(name: "GillSans-Semibold", size: 22)
         label.text = Constants.Cells.weather
-        return label
-    }()
-    private let todayLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = Constants.Cells.today
         return label
     }()
     private let curTempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = UIFont.init(name: "GillSans-Semibold", size: 26)
         label.text = ""
         return label
     }()
-    private let curImageLabel: UIImageView = {
+    private let curImageView: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .clear
         image.contentMode = .scaleAspectFit
@@ -47,14 +37,15 @@ class HeaderFullWeather: UIView {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.adjustsFontSizeToFitWidth = true
+        label.font = UIFont.init(name: "GillSans", size: 18)
         label.text = ""
         return label
     }()
     private let tempFeelsLikeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
         label.text = Constants.Cells.weatherFellsLike
@@ -120,6 +111,11 @@ class HeaderFullWeather: UIView {
         label.text = "Закат"
         return label
     }()
+    private let separatorView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
     
     // MARK: - LifeCycle
     
@@ -141,12 +137,12 @@ class HeaderFullWeather: UIView {
         self.backgroundColor = .clear
         
         self.addSubview(titleLabel)
-        self.addSubview(todayLabel)
         self.addSubview(curTempLabel)
-        self.addSubview(curImageLabel)
+        self.addSubview(curImageView)
         self.addSubview(descriptionLabel)
         self.addSubview(tempFeelsLikeLabel)
         self.addSubview(mainStackView)
+        self.addSubview(separatorView)
         
         mainStackView.addArrangedSubview(sunriseStackView)
         mainStackView.addArrangedSubview(sunsetStackView)
@@ -164,27 +160,8 @@ class HeaderFullWeather: UIView {
                           paddingBottom: 0,
                           paddingRight: 0,
                           width: 0, height: 20)
-        todayLabel.anchor(top: titleLabel.bottomAnchor,
-                          left: self.leftAnchor,
-                          bottom: nil,
-                          right: curTempLabel.leftAnchor,
-                          paddingTop: 8,
-                          paddingLeft: 16,
-                          paddingBottom: 0,
-                          paddingRight: 8,
-                          width: 0,
-                          height: 25)
+        curTempLabel.centerX(inView: self)
         curTempLabel.anchor(top: titleLabel.bottomAnchor,
-                            left: nil,
-                            bottom: nil,
-                            right: curImageLabel.leftAnchor,
-                            paddingTop: 8,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 8,
-                            width: 0,
-                            height: 25)
-        curImageLabel.anchor(top: titleLabel.bottomAnchor,
                              left: nil,
                              bottom: nil,
                              right: nil,
@@ -192,23 +169,34 @@ class HeaderFullWeather: UIView {
                              paddingLeft: 0,
                              paddingBottom: 0,
                              paddingRight: 0,
-                             width: 30,
-                             height: 30)
-        descriptionLabel.anchor(top: todayLabel.bottomAnchor,
-                                left: self.leftAnchor,
+                             width: 100,
+                             height: 50)
+
+        curImageView.anchor(top: curTempLabel.bottomAnchor,
+                            left: self.leftAnchor,
+                             bottom: nil,
+                             right: nil,
+                             paddingTop: 0,
+                             paddingLeft: 80,
+                             paddingBottom: 0,
+                             paddingRight: 0,
+                             width: 80,
+                             height: 80)
+        descriptionLabel.anchor(top: curImageView.topAnchor,
+                                left: curImageView.rightAnchor,
                                 bottom: nil,
                                 right: self.rightAnchor,
-                                paddingTop: 8,
-                                paddingLeft: 16,
+                                paddingTop: 27,
+                                paddingLeft: 8,
                                 paddingBottom: 0,
                                 paddingRight: 16,
                                 width: 0,
                                 height: 25)
-        tempFeelsLikeLabel.anchor(top: descriptionLabel.bottomAnchor,
+        tempFeelsLikeLabel.anchor(top: curImageView.bottomAnchor,
                                   left: self.leftAnchor,
                                   bottom: nil,
                                   right: self.rightAnchor,
-                                  paddingTop: 8,
+                                  paddingTop: 0,
                                   paddingLeft: 16,
                                   paddingBottom: 0,
                                   paddingRight: 16,
@@ -216,24 +204,53 @@ class HeaderFullWeather: UIView {
                                   height: 25)
         mainStackView.anchor(top: tempFeelsLikeLabel.bottomAnchor,
                              left: self.leftAnchor,
-                             bottom: nil,
+                             bottom: separatorView.topAnchor,
+                             right: self.rightAnchor,
+                             paddingTop: 4,
+                             paddingLeft: 16,
+                             paddingBottom: 2,
+                             paddingRight: 16,
+                             width: 0,
+                             height: 50)
+        separatorView.anchor(top: nil,
+                             left: self.leftAnchor,
+                             bottom: self.bottomAnchor,
                              right: self.rightAnchor,
                              paddingTop: 0,
                              paddingLeft: 16,
                              paddingBottom: 0,
                              paddingRight: 16,
                              width: 0,
-                             height: 50)
+                             height: 1)
     }
     
-    func configureUI(title: String = "titleWeather", today: String, curTemp: String, curImage: UIImage, description: String, feelsLike: String, sunrise: String, sunset: String) {
+    func configureUI(title: String = "Weather", curTemp: String, curImage: UIImage, description: String, feelsLike: String, sunrise: String, sunset: String) {
         titleLabel.text = title
-        todayLabel.text = today
         curTempLabel.text = curTemp
-        curImageLabel.image = curImage
+        curImageView.image = curImage
         descriptionLabel.text = description
-        tempFeelsLikeLabel.text = feelsLike
-        sunriseLabel.text = sunrise
-        sunsetLabel.text = sunset
+        tempFeelsLikeLabel.text = "Ощущается как \(feelsLike)"
+        TimeFormatter.utcToLocalTime(dateStr: "\(sunrise)", complection: { sunriseString in
+            sunriseTimeLabel.text = sunriseString
+        })
+        TimeFormatter.utcToLocalTime(dateStr: "\(sunset)", complection: { sunsetString in
+            sunsetTimeLabel.text = sunsetString
+        })
+        
+        var selfColor = UIColor()
+        switch description {
+        case "clear sky": selfColor = .yellow
+        case "few clouds": selfColor = .blue
+        case "few clouds1":  selfColor = .secondaryLabel
+        case "scattered clouds": selfColor = .lightGray
+        case "broken clouds": selfColor = .gray
+        case "shower rain": selfColor = .darkGray
+        case "rain": selfColor = .cyan
+        case "thunderstorm": selfColor = .brown
+        case "snow": selfColor = .white
+        case "mist": selfColor = .magenta
+        default: selfColor = .white
+        }
+        self.backgroundColor = selfColor
     }
 }

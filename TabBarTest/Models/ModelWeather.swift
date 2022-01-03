@@ -6,6 +6,31 @@
 //
 
 import Foundation
+import UIKit
+
+// структура для погоды на текущий день и на 7 дней
+struct CurrentWeatherSevenDays {
+    var currentWeather: CurrentWeatherOfSevenDays
+    var sevenDaysWeather: [WeatherSevenDays]
+}
+// структура для погоды на текущий день
+struct CurrentWeatherOfSevenDays {
+    var todayTemp: Double
+    var imageWeather: UIImage
+    var description: String
+    var feelsLike: Double
+    var sunrise: Int
+    var sunset: Int
+}
+// структура для погоды на 7 дней
+struct WeatherSevenDays {
+    var dayOfWeek: Int
+    var tempFrom: Double
+    var tempTo: Double
+    var image: UIImage
+    var description: String
+}
+
 
 // для карты текущая погода на 7 дней по месторасположению
 struct CurrentWeatherForSevenDays: Decodable {
