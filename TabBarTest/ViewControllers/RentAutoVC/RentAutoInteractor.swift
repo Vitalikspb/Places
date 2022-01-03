@@ -24,16 +24,21 @@ class RentAutoInteractor: RentAutoBussinessLogic, RentAutoDataStore {
     
     func showRentAuto() {
         // тут запрашиваем у базы всю инфу по текущему городу
-        let rentAuto = [RentAutoModels.RentAutoModel(name: "AVIS", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.RentAutoModel(name: "Hertz", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.RentAutoModel(name: "Europcar", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!)]
+        let rentAuto = [RentAutoModels.AutoModel(name: "AVIS", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
+                        RentAutoModels.AutoModel(name: "Hertz", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
+                        RentAutoModels.AutoModel(name: "Europcar", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!)]
         
-        let rentTaxi = [RentAutoModels.RentTaxi(name: "UBER", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.RentTaxi(name: "Яндекс", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
-                        RentAutoModels.RentTaxi(name: "Ситимобил", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!)]
+        let rentTaxi = [RentAutoModels.AutoModel(name: "UBER", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
+                        RentAutoModels.AutoModel(name: "Яндекс", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!),
+                        RentAutoModels.AutoModel(name: "Ситимобил", image: UIImage(named: "hub3")!, url: URL(string: "https://RentAuto.ru/")!)]
         
-        presenter?.presentRentAuto(response: RentAutoModels.RentAuto.ViewModel(rentsService:
-            RentAutoModels.ServiceAuto(rents: rentAuto, taxi: rentTaxi)
-        ))
+        presenter?.presentRentAuto(response:
+                                    RentAutoModels.RentAuto.ViewModel(
+                                        rentsService: [
+                                            RentAutoModels.ServiceAuto(titlesec: RentAutoModels.TitleSection(title: "Аренда авто"), rents: rentAuto),
+                                            RentAutoModels.ServiceAuto(titlesec: RentAutoModels.TitleSection(title: "Такси"), rents: rentTaxi)
+                                        ]
+                                    )
+        )
     }
 }

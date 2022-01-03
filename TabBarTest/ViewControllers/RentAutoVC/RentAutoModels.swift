@@ -12,19 +12,17 @@ import UIKit
 
 enum RentAutoModels {
     
-    struct ServiceAuto {
-        var rents: [RentAutoModel]
-        var taxi: [RentTaxi]
+    struct ServiceAuto: Hashable {
+        var titlesec: TitleSection
+        var rents: [AutoModel]
     }
-    struct RentTaxi {
+    struct AutoModel: Hashable {
         let name: String
         let image: UIImage
         let url: URL
     }
-    struct RentAutoModel {
-        let name: String
-        let image: UIImage
-        let url: URL
+    struct TitleSection: Hashable {
+        var title: String
     }
     
     enum RentAuto {
@@ -37,7 +35,7 @@ enum RentAutoModels {
         
         // посылаем все описание текущего города который выбрали из вкладки CountyTab
         struct ViewModel {
-            var rentsService: ServiceAuto
+            var rentsService: [ServiceAuto]
         }
     }
 }

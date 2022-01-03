@@ -12,7 +12,7 @@ class RentAutoCollectionViewCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
         return label
     }()

@@ -38,6 +38,7 @@
 		5345E2892718B2D400FCD554 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */; };
 		5345E28C2718B30000FCD554 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5345E28B2718B30000FCD554 /* SettingsController.swift */; };
 		534E20E62769193000442F29 /* WorldStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 534E20E52769193000442F29 /* WorldStoryboard.storyboard */; };
+		53714604278310590045E2B9 /* SectionHeaderRentAuto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53714603278310590045E2B9 /* SectionHeaderRentAuto.swift */; };
 		538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF82F27341AAB00D02ECA /* StackViewStars.swift */; };
 		538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF831273422C500D02ECA /* FloatingViewSecondTableViewCell.swift */; };
 		538AF835273424DC00D02ECA /* FloatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */; };
@@ -206,6 +207,7 @@
 		5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
 		5345E28B2718B30000FCD554 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		534E20E52769193000442F29 /* WorldStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WorldStoryboard.storyboard; sourceTree = "<group>"; };
+		53714603278310590045E2B9 /* SectionHeaderRentAuto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderRentAuto.swift; sourceTree = "<group>"; };
 		538AF82F27341AAB00D02ECA /* StackViewStars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewStars.swift; sourceTree = "<group>"; };
 		538AF831273422C500D02ECA /* FloatingViewSecondTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewSecondTableViewCell.swift; sourceTree = "<group>"; };
 		538AF834273424DC00D02ECA /* FloatingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -655,6 +657,7 @@
 				C26BFE7F276A2B4000ABD119 /* ExibitionsTableViewCell.swift */,
 				C26BFE5F2769E3F600ABD119 /* CountryToSelectTableViewCell.swift */,
 				C2C985EA2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift */,
+				53714603278310590045E2B9 /* SectionHeaderRentAuto.swift */,
 				C2C985EE2745019400CCC2F7 /* CountryCellsCitiesCollectionViewCell.swift */,
 				5323BA15274D3DBE00F6BA5E /* SightCollectionViewCell.swift */,
 				5323BA19274D525800F6BA5E /* TicketsCellsCitiesCollectionViewCell.swift */,
@@ -1009,6 +1012,7 @@
 				C26BFE592768D7E200ABD119 /* IntrestingEventsPresenter.swift in Sources */,
 				C2A0C23B276CD6540023BF60 /* FAQInteractor.swift in Sources */,
 				C2CA35EA26FDF98E00795EF6 /* TabBarWithCorners.swift in Sources */,
+				53714604278310590045E2B9 /* SectionHeaderRentAuto.swift in Sources */,
 				53F0D7A4275E98560087A9BB /* FavouritesController.swift in Sources */,
 				C26BFE65276A1BF600ABD119 /* SelectedInterestingEventController.swift in Sources */,
 				C259AA1B27215B7500B03921 /* CountryCitiesTableViewCell.swift in Sources */,
