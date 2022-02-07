@@ -7,6 +7,7 @@
 
 import UIKit
 import GoogleMaps
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,10 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         GMSServices.provideAPIKey(Constants.apiKey)
         connectivity.startNetworkReachabilityObserver()
-        
+        configureFirebase()
         return true
     }
 
+    private func configureFirebase() {
+        FirebaseApp.configure()
+    }
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
