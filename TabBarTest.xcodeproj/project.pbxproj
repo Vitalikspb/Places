@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18C25D03035A82AD9CDBBF21 /* Pods_TabBarTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FDB80F8D64C9AFF6D52A8B3 /* Pods_TabBarTest.framework */; };
 		5323BA12274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA11274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift */; };
 		5323BA14274D3BA500F6BA5E /* SightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA13274D3BA500F6BA5E /* SightTableViewCell.swift */; };
 		5323BA16274D3DBE00F6BA5E /* SightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA15274D3DBE00F6BA5E /* SightCollectionViewCell.swift */; };
@@ -80,6 +79,7 @@
 		53F3E300273FED23004B278E /* CityRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F3E2FF273FED23004B278E /* CityRouter.swift */; };
 		53F3E30227404119004B278E /* CurrentCityButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F3E30127404119004B278E /* CurrentCityButtonView.swift */; };
 		53F3E3042740469E004B278E /* MapRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F3E3032740469E004B278E /* MapRouter.swift */; };
+		AADB2BCAF9D0460CE83F5581 /* Pods_TabBarTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DDC2D9B33D1D47C37891B97 /* Pods_TabBarTest.framework */; };
 		C2186D8A272C0B05001889AF /* FloatingViewFirstTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2186D89272C0B05001889AF /* FloatingViewFirstTableViewCell.swift */; };
 		C2350E07273AC39F000BA2A7 /* FloatingViewThirdTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2350E06273AC39F000BA2A7 /* FloatingViewThirdTableViewCell.swift */; };
 		C24A7E962771DCBD00D4751F /* WeatherController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C24A7E952771DCBD00D4751F /* WeatherController.storyboard */; };
@@ -186,7 +186,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		500C05E5E5A28B5089ECD296 /* Pods-TabBarTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.release.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.release.xcconfig"; sourceTree = "<group>"; };
+		1DDC2D9B33D1D47C37891B97 /* Pods_TabBarTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabBarTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FD7A97CE38913470C19A8E5 /* Pods-TabBarTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.debug.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.debug.xcconfig"; sourceTree = "<group>"; };
+		3505CAED9B5A4C1483709BEE /* Pods-TabBarTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.release.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.release.xcconfig"; sourceTree = "<group>"; };
 		5323BA11274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsCollectionViewCell.swift; sourceTree = "<group>"; };
 		5323BA13274D3BA500F6BA5E /* SightTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SightTableViewCell.swift; sourceTree = "<group>"; };
 		5323BA15274D3DBE00F6BA5E /* SightCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SightCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -250,7 +252,6 @@
 		53F3E2FF273FED23004B278E /* CityRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityRouter.swift; sourceTree = "<group>"; };
 		53F3E30127404119004B278E /* CurrentCityButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCityButtonView.swift; sourceTree = "<group>"; };
 		53F3E3032740469E004B278E /* MapRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRouter.swift; sourceTree = "<group>"; };
-		6FDB80F8D64C9AFF6D52A8B3 /* Pods_TabBarTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabBarTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2186D89272C0B05001889AF /* FloatingViewFirstTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewFirstTableViewCell.swift; sourceTree = "<group>"; };
 		C2350E06273AC39F000BA2A7 /* FloatingViewThirdTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingViewThirdTableViewCell.swift; sourceTree = "<group>"; };
 		C24A7E932770C48E00D4751F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -357,7 +358,6 @@
 		C2CA35EF26FE0C9C00795EF6 /* CurrentCityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCityController.swift; sourceTree = "<group>"; };
 		C2CA35F126FE1DA800795EF6 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		C2CA35F326FE1DB700795EF6 /* MapStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapStoryboard.storyboard; sourceTree = "<group>"; };
-		F5A258287D90199161C7769D /* Pods-TabBarTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.debug.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,7 +366,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				53EF2C0B27B1AC1F0019684F /* FirebaseMessaging in Frameworks */,
-				18C25D03035A82AD9CDBBF21 /* Pods_TabBarTest.framework in Frameworks */,
 				5396A496270639570044D759 /* Alamofire in Frameworks */,
 				53EF2C0327B1AC1F0019684F /* FirebaseDatabase in Frameworks */,
 				53EF2C0D27B1AC1F0019684F /* FirebaseAuth in Frameworks */,
@@ -375,6 +374,7 @@
 				53EF2C0527B1AC1F0019684F /* FirebaseAnalytics in Frameworks */,
 				53EF2C0127B1AC1F0019684F /* FirebaseFirestore in Frameworks */,
 				53EF2C0727B1AC1F0019684F /* FirebaseStorage in Frameworks */,
+				AADB2BCAF9D0460CE83F5581 /* Pods_TabBarTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,8 +384,8 @@
 		023FC6799975207E8991DFAE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F5A258287D90199161C7769D /* Pods-TabBarTest.debug.xcconfig */,
-				500C05E5E5A28B5089ECD296 /* Pods-TabBarTest.release.xcconfig */,
+				2FD7A97CE38913470C19A8E5 /* Pods-TabBarTest.debug.xcconfig */,
+				3505CAED9B5A4C1483709BEE /* Pods-TabBarTest.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -835,7 +835,7 @@
 				C2CA35D226FDCDAF00795EF6 /* TabBarTest */,
 				C2CA35D126FDCDAF00795EF6 /* Products */,
 				023FC6799975207E8991DFAE /* Pods */,
-				FCD7794770F4D7EACCF6B159 /* Frameworks */,
+				C671EF7A071E73BB6E56DE7B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -862,10 +862,10 @@
 			path = TabBarTest;
 			sourceTree = "<group>";
 		};
-		FCD7794770F4D7EACCF6B159 /* Frameworks */ = {
+		C671EF7A071E73BB6E56DE7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6FDB80F8D64C9AFF6D52A8B3 /* Pods_TabBarTest.framework */,
+				1DDC2D9B33D1D47C37891B97 /* Pods_TabBarTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -877,11 +877,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C2CA35E426FDCDB100795EF6 /* Build configuration list for PBXNativeTarget "TabBarTest" */;
 			buildPhases = (
-				FF8CE8B3217C0A1C2BDD1CCB /* [CP] Check Pods Manifest.lock */,
+				1D2DA76B1E74CC66B48EE071 /* [CP] Check Pods Manifest.lock */,
 				C2CA35CC26FDCDAF00795EF6 /* Sources */,
 				C2CA35CD26FDCDAF00795EF6 /* Frameworks */,
 				C2CA35CE26FDCDAF00795EF6 /* Resources */,
-				B5A7F928A3A0879B8A0B1815 /* [CP] Copy Pods Resources */,
+				ABD588BAE41B427E584FEEF8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -928,9 +928,9 @@
 			);
 			mainGroup = C2CA35C726FDCDAF00795EF6;
 			packageReferences = (
-				5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
+				53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
+				53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios.git" */,
 			);
 			productRefGroup = C2CA35D126FDCDAF00795EF6 /* Products */;
 			projectDirPath = "";
@@ -971,24 +971,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B5A7F928A3A0879B8A0B1815 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TabBarTest/Pods-TabBarTest-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TabBarTest/Pods-TabBarTest-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TabBarTest/Pods-TabBarTest-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FF8CE8B3217C0A1C2BDD1CCB /* [CP] Check Pods Manifest.lock */ = {
+		1D2DA76B1E74CC66B48EE071 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1008,6 +991,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ABD588BAE41B427E584FEEF8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TabBarTest/Pods-TabBarTest-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TabBarTest/Pods-TabBarTest-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TabBarTest/Pods-TabBarTest-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1310,7 +1310,7 @@
 		};
 		C2CA35E526FDCDB100795EF6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F5A258287D90199161C7769D /* Pods-TabBarTest.debug.xcconfig */;
+			baseConfigurationReference = 2FD7A97CE38913470C19A8E5 /* Pods-TabBarTest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1331,7 +1331,7 @@
 		};
 		C2CA35E626FDCDB100795EF6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 500C05E5E5A28B5089ECD296 /* Pods-TabBarTest.release.xcconfig */;
+			baseConfigurationReference = 3505CAED9B5A4C1483709BEE /* Pods-TabBarTest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1374,7 +1374,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -1382,7 +1382,7 @@
 				minimumVersion = 5.4.0;
 			};
 		};
-		53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -1390,7 +1390,7 @@
 				minimumVersion = 8.11.0;
 			};
 		};
-		53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -1403,47 +1403,47 @@
 /* Begin XCSwiftPackageProductDependency section */
 		5396A495270639570044D759 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
 			productName = Alamofire;
 		};
 		53EF2C0027B1AC1F0019684F /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseFirestore;
 		};
 		53EF2C0227B1AC1F0019684F /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseDatabase;
 		};
 		53EF2C0427B1AC1F0019684F /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseAnalytics;
 		};
 		53EF2C0627B1AC1F0019684F /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseStorage;
 		};
 		53EF2C0827B1AC1F0019684F /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseCrashlytics;
 		};
 		53EF2C0A27B1AC1F0019684F /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseMessaging;
 		};
 		53EF2C0C27B1AC1F0019684F /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
 			productName = FirebaseAuth;
 		};
 		53EF2C0F27B1ADE80019684F /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
 			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
