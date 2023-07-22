@@ -154,11 +154,11 @@ extension RentAutoController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        indexPath.section == 0
-            ?
-            print("выбран: \(viewModel.rentsService.first?.rents[indexPath.row].name)")
-            :
-            print("выбран: \(viewModel.rentsService.last?.rents[indexPath.row].name)")
+//        indexPath.section == 0
+//            ?
+//            print("выбран: \(viewModel.rentsService.first?.rents[indexPath.row].name)")
+//            :
+//            print("выбран: \(viewModel.rentsService.last?.rents[indexPath.row].name)")
     }
 }
 

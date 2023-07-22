@@ -41,7 +41,7 @@ class MainFloatingView: UIView {
         button.backgroundColor = .clear
         button.alpha = 0
         button.imageView?.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(closeFloatingView), for: .touchUpInside)
+        button.addTarget(MainFloatingView.self, action: #selector(closeFloatingView), for: .touchUpInside)
         return button
     }()
     private let tableView: UITableView = {

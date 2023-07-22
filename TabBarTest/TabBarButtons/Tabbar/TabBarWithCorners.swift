@@ -39,7 +39,7 @@ class TabBarWithCorners: UITabBar {
         shapeLayer.shadowColor = UIColor.black.cgColor
         shapeLayer.shadowOffset = CGSize(width: 0, height: 0);
         shapeLayer.shadowOpacity = 0.05
-        shapeLayer.shadowPath =  UIBezierPath(roundedRect: bounds, cornerRadius: radii).cgPath
+//        shapeLayer.shadowPath =  UIBezierPath(roundedRect: bounds, cornerRadius: radii).cgPath
         shapeLayer.shadowRadius = 16
         
         if let oldShapeLayer = self.shapeLayer {
