@@ -11,9 +11,8 @@ import CoreLocation
 
 class WeatherAPI {
     
-    private let unit = "°"
-    
     // MARK: - Текущая погода для экрана карты
+    
     // Запрос текущей погоды для экрана карты
     func loadCurrentWeather(latitude myCurrentLatitude: CLLocationDegrees,
                             longitude myCurrentLongitude: CLLocationDegrees,
@@ -31,7 +30,7 @@ class WeatherAPI {
             }
             do {
                 let forecast = try JSONDecoder().decode(CurrentWeather.self, from: data)
-                completion("\(Int(forecast.main.temp))\(self.unit)",
+                completion("\(Int(forecast.main.temp))\(Constants.unitCelcium)",
                            self.loadIconFromApi(with: forecast.weather[0].icon))
             } catch let error {
                 print("error weather location: \(error)")
@@ -48,7 +47,7 @@ class WeatherAPI {
         let excludeOptions = "minutely,hourly,alerts"
         let metricOptions = "metric"
         let url = "\(Constants.BaseURLSevenDays)lat=\(myCurrentLatitude)&lon=\(myCurrentLongitude)&exclude=\(excludeOptions)&appid=\(Constants.APIKEY)&units=\(metricOptions)&lang=\(curLang)"
-        //        https://api.openweathermap.org/data/2.5/onecall?lat=59.939634&lon=30.3104843&exclude=minutely,hourly&units=metric&appid=8a8dd7602db62946ca2c5ab51405a786&lang=ru
+        //https://api.openweathermap.org/data/2.5/onecall?lat=59.939634&lon=30.3104843&exclude=minutely,hourly&units=metric&appid=8a8dd7602db62946ca2c5ab51405a786&lang=ru
         
         guard let wheatherURL = URL(string: url) else { return }
         

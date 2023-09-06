@@ -9,7 +9,7 @@ import UIKit
 
 extension String {
     
-    // высчитываем высоту текста при заданной ширине экрана и размера шрифта
+    /// высчитываем высоту текста при заданной ширине экрана и размера шрифта
     func height(widthScreen: CGFloat, font: UIFont) -> CGFloat {
         let textSize = CGSize(width: widthScreen, height: .greatestFiniteMagnitude)
         
@@ -20,5 +20,12 @@ extension String {
                                      context: nil)
         // округляем значение
         return ceil(size.height)
+    }
+    
+    /// Делаем первую букву заглавной из всего предложения
+    var capitalizedSentence: String {
+        let firstLetter = self.prefix(1).capitalized
+        let remainingLetters = self.dropFirst().lowercased()
+        return firstLetter + remainingLetters
     }
 }

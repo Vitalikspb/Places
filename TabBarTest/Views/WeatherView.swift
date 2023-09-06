@@ -9,27 +9,14 @@ import UIKit
 
 class WeatherView: UIView {
     
-    lazy var leftGradient: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        gradient.type = .axial
-        gradient.colors = [
-            UIColor.white.withAlphaComponent(1.0).cgColor,
-            UIColor.white.withAlphaComponent(0.0).cgColor
-        ]
-        gradient.startPoint = CGPoint(x: 0, y: 1)
-        gradient.endPoint = CGPoint(x: 1, y: 1)
-        return gradient
-    }()
-    lazy var rightGradient: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        gradient.type = .axial
-        gradient.colors = [
-            UIColor.white.withAlphaComponent(0.0).cgColor,
-            UIColor.white.withAlphaComponent(1.0).cgColor
-        ]
-        gradient.startPoint = CGPoint(x: 0, y: 1)
-        gradient.endPoint = CGPoint(x: 1, y: 1)
-        return gradient
+    // MARK: - UI properties
+    
+    private let mainContainerView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .setCustomColor(color: .weatherBlueBackground)
+        view.layer.cornerRadius = 12
+        view.layer.masksToBounds = true
+        return view
     }()
     
     private let weatherImage: UIImageView = {
@@ -37,52 +24,47 @@ class WeatherView: UIView {
         image.contentMode = .scaleAspectFit
         return image
     }()
-    var weatherViewImage: UIImage? {
-        didSet {
-            weatherImage.image = weatherViewImage
-        }
-    }
+   
     private let temperatureLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.1764705882, green: 0.2, blue: 0.2588235294, alpha: 1)
+        label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .center
-        label.font = UIFont.init(name: "GillSans", size: 16)
+        label.font = UIFont.init(name: "GillSans-semiBold", size: 16)
         label.text = ""
         return label
     }()
+    
+        // MARK: - Public propetries
+    
     var weatherViewTemperature: String = "" {
         didSet {
             temperatureLabel.text = weatherViewTemperature
         }
     }
-    private let shadowView: UIView = {
-       let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 20
-        view.layer.masksToBounds = true
-        return view
-    }()
+    var weatherViewImage: UIImage? {
+        didSet {
+            weatherImage.image = weatherViewImage
+        }
+    }
     
+    // MARK: - Private properties
     
-    var timerRepeat: Bool = true
+    private var timerRepeat: Bool = true
+    
+    // MARK: - Life cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
- 
-        self.standartShadow(cornerRadius: 20)
+        self.backgroundColor = .clear
+        self.addSubview(mainContainerView)
+        mainContainerView.addSubview(weatherImage)
+        mainContainerView.addSubview(temperatureLabel)
         
-        self.addSubview(shadowView)
+        self.frame = CGRect(x: 0, y: 0, width: 48, height: 40)
+        mainContainerView.frame = CGRect(x: 0, y: 0, width: 48, height: 40)
+        weatherImage.frame = CGRect(x: 8, y: 4, width: 32, height: 32)
+        temperatureLabel.frame = CGRect(x: 52, y: 4, width: 32, height: 32)
         
-        shadowView.addSubview(weatherImage)
-        shadowView.addSubview(temperatureLabel)
-        shadowView.layer.addSublayer(leftGradient)
-        shadowView.layer.addSublayer(rightGradient)
-        
-        shadowView.frame = CGRect(x: 0, y: 0, width: 50, height: 38)
-        leftGradient.frame = CGRect(x: 0, y: 0, width: 8, height: 38)
-        rightGradient.frame = CGRect(x: 42, y: 0, width: 8, height: 38)
-        weatherImage.frame = CGRect(x: 9, y: 3, width: 32, height: 32)
-        temperatureLabel.frame = CGRect(x: 55, y: 3, width: 32, height: 32)
         let _ = Timer.scheduledTimer(timeInterval: 15.0,
                                      target: self,
                                      selector: #selector(repeatWeatherAnimate),
@@ -99,14 +81,14 @@ class WeatherView: UIView {
             UIView.animate(withDuration: 1.8, animations: { [weak self] in
                 guard let self = self else { return }
                 self.weatherImage.frame.origin.x = -40
-                self.temperatureLabel.frame.origin.x = 12
+                self.temperatureLabel.frame.origin.x = 9
             })
             timerRepeat = false
         } else {
             UIView.animate(withDuration: 1.8, animations: { [weak self] in
                 guard let self = self else { return }
                 self.weatherImage.frame.origin.x = 9
-                self.temperatureLabel.frame.origin.x = 55
+                self.temperatureLabel.frame.origin.x = 52
             })
             timerRepeat = true
         }

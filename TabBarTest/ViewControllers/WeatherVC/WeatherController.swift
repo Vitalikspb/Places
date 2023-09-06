@@ -18,11 +18,16 @@ class WeatherController: UIViewController {
     
     private let topSeparator: UIView = {
        let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .setCustomColor(color: .separatorAppearanceViewNonChanged)
         view.layer.cornerRadius = 2
         return view
     }()
-    private let headerFullWeather = HeaderFullWeather(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 260))
+    
+    private let headerFullWeather = HeaderFullWeather(frame: CGRect(x: 0,
+                                                                    y: 0,
+                                                                    width: UIScreen.main.bounds.width,
+                                                                    height: 296))
+    
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
     
@@ -69,10 +74,6 @@ class WeatherController: UIViewController {
         router.dataStore = interactor
     }
     
-    private func setupUserDefault() {
-        
-    }
-    
     private func setupUI() {
         tableView.register(FullWeatherTableViewCell.self,
                            forCellReuseIdentifier: FullWeatherTableViewCell.identifier)
@@ -83,33 +84,44 @@ class WeatherController: UIViewController {
                                       feelsLike: "\(Int(viewModel.weather.currentWeather.feelsLike))",
                                       sunrise: "\(viewModel.weather.currentWeather.sunrise)",
                                       sunset: "\(viewModel.weather.currentWeather.sunset)")
-        tableView.tableHeaderView = headerFullWeather
+        
+        tableView.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 0, right: 0)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
         tableView.allowsSelection = false
-        tableView.separatorStyle = .singleLine
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
-        view.addSubview(topSeparator)
-        view.addSubview(tableView)
+        view.addSubviews(headerFullWeather, tableView, topSeparator)
+        
         topSeparator.centerX(inView: view)
+        headerFullWeather.anchor(top: view.topAnchor,
+                                 left: view.leftAnchor,
+                                 bottom: nil,
+                                 right: view.rightAnchor,
+                                 paddingTop: 0,
+                                 paddingLeft: 0,
+                                 paddingBottom: 0,
+                                 paddingRight: 0,
+                                 width: UIScreen.main.bounds.width, height: 296)
+        
         topSeparator.anchor(top: view.topAnchor,
                             left: nil,
                             bottom: nil,
                             right: nil,
-                            paddingTop: 10,
+                            paddingTop: 8,
                             paddingLeft: 0,
                             paddingBottom: 0,
                             paddingRight: 0,
-                            width: 100, height: 4)
-        tableView.anchor(top: topSeparator.bottomAnchor,
+                            width: 72, height: 4)
+        
+        tableView.anchor(top: headerFullWeather.bottomAnchor,
                          left: view.leftAnchor,
                          bottom: view.bottomAnchor,
                          right: view.rightAnchor,
-                         paddingTop: 10,
+                         paddingTop: 0,
                          paddingLeft: 0,
                          paddingBottom: 0,
                          paddingRight: 0,

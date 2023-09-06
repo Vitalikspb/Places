@@ -1,8 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "sight.png",
-      "idiom" : "universal"
+      "filename" : "Ic_cultureCinema.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "Ic_cultureCinema@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "Ic_cultureCinema@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

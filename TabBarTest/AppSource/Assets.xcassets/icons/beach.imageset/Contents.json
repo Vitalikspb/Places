@@ -1,8 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "beach.png",
-      "idiom" : "universal"
+      "filename" : "Ic_beach.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "Ic_beach@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "Ic_beach@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

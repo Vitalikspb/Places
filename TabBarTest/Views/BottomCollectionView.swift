@@ -16,6 +16,7 @@ class BottomCollectionView: UIView {
         var type: String
         var image: UIImage
         var nameOfSight: String
+        var typeSight: TypeSightsImageName
     }
     
     // MARK: - Public properties
@@ -53,16 +54,20 @@ class BottomCollectionView: UIView {
         self.backgroundColor = .clear
         let data = [BottomCollectionViewModel(type: "Музей",
                                               image: UIImage(named: "museumRusskiy")!,
-                                              nameOfSight: "Русский музей"),
+                                              nameOfSight: "Русский музей",
+                                              typeSight: .museum),
                     BottomCollectionViewModel(type: "Парк",
                                               image: UIImage(named: "parkMarsovoPole")!,
-                                              nameOfSight: "Парк марсово поле"),
+                                              nameOfSight: "Парк марсово поле",
+                                              typeSight: .sight),
                     BottomCollectionViewModel(type: "Музей",
                                               image: UIImage(named: "museumHermitage")!,
-                                              nameOfSight: "Эрмитаж"),
+                                              nameOfSight: "Эрмитаж",
+                                              typeSight: .museum),
                     BottomCollectionViewModel(type: "Достопримечательность",
                                               image: UIImage(named: "dostoprimechatelnostPetrPerviy")!,
-                                              nameOfSight: "Пямятник Петру 1")]
+                                              nameOfSight: "Пямятник Петру 1",
+                                              typeSight: .temple)]
         dataModel = data
         
         let layout = UICollectionViewFlowLayout()
@@ -98,7 +103,8 @@ extension BottomCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BottomCollectionViewCollectionViewCell.identifier, for: indexPath) as? BottomCollectionViewCollectionViewCell else { return UICollectionViewCell() }
         cell.conigureCell(type: dataModel[indexPath.row].type,
                           name: dataModel[indexPath.row].nameOfSight,
-                          image: dataModel[indexPath.row].image)
+                          image: dataModel[indexPath.row].image,
+                          typeSight: dataModel[indexPath.row].typeSight)
         return cell
     }
     
@@ -108,17 +114,16 @@ extension BottomCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     
     // Размер ячейки
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width-120,
-                      height: 110)
+        return CGSize(width: UIScreen.main.bounds.width-120, height: 88)
     }
     
     // Отступы от краев экрана на крайних ячейках
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
     // Расстояние между ячейками - белый отступ
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 12
+        return 8
     }
 }

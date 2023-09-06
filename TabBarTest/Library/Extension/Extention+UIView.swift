@@ -9,6 +9,14 @@ import UIKit
 
 extension UIView {
     
+    // Для удобства верстки из кода
+    func addSubviews(_ views: UIView ...){
+        views.forEach {
+            addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    
     func centerX(inView view: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

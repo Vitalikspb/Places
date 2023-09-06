@@ -62,8 +62,7 @@ class ScrollViewOnMap: UIScrollView {
         
         [searchFilter, sightFilter, transportFilter,
          leisureFilter, marketFilter, beachFilter, worshipFilter].forEach {
-            $0.backgroundColor = UIColor.white
-            $0.standartShadow(cornerRadius: 18)
+            $0.backgroundColor = .setCustomColor(color: .filterViewMainSearch)
         }
         
         
@@ -103,53 +102,50 @@ class ScrollViewOnMap: UIScrollView {
         let beachWidth = beachFilter.frame.width
         let worshipWidth = worshipFilter.frame.width
         
-        let frameSearch = CGRect(x: 12,
+        let frameSearch = CGRect(x: 16,
                                  y: 2,
                                  width: searchWidth,
-                                 height: 36)
+                                 height: 40)
         searchFilter.frame = frameSearch
         
-        let frameSight = CGRect(x: searchWidth + 24,
+        let frameSight = CGRect(x: searchWidth + 28,
                                 y: 2,
                                 width: sightWidth,
-                                height: 36)
+                                height: 40)
         sightFilter.frame = frameSight
         
-        let frameTransport = CGRect(x: searchWidth + sightWidth + 36,
+        let frameTransport = CGRect(x: searchWidth + sightWidth + 40,
                                     y: 2,
                                     width: transportWidth,
-                                    height: 36)
+                                    height: 40)
         transportFilter.frame = frameTransport
         
-        let frameLeisure = CGRect(x: searchWidth + sightWidth + transportWidth + 48,
+        let frameLeisure = CGRect(x: searchWidth + sightWidth + transportWidth + 52,
                                   y: 2,
                                   width: leisureWidth,
-                                  height: 36)
+                                  height: 40)
         leisureFilter.frame = frameLeisure
         
-        let frameMarket = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + 60,
+        let frameMarket = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + 64,
                                  y: 2,
                                  width: marketWidth,
-                                 height: 36)
+                                 height: 40)
         
         marketFilter.frame = frameMarket
-        let frameBeach = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + marketWidth + 72,
+        let frameBeach = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + marketWidth + 76,
                                 y: 2,
                                 width: beachWidth,
-                                height: 36)
+                                height: 40)
         
         beachFilter.frame = frameBeach
-        let frameWorship = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + marketWidth + beachWidth + 84,
+        let frameWorship = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + marketWidth + beachWidth + 88,
                                   y: 2,
                                   width: worshipWidth,
-                                  height: 36)
+                                  height: 40)
         worshipFilter.frame = frameWorship
-        
-        
-        
-        
-        self.contentSize = CGSize(width: searchWidth + sightWidth + transportWidth + leisureWidth + marketWidth + beachWidth + worshipWidth + 96,
-                                  height: self.frame.height)
+
+        self.contentSize = CGSize(width: searchWidth + sightWidth + transportWidth + leisureWidth + marketWidth + beachWidth + worshipWidth + 100,
+                                  height: 40)
     }
     
     @objc func handleSearchFilter() {
@@ -186,7 +182,7 @@ class ScrollViewOnMap: UIScrollView {
             let frame = CGRect(x: 24,
                                y: 2,
                                width: filterView.frame.width,
-                               height: 36)
+                               height: 40)
             filterView.frame = frame
             self.contentSize = CGSize(width: filterView.frame.width + 200,
                                       height: self.frame.height)
@@ -203,26 +199,21 @@ class ScrollViewOnMap: UIScrollView {
          leisureFilter, marketFilter, beachFilter, worshipFilter].forEach { currentView in
             
             if currentView === filterView {
-                filterView.backgroundColor = filterView.backgroundColor == .white ? .systemBlue : .white
-                filterView.label.textColor = filterView.label.textColor == .systemBlue ? .white : .systemBlue
-                filterView.myImage.tintColor = filterView.myImage.tintColor == .systemBlue ? .white : .systemBlue
+                filterView.backgroundColor = .setCustomColor(color: .filterViewMainSearch)
+                filterView.label.textColor = .setCustomColor(color: .titleText)
+                filterView.myImage.tintColor = .setCustomColor(color: .titleText)
                 
-                if isSelected {
-                    // показать все фильтры
-                    showAllFilters()
-                } else {
-                    // уменьшить ширину скролл и пересичитать констейны для поиска и выбранного фильтра
-                    hideAllFilters(withCurrent: filterView)
-                }
+                isSelected
+                // показать все фильтры
+                ? showAllFilters()
+                // уменьшить ширину скролл и пересичитать констейны для поиска и выбранного фильтра
+                : hideAllFilters(withCurrent: filterView)
                 self.updateConstraints()
             } else {
                 UIView.animate(withDuration: 0.55) { [weak self] in
                     guard let self = self else { return }
                     currentView.alpha = !self.isSelected ? 0 : 1
                 }
-                currentView.backgroundColor = .white
-                currentView.label.textColor = .systemBlue
-                currentView.myImage.tintColor = .systemBlue
             }
         }
     }

@@ -33,13 +33,12 @@ class TabBarWithCorners: UITabBar {
         let shapeLayer = CAShapeLayer()
         
         shapeLayer.path = createPath()
-        shapeLayer.strokeColor = UIColor.gray.withAlphaComponent(0.1).cgColor
-        shapeLayer.fillColor = UIColor.white.cgColor
+        shapeLayer.strokeColor = UIColor.white.withAlphaComponent(0.1).cgColor
+        shapeLayer.fillColor = UIColor.setCustomColor(color: .tabBarIconBackground).cgColor
         shapeLayer.lineWidth = 2
         shapeLayer.shadowColor = UIColor.black.cgColor
-        shapeLayer.shadowOffset = CGSize(width: 0, height: 0);
+        shapeLayer.shadowOffset = CGSize(width: 0, height: 0)
         shapeLayer.shadowOpacity = 0.05
-//        shapeLayer.shadowPath =  UIBezierPath(roundedRect: bounds, cornerRadius: radii).cgPath
         shapeLayer.shadowRadius = 16
         
         if let oldShapeLayer = self.shapeLayer {
@@ -48,6 +47,8 @@ class TabBarWithCorners: UITabBar {
             layer.insertSublayer(shapeLayer, at: 0)
         }
         self.shapeLayer = shapeLayer
+        self.tintColor = .setCustomColor(color: .tabBarIconSelected)
+        self.unselectedItemTintColor = .setCustomColor(color: .tabBarIconUnselected)
     }
     
     private func createPath() -> CGPath {
