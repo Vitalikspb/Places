@@ -183,6 +183,7 @@
 		C2CA35F026FE0C9C00795EF6 /* CurrentCityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CA35EF26FE0C9C00795EF6 /* CurrentCityController.swift */; };
 		C2CA35F226FE1DA800795EF6 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CA35F126FE1DA800795EF6 /* MapController.swift */; };
 		C2CA35F426FE1DB700795EF6 /* MapStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2CA35F326FE1DB700795EF6 /* MapStoryboard.storyboard */; };
+		FE451D242AA85CAD00831485 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE451D232AA85CAD00831485 /* Extension+UIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -358,6 +359,7 @@
 		C2CA35EF26FE0C9C00795EF6 /* CurrentCityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentCityController.swift; sourceTree = "<group>"; };
 		C2CA35F126FE1DA800795EF6 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		C2CA35F326FE1DB700795EF6 /* MapStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapStoryboard.storyboard; sourceTree = "<group>"; };
+		FE451D232AA85CAD00831485 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -644,6 +646,7 @@
 				C259AA1027204DA600B03921 /* Extension+UserDefault.swift */,
 				C259AA1D2721710800B03921 /* Extension+UIImageView.swift */,
 				53403D702763E0FC004087F7 /* Extension+String.swift */,
+				FE451D232AA85CAD00831485 /* Extension+UIColor.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -928,9 +931,9 @@
 			);
 			mainGroup = C2CA35C726FDCDAF00795EF6;
 			packageReferences = (
-				5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
-				53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */,
-				53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios.git" */,
+				5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = C2CA35D126FDCDAF00795EF6 /* Products */;
 			projectDirPath = "";
@@ -1096,6 +1099,7 @@
 				C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */,
 				C24A7EAC27731DA200D4751F /* TimeFormatter.swift in Sources */,
 				53403D68275FF1B5004087F7 /* FavouritesTableViewCell.swift in Sources */,
+				FE451D242AA85CAD00831485 /* Extension+UIColor.swift in Sources */,
 				53F0D7AE275E98990087A9BB /* FavouritesModels.swift in Sources */,
 				C2A0C21C276B46730023BF60 /* DescriptionCountryToBuyWorker.swift in Sources */,
 				C2A0C21E276B467C0023BF60 /* DescriptionCountryToBuyPresenter.swift in Sources */,
@@ -1374,7 +1378,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
+		5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -1382,7 +1386,7 @@
 				minimumVersion = 5.4.0;
 			};
 		};
-		53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */ = {
+		53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
@@ -1390,7 +1394,7 @@
 				minimumVersion = 8.11.0;
 			};
 		};
-		53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios.git" */ = {
+		53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -1403,47 +1407,47 @@
 /* Begin XCSwiftPackageProductDependency section */
 		5396A495270639570044D759 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
+			package = 5396A494270639570044D759 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 		53EF2C0027B1AC1F0019684F /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
 		53EF2C0227B1AC1F0019684F /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
 		};
 		53EF2C0427B1AC1F0019684F /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
 		53EF2C0627B1AC1F0019684F /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
 		};
 		53EF2C0827B1AC1F0019684F /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
 		53EF2C0A27B1AC1F0019684F /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
 		};
 		53EF2C0C27B1AC1F0019684F /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk.git" */;
+			package = 53EF2BFF27B1AC1F0019684F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
 		53EF2C0F27B1ADE80019684F /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
+			package = 53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -8,6 +8,7 @@
 import MapKit
 
 extension CLLocation {
+    
     func fetchCityAndCountry(completion: @escaping (_ city: String?,
                                                     _ country:  String?,
                                                     _ error: Error?) -> ()) {

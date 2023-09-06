@@ -37,12 +37,15 @@ enum Constants {
     static let BaseURLSevenDays = "https://api.openweathermap.org/data/2.5/onecall?"
     static let weatherIconUrl = "https://openweathermap.org/img/wn/"
     static let weatherIconUrlEnd = "@2x.png"
+    /// "°"
+    static let unitCelcium = "°"
     
     // MARK: - Map Screen
     
     // MARK: - Favourites screen
     
     enum Favourites {
+        /// "Сохраненное"
         static let titleScreen = "Сохраненное"
     }
     
@@ -72,8 +75,8 @@ enum Constants {
         static let weather = "Погода"
         static let today = "Сегодня:"
         static let weatherFellsLike = "Ощущается как "
-        static let sunrise = "Восход солнца"
-        static let sunset = "Закат солнца"
+        static let sunrise = "Восход солнца:"
+        static let sunset = "Закат солнца:"
         static let weatherInCity = "Погода в "
         static let sightNearMe = "Места в окресностях"
         static let chooseOfRedaction = "Выбор редакции"
@@ -84,9 +87,13 @@ enum Constants {
     
     // MARK: - Views
     enum Views {
+        /// "Поиск"
         static let search = "Поиск"
+        /// "Достопримечательность"
         static let sights = "Достопримечательность"
+        /// "Транспорт"
         static let transport = "Транспорт"
+        /// "Досуг"
         static let relax = "Досуг"
         static let market = "Рынок"
         static let beach = "Пляж"

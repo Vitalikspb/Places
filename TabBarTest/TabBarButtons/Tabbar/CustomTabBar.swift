@@ -18,17 +18,16 @@ class CustomTaBarVC: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         self.delegate = self
         self.selectedIndex = 0
-        
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag {
         case 0: break
-//            print("map button")
+            print("map button")
         case 1: break
-//            print("country button")
+            print("country button")
         case 2: break
-//            print("World button")
+            print("World button")
         case 3:
             print("Settigns button")
         default:

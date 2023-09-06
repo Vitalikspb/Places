@@ -681,6 +681,7 @@ extension MapController: ActionButtonsScrollViewDelegate {
 }
 
 // MARK: - MapDisplayLogic
+
 extension MapController: MapDisplayLogic {
     // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String) {

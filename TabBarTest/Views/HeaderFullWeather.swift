@@ -9,22 +9,30 @@ import UIKit
 class HeaderFullWeather: UIView {
     
     // MARK: - UI properties
+    
+    
+    private let mainContainerView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .setCustomColor(color: .weatherBlueBackground)
+        return view
+    }()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .mainWhite)
         label.textAlignment = .center
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 22)
-        label.text = Constants.Cells.weather
-        return label
-    }()
-    private let curTempLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 26)
+        label.font = UIFont.init(name: "GillSans-bold", size: 16)
         label.text = ""
         return label
+    }()
+    
+    private let lightSmallRectangleView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .setCustomColor(color: .weatherLightRectangle)
+        view.layer.cornerRadius = 32
+        view.layer.borderColor = UIColor.setCustomColor(color: .weatherLightRectangleBorder).cgColor
+        view.layer.borderWidth = 1
+        return view
     }()
     private let curImageView: UIImageView = {
         let image = UIImageView()
@@ -32,90 +40,43 @@ class HeaderFullWeather: UIView {
         image.contentMode = .scaleAspectFit
         return image
     }()
-    private let descriptionLabel: UILabel = {
+    
+    private let curTempLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.adjustsFontSizeToFitWidth = true
-        label.font = UIFont.init(name: "GillSans", size: 18)
+        label.textColor = .setCustomColor(color: .mainWhite)
+        label.textAlignment = .center
+        label.font = UIFont.init(name: "GillSans-bold", size: 24)
         label.text = ""
         return label
     }()
+    
     private let tempFeelsLikeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .mainWhite)
         label.textAlignment = .center
-        label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = Constants.Cells.weatherFellsLike
+        label.text = ""
         return label
     }()
-    let mainStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.distribution = .fillProportionally
-        stack.spacing = 10
-        stack.axis = .horizontal
-        return stack
-    }()
-    
-    let sunriseStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 0
-        stack.axis = .vertical
-        return stack
-    }()
+   
     private let sunriseLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.textColor = .setCustomColor(color: .mainWhite)
+        label.textAlignment = .left
+        label.font = UIFont.init(name: "GillSans-SemiBold", size: 14)
         label.text = Constants.Cells.sunrise
         return label
     }()
-    private let sunriseTimeLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "Рассвет"
-        return label
-    }()
-    let sunsetStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 0
-        stack.axis = .vertical
-        return stack
-    }()
+
     private let sunsetLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.textColor = .setCustomColor(color: .mainWhite)
+        label.textAlignment = .right
+        label.font = UIFont.init(name: "GillSans-SemiBold", size: 14)
         label.text = Constants.Cells.sunset
         return label
     }()
-    private let sunsetTimeLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "Закат"
-        return label
-    }()
-    private let separatorView: UIView = {
-       let view = UIView()
-        view.backgroundColor = .lightGray
-        return view
-    }()
+    
     
     // MARK: - LifeCycle
     
@@ -136,121 +97,112 @@ class HeaderFullWeather: UIView {
     private func setupUI() {
         self.backgroundColor = .clear
         
-        self.addSubview(titleLabel)
-        self.addSubview(curTempLabel)
-        self.addSubview(curImageView)
-        self.addSubview(descriptionLabel)
-        self.addSubview(tempFeelsLikeLabel)
-        self.addSubview(mainStackView)
-        self.addSubview(separatorView)
+        self.addSubviews(mainContainerView)
+        mainContainerView.addSubviews(titleLabel, lightSmallRectangleView, sunriseLabel, sunsetLabel)
+        lightSmallRectangleView.addSubviews(curImageView, curTempLabel, tempFeelsLikeLabel)
+
+        mainContainerView.addConstraintsToFillView(view: self)
         
-        mainStackView.addArrangedSubview(sunriseStackView)
-        mainStackView.addArrangedSubview(sunsetStackView)
-        sunriseStackView.addArrangedSubview(sunriseLabel)
-        sunriseStackView.addArrangedSubview(sunriseTimeLabel)
-        sunsetStackView.addArrangedSubview(sunsetLabel)
-        sunsetStackView.addArrangedSubview(sunsetTimeLabel)
-        
-        titleLabel.anchor(top: self.topAnchor,
-                          left: self.leftAnchor,
+        titleLabel.centerX(inView: mainContainerView)
+        titleLabel.anchor(top: mainContainerView.topAnchor,
+                          left: mainContainerView.leftAnchor,
                           bottom: nil,
-                          right: self.rightAnchor,
-                          paddingTop: 10,
+                          right: mainContainerView.rightAnchor,
+                          paddingTop: 30,
                           paddingLeft: 16,
                           paddingBottom: 0,
-                          paddingRight: 0,
-                          width: 0, height: 20)
-        curTempLabel.centerX(inView: self)
-        curTempLabel.anchor(top: titleLabel.bottomAnchor,
-                             left: nil,
-                             bottom: nil,
-                             right: nil,
-                             paddingTop: 4,
-                             paddingLeft: 0,
-                             paddingBottom: 0,
-                             paddingRight: 0,
-                             width: 100,
-                             height: 50)
-
-        curImageView.anchor(top: curTempLabel.bottomAnchor,
-                            left: self.leftAnchor,
-                             bottom: nil,
-                             right: nil,
-                             paddingTop: 0,
-                             paddingLeft: 80,
-                             paddingBottom: 0,
-                             paddingRight: 0,
-                             width: 80,
-                             height: 80)
-        descriptionLabel.anchor(top: curImageView.topAnchor,
-                                left: curImageView.rightAnchor,
-                                bottom: nil,
-                                right: self.rightAnchor,
-                                paddingTop: 27,
-                                paddingLeft: 8,
-                                paddingBottom: 0,
-                                paddingRight: 16,
-                                width: 0,
-                                height: 25)
-        tempFeelsLikeLabel.anchor(top: curImageView.bottomAnchor,
-                                  left: self.leftAnchor,
+                          paddingRight: 16,
+                          width: 0,
+                          height: 22)
+        
+        lightSmallRectangleView.centerX(inView: mainContainerView)
+        lightSmallRectangleView.anchor(top: titleLabel.bottomAnchor,
+                                       left: nil,
+                                       bottom: nil,
+                                       right: nil,
+                                       paddingTop: 20,
+                                       paddingLeft: 0,
+                                       paddingBottom: 0,
+                                       paddingRight: 0,
+                                       width: 178,
+                                       height: 178)
+        
+        
+        curImageView.centerX(inView: lightSmallRectangleView)
+        curImageView.anchor(top: lightSmallRectangleView.topAnchor,
+                            left: nil,
+                            bottom: nil,
+                            right: nil,
+                            paddingTop: 16,
+                            paddingLeft: 0,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 72,
+                            height: 72)
+        
+        
+        curTempLabel.centerX(inView: lightSmallRectangleView)
+        curTempLabel.anchor(top: curImageView.bottomAnchor,
+                            left: nil,
+                            bottom: nil,
+                            right: nil,
+                            paddingTop: 16,
+                            paddingLeft: 0,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 0,
+                            height: 0)
+        
+        
+        tempFeelsLikeLabel.centerX(inView: lightSmallRectangleView)
+        tempFeelsLikeLabel.anchor(top: curTempLabel.bottomAnchor,
+                                  left: nil,
                                   bottom: nil,
-                                  right: self.rightAnchor,
-                                  paddingTop: 0,
-                                  paddingLeft: 16,
+                                  right: nil,
+                                  paddingTop: 2,
+                                  paddingLeft: 0,
                                   paddingBottom: 0,
-                                  paddingRight: 16,
+                                  paddingRight: 0,
                                   width: 0,
-                                  height: 25)
-        mainStackView.anchor(top: tempFeelsLikeLabel.bottomAnchor,
-                             left: self.leftAnchor,
-                             bottom: separatorView.topAnchor,
-                             right: self.rightAnchor,
-                             paddingTop: 4,
-                             paddingLeft: 16,
-                             paddingBottom: 2,
-                             paddingRight: 16,
-                             width: 0,
-                             height: 50)
-        separatorView.anchor(top: nil,
-                             left: self.leftAnchor,
-                             bottom: self.bottomAnchor,
-                             right: self.rightAnchor,
-                             paddingTop: 0,
-                             paddingLeft: 16,
-                             paddingBottom: 0,
-                             paddingRight: 16,
-                             width: 0,
-                             height: 1)
+                                  height: 0)
+        
+        sunriseLabel.anchor(top: nil,
+                            left: mainContainerView.leftAnchor,
+                            bottom: mainContainerView.bottomAnchor,
+                            right: nil,
+                            paddingTop: 0,
+                            paddingLeft: 24,
+                            paddingBottom: 16,
+                            paddingRight: 0,
+                            width: 140,
+                            height: 18)
+        
+        sunsetLabel.anchor(top: nil,
+                           left: nil,
+                           bottom: mainContainerView.bottomAnchor,
+                           right: mainContainerView.rightAnchor,
+                           paddingTop: 0,
+                           paddingLeft: 0,
+                           paddingBottom: 16,
+                           paddingRight: 24,
+                           width: 140,
+                           height: 18)
     }
     
     func configureUI(title: String = "Weather", curTemp: String, curImage: UIImage, description: String, feelsLike: String, sunrise: String, sunset: String) {
-        titleLabel.text = title
-        curTempLabel.text = curTemp
+        let today = TimeFormatter.todayDay()
+        titleLabel.text = "\(description), \(today)".capitalized
+        curTempLabel.text = "\(curTemp)\(Constants.unitCelcium)C"
         curImageView.image = curImage
-        descriptionLabel.text = description
-        tempFeelsLikeLabel.text = "Ощущается как \(feelsLike)"
+        tempFeelsLikeLabel.text = "Ощущается как \(feelsLike)\(Constants.unitCelcium)C"
         TimeFormatter.utcToLocalTime(dateStr: "\(sunrise)", complection: { sunriseString in
-            sunriseTimeLabel.text = sunriseString
+            sunriseLabel.text = "\(Constants.Cells.sunrise) \(sunriseString)"
+            
         })
         TimeFormatter.utcToLocalTime(dateStr: "\(sunset)", complection: { sunsetString in
-            sunsetTimeLabel.text = sunsetString
+            sunsetLabel.text = "\(Constants.Cells.sunset) \(sunsetString)"
         })
-        
-        var selfColor = UIColor()
-        switch description {
-        case "clear sky": selfColor = .yellow
-        case "few clouds": selfColor = .blue
-        case "few clouds1":  selfColor = .secondaryLabel
-        case "scattered clouds": selfColor = .lightGray
-        case "broken clouds": selfColor = .gray
-        case "shower rain": selfColor = .darkGray
-        case "rain": selfColor = .cyan
-        case "thunderstorm": selfColor = .brown
-        case "snow": selfColor = .white
-        case "mist": selfColor = .magenta
-        default: selfColor = .white
-        }
-        self.backgroundColor = selfColor
+    
     }
 }
+

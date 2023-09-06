@@ -9,30 +9,21 @@ import UIKit
 
 class FullWeatherTableViewCell: UITableViewCell {
     
+    // MARK: - UI Properties
+    
+    private let mainContainerView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .setCustomColor(color: .weatherCellBackground)
+        view.layer.cornerRadius = 12
+        return view
+    }()
+    
     private let currentDayLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
-        label.text = "Понедельник"
-        return label
-    }()
-    private let minTempLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .right
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 16)
-        label.text = "-10"
-        return label
-    }()
-    private let maxTempLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 16)
-        label.text = "10"
+        label.font = UIFont.init(name: "GillSans-bold", size: 14)
+        label.text = ""
         return label
     }()
     private let curImageImageView: UIImageView = {
@@ -43,13 +34,31 @@ class FullWeatherTableViewCell: UITableViewCell {
     }()
     private let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .subTitleText)
         label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "Ясно"
+        label.text = ""
         return label
     }()
+    private let minTempLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .setCustomColor(color: .weatherBlueText)
+        label.textAlignment = .right
+        label.font = UIFont.init(name: "GillSans-semiBold", size: 14)
+        label.text = ""
+        return label
+    }()
+    private let maxTempLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .setCustomColor(color: .weatherBlueText)
+        label.textAlignment = .left
+        label.font = UIFont.init(name: "GillSans-semiBold", size: 14)
+        label.text = ""
+        return label
+    }()
+    
+    // MARK: - Public properties
     
     static let identifier = "FullWeatherTableViewCell"
     
@@ -80,66 +89,86 @@ class FullWeatherTableViewCell: UITableViewCell {
     }
     
     func setupUI() {
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
+        contentView.backgroundColor = .clear
         
-        contentView.addSubview(currentDayLabel)
-        contentView.addSubview(minTempLabel)
-        contentView.addSubview(maxTempLabel)
-        contentView.addSubview(curImageImageView)
-        contentView.addSubview(descriptionLabel)
-        currentDayLabel.anchor(top: contentView.topAnchor,
-                          left: contentView.leftAnchor,
+        contentView.addSubviews(mainContainerView)
+        mainContainerView.addSubviews(currentDayLabel, minTempLabel, maxTempLabel,
+                                      curImageImageView, descriptionLabel)
+        
+        mainContainerView.anchor(top: contentView.topAnchor,
+                                  left: contentView.leftAnchor,
+                                  bottom: contentView.bottomAnchor,
+                                  right: contentView.rightAnchor,
+                                  paddingTop: 4,
+                                  paddingLeft: 16,
+                                  paddingBottom: 4,
+                                  paddingRight: 16,
+                                  width: 0, height: 0)
+        
+        currentDayLabel.centerY(inView: mainContainerView)
+        currentDayLabel.anchor(top: nil,
+                          left: mainContainerView.leftAnchor,
                           bottom: nil,
                           right: nil,
-                          paddingTop: 8,
+                          paddingTop: 0,
                           paddingLeft: 16,
                           paddingBottom: 0,
                           paddingRight: 0,
-                          width: 150, height: 25)
-        minTempLabel.anchor(top: currentDayLabel.bottomAnchor,
-                             left: contentView.leftAnchor,
-                             bottom: contentView.bottomAnchor,
-                             right: maxTempLabel.leftAnchor,
-                             paddingTop: 8,
-                             paddingLeft: 16,
-                             paddingBottom: 16,
-                             paddingRight: 8,
-                             width: 50, height: 25)
-        maxTempLabel.anchor(top: currentDayLabel.bottomAnchor,
-                            left: minTempLabel.rightAnchor,
-                            bottom: contentView.bottomAnchor,
-                            right: nil,
-                            paddingTop: 8,
-                            paddingLeft: 0,
-                            paddingBottom: 16,
-                            paddingRight: 0,
-                            width: 50, height: 25)
-        curImageImageView.anchor(top: contentView.topAnchor,
-                             left: currentDayLabel.rightAnchor,
-                             bottom: contentView.bottomAnchor,
+                          width: 100, height: 18)
+        
+        curImageImageView.centerY(inView: mainContainerView)
+        curImageImageView.anchor(top: nil,
+                             left: nil,
+                             bottom: nil,
                              right: nil,
-                             paddingTop: 8,
+                             paddingTop: 0,
                              paddingLeft: 0,
-                             paddingBottom: 8,
+                             paddingBottom: 0,
                              paddingRight: 0,
-                             width: 0, height: 0)
-        descriptionLabel.anchor(top: contentView.topAnchor,
+                             width: 28, height: 28)
+        
+        descriptionLabel.centerY(inView: mainContainerView)
+        descriptionLabel.anchor(top: nil,
                             left: curImageImageView.rightAnchor,
-                            bottom: contentView.bottomAnchor,
-                            right: contentView.rightAnchor,
+                            bottom: nil,
+                            right: minTempLabel.leftAnchor,
+                            paddingTop: 0,
+                            paddingLeft: 8,
+                            paddingBottom: 0,
+                            paddingRight: 16,
+                            width: 110, height: 0)
+        
+        minTempLabel.centerY(inView: mainContainerView)
+        minTempLabel.anchor(top: nil,
+                             left: nil,
+                             bottom: nil,
+                             right: maxTempLabel.leftAnchor,
+                             paddingTop: 0,
+                             paddingLeft: 0,
+                             paddingBottom: 0,
+                             paddingRight: 0,
+                             width: 0, height: 18)
+        
+        maxTempLabel.centerY(inView: mainContainerView)
+        maxTempLabel.anchor(top: nil,
+                            left: nil,
+                            bottom: nil,
+                            right: mainContainerView.rightAnchor,
                             paddingTop: 0,
                             paddingLeft: 0,
                             paddingBottom: 0,
-                            paddingRight: 8,
-                            width: 0, height: 0)
+                            paddingRight: 16,
+                            width: 0, height: 18)
+        
     }
     
     func configureCell(day: Int, minTemp: Int, maxTemp: Int, image: UIImage, description: String) {
         TimeFormatter.utcToLocalDate(dateStr: "\(day)", complection: { day in
             currentDayLabel.text = day
         })
-        minTempLabel.text = "\(minTemp)  /"
-        maxTempLabel.text = "\(maxTemp)"
+        minTempLabel.text = "\(minTemp) /"
+        maxTempLabel.text = " \(maxTemp)\(Constants.unitCelcium)"
         curImageImageView.image = image
         descriptionLabel.text = description
     }

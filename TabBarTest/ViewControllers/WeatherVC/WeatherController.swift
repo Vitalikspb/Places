@@ -18,11 +18,16 @@ class WeatherController: UIViewController {
     
     private let topSeparator: UIView = {
        let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .setCustomColor(color: .separatorAppearanceViewNonChanged)
         view.layer.cornerRadius = 2
         return view
     }()
-    private let headerFullWeather = HeaderFullWeather(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 260))
+    
+    private let headerFullWeather = HeaderFullWeather(frame: CGRect(x: 0,
+                                                                    y: 0,
+                                                                    width: UIScreen.main.bounds.width,
+                                                                    height: 296))
+    
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
     
@@ -86,34 +91,25 @@ class WeatherController: UIViewController {
         tableView.tableHeaderView = headerFullWeather
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
         tableView.allowsSelection = false
-        tableView.separatorStyle = .singleLine
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        view.addSubviews(tableView, topSeparator)
         
-        view.addSubview(topSeparator)
-        view.addSubview(tableView)
         topSeparator.centerX(inView: view)
         topSeparator.anchor(top: view.topAnchor,
                             left: nil,
                             bottom: nil,
                             right: nil,
-                            paddingTop: 10,
+                            paddingTop: 8,
                             paddingLeft: 0,
                             paddingBottom: 0,
                             paddingRight: 0,
-                            width: 100, height: 4)
-        tableView.anchor(top: topSeparator.bottomAnchor,
-                         left: view.leftAnchor,
-                         bottom: view.bottomAnchor,
-                         right: view.rightAnchor,
-                         paddingTop: 10,
-                         paddingLeft: 0,
-                         paddingBottom: 0,
-                         paddingRight: 0,
-                         width: 0, height: 0)
+                            width: 72, height: 4)
+        
+        tableView.addConstraintsToFillView(view: view)
     }
 }
 
