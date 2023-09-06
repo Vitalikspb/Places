@@ -159,7 +159,7 @@ class HeaderFullWeather: UIView {
                                   left: nil,
                                   bottom: nil,
                                   right: nil,
-                                  paddingTop: 2,
+                                  paddingTop: 6,
                                   paddingLeft: 0,
                                   paddingBottom: 0,
                                   paddingRight: 0,
@@ -171,7 +171,7 @@ class HeaderFullWeather: UIView {
                             bottom: mainContainerView.bottomAnchor,
                             right: nil,
                             paddingTop: 0,
-                            paddingLeft: 24,
+                            paddingLeft: 32,
                             paddingBottom: 16,
                             paddingRight: 0,
                             width: 140,
@@ -184,7 +184,7 @@ class HeaderFullWeather: UIView {
                            paddingTop: 0,
                            paddingLeft: 0,
                            paddingBottom: 16,
-                           paddingRight: 24,
+                           paddingRight: 32,
                            width: 140,
                            height: 18)
     }

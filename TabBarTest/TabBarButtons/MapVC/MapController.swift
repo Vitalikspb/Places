@@ -84,8 +84,8 @@ class MapController: UIViewController {
                                                             height: 60))
     private var weatherView = WeatherView(frame: CGRect(x: 0,
                                                         y: 0,
-                                                        width: 50,
-                                                        height: 38))
+                                                        width: 48,
+                                                        height: 40))
     private let buttonsView = ActionButtonsScrollView(frame: CGRect(x: 0,
                                                                     y: 0,
                                                                     width: UIScreen.main.bounds.width,
@@ -209,11 +209,11 @@ class MapController: UIViewController {
                            left: view.leftAnchor,
                            bottom: nil,
                            right: nil,
-                           paddingTop: 0,
-                           paddingLeft: 15,
+                           paddingTop: 8,
+                           paddingLeft: 16,
                            paddingBottom: 0,
                            paddingRight: 0,
-                           width: 50, height: 38)
+                           width: 48, height: 40)
         topSearchView.anchor(top: view.layoutMarginsGuide.topAnchor,
                              left: view.leftAnchor,
                              bottom: nil,

@@ -43,9 +43,14 @@ extension UIColor {
         case weatherLightRectangle = "weatherLightRectangle"
         /// Рамка квадрата погоды
         case weatherLightRectangleBorder = "weatherLightRectangleBorder"
+        /// цвет ячеек в погоде
         case weatherCellBackground = "weatherCellBackground"
+        /// цвет таблицы в погоде
         case weatherTableViewBackground = "weatherTableViewBackground"
-        
+        ///
+        case filterViewMain = "filterViewMain"
+        ///
+        case filterViewMainSearch = "filterViewMainSearch"
     }
     
    static func setCustomColor(color: CustomColor) -> UIColor {

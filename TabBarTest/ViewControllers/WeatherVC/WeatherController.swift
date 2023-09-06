@@ -74,10 +74,6 @@ class WeatherController: UIViewController {
         router.dataStore = interactor
     }
     
-    private func setupUserDefault() {
-        
-    }
-    
     private func setupUI() {
         tableView.register(FullWeatherTableViewCell.self,
                            forCellReuseIdentifier: FullWeatherTableViewCell.identifier)
@@ -88,7 +84,8 @@ class WeatherController: UIViewController {
                                       feelsLike: "\(Int(viewModel.weather.currentWeather.feelsLike))",
                                       sunrise: "\(viewModel.weather.currentWeather.sunrise)",
                                       sunset: "\(viewModel.weather.currentWeather.sunset)")
-        tableView.tableHeaderView = headerFullWeather
+        
+        tableView.contentInset = UIEdgeInsets(top: 14, left: 0, bottom: 0, right: 0)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
@@ -96,9 +93,20 @@ class WeatherController: UIViewController {
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
         tableView.allowsSelection = false
-        view.addSubviews(tableView, topSeparator)
+        
+        view.addSubviews(headerFullWeather, tableView, topSeparator)
         
         topSeparator.centerX(inView: view)
+        headerFullWeather.anchor(top: view.topAnchor,
+                                 left: view.leftAnchor,
+                                 bottom: nil,
+                                 right: view.rightAnchor,
+                                 paddingTop: 0,
+                                 paddingLeft: 0,
+                                 paddingBottom: 0,
+                                 paddingRight: 0,
+                                 width: UIScreen.main.bounds.width, height: 296)
+        
         topSeparator.anchor(top: view.topAnchor,
                             left: nil,
                             bottom: nil,
@@ -109,7 +117,15 @@ class WeatherController: UIViewController {
                             paddingRight: 0,
                             width: 72, height: 4)
         
-        tableView.addConstraintsToFillView(view: view)
+        tableView.anchor(top: headerFullWeather.bottomAnchor,
+                         left: view.leftAnchor,
+                         bottom: view.bottomAnchor,
+                         right: view.rightAnchor,
+                         paddingTop: 0,
+                         paddingLeft: 0,
+                         paddingBottom: 0,
+                         paddingRight: 0,
+                         width: 0, height: 0)
     }
 }
 
