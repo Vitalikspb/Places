@@ -191,8 +191,8 @@ class HeaderFullWeather: UIView {
     
     func configureUI(title: String = "Weather", curTemp: String, curImage: UIImage, description: String, feelsLike: String, sunrise: String, sunset: String) {
         let today = TimeFormatter.todayDay()
-        titleLabel.text = "\(description), \(today)".capitalized
-        curTempLabel.text = "\(curTemp)\(Constants.unitCelcium)C"
+        titleLabel.text = "\(description), \(today)".capitalizedSentence
+        curTempLabel.text = "\(curTemp)\(Constants.unitCelcium)C".capitalizedSentence
         curImageView.image = curImage
         tempFeelsLikeLabel.text = "Ощущается как \(feelsLike)\(Constants.unitCelcium)C"
         TimeFormatter.utcToLocalTime(dateStr: "\(sunrise)", complection: { sunriseString in

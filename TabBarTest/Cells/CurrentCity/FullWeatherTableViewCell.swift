@@ -165,12 +165,12 @@ class FullWeatherTableViewCell: UITableViewCell {
     
     func configureCell(day: Int, minTemp: Int, maxTemp: Int, image: UIImage, description: String) {
         TimeFormatter.utcToLocalDate(dateStr: "\(day)", complection: { day in
-            currentDayLabel.text = day
+            currentDayLabel.text = day.capitalizedSentence
         })
         minTempLabel.text = "\(minTemp) /"
         maxTempLabel.text = " \(maxTemp)\(Constants.unitCelcium)"
         curImageImageView.image = image
-        descriptionLabel.text = description
+        descriptionLabel.text = description.capitalizedSentence
     }
 
 }

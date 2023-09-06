@@ -47,10 +47,12 @@ extension UIColor {
         case weatherCellBackground = "weatherCellBackground"
         /// цвет таблицы в погоде
         case weatherTableViewBackground = "weatherTableViewBackground"
-        ///
+        /// 
         case filterViewMain = "filterViewMain"
         ///
         case filterViewMainSearch = "filterViewMainSearch"
+        /// Фон таббара
+        case tabBarIconBackground = "tabBarIconBackground"
     }
     
    static func setCustomColor(color: CustomColor) -> UIColor {
