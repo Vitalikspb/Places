@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CityPresentationLogic {
+protocol CityPresentationLogic: AnyObject {
     func presentCity(response: CityViewModel.CurrentCity.ViewModel)
 }
 

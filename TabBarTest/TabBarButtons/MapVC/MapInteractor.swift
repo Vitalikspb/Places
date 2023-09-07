@@ -8,7 +8,7 @@
 import Foundation
 import GoogleMaps
 
-protocol MapBussinessLogic {
+protocol MapBussinessLogic: AnyObject {
     func showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request)
     func showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request)
     func fetchAllTestMarkers(request: MapViewModel.FilterName)
@@ -17,7 +17,7 @@ protocol MapBussinessLogic {
     func appendAllMarkers()
 }
 
-protocol MapDataStore {
+protocol MapDataStore: AnyObject {
     var markers: GMSMarker? { get set }
 }
 

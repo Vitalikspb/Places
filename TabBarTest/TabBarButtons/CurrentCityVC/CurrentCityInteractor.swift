@@ -7,11 +7,11 @@
 import UIKit
 import CoreLocation
 
-protocol CurrentCityBussinessLogic {
+protocol CurrentCityBussinessLogic: AnyObject {
     func showCity(lat: CLLocationDegrees, lon: CLLocationDegrees)
 }
 
-protocol CurrentCityDataStore {
+protocol CurrentCityDataStore: AnyObject {
     var currentCity: String { get set }
     var currentWeather: CurrentWeatherSevenDays { get set }
 }

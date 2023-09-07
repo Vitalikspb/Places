@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol FavouritesRoutingLogic {
+protocol FavouritesRoutingLogic: AnyObject {
 }
 
-protocol FavouritesDataPassing {
+protocol FavouritesDataPassing: AnyObject {
 }
 
 class FavouritesRouter: NSObject, FavouritesRoutingLogic, FavouritesDataPassing {

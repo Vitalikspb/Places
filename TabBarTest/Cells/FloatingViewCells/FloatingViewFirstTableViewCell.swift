@@ -10,39 +10,23 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     
     // MARK: - UI properties
     
+    private let mainContainerView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
+        view.layer.cornerRadius = 12
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .titleText)
         label.text = "Эрмитаж"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Bold", size: 17)
+        label.font = UIFont.init(name: "GillSans-Bold", size: 18)
         return label
     }()
-    let typeLocationLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .gray
-        label.text = "Музей"
-        label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
-        return label
-    }()
-    let openCloseLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .systemRed
-        label.text = "Закрыто"
-        label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
-        return label
-    }()
-    let whenOpenLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .gray
-        label.text = "Откроется в 09:00"
-        label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans", size: 15)
-        return label
-    }()
-    let workInformationImage: UIImageView = {
+    let typeSightImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .clear
         imageView.tintColor = .gray
@@ -51,29 +35,29 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         imageView.image = UIImage(named: "vosklicanie")
         return imageView
     }()
-    let workInformationLabel: UILabel = {
+    let typeLocationLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
-        label.text = "Информация о режиме работы может изменится"
+        label.textColor = .setCustomColor(color: .subTitleText)
+        label.text = "Музей"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans", size: 13)
+        label.font = UIFont.init(name: "GillSans-semiBold", size: 14)
         return label
     }()
     let ratingLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .gray
+        label.textColor = .setCustomColor(color: .subTitleText)
         label.text = "4.5"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans", size: 15)
+        label.font = UIFont.init(name: "GillSans-semiBold", size: 14)
         return label
     }()
     let starView = StackViewStar()
     let reviewLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .gray
+        label.textColor = .setCustomColor(color: .subTitleText)
         label.text = "(14 731)"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans", size: 15)
+        label.font = UIFont.init(name: "GillSans", size: 14)
         return label
     }()
     
@@ -86,9 +70,9 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     
     static let identifier = "FloatingViewFirstTableViewCell"
     
-    // MARK: - Private propetries
+    // MARK: - Private properties
     
-    var countOfRatingStars: Int = 0
+    private var smallView: Bool = true
     
     // MARK: - Lifecycle
     
@@ -105,7 +89,6 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        
     }
     
     override func prepareForReuse() {
@@ -118,7 +101,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(title: String, type: String, showButtons: Bool) {
+    func configCell(title: String, type: String, showButtons: Bool, smallView: Bool = true) {
         titleLabel.text = title
         typeLocationLabel.text = type
         UIView.animate(withDuration: 0.5) { [weak self] in
@@ -126,116 +109,90 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
             self.buttonsView.alpha = showButtons ? 0 : 1
             self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         }
-        countOfRatingStars = 4
-        starView.show(with: countOfRatingStars)
+        self.smallView = smallView
+        starView.show(with: 1)
     }
     
     private func setupUI() {
+        contentView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
         buttonsView.actionButtonDelegate = self
+        contentView.addSubviews(mainContainerView, buttonsView)
         
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(typeLocationLabel)
-        contentView.addSubview(buttonsView)
-        contentView.addSubview(openCloseLabel)
-        contentView.addSubview(whenOpenLabel)
-        contentView.addSubview(workInformationLabel)
-        contentView.addSubview(workInformationImage)
-        contentView.addSubview(ratingLabel)
-        contentView.addSubview(starView)
-        contentView.addSubview(reviewLabel)
+        mainContainerView.addSubviews(titleLabel, typeSightImageView, typeLocationLabel, ratingLabel, starView, reviewLabel)
         
-        
-        
-        titleLabel.anchor(top: topAnchor,
-                          left: leftAnchor,
-                          bottom: nil,
-                          right: rightAnchor,
-                          paddingTop: 10,
-                          paddingLeft: 10,
-                          paddingBottom: 0,
-                          paddingRight: 10,
-                          width: 0, height: 25)
-        typeLocationLabel.anchor(top: titleLabel.bottomAnchor,
+        mainContainerView.anchor(top: topAnchor,
                                  left: leftAnchor,
                                  bottom: nil,
+                                 right: rightAnchor,
+                                 paddingTop: 0,
+                                 paddingLeft: 16,
+                                 paddingBottom: 0,
+                                 paddingRight: 16,
+                                 width: 0, height: 80)
+        titleLabel.anchor(top: mainContainerView.topAnchor,
+                          left: mainContainerView.leftAnchor,
+                          bottom: nil,
+                          right: mainContainerView.rightAnchor,
+                          paddingTop: 14,
+                          paddingLeft: 12,
+                          paddingBottom: 0,
+                          paddingRight: 12,
+                          width: 0, height: 0)
+        typeSightImageView.anchor(top: titleLabel.bottomAnchor,
+                                  left: mainContainerView.leftAnchor,
+                                  bottom: nil,
+                                  right: nil,
+                                  paddingTop: 12,
+                                  paddingLeft: 12,
+                                  paddingBottom: 0,
+                                  paddingRight: 10,
+                                  width: 16, height: 16)
+        typeLocationLabel.anchor(top: titleLabel.bottomAnchor,
+                                 left: typeSightImageView.rightAnchor,
+                                 bottom: nil,
                                  right: nil,
-                                 paddingTop: 10,
-                                 paddingLeft: 10,
+                                 paddingTop: 12,
+                                 paddingLeft: 4,
                                  paddingBottom: 0,
                                  paddingRight: 10,
-                                 width: typeLocationLabel.textWidth(), height: 20)
+                                 width: typeLocationLabel.textWidth(), height: 0)
+        starView.anchor(top: titleLabel.bottomAnchor,
+                        left: typeLocationLabel.rightAnchor,
+                        bottom: nil,
+                        right: nil,
+                        paddingTop: 12,
+                        paddingLeft: 16,
+                        paddingBottom: 0,
+                        paddingRight: 0,
+                        width: 15, height: 15)
         ratingLabel.anchor(top: titleLabel.bottomAnchor,
-                           left: typeLocationLabel.rightAnchor,
+                           left: starView.rightAnchor,
                            bottom: nil,
                            right: nil,
-                           paddingTop: 10,
+                           paddingTop: 11,
                            paddingLeft: 10,
                            paddingBottom: 0,
                            paddingRight: 0,
                            width: ratingLabel.textWidth(), height: 20)
-        starView.anchor(top: titleLabel.bottomAnchor,
-                        left: ratingLabel.rightAnchor,
-                        bottom: nil,
-                        right: nil,
-                        paddingTop: 10,
-                        paddingLeft: 4,
-                        paddingBottom: 0,
-                        paddingRight: 0,
-                        width: CGFloat(countOfRatingStars * 25), height: 20)
+        
         reviewLabel.anchor(top: titleLabel.bottomAnchor,
-                           left: starView.rightAnchor,
+                           left: ratingLabel.rightAnchor,
                            bottom: nil,
                            right: rightAnchor,
-                           paddingTop: 10,
+                           paddingTop: 12,
                            paddingLeft: 4,
                            paddingBottom: 0,
-                           paddingRight: 10,
-                           width: 0, height: 20)
-        openCloseLabel.anchor(top: typeLocationLabel.bottomAnchor,
-                              left: leftAnchor,
-                              bottom: nil,
-                              right: nil,
-                              paddingTop: 10,
-                              paddingLeft: 10,
-                              paddingBottom: 0,
-                              paddingRight: 0,
-                              width: openCloseLabel.textWidth(), height: 20)
-        whenOpenLabel.anchor(top: typeLocationLabel.bottomAnchor,
-                             left: openCloseLabel.rightAnchor,
-                             bottom: nil,
-                             right: rightAnchor,
-                             paddingTop: 10,
-                             paddingLeft: 10,
-                             paddingBottom: 0,
-                             paddingRight: 10,
-                             width: 0, height: 20)
-        workInformationImage.anchor(top: openCloseLabel.bottomAnchor,
-                                    left: leftAnchor,
-                                    bottom: nil,
-                                    right: nil,
-                                    paddingTop: 7,
-                                    paddingLeft: 10,
-                                    paddingBottom: 0,
-                                    paddingRight: 0,
-                                    width: 25, height: 25)
-        workInformationLabel.anchor(top: openCloseLabel.bottomAnchor,
-                                    left: workInformationImage.rightAnchor,
-                                    bottom: nil,
-                                    right: rightAnchor,
-                                    paddingTop: 10,
-                                    paddingLeft: 10,
-                                    paddingBottom: 0,
-                                    paddingRight: 0,
-                                    width: 0, height: 20)
-        buttonsView.anchor(top: workInformationImage.bottomAnchor,
+                           paddingRight: 0,
+                           width: 0, height: 0)
+        buttonsView.anchor(top: mainContainerView.bottomAnchor,
                            left: leftAnchor,
-                           bottom: bottomAnchor,
+                           bottom: nil,
                            right: rightAnchor,
-                           paddingTop: 5,
+                           paddingTop: 28,
                            paddingLeft: 0,
                            paddingBottom: 0,
                            paddingRight: 0,
-                           width: 0, height: 60)
+                           width: 0, height: smallView ? 140 : 60)
     }
 }
 

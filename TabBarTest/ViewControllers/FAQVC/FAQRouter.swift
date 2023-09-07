@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol FAQRoutingLogic {
+protocol FAQRoutingLogic: AnyObject {
 }
 
-protocol FAQDataPassing {
+protocol FAQDataPassing: AnyObject {
     var dataStore: FAQDataStore? { get }
 }
 

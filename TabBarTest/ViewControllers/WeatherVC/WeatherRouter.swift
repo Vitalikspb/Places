@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol WeatherRoutingLogic {
+protocol WeatherRoutingLogic: AnyObject {
 }
 
-protocol WeatherDataPassing {
+protocol WeatherDataPassing: AnyObject {
     var dataStore: WeatherDataStore? { get }
 }
 

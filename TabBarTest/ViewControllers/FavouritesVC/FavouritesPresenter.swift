@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FavouritesPresentationLogic {
+protocol FavouritesPresentationLogic: AnyObject {
     func presentFavourites(response: FavouritesViewModel.FavouritesSight.ViewModel)
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FAQPresentationLogic {
+protocol FAQPresentationLogic: AnyObject {
     func presentFAQ(response: FAQModels.RentAuto.ViewModel)
 }
 

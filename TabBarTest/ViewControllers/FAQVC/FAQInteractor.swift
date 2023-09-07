@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol FAQBussinessLogic {
+protocol FAQBussinessLogic: AnyObject {
     func showFAQ()
 }
 
-protocol FAQDataStore {
+protocol FAQDataStore: AnyObject {
     var currentCity: String { get set }
 }
 

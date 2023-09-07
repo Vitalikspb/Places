@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol WorldRoutingLogic {
+protocol WorldRoutingLogic: AnyObject {
     func routeToCountryVC()
     func routeToCityVC()
 }
 
-protocol WorldDataPassing {
+protocol WorldDataPassing: AnyObject {
     var dataStore: WorldDataStore? { get set }
 }
 

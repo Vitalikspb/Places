@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol IntrestingEventsBussinessLogic {
+protocol IntrestingEventsBussinessLogic: AnyObject {
     func showIntrestingEvents()
 }
 
-protocol IntrestingEventsDataStore {
+protocol IntrestingEventsDataStore: AnyObject {
     var currentCity: String { get set }
     var name: String { get set }
     var image: [UIImage] { get set }

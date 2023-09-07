@@ -8,7 +8,7 @@
 import Foundation
 import GoogleMaps
 
-protocol MapPresentationLogic {
+protocol MapPresentationLogic: AnyObject {
     func presentChoosenDestinationView(response: [GMSMarker])
     func presentSelectedDestinationView(response: [GMSMarker])
     func presentAllMarkers(response: [GMSMarker])

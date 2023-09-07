@@ -7,10 +7,10 @@
 
 import UIKit
 
-protocol SelectedInterestingEventRoutingLogic {
+protocol SelectedInterestingEventRoutingLogic: AnyObject {
 }
 
-protocol SelectedInterestingEventDataPassing {
+protocol SelectedInterestingEventDataPassing: AnyObject {
     var dataStore: SelectedInterestingEventDataStore? { get set }
 }
 

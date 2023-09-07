@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol ExibitionsBussinessLogic {
+protocol ExibitionsBussinessLogic: AnyObject {
     func showExibitions()
 }
 
-protocol ExibitionsDataStore {
+protocol ExibitionsDataStore: AnyObject {
     var currentCity: String { get set }
 }
 

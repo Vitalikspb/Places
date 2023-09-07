@@ -10,10 +10,16 @@ import UIKit
 
 // MARK: - FloatingViewDelegate
 
-protocol FloatingViewDelegate {
+protocol FloatingViewDelegate: AnyObject {
     func floatingPanelIsHidden()
     func floatingPanelFullScreen()
     func floatingPanelPatriallyScreen()
+    func makeCall()
+    func openSite()
+    func openVK()
+    func openFaceBook()
+    func openInstagram()
+    func openYoutube()
 }
 
 class FloatingView: UIView {
@@ -133,7 +139,7 @@ class FloatingView: UIView {
                     self.cornerRadii(with: 0)
                 } else if state == .NotExpanded {
                 } else {
-                    self.cornerRadii(with: 16)
+                    self.cornerRadii(with: 12)
                 }
             })
         }
@@ -141,6 +147,7 @@ class FloatingView: UIView {
     }
     
     func configureUI() {
+        mainView.delegate = self
         backgroundColor = .clear
         addSubview(mainView)
         
@@ -155,7 +162,6 @@ class FloatingView: UIView {
                         width: 0,
                         height: 0)
         configureGestureRecognizer()
-        self.standartShadow(cornerRadius: 8)
     }
     
     
@@ -174,9 +180,33 @@ class FloatingView: UIView {
 // MARK: - MainFloatingViewDelegate
 
 extension FloatingView: MainFloatingViewDelegate {
-    func closeFloatingView() {
-        animateInputView(targetPosition: screenHeight, state: .NotExpanded)
-        delegate?.floatingPanelIsHidden()
-        mainView.floatingPanelIsHidden()
+    func makeCall() {
+        delegate?.makeCall()
     }
+    
+    func openSite() {
+        delegate?.openSite()
+    }
+    
+    func openVK() {
+        delegate?.openVK()
+    }
+    
+    func openFaceBook() {
+        delegate?.openFaceBook()
+    }
+    
+    func openInstagram() {
+        delegate?.openInstagram()
+    }
+    
+    func openYoutube() {
+        delegate?.openYoutube()
+    }
+    
+//    func closeFloatingView() {
+//        animateInputView(targetPosition: screenHeight, state: .NotExpanded)
+//        delegate?.floatingPanelIsHidden()
+//        mainView.floatingPanelIsHidden()
+//    }
 }

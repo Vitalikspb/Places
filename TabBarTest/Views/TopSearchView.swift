@@ -7,17 +7,20 @@
 
 import UIKit
 
-protocol TopSearchViewDelegate {
+protocol TopSearchViewDelegate: AnyObject {
     func clearTextField()
 //    var textOfSearchTextField: String { set }
 }
 
 class TopSearchView: UIView {
     
+    // MARK: - UI properties
+    
     private let titleImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
-        image.image = UIImage(systemName: "magnifyingglass")
+        image.image = UIImage(named: "search")
+        image.tintColor = .setCustomColor(color: .titleText)
         return image
     }()
     
@@ -28,44 +31,51 @@ class TopSearchView: UIView {
         textField.clearButtonMode = .whileEditing
         textField.isUserInteractionEnabled = true
         textField.text = ""
+        textField.textColor = .setCustomColor(color: .titleText)
         return textField
     }()
     
-    var topSearchDelegate: TopSearchViewDelegate?
+    // MARK: - Public properties
+    
+    weak var topSearchDelegate: TopSearchViewDelegate?
+    
+    // MARK: - Life cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.isUserInteractionEnabled = true
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 30
-        self.standartShadow(cornerRadius: 30)
+        self.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
+        self.layer.cornerRadius = 12
         
         self.addSubview(titleImage)
         self.addSubview(inputTextField)
+        
         inputTextField.addTarget(self, action: #selector(didtapped), for: .touchUpInside)
         inputTextField.delegate = self
         
-        titleImage.frame = CGRect(x: 8,
+        titleImage.frame = CGRect(x: 12,
                                   y: (self.frame.height / 2) - 14,
                                   width: 30,
                                   height: 30)
-        inputTextField.frame = CGRect(x: CGFloat(titleImage.frame.width)+15,
+        inputTextField.frame = CGRect(x: CGFloat(titleImage.frame.width) + 22,
                                       y: (self.frame.height / 2) - 18,
-                                      width: UIScreen.main.bounds.width-76,
+                                      width: UIScreen.main.bounds.width - (CGFloat(titleImage.frame.width) + 24) - 40,
                                       height: 36)
     }
-    
-    @objc func didtapped() {
-        inputTextField.becomeFirstResponder()
-    }
-    
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Actions
+    
+    @objc func didtapped() {
+        inputTextField.becomeFirstResponder()
+    }
 }
+
+// MARK: - UITextFieldDelegate
 
 extension TopSearchView: UITextFieldDelegate {
     

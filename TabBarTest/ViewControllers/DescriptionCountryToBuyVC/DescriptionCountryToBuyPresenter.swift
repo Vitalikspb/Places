@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol DescriptionCountryToBuyPresentationLogic {
+protocol DescriptionCountryToBuyPresentationLogic: AnyObject {
     func presentCountry(response: DescriptionCountryToBuyViewModel.CurrentCountry.ViewModel)
 }
 

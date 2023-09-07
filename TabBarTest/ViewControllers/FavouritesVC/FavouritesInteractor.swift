@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol FavouritesBussinessLogic {
+protocol FavouritesBussinessLogic: AnyObject {
     func showFavourites()
 }
 //
-//protocol FavouritesDataStore {
+//protocol FavouritesDataStore: AnyObject {
 //    var citiesArray: [String] { get set }
 //}
 

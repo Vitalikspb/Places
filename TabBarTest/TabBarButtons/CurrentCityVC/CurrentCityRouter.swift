@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CurrentCityRoutingLogic {
+protocol CurrentCityRoutingLogic: AnyObject {
     func routeToCityVC()
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
@@ -18,7 +18,7 @@ protocol CurrentCityRoutingLogic {
     func routeToFullWeatherVC()
 }
 
-protocol CurrentCityDataPassing {
+protocol CurrentCityDataPassing: AnyObject {
     var dataStore: CurrentCityDataStore? { get set }
 }
 

@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol IntrestingEventsRoutingLogic {
+protocol IntrestingEventsRoutingLogic: AnyObject {
     func routeToSelectedEventVC()
 }
 
-protocol IntrestingEventsDataPassing {
+protocol IntrestingEventsDataPassing: AnyObject {
     var dataStore: IntrestingEventsDataStore? { get set }
 }
 

@@ -8,11 +8,11 @@
 import UIKit
 import CoreLocation
 
-protocol DescriptionCountryToBuyBussinessLogic {
+protocol DescriptionCountryToBuyBussinessLogic: AnyObject {
     func showCity()
 }
 
-protocol DescriptionCountryToBuyDataStore {
+protocol DescriptionCountryToBuyDataStore: AnyObject {
     var currentCountry: String { get set }
     var currentWeather: CurrentWeatherSevenDays { get set }
 }

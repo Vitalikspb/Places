@@ -7,7 +7,12 @@
 import UIKit
 
 protocol MainFloatingViewDelegate: AnyObject {
-    func closeFloatingView()
+    func makeCall()
+    func openSite()
+    func openVK()
+    func openFaceBook()
+    func openInstagram()
+    func openYoutube()
 }
 
 class MainFloatingView: UIView {
@@ -21,9 +26,8 @@ class MainFloatingView: UIView {
 
     let indicatorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
-        view.layer.cornerRadius = 3
-        view.alpha = 0.8
+        view.backgroundColor = .setCustomColor(color: .separatorAppearanceView)
+        view.layer.cornerRadius = 2
         return view
     }()
     let imageView: UIImageView = {
@@ -32,27 +36,20 @@ class MainFloatingView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.image = UIImage(named: "museumHermitage")
+        imageView.layer.cornerRadius = 12
         return imageView
-    }()
-    let closeButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "close"), for: .normal)
-        button.imageView?.tintColor = .lightGray
-        button.backgroundColor = .clear
-        button.alpha = 0
-        button.imageView?.contentMode = .scaleAspectFill
-        button.addTarget(MainFloatingView.self, action: #selector(closeFloatingView), for: .touchUpInside)
-        return button
     }()
     private let tableView: UITableView = {
         let table = UITableView()
-        table.backgroundColor = .white
+        table.separatorStyle = .none
         table.allowsSelection = false
         table.isUserInteractionEnabled = true
         table.isScrollEnabled = false
         table.showsVerticalScrollIndicator = false
         return table
     }()
+    
+    private var smallView: Bool = true
     
     // MARK: - LifeCycle
     
@@ -68,46 +65,37 @@ class MainFloatingView: UIView {
     // MARK: - Static function
     
     func floatingPanelIsHidden() {
+        tableView.separatorStyle = .none
         tableView.isUserInteractionEnabled = false
         tableView.isScrollEnabled = false
-        UIView.animate(withDuration: 0.4) { [weak self] in
-            guard let self = self else { return }
-            self.closeButton.alpha = 0
-        }
         stateFloatingFullView = false
+        smallView = false
         reloadData()
     }
     
     func floatingPanelFullScreen() {
+        tableView.separatorStyle = .none
         tableView.isUserInteractionEnabled = true
         tableView.isScrollEnabled = true
-        UIView.animate(withDuration: 0.52) { [weak self] in
-            guard let self = self else { return }
-            self.closeButton.alpha = 1
-        }
         stateFloatingFullView = true
+        smallView = false
         reloadData()
     }
     
     func floatingPanelPatriallyScreen() {
+        tableView.separatorStyle = .none
         tableView.isUserInteractionEnabled = true
         tableView.isScrollEnabled = false
-        UIView.animate(withDuration: 0.4) { [weak self] in
-            guard let self = self else { return }
-            self.closeButton.alpha = 0
-        }
         stateFloatingFullView = false
+        smallView = true
         reloadData()
     }
     
     // MARK: - Helper functions
     
     private func configureUI() {
-        self.backgroundColor = .white
-        addSubview(imageView)
-        addSubview(indicatorView)
-        addSubview(tableView)
-        addSubview(closeButton)
+        self.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
+        addSubviews(imageView, indicatorView, tableView)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -117,19 +105,13 @@ class MainFloatingView: UIView {
                            forCellReuseIdentifier: FloatingViewSecondTableViewCell.identifier)
         tableView.register(FloatingViewThirdTableViewCell.self,
                            forCellReuseIdentifier: FloatingViewThirdTableViewCell.identifier)
+        tableView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
+        tableView.separatorStyle = .none
+        tableView.separatorColor = .clear
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         
-        imageView.anchor(top: topAnchor,
-                         left: leftAnchor,
-                         bottom: nil,
-                         right: rightAnchor,
-                         paddingTop: 0,
-                         paddingLeft: 0,
-                         paddingBottom: 0,
-                         paddingRight: 0,
-                         width: 0,
-                         height: (UIScreen.main.bounds.height/4))
         indicatorView.centerX(inView: self)
-        indicatorView.anchor(top: imageView.bottomAnchor,
+        indicatorView.anchor(top: topAnchor,
                              left: nil,
                              bottom: nil,
                              right: nil,
@@ -137,18 +119,18 @@ class MainFloatingView: UIView {
                              paddingLeft: 0,
                              paddingBottom: 0,
                              paddingRight: 0,
-                             width: 80,
-                             height: 6)
-        closeButton.anchor(top: imageView.bottomAnchor,
-                           left: nil,
-                           bottom: nil,
-                           right: rightAnchor,
-                           paddingTop: 10,
-                           paddingLeft: 0,
-                           paddingBottom: 0,
-                           paddingRight: 10,
-                           width: 30,
-                           height: 30)
+                             width: 72,
+                             height: 4)
+        imageView.anchor(top: topAnchor,
+                         left: leftAnchor,
+                         bottom: nil,
+                         right: rightAnchor,
+                         paddingTop: 21,
+                         paddingLeft: 16,
+                         paddingBottom: 0,
+                         paddingRight: 16,
+                         width: 0,
+                         height: (UIScreen.main.bounds.height/4))
         tableView.anchor(top: imageView.bottomAnchor,
                          left: leftAnchor,
                          bottom: bottomAnchor,
@@ -166,12 +148,6 @@ class MainFloatingView: UIView {
             guard let self = self else { return }
             self.tableView.reloadData()
         }
-    }
-    
-    // MARK: - Selectors
-    
-    @objc private func closeFloatingView() {
-        delegate?.closeFloatingView()
     }
 }
 
@@ -202,7 +178,8 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewFirstTableViewCell.identifier, for: indexPath) as! FloatingViewFirstTableViewCell
             cell.configCell(title: "Самый лучший музей",
                             type: "Музей",
-                            showButtons: tableView.isScrollEnabled == true ? true : false)
+                            showButtons: tableView.isScrollEnabled == true ? true : false,
+                            smallView: smallView)
             return cell
             
         case 1:
@@ -211,6 +188,7 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
             
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewThirdTableViewCell.identifier, for: indexPath) as! FloatingViewThirdTableViewCell
+            cell.delegate = self
             return cell
             
         default:
@@ -225,17 +203,44 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
         
         switch indexPath.row {
         // первая ячейка
-        case 0: return stateFloatingFullView ? 135 : 200
+        case 0: return stateFloatingFullView ? 88 : 200
             
         // ячейка с collectionView с картинками
-        // размер ячеек - картинок равен 180х140
-        case 1: return 200
-        // ячейка с контактами
+        case 1: return 204
             
-        case 2: return 310
+        // ячейка с контактами
+        case 2: return 244
             
         default:
             return 200
         }
     }
+}
+
+extension MainFloatingView: FloatingViewThirdTableViewCellDelegate {
+    func makeCall() {
+        delegate?.makeCall()
+    }
+    
+    func openSite() {
+        delegate?.openSite()
+    }
+    
+    func openVK() {
+        delegate?.openVK()
+    }
+    
+    func openFaceBook() {
+        delegate?.openFaceBook()
+    }
+    
+    func openInstagram() {
+        delegate?.openInstagram()
+    }
+    
+    func openYoutube() {
+        delegate?.openYoutube()
+    }
+    
+    
 }

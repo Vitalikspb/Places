@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol HelperMapsPresentationLogic {
+protocol HelperMapsPresentationLogic: AnyObject {
     func presentHelperMaps(response: HelperMapsModels.HelperMaps.ViewModel)
 }
 

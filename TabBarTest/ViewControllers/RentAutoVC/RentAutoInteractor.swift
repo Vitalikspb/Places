@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol RentAutoBussinessLogic {
+protocol RentAutoBussinessLogic: AnyObject {
     func showRentAuto()
 }
 
-protocol RentAutoDataStore {
+protocol RentAutoDataStore: AnyObject {
     var rentsName: String { get set }
     var rentsImage: UIImage { get set }
 }

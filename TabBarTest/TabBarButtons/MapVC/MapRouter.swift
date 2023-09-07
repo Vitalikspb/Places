@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol MapRoutingLogic {
+protocol MapRoutingLogic: AnyObject {
     func routeToCityVC()
 }
 
-protocol MapDataPassing {
+protocol MapDataPassing: AnyObject {
     var dataStore: MapDataStore? { get set }
 }
 

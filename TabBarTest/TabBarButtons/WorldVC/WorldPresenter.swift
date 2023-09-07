@@ -6,7 +6,7 @@
 
 import Foundation
 
-protocol WorldPresentationLogic {
+protocol WorldPresentationLogic: AnyObject {
     func presentAllMarkers(response: WorldViewModels.AllCountriesInTheWorld.ViewModel)
 }
 

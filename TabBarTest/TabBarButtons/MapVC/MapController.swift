@@ -80,7 +80,7 @@ class MapController: UIViewController {
                                                               height: 42))
     private let topSearchView = TopSearchView(frame: CGRect(x: 0,
                                                             y: 0,
-                                                            width: UIScreen.main.bounds.width-20,
+                                                            width: UIScreen.main.bounds.width-32,
                                                             height: 60))
     private var weatherView = WeatherView(frame: CGRect(x: 0,
                                                         y: 0,
@@ -200,7 +200,7 @@ class MapController: UIViewController {
                              left: view.leftAnchor,
                              bottom: nil,
                              right: view.rightAnchor,
-                             paddingTop: 15,
+                             paddingTop: 16,
                              paddingLeft: 0,
                              paddingBottom: 0,
                              paddingRight: 0,
@@ -218,10 +218,10 @@ class MapController: UIViewController {
                              left: view.leftAnchor,
                              bottom: nil,
                              right: view.rightAnchor,
-                             paddingTop: 15,
-                             paddingLeft: 10,
+                             paddingTop: 16,
+                             paddingLeft: 16,
                              paddingBottom: 0,
-                             paddingRight: 10,
+                             paddingRight: 16,
                              width: 0, height: 60)
         buttonsView.anchor(top: nil,
                            left: view.leftAnchor,
@@ -611,6 +611,31 @@ extension MapController: CLLocationManagerDelegate {
 // MARK: - FloatingViewDelegate
 extension MapController: FloatingViewDelegate {
     
+    func makeCall() {
+        print(#function)
+    }
+    
+    func openSite() {
+        print(#function)
+    }
+    
+    func openVK() {
+        print(#function)
+    }
+    
+    func openFaceBook() {
+        print(#function)
+    }
+    
+    func openInstagram() {
+        print(#function)
+    }
+    
+    func openYoutube() {
+        print(#function)
+    }
+    
+    
     func floatingPanelFullScreen() {
         bottomCollectionViewhide()
         buttonsView.alpha = 1
@@ -721,6 +746,7 @@ extension MapController: MapDisplayLogic {
                 self.bottomCollectionView.alpha = 0
                 self.topScrollView.alpha = 0
                 self.weatherView.alpha = 0
+                self.topSearchView.alpha = 0
             }
         }
     }

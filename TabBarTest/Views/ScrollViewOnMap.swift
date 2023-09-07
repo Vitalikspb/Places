@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ScrollViewOnMapDelegate {
+protocol ScrollViewOnMapDelegate: AnyObject {
     func showSearchView()
     func chooseSightFilter(completion: @escaping() -> (Bool))
     func chooseParkFilter()
@@ -17,7 +17,7 @@ protocol ScrollViewOnMapDelegate {
 
 class ScrollViewOnMap: UIScrollView {
     
-    var onMapdelegate: ScrollViewOnMapDelegate?
+    weak var onMapdelegate: ScrollViewOnMapDelegate?
     private var isSelected: Bool = false
     
     // поиск

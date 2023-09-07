@@ -53,6 +53,8 @@ extension UIColor {
         case filterViewMainSearch = "filterViewMainSearch"
         /// Фон таббара
         case tabBarIconBackground = "tabBarIconBackground"
+        /// фон кнопок на скроле на всплывающих вьюхах
+        case filterbuttonFloatingScreen = "filterbuttonFloatingScreen"
     }
     
    static func setCustomColor(color: CustomColor) -> UIColor {

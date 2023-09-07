@@ -6,7 +6,7 @@
 
 import Foundation
 
-protocol CurrentCityPresentationLogic {
+protocol CurrentCityPresentationLogic: AnyObject {
     func presentAllMarkers(response: CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel)
     func updateWeather(response: CurrentCityViewModel.WeatherCurrentCountry.ViewModel)
 }

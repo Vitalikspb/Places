@@ -6,11 +6,11 @@
 
 import UIKit
 
-protocol SelectedInterestingEventBussinessLogic {
+protocol SelectedInterestingEventBussinessLogic: AnyObject {
     func showEvent()
 }
 
-protocol SelectedInterestingEventDataStore {
+protocol SelectedInterestingEventDataStore: AnyObject {
     var name: String { get set }
     var image: [UIImage] { get set }
     var description: String { get set }
