@@ -84,7 +84,6 @@ class StackViewStar: UIView {
         
         [image1, image2, image3, image4, image5].forEach {
             $0.image = UIImage(named: "star")
-            $0.tintColor = .yellow
             $0.isHidden = false
         }
     }

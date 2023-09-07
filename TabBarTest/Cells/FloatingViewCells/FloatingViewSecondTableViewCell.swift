@@ -60,7 +60,7 @@ class FloatingViewSecondTableViewCell: UITableViewCell {
     private func setupUI() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 220, height: 180)
+        layout.itemSize = CGSize(width: 256, height: 184)
         layout.minimumLineSpacing = 10.0
         layout.minimumInteritemSpacing = 10.0
         collectionView.register(FloatingCollectionViewCell.self,
@@ -69,7 +69,7 @@ class FloatingViewSecondTableViewCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
         collectionView.setCollectionViewLayout(layout, animated: true)
         
         

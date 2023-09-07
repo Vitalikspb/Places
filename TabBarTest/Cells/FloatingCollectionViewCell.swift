@@ -28,23 +28,17 @@ class FloatingCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        contentView.updateShadow(cornerRadius: 8)
-    }
-    
     private func setupUI() {
-        
+        self.backgroundColor = .clear
+        contentView.backgroundColor = .clear
         image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 8
+        image.layer.cornerRadius = 12
         image.layer.masksToBounds = true
-        image.backgroundColor = .white
+        image.backgroundColor = .clear
         image.image = UIImage(named: "hub3")
         
-        self.backgroundColor = .clear
-        contentView.standartShadow(cornerRadius: 8)
-        
         contentView.addSubview(image)
+        
         image.addConstraintsToFillView(view: contentView)
     }
     

@@ -611,6 +611,31 @@ extension MapController: CLLocationManagerDelegate {
 // MARK: - FloatingViewDelegate
 extension MapController: FloatingViewDelegate {
     
+    func makeCall() {
+        print(#function)
+    }
+    
+    func openSite() {
+        print(#function)
+    }
+    
+    func openVK() {
+        print(#function)
+    }
+    
+    func openFaceBook() {
+        print(#function)
+    }
+    
+    func openInstagram() {
+        print(#function)
+    }
+    
+    func openYoutube() {
+        print(#function)
+    }
+    
+    
     func floatingPanelFullScreen() {
         bottomCollectionViewhide()
         buttonsView.alpha = 1
@@ -721,6 +746,7 @@ extension MapController: MapDisplayLogic {
                 self.bottomCollectionView.alpha = 0
                 self.topScrollView.alpha = 0
                 self.weatherView.alpha = 0
+                self.topSearchView.alpha = 0
             }
         }
     }

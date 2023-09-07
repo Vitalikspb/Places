@@ -65,19 +65,16 @@ class ActionButtonsScrollView: UIScrollView {
     // MARK: - Helper Functions
     
     private func setupUI() {
-        
-        self.backgroundColor = .white
+        self.backgroundColor = .setCustomColor(color: .filterbuttonFloatingScreen)
         self.isScrollEnabled = true
         self.isDirectionalLockEnabled = true
         self.showsHorizontalScrollIndicator = false
         
         [routeButton, addToFavouritesButton, callButton,
          shareButton, siteButton].forEach {
-            $0.layer.cornerRadius = 18
-            $0.backgroundColor = UIColor.white
-            $0.layer.borderWidth = 2
-            $0.layer.borderColor = UIColor.systemBlue.cgColor
-         }
+            $0.layer.cornerRadius = 12
+            $0.backgroundColor = .setCustomColor(color: .filterView)
+        }
         
         let tapRouteButton = UITapGestureRecognizer(target: self, action: #selector(handleRouteButton))
         routeButton.addGestureRecognizer(tapRouteButton)
@@ -88,7 +85,7 @@ class ActionButtonsScrollView: UIScrollView {
         let tapShareButton = UITapGestureRecognizer(target: self, action: #selector(handleShareButton))
         shareButton.addGestureRecognizer(tapShareButton)
         let tapSiteButton = UITapGestureRecognizer(target: self, action: #selector(handleSiteButton))
-        shareButton.addGestureRecognizer(tapSiteButton)
+        siteButton.addGestureRecognizer(tapSiteButton)
         
         addSubview(routeButton)
         addSubview(addToFavouritesButton)
@@ -105,39 +102,37 @@ class ActionButtonsScrollView: UIScrollView {
         let shareButtonWidth = shareButton.frame.width
         let siteButtonWidth = siteButton.frame.width
         
-        let frameRoute = CGRect(x: 12,
-                                y: 6,
+        let frameRoute = CGRect(x: 16,
+                                y: 10,
                                 width: routeButtonWidth,
                                 height: 36)
         routeButton.frame = frameRoute
         
-        let frameFavourites = CGRect(x: routeButtonWidth + 24,
-                                     y: 6,
+        let frameFavourites = CGRect(x: routeButtonWidth + 28,
+                                     y: 10,
                                      width: addToFavouritesButtonWidth,
                                      height: 36)
         addToFavouritesButton.frame = frameFavourites
         
-        let frameCall = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + 36,
-                               y: 6,
+        let frameCall = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + 40,
+                               y: 10,
                                width: callButtonWidth,
                                height: 36)
         callButton.frame = frameCall
         
-        let frameShare = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + 48,
-                                y: 6,
+        let frameShare = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + 52,
+                                y: 10,
                                 width: shareButtonWidth,
                                 height: 36)
         shareButton.frame = frameShare
         
-        let frameSite = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + shareButtonWidth + 60,
-                               y: 6,
+        let frameSite = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + shareButtonWidth + 64,
+                               y: 10,
                                width: siteButtonWidth,
                                height: 36)
         siteButton.frame = frameSite
         
-        self.contentSize = CGSize(width:
-                                    routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth +
-                                    shareButtonWidth + siteButtonWidth + 72,
+        self.contentSize = CGSize(width: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + shareButtonWidth + siteButtonWidth + 76,
                                   height: self.frame.height)
     }
     
