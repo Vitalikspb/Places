@@ -6,7 +6,7 @@
 
 import Foundation
 
-protocol SelectedInterestingEventPresentationLogic {
+protocol SelectedInterestingEventPresentationLogic: AnyObject {
     func presentDescription(response: SelectedInterestingEventViewModel.EventModels.ViewModel)
 }
 

@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol MapImageRoutingLogic {
+protocol MapImageRoutingLogic: AnyObject {
 }
 
-protocol MapImageDataPassing {
+protocol MapImageDataPassing: AnyObject {
     var dataStore: MapImageDataStore? { get }
 }
 

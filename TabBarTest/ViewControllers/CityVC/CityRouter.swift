@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CityRoutingLogic {
+protocol CityRoutingLogic: AnyObject {
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
     func routeToExibitionVC()
@@ -17,7 +17,7 @@ protocol CityRoutingLogic {
     func routeToFullWeatherVC()
 }
 
-protocol CityDataPassing {
+protocol CityDataPassing: AnyObject {
     var dataStore: CityDataStore? { get }
 }
 

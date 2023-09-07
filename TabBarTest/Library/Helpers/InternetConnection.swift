@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-protocol ConnectivityDelegate {
+protocol ConnectivityDelegate: AnyObject {
     func lostInternetConnection()
     func goodInternetConnection()
 }

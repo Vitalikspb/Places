@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol WeatherBussinessLogic {
+protocol WeatherBussinessLogic: AnyObject {
     func showWeather()
 }
 
-protocol WeatherDataStore {
+protocol WeatherDataStore: AnyObject {
     var currentWeather: CurrentWeatherSevenDays { get set }
     var currentCity: String { get set }
 }

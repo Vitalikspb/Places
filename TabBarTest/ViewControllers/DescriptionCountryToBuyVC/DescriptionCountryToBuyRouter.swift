@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol DescriptionCountryToBuyRoutingLogic {
+protocol DescriptionCountryToBuyRoutingLogic: AnyObject {
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
     func routeToExibitionVC()
 }
 
-protocol DescriptionCountryToBuyDataPassing {
+protocol DescriptionCountryToBuyDataPassing: AnyObject {
     var dataStore: DescriptionCountryToBuyDataStore? { get }
 }
 

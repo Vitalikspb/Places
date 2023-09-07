@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ExibitionsPresentationLogic {
+protocol ExibitionsPresentationLogic: AnyObject {
     func displayExibitions(response: ExibitionsModels.Exibitions.ViewModel)
 }
 

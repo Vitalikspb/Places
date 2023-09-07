@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol ExibitionsRoutingLogic {
+protocol ExibitionsRoutingLogic: AnyObject {
 }
 
-protocol ExibitionsDataPassing {
+protocol ExibitionsDataPassing: AnyObject {
     var dataStore: ExibitionsDataStore? { get }
 }
 

@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - FloatingViewDelegate
 
-protocol FloatingViewDelegate {
+protocol FloatingViewDelegate: AnyObject {
     func floatingPanelIsHidden()
     func floatingPanelFullScreen()
     func floatingPanelPatriallyScreen()

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol RentAutoPresentationLogic {
+protocol RentAutoPresentationLogic: AnyObject {
     func presentRentAuto(response: RentAutoModels.RentAuto.ViewModel)
 }
 

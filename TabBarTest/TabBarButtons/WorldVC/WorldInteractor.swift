@@ -8,11 +8,11 @@ import UIKit
 
 
 
-protocol WorldBussinessLogic {
+protocol WorldBussinessLogic: AnyObject {
     func showCity()
 }
 
-protocol WorldDataStore {
+protocol WorldDataStore: AnyObject {
     var currentCity: String { get set }
     var rentsService: WorldViewModels.AllCountriesInTheWorld.ViewModel { get set }
 }

@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol RentAutoRoutingLogic {
+protocol RentAutoRoutingLogic: AnyObject {
 }
 
-protocol RentAutoDataPassing {
+protocol RentAutoDataPassing: AnyObject {
     var dataStore: RentAutoDataStore? { get }
 }
 

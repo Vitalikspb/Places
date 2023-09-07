@@ -80,7 +80,7 @@ class MapController: UIViewController {
                                                               height: 42))
     private let topSearchView = TopSearchView(frame: CGRect(x: 0,
                                                             y: 0,
-                                                            width: UIScreen.main.bounds.width-20,
+                                                            width: UIScreen.main.bounds.width-32,
                                                             height: 60))
     private var weatherView = WeatherView(frame: CGRect(x: 0,
                                                         y: 0,
@@ -200,7 +200,7 @@ class MapController: UIViewController {
                              left: view.leftAnchor,
                              bottom: nil,
                              right: view.rightAnchor,
-                             paddingTop: 15,
+                             paddingTop: 16,
                              paddingLeft: 0,
                              paddingBottom: 0,
                              paddingRight: 0,
@@ -218,10 +218,10 @@ class MapController: UIViewController {
                              left: view.leftAnchor,
                              bottom: nil,
                              right: view.rightAnchor,
-                             paddingTop: 15,
-                             paddingLeft: 10,
+                             paddingTop: 16,
+                             paddingLeft: 16,
                              paddingBottom: 0,
-                             paddingRight: 10,
+                             paddingRight: 16,
                              width: 0, height: 60)
         buttonsView.anchor(top: nil,
                            left: view.leftAnchor,

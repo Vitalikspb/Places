@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol MapImageBussinessLogic {
+protocol MapImageBussinessLogic: AnyObject {
     func showMapImage()
 }
 
-protocol MapImageDataStore {
+protocol MapImageDataStore: AnyObject {
     var stringURLOfMap: String { get set }
     var nameOfMap: String { get set }
 }

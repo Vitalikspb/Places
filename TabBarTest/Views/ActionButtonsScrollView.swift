@@ -19,7 +19,7 @@ class ActionButtonsScrollView: UIScrollView {
     
     // MARK: - Public properties
     
-    var onMapdelegate: ScrollViewOnMapDelegate?
+    weak var onMapdelegate: ScrollViewOnMapDelegate?
     weak var actionButtonDelegate: ActionButtonsScrollViewDelegate?
     
     // MARK: - Private properties

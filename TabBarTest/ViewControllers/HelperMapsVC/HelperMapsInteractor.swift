@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol HelperMapsBussinessLogic {
+protocol HelperMapsBussinessLogic: AnyObject {
     func showHelperMaps()
 }
 
-protocol HelperMapsDataStore {
+protocol HelperMapsDataStore: AnyObject {
     var currentCity: String { get set }
     var preImage: String { get set }
     var name: String { get set }

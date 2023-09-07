@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol HelperMapsRoutingLogic {
+protocol HelperMapsRoutingLogic: AnyObject {
     func routeToMapImageVC()
 }
 
-protocol HelperMapsDataPassing {
+protocol HelperMapsDataPassing: AnyObject {
     var dataStore: HelperMapsDataStore? { get set }
 }
 

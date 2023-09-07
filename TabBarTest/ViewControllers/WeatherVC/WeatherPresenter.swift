@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol WeatherPresentationLogic {
+protocol WeatherPresentationLogic: AnyObject {
     func presentWeather(response: WeatherModels.Weather.ViewModel)
 }
 

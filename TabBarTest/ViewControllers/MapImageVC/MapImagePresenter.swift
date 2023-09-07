@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol MapImagePresentationLogic {
+protocol MapImagePresentationLogic: AnyObject {
     func presentMapImage(response: MapImageModels.MapImageModel.Response)
 }
 

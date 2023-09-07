@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol IntrestingEventsPresentationLogic {
+protocol IntrestingEventsPresentationLogic: AnyObject {
     func presentIntrestingEvents(response: IntrestingEventsModels.IntrestingEvents.ViewModel)
 }
 
