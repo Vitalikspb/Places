@@ -134,6 +134,12 @@ enum Constants {
         static let share = "Поделиться"
         /// "Сайт"
         static let toSite = "Сайт"
+        /// "Избранное"
+        static let favourite = "Избранное"
+        /// "Интересные события"
+        static let interesting = "Интересные события"
+        /// "Вопросы и ответы"
+        static let faq = "Вопросы и ответы"
     }
     
     enum Errors {
