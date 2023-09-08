@@ -184,6 +184,7 @@
 		C2CA35F226FE1DA800795EF6 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CA35F126FE1DA800795EF6 /* MapController.swift */; };
 		C2CA35F426FE1DB700795EF6 /* MapStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2CA35F326FE1DB700795EF6 /* MapStoryboard.storyboard */; };
 		FE451D242AA85CAD00831485 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE451D232AA85CAD00831485 /* Extension+UIColor.swift */; };
+		FE93D3CC2AAB130900052FC1 /* ActionsButtonsCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE93D3CB2AAB130900052FC1 /* ActionsButtonsCityView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -360,6 +361,7 @@
 		C2CA35F126FE1DA800795EF6 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		C2CA35F326FE1DB700795EF6 /* MapStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MapStoryboard.storyboard; sourceTree = "<group>"; };
 		FE451D232AA85CAD00831485 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
+		FE93D3CB2AAB130900052FC1 /* ActionsButtonsCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsButtonsCityView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -659,6 +661,7 @@
 				C259AA1F272180FB00B03921 /* GradientView.swift */,
 				C2588FA0270307280014CCDC /* ScrollViewOnMap.swift */,
 				53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */,
+				FE93D3CB2AAB130900052FC1 /* ActionsButtonsCityView.swift */,
 				533D8DD7270394890006B0EE /* WeatherView.swift */,
 				53F3E30127404119004B278E /* CurrentCityButtonView.swift */,
 				C2588FAA270364180014CCDC /* TopSearchView.swift */,
@@ -1153,6 +1156,7 @@
 				532A2308276E08AB001CFAEC /* HelperMapsPresenter.swift in Sources */,
 				53F3E3042740469E004B278E /* MapRouter.swift in Sources */,
 				532A230B276E08AB001CFAEC /* HelperMapsWorker.swift in Sources */,
+				FE93D3CC2AAB130900052FC1 /* ActionsButtonsCityView.swift in Sources */,
 				C26BFE80276A2B4000ABD119 /* ExibitionsTableViewCell.swift in Sources */,
 				538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */,
 				538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */,

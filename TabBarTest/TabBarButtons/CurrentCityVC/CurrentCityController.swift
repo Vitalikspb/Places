@@ -14,6 +14,13 @@ protocol CurrentCityDisplayLogic: AnyObject {
 
 class CurrentCityController: UIViewController {
     
+    // MARK: - UI Properties
+    private let actionsButtonsCityView = ActionsButtonsCityView(frame: CGRect(x: 0,
+                                                                              y: 0,
+                                                                              width: UIScreen.main.bounds.width,
+                                                                              height: 60))
+    private let tableView = UITableView(frame: CGRect.zero, style: .plain)
+    
     // MARK: - Public Properties
     
     var interactor: CurrentCityBussinessLogic?
@@ -76,11 +83,6 @@ class CurrentCityController: UIViewController {
 //    private var currentWeather: DescriptionWeather!
     private var descriptionHeightCell: CGFloat = 0
     
-    
-    // MARK: - UI Properties
-    
-    private let tableView = UITableView(frame: CGRect.zero, style: .plain)
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -128,6 +130,7 @@ class CurrentCityController: UIViewController {
     }
     
     private func setupUI() {
+        actionsButtonsCityView.actionButtonDelegate = self
         // скролл картинок
         tableView.register(CountryPhotosTableViewCell.self,
                            forCellReuseIdentifier: CountryPhotosTableViewCell.identifier)
@@ -158,9 +161,26 @@ class CurrentCityController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         
-        view.addSubview(tableView)
-    
-        tableView.addConstraintsToFillView(view: view)
+        view.addSubviews(actionsButtonsCityView, tableView)
+        
+        actionsButtonsCityView.anchor(top: view.layoutMarginsGuide.topAnchor,
+                                      left: view.leftAnchor,
+                                      bottom: nil,
+                                      right: view.rightAnchor,
+                                      paddingTop: 0,
+                                      paddingLeft: 0,
+                                      paddingBottom: 0,
+                                      paddingRight: 0,
+                                      width: 0, height: 60)
+        tableView.anchor(top: actionsButtonsCityView.bottomAnchor,
+                         left: view.leftAnchor,
+                         bottom: view.layoutMarginsGuide.bottomAnchor,
+                         right: view.rightAnchor,
+                         paddingTop: 0,
+                         paddingLeft: 0,
+                         paddingBottom: 0,
+                         paddingRight: 0,
+                         width: 0, height: 0)
     }
     
 }
@@ -223,7 +243,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             // кнопки
         case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonsCollectionViewCell.identifier, for: indexPath) as? ButtonsCollectionViewCell else { return UITableViewCell() }
-            cell.delegate = self
+//            cell.delegate = self
             return cell
             
             // Обязательно к просмотру
@@ -372,38 +392,27 @@ extension CurrentCityController: SightTableViewCellDelegate {
     }
 }
 
-// MARK: - ButtonsCollectionViewCellDelegate
-
-extension CurrentCityController: ButtonsCollectionViewCellDelegate {
-    // открываем экран списка любимых/избранных достопримечательностей
-    func favouritesHandler() {
-        router?.routeToFavouritesVC()
-    }
-    
-    func eventsHandler() {
-        router?.routeToInterestingEventsVC()
-    }
-    
-    func ticketHandler() {
-        router?.routeToExibitionVC()
-    }
-    
-    func faqHandler() {
-        router?.routeToFAQVC()
-    }
-    
-    func rentAutoHandler() {
-        router?.routeToRentAutoVC()
-    }
-    
-    func chatHandler() {
-        router?.routeToHelperMapsVC()
-    }
-}
+// MARK: - WeatherCollectionViewCellDelegate
 
 extension CurrentCityController: WeatherCollectionViewCellDelegate {
     func showFullWeather() {
         router?.routeToFullWeatherVC()
+    }
+}
+
+// MARK: - ActionsButtonsCityViewDelegate
+
+extension CurrentCityController: ActionsButtonsCityViewDelegate {
+    func favouriteButtonTapped() {
+        router?.routeToFavouritesVC()
+    }
+    
+    func interestingButtonTapped() {
+        router?.routeToInterestingEventsVC()
+    }
+    
+    func faqButtonTapped() {
+        router?.routeToFAQVC()
     }
     
     
