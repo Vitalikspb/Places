@@ -49,11 +49,11 @@ class CurrentCityController: UIViewController {
         CityArray(name: "Купертино", image: UIImage(named: "cupertino")!)]
     
     private var guidesArray: [GuideSightsModel] = [
-        GuideSightsModel(image: UIImage(named: "hermitage2")!, name: "Эрмитаж, Санкт-Петербург: билеты и самостоятельная экскурсия", price: 1060, rating: 4.5, reviews: 79),
-        GuideSightsModel(image: UIImage(named: "exhbgrandmaket")!, name: "Билет в музей «Гранд Макет Россия»", price: 6500, rating: 4.5, reviews: 1231),
+        GuideSightsModel(image: UIImage(named: "hermitage2")!, name: "Эрмитаж", price: 1060, rating: 4.5, reviews: 79),
+        GuideSightsModel(image: UIImage(named: "exhbgrandmaket")!, name: "Гранд Макет Россия", price: 6500, rating: 4.5, reviews: 1231),
         GuideSightsModel(image: UIImage(named: "exhbroof")!, name: "Экскурсия по крышам", price: 5305, rating: 0, reviews: 53),
-        GuideSightsModel(image: UIImage(named: "exhblebed")!, name: "Билет на балет «Лебединое озеро»", price: 2341, rating: 4.2, reviews: 46),
-        GuideSightsModel(image: UIImage(named: "exhbrusmuseum")!, name: "Государственный Русский музей: аудиотур на русском", price: 928, rating: 4.1, reviews: 11)
+        GuideSightsModel(image: UIImage(named: "exhblebed")!, name: "Лебединое озеро", price: 2341, rating: 4.2, reviews: 46),
+        GuideSightsModel(image: UIImage(named: "exhbrusmuseum")!, name: "Государственный Русский музей", price: 928, rating: 4.1, reviews: 11)
     ]
     var viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(
         weather: CurrentWeatherSevenDays(
@@ -72,15 +72,6 @@ class CurrentCityController: UIViewController {
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
-//    private struct DescriptionWeather {
-//        var temp: String
-//        var feelsLike: String
-//        var image: UIImage
-//        var description: String
-//        var sunrise: String
-//        var sunset: String
-//    }
-//    private var currentWeather: DescriptionWeather!
     private var descriptionHeightCell: CGFloat = 0
     
     // MARK: - Lifecycle
@@ -88,7 +79,7 @@ class CurrentCityController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        view.backgroundColor = .white
+        view.backgroundColor = .setCustomColor(color: .mainView)
         setupUI()
         // загружаем данные по текущему городу
         interactor?.showCity(lat: 59.9396340, lon: 30.3104843)
@@ -140,9 +131,6 @@ class CurrentCityController: UIViewController {
         // другие города
         tableView.register(CountryCitiesTableViewCell.self,
                            forCellReuseIdentifier: CountryCitiesTableViewCell.identifier)
-        // кнопки
-        tableView.register(ButtonsCollectionViewCell.self,
-                           forCellReuseIdentifier: ButtonsCollectionViewCell.identifier)
         // Переиспользуемая для всех интересных мест
         tableView.register(SightTableViewCell.self,
                            forCellReuseIdentifier: SightTableViewCell.identifier)
@@ -160,6 +148,7 @@ class CurrentCityController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 16, right: 0)
         
         view.addSubviews(actionsButtonsCityView, tableView)
         
@@ -211,7 +200,7 @@ extension CurrentCityController: CurrentCityDisplayLogic {
 
 extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 11
+        return 10
     }
     // MARK: - заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -219,14 +208,16 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             
             // картинки города
         case 0:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier, for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier,
+                                                           for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
             return cell
             
             // описание
         case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier, for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier,
+                                                           for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.configureCell(titleName: "Описание города", description: "lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa")
+            cell.configureCell(titleName: "Описание города", description: "Санкт-Петербург – русский портовый город на побережье Балтийского моря, который в течение двух веков служил столицей Российской империи. Он был основан в 1703 году Петром I, которому воздвигнут знаменитый памятник Медный всадник. Город по праву считается культурным центром страны. Санкт-Петербург – русский портовый город на побережье Балтийского моря, который в течение двух веков служил столицей Российской империи. Он был основан в 1703 году Петром I, которому воздвигнут знаменитый памятник Медный всадник. Город по праву считается культурным центром страны.")
             selectedDescriptionCell
                 ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
                 : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
@@ -234,35 +225,33 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             
             // Интересные места по близости
         case 2:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
+                                                           for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.titleCell = Constants.Cells.sightNearMe
-            cell.sizeCell = CGSize(width: 230, height: 170)
+            cell.sizeCell = CGSize(width: 230, height: 190)
             cell.model = sightsArray
-            return cell
-            
-            // кнопки
-        case 3:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonsCollectionViewCell.identifier, for: indexPath) as? ButtonsCollectionViewCell else { return UITableViewCell() }
-//            cell.delegate = self
             return cell
             
             // Обязательно к просмотру
-        case 4:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+        case 3:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
+                                                           for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
             cell.model = sightsArray
             cell.titleCell = Constants.Cells.mustSeeSights
-            cell.sizeCell = CGSize(width: 200, height: 140)
+            cell.sizeCell = CGSize(width: 230, height: 190)
             return cell
             
             // Билеты на экскурсии
-        case 5:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TicketCollectionViewCell.identifier, for: indexPath) as? TicketCollectionViewCell else { return UITableViewCell() }
+        case 4:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TicketCollectionViewCell.identifier,
+                                                           for: indexPath) as? TicketCollectionViewCell else { return UITableViewCell() }
             cell.model = guidesArray
+            cell.delegate = self
             return cell
             
             // Погода
-        case 6:
+        case 5:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
             // MARK: - TODO Координаты берутся из модели
             cell.configureCell(city: titleName,
@@ -276,34 +265,37 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             return cell
             
             // Выбор редакции
-        case 7:
+        case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.model = sightsArray
             cell.titleCell = Constants.Cells.chooseOfRedaction
-            cell.sizeCell = CGSize(width: 230, height: 170)
+            cell.sizeCell = CGSize(width: 230, height: 180)
             return cell
             
             // Музеи
-        case 8:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+        case 7:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
+                                                           for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
             cell.model = sightsArray
             cell.titleCell = Constants.Cells.museums
-            cell.sizeCell = CGSize(width: 200, height: 140)
+            cell.sizeCell = CGSize(width: 230, height: 180)
             return cell
             
             // Парки
-        case 9:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+        case 8:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
+                                                           for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
             cell.model = sightsArray
             cell.titleCell = Constants.Cells.parks
-            cell.sizeCell = CGSize(width: 200, height: 140)
+            cell.sizeCell = CGSize(width: 230, height: 180)
             return cell
             
             // другие города
-        case 10:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCitiesTableViewCell.identifier, for: indexPath) as? CountryCitiesTableViewCell else { return UITableViewCell() }
+        case 9:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCitiesTableViewCell.identifier,
+                                                           for: indexPath) as? CountryCitiesTableViewCell else { return UITableViewCell() }
             cell.model = cityArray
             cell.delegate = self
             return cell
@@ -320,26 +312,31 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 0: return UIScreen.main.bounds.width - (UIScreen.main.bounds.width / 3) + 32
             
             // ячейка с описанием города
-        case 1: return selectedDescriptionCell ? descriptionHeightCell : 180
+        case 1: return selectedDescriptionCell ? descriptionHeightCell : 200
+
+            // места в окрестностях
+        case 2: return 240
             
-            // ячейка с другими городами текущей страны где есть метки
-            // Выбор редакции
-        case 2,7: return 215
-            
-            // ячейка с кнопками
-        case 3: return 150
+            // обязательно к просмотру
+        case 3: return 240
             
             // Билеты на экскурсии
-            // другие города
-        case 5,10: return 230
+        case 4: return 315
             
             // Погода
-        case 6: return 250
+        case 5: return 256
+
+            // Выбор редакции
+        case 6: return 240
             
-            // Обязательно к просмотру
-            // Интересные места по близости
             // Музеи
-        case 4,8,9: return 185
+        case 7: return 240
+            
+            // Парки
+        case 8: return 240
+            
+            // другие города
+        case 9: return 320
             
         default: return 50
         }
@@ -351,7 +348,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
 extension CurrentCityController: CountryDescriptionTableViewCellDelegate {
     // определяем высоту для расширенной ячейки описание города
     func heightCell(height: CGFloat) {
-        let standartHeightDataOfCell: CGFloat = 90
+        let standartHeightDataOfCell: CGFloat = 100
         descriptionHeightCell = height + standartHeightDataOfCell
     }
     
@@ -384,6 +381,11 @@ extension CurrentCityController: CountryCitiesTableViewCellDelegate {
 // MARK: - SightTableViewCellDelegate
 
 extension CurrentCityController: SightTableViewCellDelegate {
+    // нажатие на кнопку смотреть все из "места в окрестностях"
+    func lookAll() {
+        print("вернуть на главный, отобразить на карте все точки из места в окрестностях и отдалить карту")
+    }
+    
     // открываем выбранную достопримечательность на карте
     func handleSelectedSight(_ name: String) {
         userDefault.set(true, forKey: UserDefaults.showSelectedSight)
@@ -416,5 +418,15 @@ extension CurrentCityController: ActionsButtonsCityViewDelegate {
     }
     
     
+}
+
+// MARK: - TicketCollectionViewCellDelegate
+
+extension CurrentCityController: TicketCollectionViewCellDelegate {
+    
+    // открыть страницу всех билетов
+    func lookAllTickets() {
+        print("открыть страницу всех билетов")
+    }
 }
 

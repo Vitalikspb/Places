@@ -16,9 +16,9 @@ class CountryCitiesTableViewCell: UITableViewCell {
     // MARK: - UI properties
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.font = UIFont.init(name: "GillSans-bold", size: 20)
         label.text = "Другие города"
         return label
     }()
@@ -69,7 +69,7 @@ class CountryCitiesTableViewCell: UITableViewCell {
     private func setupUI() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 280, height: 180)
+        layout.itemSize = CGSize(width: 280, height: 260)
         layout.minimumLineSpacing = 10.0
         layout.minimumInteritemSpacing = 10.0
         collectionView.register(CountryCellsCitiesCollectionViewCell.self,
@@ -93,7 +93,7 @@ class CountryCitiesTableViewCell: UITableViewCell {
                           paddingBottom: 0,
                           paddingRight: 8,
                           width: 0,
-                          height: 0)
+                          height: 32)
         collectionView.anchor(top: titleLabel.bottomAnchor,
                           left: contentView.leftAnchor,
                           bottom: contentView.bottomAnchor,

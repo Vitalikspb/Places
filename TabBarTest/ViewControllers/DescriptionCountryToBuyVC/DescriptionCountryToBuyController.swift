@@ -323,6 +323,11 @@ extension DescriptionCountryToBuyController: CountryDescriptionTableViewCellDele
 // MARK: - SightTableViewCellDelegate
 
 extension DescriptionCountryToBuyController: SightTableViewCellDelegate {
+    // нажатие на кнопку смотреть все из "места в окрестностях"
+    func lookAll() {
+        print("вернуть на главный, отобразить на карте все точки из места в окрестностях и отдалить карту")
+    }
+    
     // открываем выбранную достопримечательность на карте
     func handleSelectedSight(_ name: String) {
         userDefault.set(true, forKey: UserDefaults.showSelectedSight)

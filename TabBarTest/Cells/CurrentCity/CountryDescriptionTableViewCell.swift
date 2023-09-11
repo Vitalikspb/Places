@@ -15,29 +15,38 @@ class CountryDescriptionTableViewCell: UITableViewCell {
     
     // MARK: - Private Properties
     private let titleLabel: UILabel = {
-       let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        let label = UILabel()
+        label.textColor = .setCustomColor(color: .titleText)
+        label.textAlignment = .left
+        label.font = UIFont.init(name: "GillSans-bold", size: 22)
         label.text = Constants.Cells.cityDescription
+        label.text = ""
         return label
     }()
     private let mainTextLabel: UILabel = {
-       let label = UILabel()
-        label.textColor = .black        
-        label.textAlignment = .center
+        let label = UILabel()
+        label.textColor = .setCustomColor(color: .titleText)
+        label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = UIFont.init(name: "GillSans-semibold", size: 16)
         label.text = ""
         return label
     }()
     private let gradientView = GradientView()
+    
     let moreButtons: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.backgroundColor = .clear
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.init(name: "GillSans-semibold", size: 16)
-        button.setTitle(Constants.Cells.readMore, for: .normal)
+        let yourAttributes: [NSAttributedString.Key: Any] = [
+              .font: UIFont(name: "GillSans", size: 16) ?? UIFont.systemFont(ofSize: 16),
+              .foregroundColor: UIColor(named: "titleText") ?? UIColor.black,
+              .underlineStyle: NSUnderlineStyle.single.rawValue
+          ]
+        let attributeString = NSMutableAttributedString(
+                string: Constants.Cells.readMore,
+                attributes: yourAttributes
+             )
+        button.setAttributedTitle(attributeString, for: .normal)
         return button
     }()
     // MARK: -  Public Properties
@@ -75,36 +84,33 @@ class CountryDescriptionTableViewCell: UITableViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
         self.clipsToBounds = true
         
-        gradientView.colors = [UIColor(white: 1, alpha: 0), UIColor.white]
+        gradientView.colors = [.setCustomColor(color: .gradientBlack), .setCustomColor(color: .gradientWhite)]
         gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
         
         moreButtons.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(mainTextLabel)
-        contentView.addSubview(gradientView)
-        contentView.addSubview(moreButtons)
+        contentView.addSubviews(titleLabel, mainTextLabel, gradientView, moreButtons)
         
         titleLabel.anchor(top: contentView.topAnchor,
-                            left: contentView.leftAnchor,
-                            bottom: nil,
-                            right: contentView.rightAnchor,
-                            paddingTop: 10,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 0,
-                            width: 0, height: 20)
+                          left: contentView.leftAnchor,
+                          bottom: nil,
+                          right: contentView.rightAnchor,
+                          paddingTop: 16,
+                          paddingLeft: 16,
+                          paddingBottom: 0,
+                          paddingRight: 0,
+                          width: 0, height: 20)
         mainTextLabel.anchor(top: titleLabel.bottomAnchor,
                              left: contentView.leftAnchor,
-                             bottom: nil,
+                             bottom: contentView.bottomAnchor,
                              right: contentView.rightAnchor,
                              paddingTop: 10,
                              paddingLeft: 16,
-                             paddingBottom: 0,
+                             paddingBottom: 30,
                              paddingRight: 16,
                              width: 0, height: 0)
         gradientView.anchor(top: nil,
@@ -113,17 +119,17 @@ class CountryDescriptionTableViewCell: UITableViewCell {
                             right: contentView.rightAnchor,
                             paddingTop: 0,
                             paddingLeft: 16,
-                            paddingBottom: 0,
+                            paddingBottom: 30,
                             paddingRight: 16,
-                            width: 0, height: 70)
+                            width: 0, height: 85)
         moreButtons.anchor(top: nil,
                            left: contentView.leftAnchor,
                            bottom: contentView.bottomAnchor,
-                           right: contentView.rightAnchor,
+                           right: nil,
                            paddingTop: 0,
                            paddingLeft: 16,
                            paddingBottom: 0,
-                           paddingRight: 16,
+                           paddingRight: 0,
                            width: 0, height: 35)
     }
     
@@ -134,7 +140,8 @@ class CountryDescriptionTableViewCell: UITableViewCell {
     func configureCell(titleName name: String, description: String) {
         titleLabel.text = name
         mainTextLabel.text = description
-        let screenInsetsLeftRight:CGFloat = 32
-        delegate?.heightCell(height: description.height(widthScreen: UIScreen.main.bounds.width - screenInsetsLeftRight,font: UIFont(name: "GillSans", size: 14)!))
+        let screenInsetsLeftRight: CGFloat = 32
+        delegate?.heightCell(height: description.height(widthScreen: UIScreen.main.bounds.width - screenInsetsLeftRight,
+                                                        font: UIFont(name: "GillSans-semibold", size: 16)!))
     }
 }

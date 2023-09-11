@@ -8,6 +8,7 @@ import UIKit
 
 protocol SightTableViewCellDelegate: AnyObject {
     func handleSelectedSight(_ name: String)
+    func lookAll()
 }
 
 class SightTableViewCell: UITableViewCell {
@@ -15,20 +16,28 @@ class SightTableViewCell: UITableViewCell {
     // MARK: - UI properties
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.font = UIFont.init(name: "GillSans-bold", size: 20)
         label.text = Constants.Cells.mustSeeSights
+        return label
+    }()
+    private let lookAllLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = .setCustomColor(color: .subTitleText)
+        label.textAlignment = .right
+        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.text = Constants.Cells.lookAll
         return label
     }()
     let collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: UICollectionViewLayout.init())
     
     // MARK: - Public properties
+    
     var model: [SightsModel] = []
     static let identifier = "SightTableViewCell"
     weak var delegate: SightTableViewCellDelegate?
-    private let layout = UICollectionViewFlowLayout()
     var titleCell: String = "" {
         didSet {
             titleLabel.text = titleCell
@@ -39,6 +48,10 @@ class SightTableViewCell: UITableViewCell {
             layout.itemSize = CGSize(width: sizeCell.width, height: sizeCell.height)
         }
     }
+    
+    // MARK: - Private properties
+    
+    private let layout = UICollectionViewFlowLayout()
 
     // MARK: - Lifecycle
     
@@ -69,10 +82,14 @@ class SightTableViewCell: UITableViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 10.0
         layout.minimumInteritemSpacing = 10.0
+        
+        let tapLookAll = UITapGestureRecognizer(target: self, action: #selector(lookAllTapped))
+        lookAllLabel.isUserInteractionEnabled = true
+        lookAllLabel.addGestureRecognizer(tapLookAll)
+        
         collectionView.register(SightCollectionViewCell.self,
                                 forCellWithReuseIdentifier: SightCollectionViewCell.identifier)
         collectionView.delegate = self
@@ -81,23 +98,33 @@ class SightTableViewCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.setCollectionViewLayout(layout, animated: true)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(collectionView)
+        contentView.addSubviews(titleLabel, collectionView, lookAllLabel)
+
         titleLabel.anchor(top: contentView.topAnchor,
                           left: contentView.leftAnchor,
                           bottom: nil,
-                          right: contentView.rightAnchor,
-                          paddingTop: 0,
+                          right: lookAllLabel.leftAnchor,
+                          paddingTop: 8,
                           paddingLeft: 16,
                           paddingBottom: 0,
                           paddingRight: 8,
                           width: 0,
-                          height: 0)
+                          height: 32)
+        lookAllLabel.anchor(top: contentView.topAnchor,
+                          left: nil,
+                          bottom: nil,
+                          right: contentView.rightAnchor,
+                          paddingTop: 8,
+                          paddingLeft: 0,
+                          paddingBottom: 0,
+                          paddingRight: 16,
+                          width: 85,
+                          height: 35)
         collectionView.anchor(top: titleLabel.bottomAnchor,
                           left: contentView.leftAnchor,
                           bottom: contentView.bottomAnchor,
                           right: contentView.rightAnchor,
-                          paddingTop: 8,
+                          paddingTop: 0,
                           paddingLeft: 0,
                           paddingBottom: 0,
                           paddingRight: 0,
@@ -107,11 +134,15 @@ class SightTableViewCell: UITableViewCell {
     
     @objc private func moveToMapViewHandle(name: String) {
         switch name {
-        case "Эрмитаж": delegate?.handleSelectedSight(name)
+        case "Эрмитаж":       delegate?.handleSelectedSight(name)
         case "Русский музей": delegate?.handleSelectedSight(name)
         default:
             break
         }
+    }
+    
+    @objc private func lookAllTapped() {
+        delegate?.lookAll()
     }
 }
 

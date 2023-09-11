@@ -99,6 +99,8 @@ enum Constants {
         static let weatherInCity = "Погода в "
         /// "Места в окресностях"
         static let sightNearMe = "Места в окресностях"
+        /// "См. все"
+        static let lookAll = "См. все"
         /// "Выбор редакции"
         static let chooseOfRedaction = "Выбор редакции"
         /// "Музеи"

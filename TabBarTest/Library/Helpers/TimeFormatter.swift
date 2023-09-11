@@ -50,4 +50,25 @@ class TimeFormatter {
         }
         return tempDate
     }
+    
+    // Сегодняшняя дата в формате 22.03.2022
+    static func todayDayLetterFullFormat() -> String {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        
+        let today = Date()
+        let midnight = calendar.startOfDay(for: today).timeIntervalSince1970
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        let date = Date(timeIntervalSince1970: midnight)
+        var tempDate = dateFormatter.string(from: date)
+        
+        // Удаляем 0 если число то 10
+        if tempDate.first == "0" {
+            tempDate.removeFirst()
+        }
+        return tempDate
+    }
 }

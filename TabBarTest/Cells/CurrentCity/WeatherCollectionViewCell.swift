@@ -16,39 +16,61 @@ class WeatherCollectionViewCell: UITableViewCell {
     // MARK: - Private Properties
     private let mainView: UIView = {
        let view = UIView()
-        view.backgroundColor = UIColor(red: 1.0/255, green: 1.0/255, blue: 1.0/255, alpha: 0.1)
+        view.backgroundColor = .clear
+        return view
+    }()
+    private let topContainerView: UIView = {
+       let view = UIView()
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .setCustomColor(color: .weatherBlueBackground)
+        return view
+    }()
+    private let buttonContainerView: UIView = {
+       let view = UIView()
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .setCustomColor(color: .weatherBlueBackground)
         return view
     }()
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.font = UIFont.init(name: "GillSans-bold", size: 20)
         label.text = Constants.Cells.weather
         return label
     }()
     private let todayLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
         label.text = Constants.Cells.today
         return label
     }()
+    
+    
     private let curTempLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .white
         label.textAlignment = .left
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.textAlignment = .left
+        label.font = UIFont.init(name: "GillSans-semiBold", size: 32)
         label.text = ""
         return label
+    }()
+    private let lightSmallRectangleView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .setCustomColor(color: .weatherLightRectangle)
+        view.layer.cornerRadius = 6
+        view.layer.borderColor = UIColor.setCustomColor(color: .weatherLightRectangleBorder).cgColor
+        view.layer.borderWidth = 1
+        return view
     }()
     private let curImageLabel: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .clear
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleToFill
         return image
     }()
     private let descriptionLabel: UILabel = {
@@ -62,82 +84,41 @@ class WeatherCollectionViewCell: UITableViewCell {
     }()
     private let tempFeelsLikeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
         label.text = Constants.Cells.weatherFellsLike
         return label
     }()
-    let mainStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.distribution = .fillProportionally
-        stack.spacing = 10
-        stack.axis = .horizontal
-        return stack
-    }()
     
-    let sunriseStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 0
-        stack.axis = .vertical
-        return stack
-    }()
+   
     private let sunriseLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
+        label.textColor = .white
+        label.textAlignment = .left
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
         label.text = Constants.Cells.sunrise
         return label
     }()
-    private let sunriseTimeLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "00:00"
-        return label
-    }()
-    let sunsetStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.distribution = .fill
-        stack.alignment = .center
-        stack.spacing = 0
-        stack.axis = .vertical
-        return stack
-    }()
+   
     private let sunsetLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
+        label.textColor = .white
+        label.textAlignment = .right
         label.numberOfLines = 0
         label.font = UIFont.init(name: "GillSans", size: 14)
         label.text = Constants.Cells.sunset
         return label
     }()
-    private let sunsetTimeLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
-        label.text = "00:00"
-        return label
-    }()
+   
     let fullWeatherButtons: UIButton = {
        let button = UIButton()
         button.backgroundColor = .clear
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.init(name: "GillSans-semibold", size: 16)
         button.setTitle("Погода на 7 дней", for: .normal)
-        button.layer.cornerRadius = 18
-        button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.lightGray.cgColor
         return button
     }()
     // MARK: -  Public Properties
@@ -176,130 +157,125 @@ class WeatherCollectionViewCell: UITableViewCell {
     
     private func setupUI() {
         self.backgroundColor = .clear
-        
-        mainView.layer.cornerRadius = 10
+        mainView.backgroundColor = .clear
         
         fullWeatherButtons.addTarget(self, action: #selector(fullWeatherTapped), for: .touchUpInside)
         
-        contentView.addSubview(mainView)
-        mainView.addSubview(titleLabel)
-        mainView.addSubview(todayLabel)
-        mainView.addSubview(curTempLabel)
-        mainView.addSubview(curImageLabel)
-        mainView.addSubview(descriptionLabel)
-        mainView.addSubview(tempFeelsLikeLabel)
-        mainView.addSubview(mainStackView)
-        mainView.addSubview(fullWeatherButtons)
+        contentView.addSubviews(mainView)
+        mainView.addSubviews(titleLabel, topContainerView, buttonContainerView)
+        topContainerView.addSubviews(todayLabel, lightSmallRectangleView, curTempLabel,
+                                     tempFeelsLikeLabel, sunriseLabel, sunsetLabel)
+        lightSmallRectangleView.addSubviews(curImageLabel)
+        buttonContainerView.addSubviews(fullWeatherButtons)
         
-        mainStackView.addArrangedSubview(sunriseStackView)
-        mainStackView.addArrangedSubview(sunsetStackView)
-        sunriseStackView.addArrangedSubview(sunriseLabel)
-        sunriseStackView.addArrangedSubview(sunriseTimeLabel)
-        sunsetStackView.addArrangedSubview(sunsetLabel)
-        sunsetStackView.addArrangedSubview(sunsetTimeLabel)
+        mainView.addConstraintsToFillView(view: contentView)
         
-        mainView.anchor(top: contentView.topAnchor,
-                        left: contentView.leftAnchor,
-                        bottom: contentView.bottomAnchor,
-                        right: contentView.rightAnchor,
-                        paddingTop: 10,
-                        paddingLeft: 16,
-                        paddingBottom: 0,
-                        paddingRight: 16,
-                        width: 0, height: 0)
-        
-        titleLabel.anchor(top: mainView.topAnchor,
-                          left: mainView.leftAnchor,
+        titleLabel.anchor(top: contentView.topAnchor,
+                          left: contentView.leftAnchor,
                           bottom: nil,
-                          right: mainView.rightAnchor,
-                          paddingTop: 10,
+                          right: contentView.rightAnchor,
+                          paddingTop: 0,
                           paddingLeft: 16,
                           paddingBottom: 0,
-                          paddingRight: 0,
-                          width: 0, height: 20)
-        todayLabel.anchor(top: titleLabel.bottomAnchor,
-                          left: mainView.leftAnchor,
-                          bottom: nil,
-                          right: curTempLabel.leftAnchor,
-                          paddingTop: 8,
-                          paddingLeft: 16,
-                          paddingBottom: 0,
-                          paddingRight: 8,
-                          width: 0,
-                          height: 25)
-        curTempLabel.anchor(top: titleLabel.bottomAnchor,
-                            left: nil,
-                            bottom: nil,
-                            right: curImageLabel.leftAnchor,
-                            paddingTop: 8,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 8,
-                            width: 0,
-                            height: 25)
-        curImageLabel.anchor(top: titleLabel.bottomAnchor,
-                             left: nil,
-                             bottom: nil,
-                             right: nil,
-                             paddingTop: 4,
-                             paddingLeft: 0,
-                             paddingBottom: 0,
-                             paddingRight: 0,
-                             width: 30,
-                             height: 30)
-        descriptionLabel.anchor(top: todayLabel.bottomAnchor,
-                                left: mainView.leftAnchor,
-                                bottom: nil,
-                                right: mainView.rightAnchor,
-                                paddingTop: 8,
+                          paddingRight: 16,
+                          width: 0, height: 32)
+        
+        topContainerView.anchor(top: titleLabel.bottomAnchor,
+                                left: contentView.leftAnchor,
+                                bottom: buttonContainerView.topAnchor,
+                                right: contentView.rightAnchor,
+                                paddingTop: 16,
                                 paddingLeft: 16,
-                                paddingBottom: 0,
+                                paddingBottom: 8,
                                 paddingRight: 16,
-                                width: 0,
-                                height: 25)
-        tempFeelsLikeLabel.anchor(top: descriptionLabel.bottomAnchor,
-                                  left: mainView.leftAnchor,
+                                width: 0, height: 160)
+        
+        todayLabel.anchor(top: topContainerView.topAnchor,
+                          left: topContainerView.leftAnchor,
+                          bottom: nil,
+                          right: topContainerView.rightAnchor,
+                          paddingTop: 12,
+                          paddingLeft: 16,
+                          paddingBottom: 0,
+                          paddingRight: 16,
+                          width: 0, height: 24)
+        lightSmallRectangleView.anchor(top: todayLabel.bottomAnchor,
+                                       left: topContainerView.leftAnchor,
+                                       bottom: nil,
+                                       right: nil,
+                                       paddingTop: 12,
+                                       paddingLeft: 16,
+                                       paddingBottom: 0,
+                                       paddingRight: 0,
+                                       width: 64,
+                                       height: 64)
+        curImageLabel.addConstraintsToFillView(view: lightSmallRectangleView)
+        
+        curTempLabel.anchor(top: todayLabel.bottomAnchor,
+                            left: curImageLabel.rightAnchor,
+                            bottom: nil,
+                            right: nil,
+                            paddingTop: 12,
+                            paddingLeft: 12,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 0,
+                            height: 0)
+        
+        tempFeelsLikeLabel.anchor(top: curTempLabel.bottomAnchor,
+                                  left: curImageLabel.rightAnchor,
                                   bottom: nil,
-                                  right: mainView.rightAnchor,
-                                  paddingTop: 8,
-                                  paddingLeft: 16,
+                                  right: topContainerView.rightAnchor,
+                                  paddingTop: 0,
+                                  paddingLeft: 12,
                                   paddingBottom: 0,
                                   paddingRight: 16,
                                   width: 0,
-                                  height: 25)
-        mainStackView.anchor(top: tempFeelsLikeLabel.bottomAnchor,
-                             left: mainView.leftAnchor,
-                             bottom: nil,
-                             right: mainView.rightAnchor,
-                             paddingTop: 0,
-                             paddingLeft: 16,
-                             paddingBottom: 0,
-                             paddingRight: 16,
-                             width: 0,
-                             height: 50)
-        fullWeatherButtons.anchor(top: mainStackView.bottomAnchor,
-                                  left: mainView.leftAnchor,
-                                  bottom: mainView.bottomAnchor,
-                                  right: mainView.rightAnchor,
-                                  paddingTop: 0,
-                                  paddingLeft: 16,
-                                  paddingBottom: 10,
-                                  paddingRight: 16,
-                                  width: 0,
-                                  height: 36)
+                                  height: 0)
+        
+        sunriseLabel.anchor(top: curImageLabel.bottomAnchor,
+                            left: topContainerView.leftAnchor,
+                            bottom: topContainerView.bottomAnchor,
+                            right: nil,
+                            paddingTop: 12,
+                            paddingLeft: 24,
+                            paddingBottom: 16,
+                            paddingRight: 0,
+                            width: 0, height: 18)
+        sunsetLabel.anchor(top: curImageLabel.bottomAnchor,
+                           left: nil,
+                           bottom: topContainerView.bottomAnchor,
+                           right: topContainerView.rightAnchor,
+                           paddingTop: 12,
+                           paddingLeft: 0,
+                           paddingBottom: 16,
+                           paddingRight: 24,
+                           width: 0, height: 18)
+        
+        buttonContainerView.anchor(top: nil,
+                                   left: contentView.leftAnchor,
+                                   bottom: contentView.bottomAnchor,
+                                   right: contentView.rightAnchor,
+                                   paddingTop: 0,
+                                   paddingLeft: 16,
+                                   paddingBottom: 0,
+                                   paddingRight: 16,
+                                   width: 0, height: 40)
+        
+        fullWeatherButtons.addConstraintsToFillView(view: buttonContainerView)
     }
     
     func configureCell(city: String, curTemp: Int, curImage: UIImage, description: String, feelLike: Int, sunrise: Int,  sunset: Int) {
-        titleLabel.text = Constants.Cells.weatherInCity + city
-        curTempLabel.text = "\(curTemp)"
+        todayLabel.text = "\(city) \(TimeFormatter.todayDayLetterFullFormat())"
+        curTempLabel.text = "\(curTemp)ºC"
         curImageLabel.image = curImage
         descriptionLabel.text = "\(description)"
-        tempFeelsLikeLabel.text = "Ощущается как: \(feelLike)"
+        tempFeelsLikeLabel.text = "Ощущается как: \(feelLike)ºC"
         TimeFormatter.utcToLocalTime(dateStr: "\(sunrise)", complection: { sunriseString in
-            sunriseTimeLabel.text = sunriseString
+            sunriseLabel.text = "\(Constants.Cells.sunrise) \(sunriseString)"
         })
         TimeFormatter.utcToLocalTime(dateStr: "\(sunset)", complection: { sunsetString in
-            sunsetTimeLabel.text = sunsetString
+            sunsetLabel.text = "\(Constants.Cells.sunset) \(sunsetString)"
         })
     }
     

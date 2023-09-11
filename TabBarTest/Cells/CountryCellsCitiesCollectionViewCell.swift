@@ -24,32 +24,37 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     }()
     private let title: UILabel = {
         let label = UILabel()
-        label.textColor = .white
-        label.contentMode = .center
+        label.textColor = .setCustomColor(color: .titleText)
+        label.contentMode = .bottom
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        label.numberOfLines = 0
+        label.font = UIFont.init(name: "GillSans-semiBold", size: 16)
         return label
     }()
-    private let gradientView = GradientView()
     private let numberOfSightLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(white: 1.0, alpha: 0.85)
+        label.textColor = .setCustomColor(color: .subTitleText)
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans", size: 13)
+        label.font = UIFont.init(name: "GillSans", size: 14)
         return label
     }()
-    private let moveToChoosenCityButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(Constants.Cells.toMap, for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .clear
-        button.contentHorizontalAlignment = .right
-        button.contentVerticalAlignment = .bottom
-        button.titleLabel?.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
-        return button
+    
+    private let moveToChoosenCityView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .setCustomColor(color: .mainView)
+        view.layer.cornerRadius = 6
+        return view
+    }()
+    private let moveToChoosenCityButton: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .center
+        imageView.tintColor = .setCustomColor(color: .titleText)
+        imageView.backgroundColor = .clear
+        imageView.image = UIImage(named: "moveToMap")
+        return imageView
     }()
     
     private let latitude = 59.88422
@@ -74,7 +79,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
             numberOfSightLabel.text = "\(Constants.Cells.countSights): \(cellNumberOfSight)"
         }
     }
-
+    
     // MARK: - LifeCycle
     
     override init(frame: CGRect) {
@@ -96,67 +101,57 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 50),
-                                byRoundingCorners: [.bottomLeft, .bottomRight],
-                                cornerRadii: CGSize(width: 8, height: 8))
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = path.cgPath
-        gradientView.colors = [UIColor.clear, UIColor.black]
-        gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradientView.layer.mask = maskLayer
-
-        moveToChoosenCityButton.addTarget(self, action: #selector(moveToMapViewHandle), for: .touchUpInside)
+        let moveTap = UIGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
+        moveToChoosenCityButton.isUserInteractionEnabled = true
+        moveToChoosenCityButton.addGestureRecognizer(moveTap)
         
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 8
+        self.backgroundColor = .clear
+        self.layer.cornerRadius = 12
         self.clipsToBounds = true
         
-        contentView.addSubview(image)
-        contentView.addSubview(gradientView)
-        contentView.addSubview(title)
-        contentView.addSubview(numberOfSightLabel)
-        contentView.addSubview(moveToChoosenCityButton)
+        contentView.addSubviews(image, title, numberOfSightLabel, moveToChoosenCityView)
+        moveToChoosenCityView.addSubviews(moveToChoosenCityButton)
     }
     
     private func setupConstraints() {
-        image.addConstraintsToFillView(view: contentView)
-        gradientView.anchor(top: nil,
-                            left: contentView.leftAnchor,
-                            bottom: contentView.bottomAnchor,
-                            right: contentView.rightAnchor,
-                            paddingTop: 0,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 0,
-                            width: 0, height: 50)
+        image.anchor(top: contentView.topAnchor,
+                     left: contentView.leftAnchor,
+                     bottom: title.topAnchor,
+                     right: contentView.rightAnchor,
+                     paddingTop: 0,
+                     paddingLeft: 0,
+                     paddingBottom: 4,
+                     paddingRight: 0,
+                     width: 0, height: 0)
+        
         title.anchor(top: nil,
                      left: contentView.leftAnchor,
                      bottom: nil,
                      right: moveToChoosenCityButton.leftAnchor,
                      paddingTop: 0,
-                     paddingLeft: 8,
+                     paddingLeft: 0,
                      paddingBottom: 0,
                      paddingRight: 0,
                      width: 0, height: 25)
         numberOfSightLabel.anchor(top: title.bottomAnchor,
                                   left: contentView.leftAnchor,
                                   bottom: contentView.bottomAnchor,
-                                  right: moveToChoosenCityButton.leftAnchor,
+                                  right: nil,
                                   paddingTop: 0,
-                                  paddingLeft: 8,
+                                  paddingLeft: 0,
                                   paddingBottom: 8,
                                   paddingRight: 0,
                                   width: 0, height: 20)
-        moveToChoosenCityButton.anchor(top: nil,
-                                       left: numberOfSightLabel.rightAnchor,
-                                       bottom: contentView.bottomAnchor,
-                                       right: contentView.rightAnchor,
-                                       paddingTop: 0,
-                                       paddingLeft: 8,
-                                       paddingBottom: 4,
-                                       paddingRight: 8,
-                                       width: 0, height: 40)
+        moveToChoosenCityView.anchor(top: image.topAnchor,
+                                     left: nil,
+                                     bottom: nil,
+                                     right: image.rightAnchor,
+                                     paddingTop: 8,
+                                     paddingLeft: 0,
+                                     paddingBottom: 0,
+                                     paddingRight: 8,
+                                     width: 35, height: 35)
+        moveToChoosenCityButton.addConstraintsToFillView(view: moveToChoosenCityView)
     }
     
     func conigureCell(title: String, image: UIImage) {

@@ -18,6 +18,7 @@ protocol ButtonsCollectionViewCellDelegate: AnyObject {
 class ButtonsCollectionViewCell: UITableViewCell {
     
     // MARK: - Private Properties
+    
     let buttonsTopStackView: UIStackView = {
         let stack = UIStackView()
         stack.distribution = .fillEqually

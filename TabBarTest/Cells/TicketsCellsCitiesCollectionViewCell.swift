@@ -25,29 +25,56 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Private properties
     
-    private let image = UIImageView()
-    private let title = UILabel()
-    private let gradientView = GradientView()
-    let mainStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.distribution = .fillProportionally
-        stack.spacing = 10
-        stack.axis = .horizontal
-        return stack
+    private let image: UIImageView = {
+       let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .clear
+        return imageView
     }()
-    private let priceLabel = UILabel()
-    private let separatorLeft = UIView()
-    let ratingStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.distribution = .fill
-        stack.spacing = 0
-        stack.axis = .horizontal
-        return stack
+    private let title: UILabel = {
+        let label = UILabel()
+        label.textColor = .setCustomColor(color: .titleText)
+        label.contentMode = .center
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
+        return label
     }()
-    private let ratingImage = UIImageView()
-    private let ratingLabel = UILabel()
-    private let separatorRight = UIView()
-    private let reviewsLabel = UILabel()
+    private let priceLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = .setCustomColor(color: .subTitleText)
+        label.contentMode = .center
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans", size: 16)
+        return label
+    }()
+    private let ratingImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "star")
+        imageView.contentMode = .center
+        return imageView
+    }()
+    private let ratingLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = .setCustomColor(color: .titleText)
+        label.contentMode = .center
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
+        return label
+    }()
+    private let reviewsLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = .setCustomColor(color: .subTitleText)
+        label.contentMode = .center
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.font = UIFont.init(name: "GillSans", size: 16)
+        return label
+    }()
     
     // MARK: - LifeCycle
     
@@ -70,140 +97,73 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 8
-        image.layer.masksToBounds = true
-        image.backgroundColor = .white
-        
-        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 50),
-                                byRoundingCorners: [.bottomLeft, .bottomRight],
-                                cornerRadii: CGSize(width: 8, height: 8))
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = path.cgPath
-        gradientView.colors = [UIColor.clear, UIColor.black]
-        gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradientView.layer.mask = maskLayer
-        
-        title.textColor = .white
-        title.contentMode = .center
-        title.textAlignment = .left
-        title.backgroundColor = .clear
-        title.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
-        
-        
-        priceLabel.textColor = UIColor(white: 1.0, alpha: 0.85)
-        priceLabel.contentMode = .center
-        priceLabel.textAlignment = .left
-        priceLabel.backgroundColor = .clear
-        priceLabel.font = UIFont.init(name: "GillSans", size: 13)
-        
-        separatorLeft.backgroundColor = UIColor(white: 1.0, alpha: 0.85)
-        
-        ratingImage.image = UIImage(systemName: "star.fill")
-        ratingImage.contentMode = .scaleAspectFit
-        ratingImage.tintColor = .yellow
-        
-        ratingLabel.textColor = UIColor(white: 1.0, alpha: 0.85)
-        ratingLabel.contentMode = .center
-        ratingLabel.textAlignment = .left
-        ratingLabel.backgroundColor = .clear
-        ratingLabel.font = UIFont.init(name: "GillSans", size: 13)
-        
-        separatorRight.backgroundColor = UIColor(white: 1.0, alpha: 0.85)
-        
-        reviewsLabel.textColor = UIColor(white: 1.0, alpha: 0.85)
-        reviewsLabel.contentMode = .center
-        reviewsLabel.textAlignment = .left
-        reviewsLabel.backgroundColor = .clear
-        reviewsLabel.font = UIFont.init(name: "GillSans", size: 13)
-        
-        
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 8
+        self.backgroundColor = .clear
+        self.layer.cornerRadius = 12
         self.clipsToBounds = true
-        
-        
-        contentView.addSubview(image)
-        contentView.addSubview(gradientView)
-        contentView.addSubview(title)
-        contentView.addSubview(mainStackView)
-        
-        mainStackView.addArrangedSubview(priceLabel)
-        mainStackView.addArrangedSubview(separatorLeft)
-        mainStackView.addArrangedSubview(ratingStackView)
-        mainStackView.addArrangedSubview(separatorRight)
-        mainStackView.addArrangedSubview(reviewsLabel)
-        
-        ratingStackView.addArrangedSubview(ratingImage)
-        ratingStackView.addArrangedSubview(ratingLabel)
-        
+        contentView.addSubviews(image, title, ratingImage, ratingLabel, priceLabel, reviewsLabel)
     }
     
     private func setupConstraints() {
-        image.addConstraintsToFillView(view: contentView)
-        gradientView.anchor(top: nil,
-                            left: contentView.leftAnchor,
-                            bottom: contentView.bottomAnchor,
-                            right: contentView.rightAnchor,
-                            paddingTop: 0,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 0,
-                            width: 0, height: 50)
+        image.anchor(top: contentView.topAnchor,
+                      left: contentView.leftAnchor,
+                      bottom: title.topAnchor,
+                      right: contentView.rightAnchor,
+                      paddingTop: 0,
+                      paddingLeft: 0,
+                      paddingBottom: 2,
+                      paddingRight: 0,
+                      width: 0, height: 0)
         title.anchor(top: nil,
                      left: contentView.leftAnchor,
-                     bottom: nil,
-                     right: contentView.rightAnchor,
-                     paddingTop: 0,
-                     paddingLeft: 8,
+                     bottom: priceLabel.topAnchor,
+                     right: nil,
+                     paddingTop: 4,
+                     paddingLeft: 0,
                      paddingBottom: 0,
                      paddingRight: 0,
                      width: 0, height: 25)
         ratingImage.anchor(top: nil,
-                           left: nil,
-                           bottom: nil,
+                           left: title.rightAnchor,
+                           bottom: priceLabel.topAnchor,
                            right: nil,
                            paddingTop: 0,
-                           paddingLeft: 0,
-                           paddingBottom: 0,
+                           paddingLeft: 8,
+                           paddingBottom: 4,
                            paddingRight: 0,
-                           width: 20, height: 20)
-        separatorRight.anchor(top: nil,
-                           left: nil,
-                           bottom: nil,
+                           width: 16, height: 16)
+        ratingLabel.anchor(top: nil,
+                           left: ratingImage.rightAnchor,
+                           bottom: priceLabel.topAnchor,
                            right: nil,
                            paddingTop: 0,
-                           paddingLeft: 0,
-                           paddingBottom: 0,
+                           paddingLeft: 8,
+                           paddingBottom: 2,
                            paddingRight: 0,
-                           width: 2, height: 15)
-        separatorLeft.anchor(top: nil,
-                           left: nil,
-                           bottom: nil,
-                           right: nil,
-                           paddingTop: 0,
-                           paddingLeft: 0,
-                           paddingBottom: 0,
-                           paddingRight: 0,
-                           width: 2, height: 15)
-        mainStackView.anchor(top: title.bottomAnchor,
-                                  left: contentView.leftAnchor,
-                                  bottom: contentView.bottomAnchor,
-                                  right: contentView.rightAnchor,
-                                  paddingTop: 0,
-                                  paddingLeft: 8,
-                                  paddingBottom: 8,
-                                  paddingRight: 8,
-                                  width: 0, height: 15)
-       
-
+                           width: 0, height: 0)
+        priceLabel.anchor(top: nil,
+                          left: contentView.leftAnchor,
+                          bottom: contentView.bottomAnchor,
+                          right: nil,
+                          paddingTop: 0,
+                          paddingLeft: 0,
+                          paddingBottom: 8,
+                          paddingRight: 0,
+                          width: 0, height: 25)
+        reviewsLabel.anchor(top: nil,
+                          left: priceLabel.rightAnchor,
+                          bottom: contentView.bottomAnchor,
+                          right: nil,
+                          paddingTop: 0,
+                          paddingLeft: 2,
+                          paddingBottom: 8,
+                          paddingRight: 0,
+                          width: 0, height: 25)
     }
     
     func configureCell(title: String, image: UIImage, price: Int, rating: Double, reviews: Int) {
         cellImage = image
         cellTitle = title
-        priceLabel.text = "\(price) Р."
+        priceLabel.text = "\(price) ₽ / "
         ratingLabel.text = "\(rating)"
         reviewsLabel.text = "\(Constants.Cells.reviews): \(reviews)"
     }

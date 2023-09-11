@@ -55,6 +55,8 @@ extension UIColor {
         case tabBarIconBackground = "tabBarIconBackground"
         /// фон кнопок на скроле на всплывающих вьюхах
         case filterbuttonFloatingScreen = "filterbuttonFloatingScreen"
+        case gradientWhite = "gradientWhite"
+        case gradientBlack = "gradientBlack"
     }
     
    static func setCustomColor(color: CustomColor) -> UIColor {
