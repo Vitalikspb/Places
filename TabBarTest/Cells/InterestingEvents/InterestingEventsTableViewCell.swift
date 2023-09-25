@@ -13,14 +13,14 @@ class InterestingEventsTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
     private let mainImageView: UIImageView = {
@@ -36,7 +36,7 @@ class InterestingEventsTableViewCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         label.text = ""
         return label
     }()

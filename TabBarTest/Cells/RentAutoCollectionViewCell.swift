@@ -14,7 +14,7 @@ class RentAutoCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
     private let mainImageView: UIImageView = {

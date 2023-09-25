@@ -33,7 +33,7 @@ class SelectedInterestingEventController: UIViewController {
        let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 15)
+        label.font = .setCustomFont(name: .semibold, andSize: 15)
         label.text = "00-00-0000"
         return label
     }()
@@ -41,7 +41,7 @@ class SelectedInterestingEventController: UIViewController {
        let textView = UITextView()
         textView.backgroundColor = .white
         textView.isUserInteractionEnabled = false
-        textView.font = UIFont.init(name: "GillSans-Regular", size: 15)
+        textView.font = .setCustomFont(name: .regular, andSize: 15)
         return textView
     }()
 

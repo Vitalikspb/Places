@@ -89,12 +89,10 @@ class FAQController: UIViewController {
             let standartInsetScreen: CGFloat = 60
             let bigCellHeight = $0.answer.height(
                 widthScreen: UIScreen.main.bounds.width - standartInsetScreen,
-                font: UIFont(name: "GillSans-SemiBold",
-                             size: 16)!)
+                font: .setCustomFont(name: .bold, andSize: 16))
             let smallCellHeight = $0.question.height(
                 widthScreen: UIScreen.main.bounds.width - standartInsetScreen,
-                font: UIFont(name: "GillSans-SemiBold",
-                             size: 16)!)
+                font: .setCustomFont(name: .bold, andSize: 16))
             heightOfCells.append(
                 HeightOfCells(bigCell: bigCellHeight + standartBigHeightCell,
                               smallCell: smallCellHeight + standartSmallHeightCell)

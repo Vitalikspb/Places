@@ -22,7 +22,7 @@ class FullWeatherTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-bold", size: 14)
+        label.font = .setCustomFont(name: .bold, andSize: 14)
         label.text = ""
         return label
     }()
@@ -37,7 +37,7 @@ class FullWeatherTableViewCell: UITableViewCell {
         label.textColor = .setCustomColor(color: .subTitleText)
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         label.text = ""
         return label
     }()
@@ -45,7 +45,7 @@ class FullWeatherTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .weatherBlueText)
         label.textAlignment = .right
-        label.font = UIFont.init(name: "GillSans-semiBold", size: 14)
+        label.font = .setCustomFont(name: .semibold, andSize: 14)
         label.text = ""
         return label
     }()
@@ -53,7 +53,7 @@ class FullWeatherTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .weatherBlueText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-semiBold", size: 14)
+        label.font = .setCustomFont(name: .semibold, andSize: 14)
         label.text = ""
         return label
     }()

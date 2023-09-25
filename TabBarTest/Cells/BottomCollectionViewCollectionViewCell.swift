@@ -25,7 +25,7 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
         label.contentMode = .topLeft
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 18)
+        label.font = .setCustomFont(name: .bold, andSize: 18)
         return label
     }()
     private let sightTypeLabel: UILabel = {
@@ -34,7 +34,7 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
         label.contentMode = .bottomLeft
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 14)
+        label.font = .setCustomFont(name: .semibold, andSize: 14)
         return label
     }()
     

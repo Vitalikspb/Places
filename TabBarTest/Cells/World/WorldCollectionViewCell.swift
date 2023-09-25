@@ -29,7 +29,7 @@ class WorldCollectionViewCell: UICollectionViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
     private let citySightCountLabel: UILabel = {
@@ -38,7 +38,7 @@ class WorldCollectionViewCell: UICollectionViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         return label
     }()
     let showSelectedCityButton: UIButton = {
@@ -46,7 +46,7 @@ class WorldCollectionViewCell: UICollectionViewCell {
         button.backgroundColor = .clear
         button.contentMode = .right
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.init(name: "GillSans-Semibold", size: 15)
+        button.titleLabel?.font = .setCustomFont(name: .semibold, andSize: 15)
         button.setTitle("Посмотреть", for: .normal)
         return button
     }()

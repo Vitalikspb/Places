@@ -24,7 +24,7 @@ class HelperMapsTableViewCell: UITableViewCell {
         title.contentMode = .center
         title.textAlignment = .left
         title.backgroundColor = .clear
-        title.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
+        title.font = .setCustomFont(name: .semibold, andSize: 16)
         return title
     }()
     private let arrowImageView: UIImageView = {

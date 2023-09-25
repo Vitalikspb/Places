@@ -365,6 +365,7 @@ extension CurrentCityController: CountryCitiesTableViewCellDelegate {
     // Открываем другой город из текущего
     func showSelectedCityDescription(_ name: String) {
         currentCity = name
+        print("open currentCity:\(currentCity)")
         router?.dataStore?.currentCity = currentCity
         router?.routeToCityVC()
     }

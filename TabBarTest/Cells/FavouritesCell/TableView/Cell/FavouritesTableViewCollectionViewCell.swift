@@ -34,7 +34,7 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        label.font = .setCustomFont(name: .semibold, andSize: 15)
         return label
     }()
     private let sightTypeLabel: UILabel = {
@@ -43,7 +43,7 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 15)
+        label.font = .setCustomFont(name: .semibold, andSize: 15)
         return label
     }()
     private let gradientView = GradientView()

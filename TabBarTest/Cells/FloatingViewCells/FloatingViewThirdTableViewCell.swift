@@ -40,14 +40,14 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
         label.text = "Адрес"
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
     let addressDescriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .subTitleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans", size: 16)
+        label.font = .setCustomFont(name: .regular, andSize: 16)
         label.text = "Невский проспект д.48"
         return label
     }()
@@ -72,7 +72,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         label.text = "Контакты"
         return label
     }()
@@ -80,7 +80,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .subTitleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans", size: 16)
+        label.font = .setCustomFont(name: .regular, andSize: 16)
         label.text = "Телефон:"
         return label
     }()
@@ -88,7 +88,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .weatherBlueBackground)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans", size: 16)
+        label.font = .setCustomFont(name: .regular, andSize: 16)
         label.text = "+7(123)-456-78-90"
         return label
     }()

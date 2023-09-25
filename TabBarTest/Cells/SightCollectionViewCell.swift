@@ -27,7 +27,7 @@ class SightCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .left
         label.backgroundColor = .clear
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans-semiBold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
     
@@ -87,9 +87,11 @@ class SightCollectionViewCell: UICollectionViewCell {
     
     private func setupUI() {
         self.backgroundColor = .clear
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapFavouriteHandle))
         imageFavourite.isUserInteractionEnabled = true
         imageFavourite.addGestureRecognizer(tap)
+        
         favouriteView.backgroundColor = putToFavouritesList
         ? .setCustomColor(color: .tabBarIconSelected)
         : .setCustomColor(color: .mainView)

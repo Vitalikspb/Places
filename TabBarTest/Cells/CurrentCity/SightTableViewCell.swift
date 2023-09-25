@@ -18,7 +18,7 @@ class SightTableViewCell: UITableViewCell {
        let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-bold", size: 20)
+        label.font = .setCustomFont(name: .bold, andSize: 20)
         label.text = Constants.Cells.mustSeeSights
         return label
     }()
@@ -26,7 +26,7 @@ class SightTableViewCell: UITableViewCell {
        let label = UILabel()
         label.textColor = .setCustomColor(color: .subTitleText)
         label.textAlignment = .right
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         label.text = Constants.Cells.lookAll
         return label
     }()

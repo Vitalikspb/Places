@@ -18,7 +18,7 @@ class CountryCitiesTableViewCell: UITableViewCell {
        let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-bold", size: 20)
+        label.font = .setCustomFont(name: .bold, andSize: 28)
         label.text = "Другие города"
         return label
     }()
@@ -123,7 +123,10 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier, for: indexPath) as? CountryCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
         
         cell.conigureCell(title: model[indexPath.row].name,
-                          image: model[indexPath.row].image)
+                          image: model[indexPath.row].image,
+                          numberOfSight: 15,
+                          latitude: 55.7529517,
+                          longitude: 37.6232801)
         cell.delegate = self
         return cell
     }
@@ -131,12 +134,17 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.showSelectedCityDescription(model[indexPath.row].name)
-    }
 }
 
+// MARK: - CountryCellsCitiesCollectionViewCellDelegate
+
 extension CountryCitiesTableViewCell: CountryCellsCitiesCollectionViewCellDelegate {
+    // Открытие другого города
+    func handleMap(name: String) {
+        delegate?.showSelectedCityDescription(name)
+    }
+    
+    // Открытие другого города на карте
     func handleSelectedCity(_ lat: Double, _ lon: Double) {
         delegate?.showSelectedCityOnMap(lat, lon)
     }

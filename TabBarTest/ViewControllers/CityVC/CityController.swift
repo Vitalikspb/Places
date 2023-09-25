@@ -12,14 +12,35 @@ protocol CityDisplayLogic: AnyObject {
 }
 
 class CityController: UIViewController {
-
+    
     
     // MARK: - UI Properties
-    
+    private let actionsButtonsCityView = ActionsButtonsCityView(frame: CGRect(x: 0,
+                                                                              y: 0,
+                                                                              width: UIScreen.main.bounds.width,
+                                                                              height: 60))
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     var currentCity: String = ""
     
     // MARK: - Private Properties
+    
+    
+    // MARK: - TODO Удалить когда сделаю загрузку с сервера
+    private var sightsArray: [SightsModel] = [
+        SightsModel(name: "Эрмитаж", image: UIImage(named: "museumHermitage")!, favourite: true),
+        SightsModel(name: "Русский музей", image: UIImage(named: "museumRusskiy")!, favourite: false),
+        SightsModel(name: "Купчино", image: UIImage(named: "kupchino")!, favourite: false),
+        SightsModel(name: "Петропавловская крепость", image: UIImage(named: "petropavlovskaiaKrepost")!, favourite: true),
+        SightsModel(name: "Казанский собор", image: UIImage(named: "kazanskiySobor")!, favourite: true),
+        SightsModel(name: "Исаакиевский собор", image: UIImage(named: "isaakievskiySobor")!, favourite: true)]
+    private var guidesArray: [GuideSightsModel] = [
+        GuideSightsModel(image: UIImage(named: "hermitage2")!, name: "Эрмитаж", price: 1060, rating: 4.5, reviews: 79),
+        GuideSightsModel(image: UIImage(named: "exhbgrandmaket")!, name: "Гранд Макет Россия", price: 6500, rating: 4.5, reviews: 1231),
+        GuideSightsModel(image: UIImage(named: "exhbroof")!, name: "Экскурсия по крышам", price: 5305, rating: 0, reviews: 53),
+        GuideSightsModel(image: UIImage(named: "exhblebed")!, name: "Лебединое озеро", price: 2341, rating: 4.2, reviews: 46),
+        GuideSightsModel(image: UIImage(named: "exhbrusmuseum")!, name: "Государственный Русский музей", price: 928, rating: 4.1, reviews: 11)
+    ]
+    
     
     private var titleName: String = ""
     var interactor: CityBussinessLogic?
@@ -47,7 +68,7 @@ class CityController: UIViewController {
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
     private var descriptionHeightCell: CGFloat = 0
-
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -67,7 +88,7 @@ class CityController: UIViewController {
         super.init(coder: aDecoder)
         setupClean()
     }
-
+    
     // MARK: - Helper Functions
     
     // Настройка архитектуры Clean Swift
@@ -89,6 +110,7 @@ class CityController: UIViewController {
     }
     
     private func setupUI() {
+        actionsButtonsCityView.actionButtonDelegate = self
         // скролл картинок
         tableView.register(CountryPhotosTableViewCell.self,
                            forCellReuseIdentifier: CountryPhotosTableViewCell.identifier)
@@ -110,11 +132,11 @@ class CityController: UIViewController {
         // Погода
         tableView.register(WeatherCollectionViewCell.self,
                            forCellReuseIdentifier: WeatherCollectionViewCell.identifier)
-
+        
         // +1
         //        tableView.register(MuseumsTableViewCell.self,
         //                                forCellReuseIdentifier: MuseumsTableViewCell.identifier)
-
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
@@ -123,11 +145,20 @@ class CityController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         
-        view.addSubview(tableView)
+        view.addSubviews(actionsButtonsCityView, tableView)
         
-        tableView.anchor(top: view.topAnchor,
+        actionsButtonsCityView.anchor(top: view.layoutMarginsGuide.topAnchor,
+                                      left: view.leftAnchor,
+                                      bottom: nil,
+                                      right: view.rightAnchor,
+                                      paddingTop: 0,
+                                      paddingLeft: 0,
+                                      paddingBottom: 0,
+                                      paddingRight: 0,
+                                      width: 0, height: 60)
+        tableView.anchor(top: actionsButtonsCityView.bottomAnchor,
                          left: view.leftAnchor,
-                         bottom: view.bottomAnchor,
+                         bottom: view.layoutMarginsGuide.bottomAnchor,
                          right: view.rightAnchor,
                          paddingTop: 0,
                          paddingLeft: 0,
@@ -141,7 +172,7 @@ class CityController: UIViewController {
 
 extension CityController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 9
     }
     // MARK: - заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -149,49 +180,53 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             
             // картинки города
         case 0:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier, for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier,
+                                                           for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
             return cell
             
             // описание
         case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier, for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier,
+                                                           for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.configureCell(titleName: "Описание города",
-                               description: "lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa lasdfalsdfh; asflsadh flasdflhdl hlshd flsdhf ls flsldf jlsfs a;lf sldf ls;dlfjh lsajfdlsdflj ljsdfl sdflkjs;d lj sld l;skadjh ljhl;sdjhflsa sdlakhjf l;jsdl jlsdj lfjsd;l ljs;f jl;saj ;lskjdf lsjad kj ksadl jl;sj ;sdj fjsdl;jsjdfjl;sa ;s;ldkfl ;js;fkjsa")
+            cell.configureCell(titleName: "Описание города", description: "Санкт-Петербург – русский портовый город на побережье Балтийского моря, который в течение двух веков служил столицей Российской империи. Он был основан в 1703 году Петром I, которому воздвигнут знаменитый памятник Медный всадник. Город по праву считается культурным центром страны. Санкт-Петербург – русский портовый город на побережье Балтийского моря, который в течение двух веков служил столицей Российской империи. Он был основан в 1703 году Петром I, которому воздвигнут знаменитый памятник Медный всадник. Город по праву считается культурным центром страны.")
             selectedDescriptionCell
-                ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
-                : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
+            ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
+            : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
             return cell
             
             // Интересные места по близости
         case 2:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
+                                                           for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.titleCell = Constants.Cells.sightNearMe
-            cell.sizeCell = CGSize(width: 230, height: 170)
-            return cell
-            
-            // кнопки
-        case 3:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonsCollectionViewCell.identifier, for: indexPath) as? ButtonsCollectionViewCell else { return UITableViewCell() }
-            cell.delegate = self
+            cell.sizeCell = CGSize(width: 230, height: 190)
+            cell.model = sightsArray
             return cell
             
             // Обязательно к просмотру
-        case 4:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+        case 3:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
+                                                           for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
+            cell.model = sightsArray
             cell.titleCell = Constants.Cells.mustSeeSights
-            cell.sizeCell = CGSize(width: 200, height: 140)
+            cell.sizeCell = CGSize(width: 230, height: 190)
             return cell
             
             // Билеты на экскурсии
-        case 5:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TicketCollectionViewCell.identifier, for: indexPath) as? TicketCollectionViewCell else { return UITableViewCell() }
+        case 4:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TicketCollectionViewCell.identifier,
+                                                           for: indexPath) as? TicketCollectionViewCell else { return UITableViewCell() }
+            cell.model = guidesArray
+            cell.delegate = self
             return cell
             
             // Погода
-        case 6:
+        case 5:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
+            
+            // MARK: - TODO Координаты берутся из модели
             cell.configureCell(city: titleName,
                                curTemp: Int(viewModel.weather.currentWeather.todayTemp),
                                curImage: viewModel.weather.currentWeather.imageWeather,
@@ -199,32 +234,36 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
                                feelLike: Int(viewModel.weather.currentWeather.feelsLike),
                                sunrise: viewModel.weather.currentWeather.sunrise,
                                sunset: viewModel.weather.currentWeather.sunset)
+            cell.delegate = self
             return cell
             
             // Выбор редакции
-        case 7:
+        case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+            cell.model = sightsArray
             cell.titleCell = Constants.Cells.chooseOfRedaction
-            cell.sizeCell = CGSize(width: 230, height: 170)
+            cell.sizeCell = CGSize(width: 230, height: 180)
             return cell
             
             // Музеи
-        case 8:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+        case 7:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
+                                                           for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
+            cell.model = sightsArray
             cell.titleCell = Constants.Cells.museums
-            cell.sizeCell = CGSize(width: 200, height: 140)
+            cell.sizeCell = CGSize(width: 230, height: 180)
             return cell
             
             // Парки
-        case 9:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
+        case 8:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
+                                                           for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
+            cell.model = sightsArray
             cell.titleCell = Constants.Cells.parks
-            cell.sizeCell = CGSize(width: 200, height: 140)
+            cell.sizeCell = CGSize(width: 230, height: 180)
             return cell
-            
-            // другие города
             
         default: return UITableViewCell()
         }
@@ -238,34 +277,31 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
         case 0: return UIScreen.main.bounds.width - (UIScreen.main.bounds.width / 3) + 32
             
             // ячейка с описанием города
-        case 1: return selectedDescriptionCell ? descriptionHeightCell : 180
+        case 1: return selectedDescriptionCell ? descriptionHeightCell : 200
             
-            // ячейка с другими городами текущей страны где есть метки
-            // Выбор редакции
-        case 2,7: return 215
+            // места в окрестностях
+        case 2: return 240
             
-            // ячейка с кнопками
-        case 3: return 150
+            // обязательно к просмотру
+        case 3: return 240
             
             // Билеты на экскурсии
-        case 5: return 230
+        case 4: return 315
             
             // Погода
-        case 6: return 200
+        case 5: return 256
             
-            // Обязательно к просмотру
-            // Интересные места по близости
+            // Выбор редакции
+        case 6: return 240
+            
             // Музеи
-        case 4,8,9: return 180
+        case 7: return 240
+            
+            // Парки
+        case 8: return 240
             
         default: return 50
         }
-    }
-    // MARK: - белое заполнение пустой части таблицы
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
     }
 }
 
@@ -320,29 +356,38 @@ extension CityController: SightTableViewCellDelegate {
     }
 }
 
-// MARK: - ButtonsCollectionViewCellDelegate
+// MARK: - TicketCollectionViewCellDelegate
 
-extension CityController: ButtonsCollectionViewCellDelegate {
-    // открываем экран списка любимых/избранных достопримечательностей
-    func favouritesHandler() {
+extension CityController: TicketCollectionViewCellDelegate {
+    
+    // открыть страницу всех билетов
+    func lookAllTickets() {
+        print("открыть страницу всех билетов")
+    }
+}
+
+// MARK: - WeatherCollectionViewCellDelegate
+
+extension CityController: WeatherCollectionViewCellDelegate {
+    func showFullWeather() {
+        router?.routeToFullWeatherVC()
+    }
+}
+
+// MARK: - ActionsButtonsCityViewDelegate
+
+extension CityController: ActionsButtonsCityViewDelegate {
+    func favouriteButtonTapped() {
+        router?.routeToFavouritesVC()
     }
     
-    func eventsHandler() {
-        
+    func interestingButtonTapped() {
+        router?.routeToInterestingEventsVC()
     }
     
-    func ticketHandler() {
-        
+    func faqButtonTapped() {
+        router?.routeToFAQVC()
     }
     
-    func faqHandler() {
-        
-    }
     
-    func rentAutoHandler() {
-        
-    }
-    
-    func chatHandler() {
-    }
 }

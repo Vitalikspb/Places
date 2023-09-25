@@ -18,7 +18,7 @@ class SectionHeader: UICollectionReusableView {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 20)
+        label.font = .setCustomFont(name: .semibold, andSize: 20)
         return label
     }()
     let subTitleLabel: UILabel = {
@@ -27,14 +27,14 @@ class SectionHeader: UICollectionReusableView {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans", size: 16)
+        label.font = .setCustomFont(name: .regular, andSize: 16)
         return label
     }()
     let showSelectedCityButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.init(name: "GillSans-Semibold", size: 15)
+        button.titleLabel?.font = .setCustomFont(name: .semibold, andSize: 15)
         button.setTitle("Посмотреть", for: .normal)
         return button
     }()

@@ -14,7 +14,7 @@ class SectionHeaderRentAuto: UICollectionReusableView {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 20)
+        label.font = .setCustomFont(name: .semibold, andSize: 20)
         return label
     }()
     let separatorView: UIView = {

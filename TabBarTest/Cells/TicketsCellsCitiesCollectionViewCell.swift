@@ -39,7 +39,7 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
     private let priceLabel: UILabel = {
@@ -48,7 +48,7 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans", size: 16)
+        label.font = .setCustomFont(name: .regular, andSize: 16)
         return label
     }()
     private let ratingImage: UIImageView = {
@@ -63,7 +63,7 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
     private let reviewsLabel: UILabel = {
@@ -72,7 +72,7 @@ class TicketsCellsCitiesCollectionViewCell: UICollectionViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans", size: 16)
+        label.font = .setCustomFont(name: .regular, andSize: 16)
         return label
     }()
     

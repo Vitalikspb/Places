@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FF45ACD2AC1CE6100FBA23E /* Extension+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */; };
 		5323BA12274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA11274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift */; };
 		5323BA14274D3BA500F6BA5E /* SightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA13274D3BA500F6BA5E /* SightTableViewCell.swift */; };
 		5323BA16274D3DBE00F6BA5E /* SightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA15274D3DBE00F6BA5E /* SightCollectionViewCell.swift */; };
@@ -189,6 +190,7 @@
 
 /* Begin PBXFileReference section */
 		1DDC2D9B33D1D47C37891B97 /* Pods_TabBarTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabBarTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIFont.swift"; sourceTree = "<group>"; };
 		2FD7A97CE38913470C19A8E5 /* Pods-TabBarTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.debug.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.debug.xcconfig"; sourceTree = "<group>"; };
 		3505CAED9B5A4C1483709BEE /* Pods-TabBarTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.release.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.release.xcconfig"; sourceTree = "<group>"; };
 		5323BA11274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -647,6 +649,7 @@
 				C254487F27070829000B9439 /* Extention+UIView.swift */,
 				C259AA1027204DA600B03921 /* Extension+UserDefault.swift */,
 				C259AA1D2721710800B03921 /* Extension+UIImageView.swift */,
+				1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */,
 				53403D702763E0FC004087F7 /* Extension+String.swift */,
 				FE451D232AA85CAD00831485 /* Extension+UIColor.swift */,
 			);
@@ -1153,6 +1156,7 @@
 				53F3E2F8273FD7FB004B278E /* CityPresenter.swift in Sources */,
 				C2350E07273AC39F000BA2A7 /* FloatingViewThirdTableViewCell.swift in Sources */,
 				C259AA1527214A5B00B03921 /* CurrentCityPresenter.swift in Sources */,
+				1FF45ACD2AC1CE6100FBA23E /* Extension+UIFont.swift in Sources */,
 				532A2308276E08AB001CFAEC /* HelperMapsPresenter.swift in Sources */,
 				53F3E3042740469E004B278E /* MapRouter.swift in Sources */,
 				532A230B276E08AB001CFAEC /* HelperMapsWorker.swift in Sources */,

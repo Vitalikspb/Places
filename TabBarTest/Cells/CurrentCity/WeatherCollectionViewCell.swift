@@ -35,7 +35,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-bold", size: 20)
+        label.font = .setCustomFont(name: .bold, andSize: 20)
         label.text = Constants.Cells.weather
         return label
     }()
@@ -44,7 +44,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         label.text = Constants.Cells.today
         return label
     }()
@@ -55,7 +55,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textColor = .white
         label.textAlignment = .left
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-semiBold", size: 32)
+        label.font = .setCustomFont(name: .semibold, andSize: 32)
         label.text = ""
         return label
     }()
@@ -78,7 +78,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         label.text = ""
         return label
     }()
@@ -87,7 +87,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         label.text = Constants.Cells.weatherFellsLike
         return label
     }()
@@ -98,7 +98,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textColor = .white
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         label.text = Constants.Cells.sunrise
         return label
     }()
@@ -108,7 +108,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         label.textColor = .white
         label.textAlignment = .right
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         label.text = Constants.Cells.sunset
         return label
     }()
@@ -117,7 +117,7 @@ class WeatherCollectionViewCell: UITableViewCell {
        let button = UIButton()
         button.backgroundColor = .clear
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.init(name: "GillSans-semibold", size: 16)
+        button.titleLabel?.font = .setCustomFont(name: .semibold, andSize: 16)
         button.setTitle("Погода на 7 дней", for: .normal)
         return button
     }()

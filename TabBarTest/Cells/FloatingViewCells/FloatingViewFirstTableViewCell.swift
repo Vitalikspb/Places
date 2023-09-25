@@ -23,7 +23,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         label.textColor = .setCustomColor(color: .titleText)
         label.text = "Эрмитаж"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-Bold", size: 18)
+        label.font = .setCustomFont(name: .bold, andSize: 18)
         return label
     }()
     let typeSightImageView: UIImageView = {
@@ -40,7 +40,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         label.textColor = .setCustomColor(color: .subTitleText)
         label.text = "Музей"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-semiBold", size: 14)
+        label.font = .setCustomFont(name: .semibold, andSize: 14)
         return label
     }()
     let ratingLabel: UILabel = {
@@ -48,7 +48,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         label.textColor = .setCustomColor(color: .subTitleText)
         label.text = "4.5"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-semiBold", size: 14)
+        label.font = .setCustomFont(name: .semibold, andSize: 14)
         return label
     }()
     let starView = StackViewStar()
@@ -57,7 +57,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         label.textColor = .setCustomColor(color: .subTitleText)
         label.text = "(14 731)"
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         return label
     }()
     

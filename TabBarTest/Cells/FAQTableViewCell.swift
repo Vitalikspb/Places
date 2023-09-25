@@ -18,7 +18,7 @@ class FAQTableViewCell: UITableViewCell {
         title.textAlignment = .left
         title.backgroundColor = .clear
         title.numberOfLines = 0
-        title.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
+        title.font = .setCustomFont(name: .semibold, andSize: 16)
         return title
     }()
     private let answerLabel: UILabel = {
@@ -28,7 +28,7 @@ class FAQTableViewCell: UITableViewCell {
         title.textAlignment = .left
         title.backgroundColor = .clear
         title.numberOfLines = 0
-        title.font = UIFont.init(name: "GillSans-SemiBold", size: 16)
+        title.font = .setCustomFont(name: .semibold, andSize: 16)
         return title
     }()
     private let arrowImageView: UIImageView = {

@@ -104,7 +104,7 @@ class ButtonsCollectionViewCell: UITableViewCell {
          FAQButton, rentAutoButton, chatButton].forEach {
             $0.backgroundColor = .clear
             $0.setTitleColor(.systemBlue, for: .normal)
-            $0.titleLabel?.font = UIFont.init(name: "GillSans-semibold", size: 16)
+            $0.titleLabel?.font = .setCustomFont(name: .semibold, andSize: 16)
             $0.titleLabel?.numberOfLines = 0
             $0.titleLabel?.textAlignment = .center
             $0.layer.cornerRadius = 10

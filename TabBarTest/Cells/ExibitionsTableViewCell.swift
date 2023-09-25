@@ -24,7 +24,7 @@ class ExibitionsTableViewCell: UITableViewCell {
         title.contentMode = .center
         title.textAlignment = .left
         title.backgroundColor = .clear
-        title.font = UIFont.init(name: "GillSans-SemiBold", size: 20)
+        title.font = .setCustomFont(name: .semibold, andSize: 20)
         return title
     }()
     private let gradientView = GradientView()
@@ -41,7 +41,7 @@ class ExibitionsTableViewCell: UITableViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans", size: 13)
+        label.font = .setCustomFont(name: .regular, andSize: 13)
         return label
     }()
     private let separatorLeft: UIView = {
@@ -69,7 +69,7 @@ class ExibitionsTableViewCell: UITableViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans", size: 13)
+        label.font = .setCustomFont(name: .regular, andSize: 13)
         return label
     }()
     private let separatorRight: UIView = {
@@ -83,7 +83,7 @@ class ExibitionsTableViewCell: UITableViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans", size: 13)
+        label.font = .setCustomFont(name: .regular, andSize: 13)
         return label
     }()
     private let durationLabel: UILabel = {
@@ -92,7 +92,7 @@ class ExibitionsTableViewCell: UITableViewCell {
         label.contentMode = .center
         label.textAlignment = .right
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans", size: 13)
+        label.font = .setCustomFont(name: .regular, andSize: 13)
         return label
     }()
     

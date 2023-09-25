@@ -8,13 +8,14 @@ import UIKit
 
 protocol CountryCellsCitiesCollectionViewCellDelegate: AnyObject {
     func handleSelectedCity(_ lat : Double, _ lon: Double)
+    func handleMap(name: String)
 }
 
 class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI properties
     
-    private let image: UIImageView = {
+    private let mainImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 8
@@ -29,7 +30,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .left
         label.backgroundColor = .clear
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans-semiBold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
     private let numberOfSightLabel: UILabel = {
@@ -38,7 +39,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         label.contentMode = .center
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         return label
     }()
     
@@ -57,8 +58,9 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let latitude = 59.88422
-    private let longitude = 30.2545
+    private var latitude = 59.88422
+    private var longitude = 30.2545
+    
     
     // MARK: - Public properties
     
@@ -66,7 +68,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     static let identifier = "CountryCellsCitiesCollectionViewCell"
     var cellImage: UIImage = UIImage() {
         didSet {
-            image.image = cellImage
+            mainImageView.image = cellImage
         }
     }
     var cellTitle: String = "" {
@@ -101,20 +103,24 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        let moveTap = UIGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
+        let moveTap = UITapGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
         moveToChoosenCityButton.isUserInteractionEnabled = true
         moveToChoosenCityButton.addGestureRecognizer(moveTap)
+        
+        let mapTap = UITapGestureRecognizer(target: self, action: #selector(moveToCityViewHandle))
+        mainImageView.isUserInteractionEnabled = true
+        mainImageView.addGestureRecognizer(mapTap)
         
         self.backgroundColor = .clear
         self.layer.cornerRadius = 12
         self.clipsToBounds = true
         
-        contentView.addSubviews(image, title, numberOfSightLabel, moveToChoosenCityView)
+        contentView.addSubviews(mainImageView, title, numberOfSightLabel, moveToChoosenCityView)
         moveToChoosenCityView.addSubviews(moveToChoosenCityButton)
     }
     
     private func setupConstraints() {
-        image.anchor(top: contentView.topAnchor,
+        mainImageView.anchor(top: contentView.topAnchor,
                      left: contentView.leftAnchor,
                      bottom: title.topAnchor,
                      right: contentView.rightAnchor,
@@ -142,10 +148,10 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
                                   paddingBottom: 8,
                                   paddingRight: 0,
                                   width: 0, height: 20)
-        moveToChoosenCityView.anchor(top: image.topAnchor,
+        moveToChoosenCityView.anchor(top: mainImageView.topAnchor,
                                      left: nil,
                                      bottom: nil,
-                                     right: image.rightAnchor,
+                                     right: mainImageView.rightAnchor,
                                      paddingTop: 8,
                                      paddingLeft: 0,
                                      paddingBottom: 0,
@@ -154,18 +160,27 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         moveToChoosenCityButton.addConstraintsToFillView(view: moveToChoosenCityView)
     }
     
-    func conigureCell(title: String, image: UIImage) {
+    func conigureCell(title: String, image: UIImage, numberOfSight: Int, latitude: Double, longitude: Double) {
         cellImage = image
         cellTitle = title
-        cellNumberOfSight = 15
+        cellNumberOfSight = numberOfSight
+        self.latitude = latitude
+        self.longitude = longitude
     }
     
     // MARK: - Selectors
+    @objc private func moveToCityViewHandle() {
+        delegate?.handleMap(name: cellTitle)
+    }
     
     @objc private func moveToMapViewHandle() {
         switch cellTitle {
-        case "Москва": delegate?.handleSelectedCity(55.7529517, 37.6232801)
-        case "Санкт-Петербург": delegate?.handleSelectedCity(59.9396340, 30.3104843)
+        case "Москва":
+            delegate?.handleSelectedCity(latitude, longitude)
+            
+        case "Санкт-Петербург":
+            delegate?.handleSelectedCity(59.9396340, 30.3104843)
+            
         default:
             break
         }

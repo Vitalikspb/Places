@@ -21,7 +21,7 @@ class HeaderFullWeather: UIView {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .mainWhite)
         label.textAlignment = .center
-        label.font = UIFont.init(name: "GillSans-bold", size: 16)
+        label.font = .setCustomFont(name: .bold, andSize: 16)
         label.text = ""
         return label
     }()
@@ -45,7 +45,7 @@ class HeaderFullWeather: UIView {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .mainWhite)
         label.textAlignment = .center
-        label.font = UIFont.init(name: "GillSans-bold", size: 24)
+        label.font = .setCustomFont(name: .bold, andSize: 24)
         label.text = ""
         return label
     }()
@@ -54,7 +54,7 @@ class HeaderFullWeather: UIView {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .mainWhite)
         label.textAlignment = .center
-        label.font = UIFont.init(name: "GillSans", size: 14)
+        label.font = .setCustomFont(name: .regular, andSize: 14)
         label.text = ""
         return label
     }()
@@ -63,7 +63,7 @@ class HeaderFullWeather: UIView {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .mainWhite)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 14)
+        label.font = .setCustomFont(name: .semibold, andSize: 14)
         label.text = Constants.Cells.sunrise
         return label
     }()
@@ -72,7 +72,7 @@ class HeaderFullWeather: UIView {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .mainWhite)
         label.textAlignment = .right
-        label.font = UIFont.init(name: "GillSans-SemiBold", size: 14)
+        label.font = .setCustomFont(name: .semibold, andSize: 14)
         label.text = Constants.Cells.sunset
         return label
     }()

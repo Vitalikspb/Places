@@ -18,7 +18,7 @@ class CountryDescriptionTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = UIFont.init(name: "GillSans-bold", size: 22)
+        label.font = .setCustomFont(name: .bold, andSize: 22)
         label.text = Constants.Cells.cityDescription
         label.text = ""
         return label
@@ -28,7 +28,7 @@ class CountryDescriptionTableViewCell: UITableViewCell {
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = UIFont.init(name: "GillSans-semibold", size: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         label.text = ""
         return label
     }()
@@ -38,7 +38,7 @@ class CountryDescriptionTableViewCell: UITableViewCell {
         let button = UIButton()
         button.backgroundColor = .clear
         let yourAttributes: [NSAttributedString.Key: Any] = [
-              .font: UIFont(name: "GillSans", size: 16) ?? UIFont.systemFont(ofSize: 16),
+            .font: UIFont.setCustomFont(name: .regular, andSize: 16),
               .foregroundColor: UIColor(named: "titleText") ?? UIColor.black,
               .underlineStyle: NSUnderlineStyle.single.rawValue
           ]
@@ -142,6 +142,6 @@ class CountryDescriptionTableViewCell: UITableViewCell {
         mainTextLabel.text = description
         let screenInsetsLeftRight: CGFloat = 32
         delegate?.heightCell(height: description.height(widthScreen: UIScreen.main.bounds.width - screenInsetsLeftRight,
-                                                        font: UIFont(name: "GillSans-semibold", size: 16)!))
+                                                        font: .setCustomFont(name: .semibold, andSize: 16)))
     }
 }

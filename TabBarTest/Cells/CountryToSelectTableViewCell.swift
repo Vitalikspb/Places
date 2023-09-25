@@ -13,7 +13,7 @@ class CountryToSelectTableViewCell: UITableViewCell {
        let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont.init(name: "GillSans-Semibold", size: 20)
+        label.font = .setCustomFont(name: .semibold, andSize: 20)
         return label
     }()
     private let mainImageView: UIImageView = {
