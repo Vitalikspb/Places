@@ -142,6 +142,8 @@ enum Constants {
         static let interesting = "Интересные события"
         /// "Вопросы и ответы"
         static let faq = "Вопросы и ответы"
+        /// "Посмотреть"
+        static let look = "Посмотреть"
     }
     
     enum Errors {

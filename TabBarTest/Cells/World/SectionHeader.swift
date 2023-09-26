@@ -5,110 +5,87 @@
 
 import UIKit
 
-protocol SectionHeaderDelegate: AnyObject {
-    func showCountyToBuy(countryName: String)
-}
-
 class SectionHeader: UICollectionReusableView {
-    static let reuseIdentifier = "SectionHeader"
+    
+    // MARK: - UI properties
     
     let countryNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.contentMode = .center
+        label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
         label.backgroundColor = .clear
-        label.font = .setCustomFont(name: .semibold, andSize: 20)
+        label.font = .setCustomFont(name: .bold, andSize: 20)
         return label
+    }()
+    private let countyIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .center
+        imageView.backgroundColor = .clear
+        imageView.image = UIImage(named: "iconRussia")
+        return imageView
     }()
     let subTitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
-        label.contentMode = .center
+        label.textColor = .setCustomColor(color: .subTitleText)
         label.textAlignment = .left
         label.backgroundColor = .clear
         label.font = .setCustomFont(name: .regular, andSize: 16)
         return label
     }()
-    let showSelectedCityButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = .setCustomFont(name: .semibold, andSize: 15)
-        button.setTitle("Посмотреть", for: .normal)
-        return button
-    }()
-    let separatorView: UIView = {
-        let separator = UIView()
-        separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.backgroundColor = .quaternaryLabel
-        return separator
-    }()
     
-    weak var delegate: SectionHeaderDelegate?
+    // MARK: - Public properties
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = .clear
-        addSubview(separatorView)
-        addSubview(countryNameLabel)
-        addSubview(subTitleLabel)
-        addSubview(showSelectedCityButton)
-        
-        showSelectedCityButton.layer.cornerRadius = 12
-        showSelectedCityButton.layer.borderWidth = 2
-        showSelectedCityButton.layer.borderColor = UIColor.lightGray.cgColor
-        showSelectedCityButton.addTarget(self, action: #selector(handleSelectCountry), for: .touchUpInside)
-        
-        separatorView.anchor(top: self.topAnchor,
-                             left: self.leftAnchor,
-                             bottom: nil,
-                             right: self.rightAnchor,
-                             paddingTop: 3,
-                             paddingLeft: 0,
-                             paddingBottom: 0,
-                             paddingRight: 0,
-                             width: 0,
-                             height: 1)
-        countryNameLabel.anchor(top: separatorView.bottomAnchor,
-                                left: self.leftAnchor,
-                                bottom: nil,
-                                right: showSelectedCityButton.leftAnchor,
-                                paddingTop: 10,
-                                paddingLeft: 16,
-                                paddingBottom: 0,
-                                paddingRight: 16,
-                                width: 0,
-                                height: 25)
-        subTitleLabel.anchor(top: countryNameLabel.bottomAnchor,
-                             left: self.leftAnchor,
-                             bottom: self.bottomAnchor,
-                             right: showSelectedCityButton.leftAnchor,
-                             paddingTop: 8,
-                             paddingLeft: 16,
-                             paddingBottom: 10,
-                             paddingRight: 16,
-                             width: 0,
-                             height: 25)
-
-        showSelectedCityButton.anchor(top: self.topAnchor,
-                                      left: nil,
-                                      bottom: self.bottomAnchor,
-                                      right: self.rightAnchor,
-                                      paddingTop: 17,
-                                      paddingLeft: 0,
-                                      paddingBottom: 17,
-                                      paddingRight: 16,
-                                      width: 130,
-                                      height: 60)
-        
-    }
+    static let reuseIdentifier = "SectionHeader"
+    
+    // MARK: - Life cycle
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("Stop trying to make storyboards happen.")
     }
     
-    @objc private func handleSelectCountry() {
-        delegate?.showCountyToBuy(countryName: countryNameLabel.text ?? "")
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        countryNameLabel.text = ""
+        countyIconImageView.image = UIImage(named: "iconRussia")
+        subTitleLabel.text = ""
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+//        self.backgroundColor = .clear
+        self.backgroundColor = .white
+        addSubviews(countryNameLabel, countyIconImageView, subTitleLabel)
+        
+        countryNameLabel.anchor(top: self.topAnchor,
+                                left: self.leftAnchor,
+                                bottom: nil,
+                                right: nil,
+                                paddingTop: 12,
+                                paddingLeft: 16,
+                                paddingBottom: 0,
+                                paddingRight: 0,
+                                width: 0,
+                                height: 32)
+        countyIconImageView.anchor(top: self.topAnchor,
+                                   left: countryNameLabel.rightAnchor,
+                                   bottom: nil,
+                                   right: nil,
+                                   paddingTop: 16,
+                                   paddingLeft: 8,
+                                   paddingBottom: 0,
+                                   paddingRight: 0,
+                                   width: 24,
+                                   height: 24)
+        
+        subTitleLabel.anchor(top: countryNameLabel.bottomAnchor,
+                             left: self.leftAnchor,
+                             bottom: self.bottomAnchor,
+                             right: self.rightAnchor,
+                             paddingTop: 0,
+                             paddingLeft: 16,
+                             paddingBottom: 10,
+                             paddingRight: 16,
+                             width: 0,
+                             height: 20)
     }
 }

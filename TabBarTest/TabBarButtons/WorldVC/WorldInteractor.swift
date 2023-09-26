@@ -28,7 +28,8 @@ class WorldInteractor: WorldBussinessLogic, WorldDataStore {
             WorldViewModels.ItemData(name: "Уфа", subName: "Более 156 мест", imageCity: UIImage(named: "hub3")!),
             WorldViewModels.ItemData(name: "Пенза", subName: "Более 132 мест", imageCity: UIImage(named: "hub3")!),
             WorldViewModels.ItemData(name: "Норильск", subName: "Более 95 мест", imageCity: UIImage(named: "hub3")!),
-            WorldViewModels.ItemData(name: "Южно-Сахалинск", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!)]),
+            WorldViewModels.ItemData(name: "Южно-Сахалинск", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!)])
+        ,
         WorldViewModels.WorldViewModel(titlesec: WorldViewModels.TitleSection(name: "Франция", subName: "17 городов, 1042 мест"), items: [
             WorldViewModels.ItemData(name: "Париж", subName: "Более 112 мест", imageCity: UIImage(named: "hub3")!),
             WorldViewModels.ItemData(name: "Ажен", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!),
@@ -38,17 +39,18 @@ class WorldInteractor: WorldBussinessLogic, WorldDataStore {
             WorldViewModels.ItemData(name: "Капентрасс", subName: "Более 131 мест", imageCity: UIImage(named: "hub3")!),
             WorldViewModels.ItemData(name: "Блойс", subName: "Более 141 мест", imageCity: UIImage(named: "hub3")!),
             WorldViewModels.ItemData(name: "Еус", subName: "Более 131 мест", imageCity: UIImage(named: "hub3")!),
-            WorldViewModels.ItemData(name: "Метз", subName: "Более 98 мест", imageCity: UIImage(named: "hub3")!)]),
-        WorldViewModels.WorldViewModel(titlesec: WorldViewModels.TitleSection(name: "США", subName: "18 городов, 1373 мест"), items: [
-            WorldViewModels.ItemData(name: "Чикаго", subName: "Более 67 мест", imageCity: UIImage(named: "hub3")!),
-            WorldViewModels.ItemData(name: "Лос-Анджелес", subName: "Более 87 мест", imageCity: UIImage(named: "hub3")!),
-            WorldViewModels.ItemData(name: "Хьюстон", subName: "Более 56 мест", imageCity: UIImage(named: "hub3")!),
-            WorldViewModels.ItemData(name: "Финикс", subName: "Более 134 мест", imageCity: UIImage(named: "hub3")!),
-            WorldViewModels.ItemData(name: "Филадельфия", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!),
-            WorldViewModels.ItemData(name: "Сан-Антонио", subName: "Более 152 мест", imageCity: UIImage(named: "hub3")!),
-            WorldViewModels.ItemData(name: "Сан-Диего", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!),
-            WorldViewModels.ItemData(name: "Даллас", subName: "Более 90 мест", imageCity: UIImage(named: "hub3")!),
-            WorldViewModels.ItemData(name: "Сан-Хосе", subName: "Более 87 мест", imageCity: UIImage(named: "hub3")!)]),
+            WorldViewModels.ItemData(name: "Метз", subName: "Более 98 мест", imageCity: UIImage(named: "hub3")!)])
+//        ,
+//        WorldViewModels.WorldViewModel(titlesec: WorldViewModels.TitleSection(name: "США", subName: "18 городов, 1373 мест"), items: [
+//            WorldViewModels.ItemData(name: "Чикаго", subName: "Более 67 мест", imageCity: UIImage(named: "hub3")!),
+//            WorldViewModels.ItemData(name: "Лос-Анджелес", subName: "Более 87 мест", imageCity: UIImage(named: "hub3")!),
+//            WorldViewModels.ItemData(name: "Хьюстон", subName: "Более 56 мест", imageCity: UIImage(named: "hub3")!),
+//            WorldViewModels.ItemData(name: "Финикс", subName: "Более 134 мест", imageCity: UIImage(named: "hub3")!),
+//            WorldViewModels.ItemData(name: "Филадельфия", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!),
+//            WorldViewModels.ItemData(name: "Сан-Антонио", subName: "Более 152 мест", imageCity: UIImage(named: "hub3")!),
+//            WorldViewModels.ItemData(name: "Сан-Диего", subName: "Более 123 мест", imageCity: UIImage(named: "hub3")!),
+//            WorldViewModels.ItemData(name: "Даллас", subName: "Более 90 мест", imageCity: UIImage(named: "hub3")!),
+//            WorldViewModels.ItemData(name: "Сан-Хосе", subName: "Более 87 мест", imageCity: UIImage(named: "hub3")!)])
     ])
     
     
