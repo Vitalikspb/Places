@@ -126,7 +126,8 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
                           image: model[indexPath.row].image,
                           numberOfSight: 15,
                           latitude: 55.7529517,
-                          longitude: 37.6232801)
+                          longitude: 37.6232801,
+                          worldScreen: .cities)
         cell.delegate = self
         return cell
     }

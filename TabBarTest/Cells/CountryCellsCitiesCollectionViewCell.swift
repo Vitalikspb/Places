@@ -13,6 +13,11 @@ protocol CountryCellsCitiesCollectionViewCellDelegate: AnyObject {
 
 class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     
+    enum WorldScreenOpen {
+        case cities
+        case country
+    }
+    
     // MARK: - UI properties
     
     private let mainImageView: UIImageView = {
@@ -23,7 +28,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         imageView.backgroundColor = .white
         return imageView
     }()
-    private let title: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
         label.contentMode = .bottom
@@ -73,7 +78,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     }
     var cellTitle: String = "" {
         didSet {
-            title.text = cellTitle
+            titleLabel.text = cellTitle
         }
     }
     var cellNumberOfSight: Int = 0 {
@@ -98,6 +103,12 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+//        titleLabel.text = nil
+//        numberOfSightLabel.text = nil
+//        mainImageView.image = nil
+//        titleLabel.alpha = 1
+//        numberOfSightLabel.alpha = 1
+//        mainImageView.alpha = 1
     }
     
     // MARK: - Helper functions
@@ -115,14 +126,14 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 12
         self.clipsToBounds = true
         
-        contentView.addSubviews(mainImageView, title, numberOfSightLabel, moveToChoosenCityView)
+        contentView.addSubviews(mainImageView, titleLabel, numberOfSightLabel, moveToChoosenCityView)
         moveToChoosenCityView.addSubviews(moveToChoosenCityButton)
     }
     
     private func setupConstraints() {
         mainImageView.anchor(top: contentView.topAnchor,
                      left: contentView.leftAnchor,
-                     bottom: title.topAnchor,
+                     bottom: titleLabel.topAnchor,
                      right: contentView.rightAnchor,
                      paddingTop: 0,
                      paddingLeft: 0,
@@ -130,7 +141,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
                      paddingRight: 0,
                      width: 0, height: 0)
         
-        title.anchor(top: nil,
+        titleLabel.anchor(top: nil,
                      left: contentView.leftAnchor,
                      bottom: nil,
                      right: moveToChoosenCityButton.leftAnchor,
@@ -139,7 +150,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
                      paddingBottom: 0,
                      paddingRight: 0,
                      width: 0, height: 25)
-        numberOfSightLabel.anchor(top: title.bottomAnchor,
+        numberOfSightLabel.anchor(top: titleLabel.bottomAnchor,
                                   left: contentView.leftAnchor,
                                   bottom: contentView.bottomAnchor,
                                   right: nil,
@@ -160,7 +171,23 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         moveToChoosenCityButton.addConstraintsToFillView(view: moveToChoosenCityView)
     }
     
-    func conigureCell(title: String, image: UIImage, numberOfSight: Int, latitude: Double, longitude: Double) {
+    
+    func conigureCell(title: String, image: UIImage, numberOfSight: Int, latitude: Double = 0.0, longitude: Double = 0.0, available: Bool = true, worldScreen: WorldScreenOpen) {
+        switch worldScreen {
+            
+        case .cities:
+            break
+            
+        case .country:
+            moveToChoosenCityView.isHidden = true
+            moveToChoosenCityButton.isHidden = true
+        }
+        if !available {
+            titleLabel.alpha = 0.65
+            numberOfSightLabel.alpha = 0.65
+            mainImageView.alpha = 0.65
+        }
+        
         cellImage = image
         cellTitle = title
         cellNumberOfSight = numberOfSight

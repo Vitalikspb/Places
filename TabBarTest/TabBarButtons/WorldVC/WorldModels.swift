@@ -16,12 +16,14 @@ enum WorldViewModels {
     }
     struct ItemData: Hashable {
         let name: String
-        let subName: String
+        let sights: Int
         let imageCity: UIImage
     }
     struct TitleSection: Hashable {
         let name: String
         let subName: String
+        let iconCountry: UIImage
+        let available: Bool
     }
     enum AllCountriesInTheWorld {
 

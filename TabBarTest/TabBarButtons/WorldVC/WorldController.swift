@@ -13,25 +13,19 @@ protocol WorldDisplayLogic: AnyObject {
 
 class WorldController: UIViewController {
     
-    var dataSource: UICollectionViewDiffableDataSource<WorldViewModels.TitleSection, WorldViewModels.ItemData>?
-
     // MARK: - UI Properties
     
-    private lazy var collectionView: UICollectionView! = nil
+    private let tableView = UITableView(frame: CGRect.zero, style: .plain)
     
     // MARK: - Public Properties
     
     var interactor: WorldBussinessLogic?
     var router: (NSObjectProtocol & WorldRoutingLogic & WorldDataPassing)?
+    var viewModel: WorldViewModels.AllCountriesInTheWorld.ViewModel!
     
     // MARK: - Private Properties
     
-    private var titleName: String = ""
-    var viewModel: WorldViewModels.AllCountriesInTheWorld.ViewModel!
-    // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
-    
-    private var isSearch : Bool = false
-    private var filteredTableData: WorldViewModels.AllCountriesInTheWorld.ViewModel!
+    private let userDefault = UserDefaults.standard
     
     // MARK: - Lifecycle
     
@@ -41,16 +35,23 @@ class WorldController: UIViewController {
         setupClean()
         setupUI()
         title = "Страны"
-        // в интеракторе создаем большую модель для заполнения всех ячеек таблицы,
-        // заголовка, погоды и всей остальой инфорамции
-        interactor?.showCity()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+        interactor?.showCity()
     }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupClean()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupClean()
+    }
     
     // MARK: - Helper Functions
     
@@ -69,153 +70,86 @@ class WorldController: UIViewController {
     }
     
     private func setupUI() {
+        // другие города
+        tableView.register(WorldCollectionViewCell.self,
+                           forCellReuseIdentifier: WorldCollectionViewCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.contentInset = UIEdgeInsets(top: -10, left: 0, bottom: 16, right: 0)
         
-        // коллекшн вью
-        self.view.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
-            
-        collectionView.register(SectionHeader.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: SectionHeader.reuseIdentifier)
-        collectionView.register(WorldCollectionViewCell.self,
-                                forCellWithReuseIdentifier: WorldCollectionViewCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.allowsSelection = false
+        view.addSubviews(tableView)
         
-        view.addSubviews(collectionView)
-        
-        collectionView.addConstraintsToFillView(view: view)
-        
-        // Настраиваем дата сорс и хедер для коллекшн вью
-        dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.reuseIdentifier, for: indexPath) as? SectionHeader else {
-                return nil
-            }
-            
-            guard let firstApp = self?.dataSource?.itemIdentifier(for: indexPath) else { return nil }
-            guard let section = self?.dataSource?.snapshot().sectionIdentifier(containingItem: firstApp) else { return nil }
-            if section.name.isEmpty { return nil }
-            
-            sectionHeader.countryNameLabel.text = section.name
-            sectionHeader.subTitleLabel.text = section.subName
-            return sectionHeader
-        }
-    }
-}
-
-// MARK: - UICollectionViewDiffableDataSource
-
-extension WorldController {
-    
-    // Настройка хедера в секции
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let reusableview = collectionView.dequeueReusableSupplementaryView(
-            ofKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: SectionHeader.reuseIdentifier,
-            for: indexPath) as! SectionHeader
-        reusableview.frame = CGRect(x: 0 , y: 0, width: self.view.frame.width, height: 80)
-        reusableview.countryNameLabel.text = filteredTableData.model[indexPath.section].titlesec.name
-        reusableview.subTitleLabel.text = filteredTableData.model[indexPath.section].titlesec.subName
-        return reusableview
+        tableView.anchor(top: view.layoutMarginsGuide.topAnchor,
+                         left: view.leftAnchor,
+                         bottom: view.layoutMarginsGuide.bottomAnchor,
+                         right: view.rightAnchor,
+                         paddingTop: 0,
+                         paddingLeft: 0,
+                         paddingBottom: 0,
+                         paddingRight: 0,
+                         width: 0, height: 0)
     }
     
-    // Настройка секции
-    func createCompositionalLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
-            self.createMediumTableSection()
-        }
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = 20
-        layout.configuration = config
-        return layout
-    }
-    
-    // Настройка лейаута секции
-    func createMediumTableSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                              heightDimension: .fractionalHeight(0.33))
-        
-        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-        
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.90),
-                                                     heightDimension: .fractionalWidth(0.61))
-        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize,
-                                                           subitems: [layoutItem])
-        
-        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
-        
-        let layoutSectionHeader = createSectionHeader()
-        layoutSection.boundarySupplementaryItems = [layoutSectionHeader]
-        
-        return layoutSection
-    }
-    
-    // Настройка лейаута хедера
-    func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-        let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                             heightDimension: .estimated(80))
-        let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: layoutSectionHeaderSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top)
-        return layoutSectionHeader
-    }
-}
-
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
-
-extension WorldController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return filteredTableData.model.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filteredTableData.model[section].items.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WorldCollectionViewCell.identifier, for: indexPath) as? WorldCollectionViewCell else { return UICollectionViewCell() }
-        let model = filteredTableData.model[indexPath.section].items[indexPath.row]
-        cell.configureCell(type: model.name,
-                           name: model.subName,
-                           image: model.imageCity)
-        cell.delegate = self
-        return cell
-    }
-
 }
 
 // MARK: - CountryDisplayLogic
 
 extension WorldController: WorldDisplayLogic {
     
-    // Отображение обновленной таблицы после заполнения в интеракторе данными модели
-    // Пока что не работает т.к нету модели
+    // отображение обновленной таблицы после заполнения в интеракторе данными модели
+    // пока что не работает т.к нету модели
     func displayAllCities(viewModel: WorldViewModels.AllCountriesInTheWorld.ViewModel) {
         self.viewModel = viewModel
-        self.filteredTableData = viewModel
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.collectionView.reloadData()
+            self.tableView.reloadData()
         }
+    }
+}
+
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+
+extension WorldController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.model.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: WorldCollectionViewCell.identifier,
+                                                       for: indexPath) as? WorldCollectionViewCell else { return UITableViewCell() }
+        let item = viewModel.model[indexPath.row]
+        print("item.titlesec:\(item.titlesec)")
+        print("item.items:\(item.items)")
+        cell.configureHeaderCell(header: item.titlesec,
+                                 cities: item.items)
+        cell.delegate = self
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 335
     }
 }
 
 // MARK: - WorldCollectionViewCellDelegate
 
 extension WorldController: WorldCollectionViewCellDelegate {
+    // Переход на карту с выбранной страной
+    func showOnMap(country: String) {
+        print("Переход на карту с выбранной страной")
+    }
     
-    // нажимаем на пноку показа города
-    func showSelected(show: String) {
-        router?.dataStore?.currentCity = show
+    
+    // Переход на выбранный город
+    func showSelectedCityDescription(_ name: String) {
+        router?.dataStore?.currentCity = name
         router?.routeToCityVC()
     }
 }
