@@ -10,7 +10,7 @@ import Foundation
 protocol CityRoutingLogic: AnyObject {
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
-    func routeToExibitionVC()
+//    func routeToExibitionVC()
     func routeToRentAutoVC()
     func routeToFAQVC()
     func routeToHelperMapsVC()
@@ -64,12 +64,12 @@ class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
         navigateToIntrestingEvents(source: viewController!, destination: destinationVC)
     }
     // на экран билеты на экскурсию
-    func routeToExibitionVC() {
-        let destinationVC: ExibitionsController = ExibitionsController.loadFromStoryboard()
-        var destinationDS = destinationVC.router!.dataStore!
-        passDataToExibitions(source: dataStore!, destination: &destinationDS)
-        navigateToExibitions(source: viewController!, destination: destinationVC)
-    }
+//    func routeToExibitionVC() {
+//        let destinationVC: ExibitionsController = ExibitionsController.loadFromStoryboard()
+//        var destinationDS = destinationVC.router!.dataStore!
+//        passDataToExibitions(source: dataStore!, destination: &destinationDS)
+//        navigateToExibitions(source: viewController!, destination: destinationVC)
+//    }
 
     // MARK: - Навигация
     
@@ -88,9 +88,9 @@ class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
     
 
     
-    func navigateToExibitions(source: CityController!, destination: ExibitionsController) {
-        source.navigationController?.pushViewController(destination, animated: true)
-    }
+//    func navigateToExibitions(source: CityController!, destination: ExibitionsController) {
+//        source.navigationController?.pushViewController(destination, animated: true)
+//    }
     func navigateToHelperMaps(source: CityController, destination: HelperMapsController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
@@ -112,9 +112,9 @@ class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
         destination.currentCity = source.currentCity
     }
     
-    func passDataToExibitions(source: CityDataStore, destination: inout ExibitionsDataStore) {
-        destination.currentCity = source.currentCity
-    }
+//    func passDataToExibitions(source: CityDataStore, destination: inout ExibitionsDataStore) {
+//        destination.currentCity = source.currentCity
+//    }
     func passDataToHelperMaps(source: CityDataStore, destination: inout HelperMapsDataStore) {
         destination.currentCity = source.currentCity
     }

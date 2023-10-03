@@ -11,7 +11,7 @@ protocol CurrentCityRoutingLogic: AnyObject {
     func routeToCityVC()
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
-    func routeToExibitionVC()
+//    func routeToExibitionVC()
     func routeToRentAutoVC()
     func routeToFAQVC()
     func routeToHelperMapsVC()
@@ -73,12 +73,12 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         navigateToViewContact(source: viewController!, destination: destinationVC)
     }
     // на экран билеты на экскурсию
-    func routeToExibitionVC() {
-        let destinationVC: ExibitionsController = ExibitionsController.loadFromStoryboard()
-        var destinationDS = destinationVC.router!.dataStore!
-        passDataToExibitions(source: dataStore!, destination: &destinationDS)
-        navigateToExibitions(source: viewController!, destination: destinationVC)
-    }
+//    func routeToExibitionVC() {
+//        let destinationVC: ExibitionsController = ExibitionsController.loadFromStoryboard()
+//        var destinationDS = destinationVC.router!.dataStore!
+//        passDataToExibitions(source: dataStore!, destination: &destinationDS)
+//        navigateToExibitions(source: viewController!, destination: destinationVC)
+//    }
 
     // MARK: - Навигация
     
@@ -100,9 +100,9 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         source.navigationController?.pushViewController(destination, animated: true)
     }
     
-    func navigateToExibitions(source: CurrentCityController!, destination: ExibitionsController) {
-        source.navigationController?.pushViewController(destination, animated: true)
-    }
+//    func navigateToExibitions(source: CurrentCityController!, destination: ExibitionsController) {
+//        source.navigationController?.pushViewController(destination, animated: true)
+//    }
     func navigateToHelperMaps(source: CurrentCityController, destination: HelperMapsController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
@@ -128,9 +128,9 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         destination.currentCity = source.currentCity
     }
     
-    func passDataToExibitions(source: CurrentCityDataStore, destination: inout ExibitionsDataStore) {
-        destination.currentCity = source.currentCity
-    }
+//    func passDataToExibitions(source: CurrentCityDataStore, destination: inout ExibitionsDataStore) {
+//        destination.currentCity = source.currentCity
+//    }
     func passDataToHelperMaps(source: CurrentCityDataStore, destination: inout HelperMapsDataStore) {
         destination.currentCity = source.currentCity
     }

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WorldRoutingLogic: AnyObject {
-    func routeToCountryVC()
+//    func routeToCountryVC()
     func routeToCityVC()
 }
 
@@ -24,12 +24,12 @@ class WorldRouter: NSObject, WorldRoutingLogic, WorldDataPassing {
     // MARK: - Роутинг
 
     // на экран выбранного города
-    func routeToCountryVC() {
-        let destinationVC: DescriptionCountryToBuyController = DescriptionCountryToBuyController.loadFromStoryboard()
-        var destinationDS = destinationVC.router!.dataStore!
-        passDataToLeadMore(source: dataStore!, destination: &destinationDS)
-        navigateToViewContact(source: viewController!, destination: destinationVC)
-    }
+//    func routeToCountryVC() {
+//        let destinationVC: DescriptionCountryToBuyController = DescriptionCountryToBuyController.loadFromStoryboard()
+//        var destinationDS = destinationVC.router!.dataStore!
+//        passDataToLeadMore(source: dataStore!, destination: &destinationDS)
+//        navigateToViewContact(source: viewController!, destination: destinationVC)
+//    }
     
     // на экран выбранного города
     func routeToCityVC() {
@@ -42,9 +42,9 @@ class WorldRouter: NSObject, WorldRoutingLogic, WorldDataPassing {
     // MARK: - Навигация
     
     // открыть следующий город по тыку на ячееке с городами
-    func navigateToViewContact(source: WorldController, destination: DescriptionCountryToBuyController) {
-        source.navigationController?.pushViewController(destination, animated: true)
-    }
+//    func navigateToViewContact(source: WorldController, destination: DescriptionCountryToBuyController) {
+//        source.navigationController?.pushViewController(destination, animated: true)
+//    }
     
     // открыть следующий город по тыку на ячееке с городами
     func navigateToViewContact(source: WorldController, destination: CityController) {
@@ -53,9 +53,9 @@ class WorldRouter: NSObject, WorldRoutingLogic, WorldDataPassing {
     
     // MARK: - Передача данных
     
-    func passDataToLeadMore(source: WorldDataStore, destination: inout DescriptionCountryToBuyDataStore) {
-        destination.currentCountry = source.currentCity
-    }
+//    func passDataToLeadMore(source: WorldDataStore, destination: inout DescriptionCountryToBuyDataStore) {
+//        destination.currentCountry = source.currentCity
+//    }
     
     func passDataToLeadMore(source: WorldDataStore, destination: inout CityDataStore) {
         destination.currentCity = source.currentCity

@@ -9,44 +9,35 @@ import UIKit
 
 class FAQTableViewCell: UITableViewCell {
     
-    // MARK: - Private properties
-    
+    // MARK: - UI properties
+    private let headerView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
+        return view
+    }()
     private let questionLabel: UILabel = {
-        let title = UILabel()
-        title.textColor = .black
-        title.contentMode = .center
-        title.textAlignment = .left
-        title.backgroundColor = .clear
-        title.numberOfLines = 0
-        title.font = .setCustomFont(name: .semibold, andSize: 16)
-        return title
+        let label = UILabel()
+        label.textColor = .setCustomColor(color: .titleText)
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        label.font = .setCustomFont(name: .bold, andSize: 20)
+        return label
     }()
     private let answerLabel: UILabel = {
-        let title = UILabel()
-        title.textColor = .darkGray
-        title.contentMode = .center
-        title.textAlignment = .left
-        title.backgroundColor = .clear
-        title.numberOfLines = 0
-        title.font = .setCustomFont(name: .semibold, andSize: 16)
-        return title
-    }()
-    private let arrowImageView: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(systemName: "arrowtriangle.down.fill")
-        image.contentMode = .scaleAspectFit
-        image.tintColor = .lightGray
-        return image
+        let label = UILabel()
+        label.textColor = .setCustomColor(color: .subTitleText)
+        label.textAlignment = .left
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        label.font = .setCustomFont(name: .regular, andSize: 16)
+        return label
     }()
     
     // MARK: - Public properties
     
-    var arrowImage: String = "" {
-        didSet {
-            arrowImageView.image = UIImage(systemName: arrowImage) ?? UIImage(systemName: "gear")
-        }
-    }
-    static let identifier = "RentAutoTableViewCell"
+    static let identifier = "FAQTableViewCell"
     
     // MARK: - Lifecycle
     
@@ -75,48 +66,46 @@ class FAQTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    private func setupUI() {
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = .white
-        self.selectedBackgroundView = bgColorView
-        self.clipsToBounds = true
-        
-        contentView.addSubview(questionLabel)
-        contentView.addSubview(answerLabel)
-        contentView.addSubview(arrowImageView)
-        
-        questionLabel.anchor(top: contentView.topAnchor,
-                             left: contentView.leftAnchor,
-                             bottom: nil,
-                             right: arrowImageView.rightAnchor,
-                             paddingTop: 21,
-                             paddingLeft: 16,
-                             paddingBottom: 0,
-                             paddingRight: 8,
-                             width: 0, height: 0)
-        answerLabel.anchor(top: questionLabel.bottomAnchor,
-                           left: contentView.leftAnchor,
-                           bottom: nil,
-                           right: arrowImageView.rightAnchor,
-                           paddingTop: 19,
-                           paddingLeft: 16,
-                           paddingBottom: 0,
-                           paddingRight: 8,
-                           width: 0, height: 0)
-        arrowImageView.anchor(top: contentView.topAnchor,
-                              left: nil,
-                              bottom: nil,
-                              right: contentView.rightAnchor,
-                              paddingTop: 8,
-                              paddingLeft: 0,
-                              paddingBottom: 0,
-                              paddingRight: 16,
-                              width: 20, height: 20)
-    }
-    
     func configureCell(question: String, answer: String) {
         questionLabel.text = question
         answerLabel.text = answer
     }
     
+    private func setupUI() {
+        contentView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
+        
+        contentView.addSubviews(headerView, answerLabel)
+        headerView.addSubviews(questionLabel)
+        
+        headerView.anchor(top: contentView.topAnchor,
+                          left: contentView.leftAnchor,
+                          bottom: nil,
+                          right: contentView.rightAnchor,
+                          paddingTop: 12,
+                          paddingLeft: 16,
+                          paddingBottom: 0,
+                          paddingRight: 16,
+                          width: 0,
+                          height: 0)
+        questionLabel.anchor(top: headerView.topAnchor,
+                             left: headerView.leftAnchor,
+                             bottom: headerView.bottomAnchor,
+                             right: headerView.rightAnchor,
+                             paddingTop: 16,
+                             paddingLeft: 16,
+                             paddingBottom: 16,
+                             paddingRight: 16,
+                             width: 0,
+                             height: 0)
+        answerLabel.anchor(top: headerView.bottomAnchor,
+                           left: contentView.leftAnchor,
+                           bottom: contentView.bottomAnchor,
+                           right: contentView.rightAnchor,
+                           paddingTop: 16,
+                           paddingLeft: 16,
+                           paddingBottom: 16,
+                           paddingRight: 16,
+                           width: 0,
+                           height: 0)
+    }
 }
