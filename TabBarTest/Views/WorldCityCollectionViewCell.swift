@@ -9,6 +9,7 @@ import UIKit
 
 protocol WorldCityCollectionViewCellDelegate: AnyObject {
     func selectCity(name: String)
+    func showCityOnMap(name: String)
 }
 
 class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
@@ -43,6 +44,20 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
         label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
+    private let moveToChoosenCityView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .setCustomColor(color: .mainView)
+        view.layer.cornerRadius = 6
+        return view
+    }()
+    private let moveToChoosenCityButton: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .center
+        imageView.tintColor = .setCustomColor(color: .titleText)
+        imageView.backgroundColor = .clear
+        imageView.image = UIImage(named: "moveToMap")
+        return imageView
+    }()
     
     // MARK: - Public properties
     
@@ -72,19 +87,24 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
             $0.alpha = alpha
         }
         mainImageView.isUserInteractionEnabled = available
+        moveToChoosenCityButton.isUserInteractionEnabled = available
     }
     
     private func setupUI() {
         let mapTap = UITapGestureRecognizer(target: self, action: #selector(moveToCityViewHandle))
         mainImageView.addGestureRecognizer(mapTap)
 
+        let moveTap = UITapGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
+        moveToChoosenCityButton.addGestureRecognizer(moveTap)
+        
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 12
         contentView.clipsToBounds = true
         
         contentView.addSubviews(mainView)
         mainView.addConstraintsToFillView(view: contentView)
-        mainView.addSubviews(mainImageView, titleLabel, numberOfSightLabel)
+        mainView.addSubviews(mainImageView, titleLabel, numberOfSightLabel, moveToChoosenCityView)
+        moveToChoosenCityView.addSubviews(moveToChoosenCityButton)
 
         
         mainImageView.anchor(top: mainView.topAnchor,
@@ -116,13 +136,28 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
                                   paddingBottom: 0,
                                   paddingRight: 0,
                                   width: 0, height: 20)
+        moveToChoosenCityView.anchor(top: mainImageView.topAnchor,
+                                     left: nil,
+                                     bottom: nil,
+                                     right: mainImageView.rightAnchor,
+                                     paddingTop: 8,
+                                     paddingLeft: 0,
+                                     paddingBottom: 0,
+                                     paddingRight: 8,
+                                     width: 35, height: 35)
+        moveToChoosenCityButton.addConstraintsToFillView(view: moveToChoosenCityView)
     }
     
     // MARK: - Selectors
     
     @objc private func moveToCityViewHandle() {
-        print("select city: \(titleLabel.text)")
+        print("переход на город подробней: \(titleLabel.text)")
         delegate?.selectCity(name: titleLabel.text ?? "")
+    }
+    
+    @objc private func moveToMapViewHandle() {
+        print("переход на город на карте")
+        delegate?.showCityOnMap(name: titleLabel.text ?? "")
     }
     
 }

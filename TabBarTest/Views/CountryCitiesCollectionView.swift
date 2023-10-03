@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol CountryCitiesCollectionViewDelegate: AnyObject {
+    func openCityOnMap(name: String)
+    func showCity(name: String)
+}
+
 class CountryCitiesCollectionView: UIView {
    
     // MARK: - UI properties
@@ -35,6 +40,7 @@ class CountryCitiesCollectionView: UIView {
     // MARK: - Public properties
     
     private var model: [WorldViewModels.ItemData] = []
+    weak var delegate: CountryCitiesCollectionViewDelegate?
     
     // MARK: - Life cycle
     
@@ -85,7 +91,23 @@ extension CountryCitiesCollectionView: UICollectionViewDataSource, UICollectionV
                            andImage: modelCell.imageCity,
                            alpha: modelCell.available ? 1 : 0.65,
                            available: modelCell.available)
+        cell.delegate = self
         return cell
+    }
+}
+
+// MARK: - WorldCityCollectionViewCellDelegate
+
+extension CountryCitiesCollectionView: WorldCityCollectionViewCellDelegate {
+    
+     // переход на город подробней
+    func selectCity(name: String) {
+        delegate?.showCity(name: name)
+    }
+
+    // переход на город на карте
+    func showCityOnMap(name: String) {
+        delegate?.openCityOnMap(name: name)
     }
 }
 

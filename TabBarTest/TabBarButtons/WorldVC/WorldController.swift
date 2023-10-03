@@ -141,15 +141,17 @@ extension WorldController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - WorldCollectionViewCellDelegate
 
 extension WorldController: WorldCollectionViewCellDelegate {
-    // Переход на карту с выбранной страной
-    func showOnMap(country: String) {
-        print("Переход на карту с выбранной страной:\(country)")
+
+    // Переход на карту с выбранным городом или страной
+    func showOnMap(name: String) {
+        print("Переход на карту с выбранной страной:\(name)")
     }
     
-    
-    // Переход на выбранный город
-    func showSelectedCityDescription(_ name: String) {
+    // Переход на выбранный город подробней
+    func showSelectedCityDescription(name: String) {
+        print("Переход на выбранный город подробней:\(name)")
         router?.dataStore?.currentCity = name
         router?.routeToCityVC()
     }
+    
 }

@@ -7,8 +7,8 @@
 import UIKit
 
 protocol WorldCollectionViewCellDelegate: AnyObject {
-    func showOnMap(country: String)
-    func showSelectedCityDescription(_ name: String)
+    func showOnMap(name: String)
+    func showSelectedCityDescription(name: String)
 }
 
 class WorldCollectionViewCell: UITableViewCell {
@@ -100,6 +100,7 @@ class WorldCollectionViewCell: UITableViewCell {
             $0.alpha = alpha
         }
         collectionViewCells.configureCells(model: cities)
+        collectionViewCells.delegate = self
         showCoutryOnMapButton.isUserInteractionEnabled = available
     }
     
@@ -167,7 +168,23 @@ class WorldCollectionViewCell: UITableViewCell {
     // MARK: - Selectors
     
     @objc private func showCountryOnMapTapped() {
-        delegate?.showOnMap(country: modelHeader.name)
+        delegate?.showOnMap(name: modelHeader.name)
     }
     
+}
+
+// MARK: - CountryCitiesCollectionViewDelegate
+
+extension WorldCollectionViewCell: CountryCitiesCollectionViewDelegate {
+    
+    // переход на город подробней
+    func openCityOnMap(name: String) {
+        delegate?.showOnMap(name: name)
+    }
+    
+    // переход на город подробней
+    func showCity(name: String) {
+        delegate?.showSelectedCityDescription(name: name)
+    }
+
 }
