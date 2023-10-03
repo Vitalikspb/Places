@@ -14,7 +14,12 @@ protocol WorldCollectionViewCellDelegate: AnyObject {
 class WorldCollectionViewCell: UITableViewCell {
     
     // MARK: - UI properties
-    
+    private let headerView: UIView = {
+       let view = UIView()
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
+        return view
+    }()
     private let countryNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
@@ -110,10 +115,46 @@ class WorldCollectionViewCell: UITableViewCell {
         let tapShowMap = UITapGestureRecognizer(target: self, action: #selector(showCountryOnMapTapped))
         showCoutryOnMapButton.addGestureRecognizer(tapShowMap)
         
-        contentView.addSubviews(countryNameLabel, countyIconImageView, subTitleLabel, showCoutryOnMapButton, collectionViewCells)
+        contentView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
+        
+        contentView.addSubviews(headerView, showCoutryOnMapButton, collectionViewCells)
+        
+        headerView.addSubviews(countryNameLabel, countyIconImageView, subTitleLabel)
 
-        countryNameLabel.anchor(top: contentView.topAnchor,
-                                left: contentView.leftAnchor,
+        headerView.anchor(top: contentView.topAnchor,
+                           left: contentView.leftAnchor,
+                           bottom: nil,
+                          right: contentView.rightAnchor,
+                           paddingTop: 12,
+                           paddingLeft: 16,
+                           paddingBottom: 0,
+                           paddingRight: 16,
+                           width: 0,
+                           height: 74)
+        showCoutryOnMapButton.centerY(inView: headerView)
+        showCoutryOnMapButton.anchor(top: nil,
+                                     left: nil,
+                                     bottom: nil,
+                                     right: headerView.rightAnchor,
+                                     paddingTop: 0,
+                                     paddingLeft: 0,
+                                     paddingBottom: 0,
+                                     paddingRight: 16,
+                                     width: 108,
+                                     height: 35)
+        collectionViewCells.anchor(top: headerView.bottomAnchor,
+                          left: contentView.leftAnchor,
+                          bottom: contentView.bottomAnchor,
+                          right: contentView.rightAnchor,
+                          paddingTop: 8,
+                          paddingLeft: 0,
+                          paddingBottom: 0,
+                          paddingRight: 0,
+                          width: 0,
+                          height: 0)
+        
+        countryNameLabel.anchor(top: headerView.topAnchor,
+                                left: headerView.leftAnchor,
                                 bottom: nil,
                                 right: nil,
                                 paddingTop: 12,
@@ -122,7 +163,7 @@ class WorldCollectionViewCell: UITableViewCell {
                                 paddingRight: 0,
                                 width: 0,
                                 height: 32)
-        countyIconImageView.anchor(top: contentView.topAnchor,
+        countyIconImageView.anchor(top: headerView.topAnchor,
                                    left: countryNameLabel.rightAnchor,
                                    bottom: nil,
                                    right: nil,
@@ -134,35 +175,16 @@ class WorldCollectionViewCell: UITableViewCell {
                                    height: 24)
         
         subTitleLabel.anchor(top: countryNameLabel.bottomAnchor,
-                             left: contentView.leftAnchor,
-                             bottom: nil,
-                             right: contentView.rightAnchor,
+                             left: headerView.leftAnchor,
+                             bottom: headerView.bottomAnchor,
+                             right: headerView.rightAnchor,
                              paddingTop: 0,
                              paddingLeft: 16,
-                             paddingBottom: 0,
+                             paddingBottom: 10,
                              paddingRight: 16,
                              width: 0,
                              height: 20)
-        showCoutryOnMapButton.anchor(top: contentView.topAnchor,
-                                     left: nil,
-                                     bottom: nil,
-                                     right: contentView.rightAnchor,
-                                     paddingTop: 20,
-                                     paddingLeft: 0,
-                                     paddingBottom: 0,
-                                     paddingRight: 16,
-                                     width: 108,
-                                     height: 35)
-        collectionViewCells.anchor(top: subTitleLabel.bottomAnchor,
-                          left: contentView.leftAnchor,
-                          bottom: contentView.bottomAnchor,
-                          right: contentView.rightAnchor,
-                          paddingTop: 8,
-                          paddingLeft: 0,
-                          paddingBottom: 0,
-                          paddingRight: 0,
-                          width: 0,
-                          height: 0)
+        
     }
     
     // MARK: - Selectors

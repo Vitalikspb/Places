@@ -97,7 +97,7 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
         let moveTap = UITapGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
         moveToChoosenCityButton.addGestureRecognizer(moveTap)
         
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
         contentView.layer.cornerRadius = 12
         contentView.clipsToBounds = true
         
@@ -133,7 +133,7 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
                                   right: nil,
                                   paddingTop: 4,
                                   paddingLeft: 16,
-                                  paddingBottom: 0,
+                                  paddingBottom: 4,
                                   paddingRight: 0,
                                   width: 0, height: 20)
         moveToChoosenCityView.anchor(top: mainImageView.topAnchor,
