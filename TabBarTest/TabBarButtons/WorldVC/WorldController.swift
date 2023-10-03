@@ -124,10 +124,10 @@ extension WorldController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: WorldCollectionViewCell.identifier,
                                                        for: indexPath) as? WorldCollectionViewCell else { return UITableViewCell() }
         let item = viewModel.model[indexPath.row]
-        print("item.titlesec:\(item.titlesec)")
-        print("item.items:\(item.items)")
         cell.configureHeaderCell(header: item.titlesec,
-                                 cities: item.items)
+                                 cities: item.items,
+                                 alpha: item.titlesec.available ? 1 : 0.65,
+                                 available: item.titlesec.available)
         cell.delegate = self
         return cell
         
@@ -143,7 +143,7 @@ extension WorldController: UITableViewDelegate, UITableViewDataSource {
 extension WorldController: WorldCollectionViewCellDelegate {
     // Переход на карту с выбранной страной
     func showOnMap(country: String) {
-        print("Переход на карту с выбранной страной")
+        print("Переход на карту с выбранной страной:\(country)")
     }
     
     

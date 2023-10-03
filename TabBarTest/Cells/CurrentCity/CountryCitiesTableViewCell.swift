@@ -122,12 +122,14 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier, for: indexPath) as? CountryCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.conigureCell(title: model[indexPath.row].name,
-                          image: model[indexPath.row].image,
-                          numberOfSight: 15,
-                          latitude: 55.7529517,
-                          longitude: 37.6232801,
-                          worldScreen: .cities)
+        let model = CountryCellCitiesModel(title: model[indexPath.row].name,
+                                           image: model[indexPath.row].image,
+                                           numberOfSight: 15,
+                                           latitude: 55.7529517,
+                                           longitude: 37.6232801,
+                                           available: true,
+                                           worldScreen: .cities)
+        cell.conigureCell(model: model)
         cell.delegate = self
         return cell
     }

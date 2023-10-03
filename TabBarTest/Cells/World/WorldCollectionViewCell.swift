@@ -23,14 +23,12 @@ class WorldCollectionViewCell: UITableViewCell {
         label.font = .setCustomFont(name: .bold, andSize: 20)
         return label
     }()
-    
     private let countyIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .center
         imageView.backgroundColor = .clear
         return imageView
     }()
-    
     private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .subTitleText)
@@ -39,11 +37,12 @@ class WorldCollectionViewCell: UITableViewCell {
         label.font = .setCustomFont(name: .regular, andSize: 16)
         return label
     }()
-    
-    let showCoutryOnMapButton = FilterView(withName: Constants.Views.look)
-    
-    let collectionView = UICollectionView(frame: CGRect.zero,
-                                          collectionViewLayout: UICollectionViewLayout.init())
+    private let showCoutryOnMapButton = FilterView(withName: Constants.Views.look)
+    private let collectionViewCells: CountryCitiesCollectionView = {
+       let view = CountryCitiesCollectionView()
+        return view
+        
+    }()
     
     // MARK: - Public properties
     
@@ -53,7 +52,6 @@ class WorldCollectionViewCell: UITableViewCell {
     
     // MARK: - Private properties
     
-    private var available: Bool = true
     private var modelHeader: WorldViewModels.TitleSection!
     private var modelCities: [WorldViewModels.ItemData] = []
     
@@ -77,17 +75,12 @@ class WorldCollectionViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        countryNameLabel.text = nil
-//        subTitleLabel.text = nil
-//        countyIconImageView.image = nil
-//        modelCities = []
-//        [countryNameLabel, subTitleLabel, countyIconImageView].forEach {
-//            $0.alpha = 1
-//        }
-//        available = true
-//        modelCities = []
-//        collectionView.dataSource = nil
-//        collectionView.delegate = nil
+        countryNameLabel.text = ""
+        subTitleLabel.text = ""
+        countyIconImageView.image = UIImage()
+        [countryNameLabel, subTitleLabel, countyIconImageView].forEach {
+            $0.alpha = 1
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -96,42 +89,28 @@ class WorldCollectionViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configureHeaderCell(header: WorldViewModels.TitleSection, cities: [WorldViewModels.ItemData]) {
+    func configureHeaderCell(header: WorldViewModels.TitleSection, cities: [WorldViewModels.ItemData], alpha: CGFloat, available: Bool) {
         modelHeader = header
         modelCities = cities
+        
         countryNameLabel.text = modelHeader.name
         subTitleLabel.text = modelHeader.subName
         countyIconImageView.image = modelHeader.iconCountry
-        self.available = modelHeader.available
-        let alphaValue = 0.65
-        if !available {
-            [countryNameLabel, subTitleLabel, countyIconImageView, showCoutryOnMapButton].forEach {
-                $0.alpha = alphaValue
-            }
-            showCoutryOnMapButton.isUserInteractionEnabled = false
+        [countryNameLabel, subTitleLabel, countyIconImageView, showCoutryOnMapButton].forEach {
+            $0.alpha = alpha
         }
-        
+        collectionViewCells.configureCells(model: cities)
+        showCoutryOnMapButton.isUserInteractionEnabled = available
     }
     
+
+    
     private func setupUI() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 280, height: 260)
-        layout.minimumLineSpacing = 10.0
-        layout.minimumInteritemSpacing = 10.0
         let tapShowMap = UITapGestureRecognizer(target: self, action: #selector(showCountryOnMapTapped))
         showCoutryOnMapButton.addGestureRecognizer(tapShowMap)
         
-        collectionView.register(CountryCellsCitiesCollectionViewCell.self,
-                                forCellWithReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        collectionView.setCollectionViewLayout(layout, animated: true)
-        
-        contentView.addSubviews(countryNameLabel, countyIconImageView, subTitleLabel, showCoutryOnMapButton, collectionView)
+        contentView.addSubviews(countryNameLabel, countyIconImageView, subTitleLabel, showCoutryOnMapButton, collectionViewCells)
+
         countryNameLabel.anchor(top: contentView.topAnchor,
                                 left: contentView.leftAnchor,
                                 bottom: nil,
@@ -173,7 +152,7 @@ class WorldCollectionViewCell: UITableViewCell {
                                      paddingRight: 16,
                                      width: 108,
                                      height: 35)
-        collectionView.anchor(top: subTitleLabel.bottomAnchor,
+        collectionViewCells.anchor(top: subTitleLabel.bottomAnchor,
                           left: contentView.leftAnchor,
                           bottom: contentView.bottomAnchor,
                           right: contentView.rightAnchor,
@@ -190,49 +169,5 @@ class WorldCollectionViewCell: UITableViewCell {
     @objc private func showCountryOnMapTapped() {
         delegate?.showOnMap(country: modelHeader.name)
     }
-}
-
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
-
-extension WorldCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource,
-                                   UICollectionViewDelegateFlowLayout{
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return modelCities.count
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier, for: indexPath) as? CountryCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
-        let model = modelCities[indexPath.row]
-        cell.conigureCell(title: model.name,
-                          image: model.imageCity,
-                          numberOfSight: model.sights,
-                          available: available,
-                          worldScreen: .country)
-        cell.delegate = self
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-    }
-}
-
-// MARK: - CountryCellsCitiesCollectionViewCellDelegate
-
-extension WorldCollectionViewCell: CountryCellsCitiesCollectionViewCellDelegate {
-    // Открытие другого города
-    func handleMap(name: String) {
-        delegate?.showSelectedCityDescription(name)
-    }
-    
-    // Открытие другого города на карте
-    func handleSelectedCity(_ lat: Double, _ lon: Double) {
-//        delegate?.showSelectedCityOnMap(lat, lon)
-        print("Открытие другого города на карте")
-    }
 }

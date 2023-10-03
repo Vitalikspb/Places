@@ -6,6 +6,21 @@
 
 import UIKit
 
+enum WorldScreenOpen {
+    case cities
+    case country
+}
+
+struct CountryCellCitiesModel {
+    var title: String
+    var image: UIImage
+    var numberOfSight: Int
+    var latitude: Double
+    var longitude: Double
+    var available: Bool
+    var worldScreen: WorldScreenOpen
+}
+
 protocol CountryCellsCitiesCollectionViewCellDelegate: AnyObject {
     func handleSelectedCity(_ lat : Double, _ lon: Double)
     func handleMap(name: String)
@@ -13,10 +28,7 @@ protocol CountryCellsCitiesCollectionViewCellDelegate: AnyObject {
 
 class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     
-    enum WorldScreenOpen {
-        case cities
-        case country
-    }
+    
     
     // MARK: - UI properties
     
@@ -63,10 +75,6 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private var latitude = 59.88422
-    private var longitude = 30.2545
-    
-    
     // MARK: - Public properties
     
     weak var delegate: CountryCellsCitiesCollectionViewCellDelegate?
@@ -87,6 +95,11 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // MARK: - Private properties
+    
+    private var latitude = 59.88422
+    private var longitude = 30.2545
+    
     // MARK: - LifeCycle
     
     override init(frame: CGRect) {
@@ -103,12 +116,12 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        titleLabel.text = nil
-//        numberOfSightLabel.text = nil
-//        mainImageView.image = nil
-//        titleLabel.alpha = 1
-//        numberOfSightLabel.alpha = 1
-//        mainImageView.alpha = 1
+        titleLabel.text = ""
+        numberOfSightLabel.text = ""
+        mainImageView.image = UIImage()
+        titleLabel.alpha = 1
+        numberOfSightLabel.alpha = 1
+        mainImageView.alpha = 1
     }
     
     // MARK: - Helper functions
@@ -171,9 +184,8 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         moveToChoosenCityButton.addConstraintsToFillView(view: moveToChoosenCityView)
     }
     
-    
-    func conigureCell(title: String, image: UIImage, numberOfSight: Int, latitude: Double = 0.0, longitude: Double = 0.0, available: Bool = true, worldScreen: WorldScreenOpen) {
-        switch worldScreen {
+    func conigureCell(model: CountryCellCitiesModel) {
+        switch model.worldScreen {
             
         case .cities:
             break
@@ -182,17 +194,17 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
             moveToChoosenCityView.isHidden = true
             moveToChoosenCityButton.isHidden = true
         }
-        if !available {
+        if !model.available {
             titleLabel.alpha = 0.65
             numberOfSightLabel.alpha = 0.65
             mainImageView.alpha = 0.65
         }
         
-        cellImage = image
-        cellTitle = title
-        cellNumberOfSight = numberOfSight
-        self.latitude = latitude
-        self.longitude = longitude
+        cellImage = model.image
+        cellTitle = model.title
+        cellNumberOfSight = model.numberOfSight
+        self.latitude = model.latitude
+        self.longitude = model.longitude
     }
     
     // MARK: - Selectors

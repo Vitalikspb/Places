@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F4654762AC5C5E800B29CDA /* Extension+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4654752AC5C5E800B29CDA /* Extension+UICollectionView.swift */; };
+		1F4654782AC6B43400B29CDA /* WorldCityCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4654772AC6B43400B29CDA /* WorldCityCollectionViewCell.swift */; };
+		1F46547A2AC6CC2200B29CDA /* Extension+UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4654792AC6CC2200B29CDA /* Extension+UIStackView.swift */; };
+		1FCF6F382ACBEB0D00727B58 /* CountryCitiesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCF6F372ACBEB0D00727B58 /* CountryCitiesCollectionView.swift */; };
 		1FF45ACD2AC1CE6100FBA23E /* Extension+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */; };
 		5323BA12274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA11274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift */; };
 		5323BA14274D3BA500F6BA5E /* SightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA13274D3BA500F6BA5E /* SightTableViewCell.swift */; };
@@ -189,6 +193,10 @@
 
 /* Begin PBXFileReference section */
 		1DDC2D9B33D1D47C37891B97 /* Pods_TabBarTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabBarTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F4654752AC5C5E800B29CDA /* Extension+UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UICollectionView.swift"; sourceTree = "<group>"; };
+		1F4654772AC6B43400B29CDA /* WorldCityCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldCityCollectionViewCell.swift; sourceTree = "<group>"; };
+		1F4654792AC6CC2200B29CDA /* Extension+UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIStackView.swift"; sourceTree = "<group>"; };
+		1FCF6F372ACBEB0D00727B58 /* CountryCitiesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCitiesCollectionView.swift; sourceTree = "<group>"; };
 		1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIFont.swift"; sourceTree = "<group>"; };
 		2FD7A97CE38913470C19A8E5 /* Pods-TabBarTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.debug.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.debug.xcconfig"; sourceTree = "<group>"; };
 		3505CAED9B5A4C1483709BEE /* Pods-TabBarTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.release.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.release.xcconfig"; sourceTree = "<group>"; };
@@ -645,9 +653,11 @@
 				C254487B2706F52E000B9439 /* Extension+CLLocation.swift */,
 				C254487F27070829000B9439 /* Extention+UIView.swift */,
 				C259AA1027204DA600B03921 /* Extension+UserDefault.swift */,
+				1F4654792AC6CC2200B29CDA /* Extension+UIStackView.swift */,
 				C259AA1D2721710800B03921 /* Extension+UIImageView.swift */,
 				1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */,
 				53403D702763E0FC004087F7 /* Extension+String.swift */,
+				1F4654752AC5C5E800B29CDA /* Extension+UICollectionView.swift */,
 				FE451D232AA85CAD00831485 /* Extension+UIColor.swift */,
 			);
 			path = Extension;
@@ -660,6 +670,8 @@
 				538AF82F27341AAB00D02ECA /* StackViewStars.swift */,
 				C259AA1F272180FB00B03921 /* GradientView.swift */,
 				C2588FA0270307280014CCDC /* ScrollViewOnMap.swift */,
+				1F4654772AC6B43400B29CDA /* WorldCityCollectionViewCell.swift */,
+				1FCF6F372ACBEB0D00727B58 /* CountryCitiesCollectionView.swift */,
 				53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */,
 				FE93D3CB2AAB130900052FC1 /* ActionsButtonsCityView.swift */,
 				533D8DD7270394890006B0EE /* WeatherView.swift */,
@@ -1048,6 +1060,7 @@
 				C259AA1327214A4F00B03921 /* CurrentCityInteractor.swift in Sources */,
 				5397795827443107006644D3 /* Extension+UIViewController.swift in Sources */,
 				C26BFE602769E3F600ABD119 /* CountryToSelectTableViewCell.swift in Sources */,
+				1FCF6F382ACBEB0D00727B58 /* CountryCitiesCollectionView.swift in Sources */,
 				C26BFE592768D7E200ABD119 /* IntrestingEventsPresenter.swift in Sources */,
 				C2A0C23B276CD6540023BF60 /* FAQInteractor.swift in Sources */,
 				C2CA35EA26FDF98E00795EF6 /* TabBarWithCorners.swift in Sources */,
@@ -1085,6 +1098,7 @@
 				C26BFE6F276A1C2400ABD119 /* SelectedInterestingEventModels.swift in Sources */,
 				C26BFE5E2768DC6000ABD119 /* InterestingEventsTableViewCell.swift in Sources */,
 				53403D6B275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift in Sources */,
+				1F4654782AC6B43400B29CDA /* WorldCityCollectionViewCell.swift in Sources */,
 				53EF4D20270E2A6E008CB1B2 /* MapWorker.swift in Sources */,
 				C2A0C220276B46840023BF60 /* DescriptionCountryToBuyModels.swift in Sources */,
 				C24A7E9C2771DCDF00D4751F /* WeatherRouter.swift in Sources */,
@@ -1117,6 +1131,7 @@
 				C2A0C23F276CD6640023BF60 /* FAQWorker.swift in Sources */,
 				C26BFE572768D7D900ABD119 /* IntrestingEventsWorker.swift in Sources */,
 				C26BFE512768D7BB00ABD119 /* IntrestingEventsController.swift in Sources */,
+				1F4654762AC5C5E800B29CDA /* Extension+UICollectionView.swift in Sources */,
 				C2588FA527030D6E0014CCDC /* FilterView.swift in Sources */,
 				53F0D7AC275E98940087A9BB /* FavouritesPresenter.swift in Sources */,
 				C2A0C245276CDA5E0023BF60 /* FAQTableViewCell.swift in Sources */,
@@ -1162,6 +1177,7 @@
 				538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */,
 				538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */,
 				C2A0C22E276CA7DF0023BF60 /* RentAutoWorker.swift in Sources */,
+				1F46547A2AC6CC2200B29CDA /* Extension+UIStackView.swift in Sources */,
 				C2A0C22A276CA7CD0023BF60 /* RentAutoInteractor.swift in Sources */,
 				53F3E2FA273FD803004B278E /* CityModels.swift in Sources */,
 				C26BFE5B2768D7EA00ABD119 /* IntrestingEventsModels.swift in Sources */,

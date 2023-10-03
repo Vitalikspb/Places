@@ -18,6 +18,7 @@ enum WorldViewModels {
         let name: String
         let sights: Int
         let imageCity: UIImage
+        let available: Bool
     }
     struct TitleSection: Hashable {
         let name: String
