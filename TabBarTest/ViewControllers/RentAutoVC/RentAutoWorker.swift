@@ -1,12 +1,12 @@
+////
+////  RentAutoWorker.swift
+////  TabBarTest
+////
+////  Created by ViceCode on 17.12.2021.
+////
 //
-//  RentAutoWorker.swift
-//  TabBarTest
+//import Foundation
 //
-//  Created by ViceCode on 17.12.2021.
-//
-
-import Foundation
-
-class RentAutoWorker {
-    
-}
+//class RentAutoWorker {
+//    
+//}

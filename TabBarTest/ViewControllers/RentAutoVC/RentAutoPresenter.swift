@@ -1,21 +1,21 @@
+////
+////  RentAutoPresenter.swift
+////  TabBarTest
+////
+////  Created by ViceCode on 17.12.2021.
+////
 //
-//  RentAutoPresenter.swift
-//  TabBarTest
+//import Foundation
 //
-//  Created by ViceCode on 17.12.2021.
+//protocol RentAutoPresentationLogic: AnyObject {
+//    func presentRentAuto(response: RentAutoModels.RentAuto.ViewModel)
+//}
 //
-
-import Foundation
-
-protocol RentAutoPresentationLogic: AnyObject {
-    func presentRentAuto(response: RentAutoModels.RentAuto.ViewModel)
-}
-
-final class RentAutoPresenter: RentAutoPresentationLogic {
-    
-    weak var rentAutoController: RentAutoController?
-    
-    func presentRentAuto(response: RentAutoModels.RentAuto.ViewModel) {
-        rentAutoController?.displayRentAuto(viewModel: response)
-    }
-}
+//final class RentAutoPresenter: RentAutoPresentationLogic {
+//    
+//    weak var rentAutoController: RentAutoController?
+//    
+//    func presentRentAuto(response: RentAutoModels.RentAuto.ViewModel) {
+//        rentAutoController?.displayRentAuto(viewModel: response)
+//    }
+//}

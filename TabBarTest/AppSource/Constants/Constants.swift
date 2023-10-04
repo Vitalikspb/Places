@@ -45,8 +45,8 @@ enum Constants {
     // MARK: - Favourites screen
     
     enum Favourites {
-        /// "Сохраненное"
-        static let titleScreen = "Сохраненное"
+        /// "Избранное"
+        static let titleScreen = "Избранное"
     }
     
     // MARK: - Country Screen

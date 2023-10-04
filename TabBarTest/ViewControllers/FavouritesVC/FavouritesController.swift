@@ -14,16 +14,17 @@ protocol FavouritesDisplayLogic: AnyObject {
 class FavouritesController: UIViewController {
     
     // MARK: - UI Properties
-    private let topTableView = FavouritesTopView(frame: CGRect(x: 0,
-                                                               y: 0,
-                                                               width: UIScreen.main.bounds.width,
-                                                               height: 200))
+    private let countryLabel: UILabel = {
+       let label = UILabel()
+        label.textColor = .setCustomColor(color: .titleText)
+        label.textAlignment = .center
+        label.font = .setCustomFont(name: .semibold, andSize: 20)
+        label.text = "Россия"
+        label.backgroundColor = .clear
+        return label
+    }()
+    
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
-    
-    // MARK: - TODO
-    // создать ячейку для коллекции - верхний список
-    // создать ячейку для таблицы - в ней будет коллекия в которой будут ячейки
-    
     
     // MARK: - Public Properties
     
@@ -40,7 +41,6 @@ class FavouritesController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        view.backgroundColor = .white
         setupClean()
         setupUI()
     }
@@ -48,10 +48,7 @@ class FavouritesController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         interactor?.showFavourites()
-        
-        topTableView.dataModel = data.allSight
 
-        
     }
     
     // MARK: - Helper Functions
@@ -67,7 +64,6 @@ class FavouritesController: UIViewController {
         interactor.presenter = presenter
         presenter.favouritesController = viewController
         router.viewController = viewController
-        //        router.dataStore = interactor
     }
     
     private func setupUserDefault() {
@@ -76,9 +72,8 @@ class FavouritesController: UIViewController {
     
     private func setupUI() {
         title = Constants.Favourites.titleScreen
-        // скролл картинок
+        self.view.backgroundColor = .setCustomColor(color: .mainView)
         
-        // таблица
         tableView.register(FavouritesTableViewCell.self,
                            forCellReuseIdentifier: FavouritesTableViewCell.identifier)
         tableView.delegate = self
@@ -88,26 +83,34 @@ class FavouritesController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.tableHeaderView = topTableView
         
-        view.addSubview(tableView)
-        topTableView.delegate = self
-        tableView.anchor(top: view.topAnchor,
+        view.addSubviews(countryLabel, tableView)
+        countryLabel.anchor(top: view.layoutMarginsGuide.topAnchor,
+                            left: view.leftAnchor,
+                            bottom: nil,
+                            right: view.rightAnchor,
+                            paddingTop: 0,
+                            paddingLeft: 0,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 0, height: 50)
+        tableView.anchor(top: countryLabel.bottomAnchor,
                          left: view.leftAnchor,
                          bottom: view.bottomAnchor,
                          right: view.rightAnchor,
-                         paddingTop: 0,
+                         paddingTop: 8,
                          paddingLeft: 0,
                          paddingBottom: 0,
                          paddingRight: 0,
                          width: 0, height: 0)
     }
     
-//    private func
 }
 
 // MARK: - CountryDisplayLogic
+
 extension FavouritesController: FavouritesDisplayLogic {
+    
     func displayFavourites(viewModel: FavouritesViewModel.FavouritesSight.ViewModel) {
         data = viewModel
         tableView.reloadData()
@@ -117,63 +120,40 @@ extension FavouritesController: FavouritesDisplayLogic {
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension FavouritesController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data?.county[section].city.count ?? 0
+        return 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return data?.county.count ?? 0
+        return data.model.count
     }
     
-    // заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FavouritesTableViewCell.identifier, for: indexPath) as? FavouritesTableViewCell else { return UITableViewCell() }
-        
-        // 5 всех достопримечательностей
-        // массив для заполенния достопримечательносей в каждой ячейке
-        var allCitiesSight = [FavouritesTableViewCell.CitySight]()
-        for (_, valueSight) in data.county[indexPath.section].city[indexPath.row].citySight.enumerated() {
-            allCitiesSight.append(FavouritesTableViewCell.CitySight(
-                                    sightType: valueSight.sightType,
-                                    sightName: valueSight.sightName,
-                                    sightImage: valueSight.sightImage,
-                                    sightFavouritesFlag: valueSight.sightFavouritesFlag))
-        }
-        
-        
-        cell.configCell(data: FavouritesTableViewCell.CellModel(
-                            city: data.county[indexPath.section].city[indexPath.row].city,
-                            descriptionCity: allCitiesSight))
+
+        cell.configCell(city: data.model[indexPath.section].titlesec.city,
+                        data: data.model[indexPath.section].items)
         cell.delegate = self
         return cell
     }
     
-    // высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // ячейка с кнопками
-        return 220
-        
-    }
-    
-    // хедер страна
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return data.county[section].county
-    }
-    
-    // белое заполнение пустой части таблицы
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
+        return 350
     }
 }
 
+// MARK: - FavouritesTableViewCellDelegate
+
 extension FavouritesController: FavouritesTableViewCellDelegate {
-    func showSelectedSightOnMap(_ name: String) {
-        print("FavouritesTableViewCellDelegate tap on cell sight with name: \(name)")
-        userDefault.set(true, forKey: UserDefaults.showSelectedSight)
-        userDefault.set(name, forKey: UserDefaults.showSelectedSightName)
-        tabBarController?.selectedIndex = 0
+    
+    func tapFavouriteButton() {
+        print("Добавить или удалить выбранный гоорд")
     }
+    
+    func showCity(name: String) {
+        print("открыть выбранный город из избранного")
+    }
+
 }
 

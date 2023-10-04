@@ -6,152 +6,172 @@
 
 import UIKit
 
+protocol FavouritesTableViewCollectionViewCellDelegate: AnyObject {
+    func tapFavouriteButton()
+    func showCity(name: String)
+}
+
 // Класс ячейки для всего списка достопримечательнойстей
 // отображается сверху экрана сохраненных достопримечательностей
-class FavouritesTableViewCollectionViewCell: UICollectionViewCell {
+class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
     
     // MARK: - UI properties
     
-    private let sightImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 8
-        imageView.layer.masksToBounds = true
-        imageView.backgroundColor = .white
-        return imageView
+    private let mainView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
     }()
-    private let favouriteFlag: UIImageView = {
+    
+    let mainImageView: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 12
+        image.clipsToBounds = true
+        image.tintColor = .setCustomColor(color: .titleText)
+        return image
+    }()
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .setCustomColor(color: .titleText)
+        label.textAlignment = .left
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
+        return label
+    }()
+    let typeSightImageView: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .center
+        image.tintColor = .setCustomColor(color: .tabBarIconSelected)
+        image.backgroundColor = .clear
+        image.image = UIImage(named: "museum")
+        
+        return image
+    }()
+    let typeSightLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .setCustomColor(color: .subTitleText)
+        label.textAlignment = .left
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
+        return label
+    }()
+    private let favouriteButtonView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .setCustomColor(color: .mainView)
+        view.layer.cornerRadius = 6
+        return view
+    }()
+    private let favouriteButtonImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .center
-        imageView.tintColor = .yellow
+        imageView.tintColor = .setCustomColor(color: .titleText)
         imageView.backgroundColor = .clear
-        imageView.image = UIImage(systemName: "star")
+        imageView.image = UIImage(named: "favouriteImage")
         return imageView
     }()
-    private let sightNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.contentMode = .center
-        label.textAlignment = .left
-        label.backgroundColor = .clear
-        label.font = .setCustomFont(name: .semibold, andSize: 15)
-        return label
-    }()
-    private let sightTypeLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.contentMode = .center
-        label.textAlignment = .left
-        label.backgroundColor = .clear
-        label.font = .setCustomFont(name: .semibold, andSize: 15)
-        return label
-    }()
-    private let gradientView = GradientView()
+    
     
     // MARK: - Public properties
     
-    static let identifier = "FavouritesTopCollectionViewCell"
+    weak var delegate: FavouritesTableViewCollectionViewCellDelegate?
+    static let identifier = "FavouritesTableViewCollectionViewCell"
     
-    private var putToFavouritesList: Bool = true
-    
-    // MARK: - LifeCycle
+    // MARK: - Life cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        setupConstraints()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupUI()
-        setupConstraints()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Helper functions
     
+    func configureCell(withName title: String, typeSight: String, andImage image: UIImage) {
+        titleLabel.text = title
+        typeSightLabel.text = typeSight
+        mainImageView.image = image
+    }
+    
     private func setupUI() {
-        let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: contentView.frame.width, height: 50),
-                                byRoundingCorners: [.bottomLeft, .bottomRight],
-                                cornerRadii: CGSize(width: 8, height: 8))
-        let maskLayer = CAShapeLayer()
-        maskLayer.path = path.cgPath
-        gradientView.colors = [UIColor.clear, UIColor.black]
-        gradientView.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientView.endPoint = CGPoint(x: 0.5, y: 1.0)
-        gradientView.layer.mask = maskLayer
+        let mapTap = UITapGestureRecognizer(target: self, action: #selector(moveToCityViewHandle))
+        mainImageView.addGestureRecognizer(mapTap)
+
+        let moveTap = UITapGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
+        favouriteButtonImageView.addGestureRecognizer(moveTap)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFavouriteHandle))
-        favouriteFlag.isUserInteractionEnabled = true
-        favouriteFlag.addGestureRecognizer(tap)
-        favouriteFlag.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
+        contentView.backgroundColor = .clear
+        contentView.layer.cornerRadius = 12
+        contentView.clipsToBounds = true
         
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 8
-        self.clipsToBounds = true
+        contentView.addSubviews(mainView)
+        mainView.addConstraintsToFillView(view: contentView)
         
-        contentView.addSubview(sightImageView)
-        contentView.addSubview(gradientView)
-        contentView.addSubview(sightNameLabel)
-        contentView.addSubview(sightTypeLabel)
-        contentView.addSubview(favouriteFlag)
-    }
-    
-    @objc private func tapFavouriteHandle() {
-        print("Put to favourite list")
-        putToFavouritesList = !putToFavouritesList
-        favouriteFlag.image = self.putToFavouritesList ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
-    }
-    
-    private func setupConstraints() {
-        sightImageView.addConstraintsToFillView(view: contentView)
-        gradientView.anchor(top: nil,
-                            left: contentView.leftAnchor,
-                            bottom: contentView.bottomAnchor,
-                            right: contentView.rightAnchor,
-                            paddingTop: 0,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 0,
-                            width: 0, height: 50)
-        sightNameLabel.anchor(top: nil,
-                               left: contentView.leftAnchor,
-                               bottom: sightTypeLabel.topAnchor,
-                               right: contentView.rightAnchor,
-                               paddingTop: 0,
-                               paddingLeft: 8,
-                               paddingBottom: 0,
-                               paddingRight: 0,
-                               width: 0, height: 25)
-        sightTypeLabel.anchor(top: nil,
-                                  left: contentView.leftAnchor,
-                                  bottom: contentView.bottomAnchor,
-                                  right: contentView.rightAnchor,
-                                  paddingTop: 0,
-                                  paddingLeft: 8,
-                                  paddingBottom: 8,
+        mainView.addSubviews(mainImageView, titleLabel, typeSightLabel, typeSightImageView, favouriteButtonView)
+        favouriteButtonView.addSubviews(favouriteButtonImageView)
+
+        
+        mainImageView.anchor(top: mainView.topAnchor,
+                             left: mainView.leftAnchor,
+                             bottom: nil,
+                             right: mainView.rightAnchor,
+                             paddingTop: 0,
+                             paddingLeft: 0,
+                             paddingBottom: 0,
+                             paddingRight: 0,
+                             width: 0, height: 0)
+        
+        titleLabel.anchor(top: mainImageView.bottomAnchor,
+                          left: mainView.leftAnchor,
+                          bottom: nil,
+                          right: nil,
+                          paddingTop: 4,
+                          paddingLeft: 16,
+                          paddingBottom: 0,
+                          paddingRight: 0,
+                          width: 0, height: 25)
+        typeSightImageView.anchor(top: titleLabel.bottomAnchor,
+                                  left: mainView.leftAnchor,
+                                  bottom: mainView.bottomAnchor,
+                                  right: nil,
+                                  paddingTop: 4,
+                                  paddingLeft: 20,
+                                  paddingBottom: 4,
+                                  paddingRight: 0,
+                                  width: 16, height: 16)
+        typeSightLabel.anchor(top: titleLabel.bottomAnchor,
+                                  left: typeSightImageView.rightAnchor,
+                                  bottom: mainView.bottomAnchor,
+                                  right: nil,
+                                  paddingTop: 4,
+                                  paddingLeft: 10,
+                                  paddingBottom: 4,
                                   paddingRight: 0,
                                   width: 0, height: 20)
-        favouriteFlag.anchor(top: contentView.topAnchor,
-                            left: nil,
-                            bottom: nil,
-                            right: contentView.rightAnchor,
-                            paddingTop: 4,
-                            paddingLeft: 0,
-                            paddingBottom: 0,
-                            paddingRight: 4,
-                            width: 35, height: 35)
+        favouriteButtonView.anchor(top: mainImageView.topAnchor,
+                                     left: nil,
+                                     bottom: nil,
+                                     right: mainImageView.rightAnchor,
+                                     paddingTop: 8,
+                                     paddingLeft: 0,
+                                     paddingBottom: 0,
+                                     paddingRight: 8,
+                                     width: 35, height: 35)
+        favouriteButtonView.addConstraintsToFillView(view: favouriteButtonImageView)
     }
-    func conigureCell(title: String, type: String, image: UIImage, favouritesFlag: Bool) {
-        sightNameLabel.text = title
-        sightTypeLabel.text = type
-        sightImageView.image = image
-        favouriteFlag.image = favouritesFlag ? UIImage(systemName: "star.fill") : UIImage(systemName: "star")
-        
+    
+    // MARK: - Selectors
+    
+    @objc private func moveToCityViewHandle() {
+        print("переход на город подробней: \(titleLabel.text)")
+        delegate?.showCity(name: titleLabel.text ?? "")
     }
+    
+    @objc private func moveToMapViewHandle() {
+        print("переход на город на карте")
+        delegate?.tapFavouriteButton()
+    }
+    
 }
 

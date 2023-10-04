@@ -1,21 +1,21 @@
+////
+////  RentAutoRouter.swift
+////  TabBarTest
+////
+////  Created by ViceCode on 17.12.2021.
+////
 //
-//  RentAutoRouter.swift
-//  TabBarTest
+//import Foundation
 //
-//  Created by ViceCode on 17.12.2021.
+//protocol RentAutoRoutingLogic: AnyObject {
+//}
 //
-
-import Foundation
-
-protocol RentAutoRoutingLogic: AnyObject {
-}
-
-protocol RentAutoDataPassing: AnyObject {
-    var dataStore: RentAutoDataStore? { get }
-}
-
-class RentAutoRouter: NSObject, RentAutoRoutingLogic, RentAutoDataPassing {
-    var dataStore: RentAutoDataStore?
-    weak var viewController: RentAutoController?
-    
-}
+//protocol RentAutoDataPassing: AnyObject {
+//    var dataStore: RentAutoDataStore? { get }
+//}
+//
+//class RentAutoRouter: NSObject, RentAutoRoutingLogic, RentAutoDataPassing {
+//    var dataStore: RentAutoDataStore?
+//    weak var viewController: RentAutoController?
+//    
+//}

@@ -11,7 +11,7 @@ protocol CityRoutingLogic: AnyObject {
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
 //    func routeToExibitionVC()
-    func routeToRentAutoVC()
+//    func routeToRentAutoVC()
     func routeToFAQVC()
     func routeToHelperMapsVC()
     func routeToFullWeatherVC()
@@ -33,11 +33,11 @@ class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
         navigateToFullWeather(source: viewController!, destination: destinationVC)
     }
     
-    // показать модальный экран со списком компаний аренды автомобилей
-    func routeToRentAutoVC() {
-        let destination: RentAutoController = RentAutoController.loadFromStoryboard()
-        presentModalRentAuto(source: viewController!, destination: destination)
-    }
+//    // показать модальный экран со списком компаний аренды автомобилей
+//    func routeToRentAutoVC() {
+//        let destination: RentAutoController = RentAutoController.loadFromStoryboard()
+//        presentModalRentAuto(source: viewController!, destination: destination)
+//    }
     func routeToFAQVC() {
         let destinationVC: FAQController = FAQController.loadFromStoryboard()
         var destinationDS = destinationVC.router!.dataStore!
@@ -94,9 +94,9 @@ class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
     func navigateToHelperMaps(source: CityController, destination: HelperMapsController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
-    func presentModalRentAuto(source: CityController!, destination: RentAutoController) {
-        source.present(destination, animated: true, completion: nil)
-    }
+//    func presentModalRentAuto(source: CityController!, destination: RentAutoController) {
+//        source.present(destination, animated: true, completion: nil)
+//    }
     func navigateToFaq(source: CityController!, destination: FAQController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }

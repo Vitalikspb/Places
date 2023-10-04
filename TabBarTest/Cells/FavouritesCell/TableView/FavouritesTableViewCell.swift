@@ -7,47 +7,44 @@
 import UIKit
 
 protocol FavouritesTableViewCellDelegate: AnyObject {
-    func showSelectedSightOnMap(_ name: String)
+    func tapFavouriteButton()
+    func showCity(name: String)
 }
 
 // Класс ячейки для основной таблицы достопримечательностей
 class FavouritesTableViewCell: UITableViewCell {
     
-    struct CellModel {
-        var city: String
-        var descriptionCity: [CitySight]
-    }
-    struct CitySight {
-        var sightType: String
-        var sightName: String
-        var sightImage: UIImage
-        var sightFavouritesFlag: Bool
-    }
-    
     // MARK: - UI properties
-    let collectionView = UICollectionView(frame: CGRect.zero,
-                                          collectionViewLayout: UICollectionViewLayout.init())
-    private let titleLabel: UILabel = {
+    
+    private let backgroundCityView: UIView = {
+       let view = UIView()
+        view.layer.cornerRadius = 12
+        view.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
+        return view
+    }()
+    
+    private let cityLabel: UILabel = {
        let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
         label.font = .setCustomFont(name: .semibold, andSize: 16)
         label.text = "Москва"
         return label
     }()
     
+    private let collectionViewCells: FavouritesCitiesCollectionView = {
+       let view = FavouritesCitiesCollectionView()
+        return view
+    }()
+    
+    
     
     // MARK: - Public properties
     
-    // MARK: - TODO изменить модель под своб собственную
-    var dataModel: CellModel!
-    
+    var dataModel: [FavouritesViewModel.ItemData]!
     weak var delegate: FavouritesTableViewCellDelegate?
     static let identifier = "FavouritesTableViewCell"
     
-    // MARK: - Private properties
-    // MARK: - TODO Изменить citiesAvailable на нормальные данные из модели
-    private var citiesAvailable = ["Эрмитаж","Русский музей","Мавзолей","Красная площадь"]
     
     // MARK: - Lifecycle
     
@@ -64,7 +61,6 @@ class FavouritesTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        
     }
     
     override func prepareForReuse() {
@@ -77,41 +73,43 @@ class FavouritesTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(data: CellModel) {
+    func configCell(city: String, data: [FavouritesViewModel.ItemData]) {
         dataModel = data
-        titleLabel.text = dataModel.city
+        cityLabel.text = city
+        
+        collectionViewCells.configureCells(model: dataModel)
     }
     
     private func setupUI() {
+        collectionViewCells.delegate = self
         
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 280, height: 180)
-        layout.minimumLineSpacing = 10.0
-        layout.minimumInteritemSpacing = 10.0
-        collectionView.register(FavouritesTableViewCollectionViewCell.self,
-                                forCellWithReuseIdentifier: FavouritesTableViewCollectionViewCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        collectionView.setCollectionViewLayout(layout, animated: true)
+        contentView.addSubviews(backgroundCityView, collectionViewCells)
+        backgroundCityView.addSubviews(cityLabel)
         
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(collectionView)
+        cityLabel.anchor(top: nil,
+                         left: backgroundCityView.leftAnchor,
+                         bottom: nil,
+                         right: backgroundCityView.rightAnchor,
+                         paddingTop: 0,
+                         paddingLeft: 16,
+                         paddingBottom: 0,
+                         paddingRight: 16,
+                         width: 0,
+                         height: 0)
+        cityLabel.centerY(inView: backgroundCityView)
         
-        titleLabel.anchor(top: contentView.topAnchor,
-                          left: contentView.leftAnchor,
-                          bottom: nil,
-                          right: contentView.rightAnchor,
-                          paddingTop: 8,
-                          paddingLeft: 16,
-                          paddingBottom: 0,
-                          paddingRight: 8,
-                          width: 0,
-                          height: 0)
-        collectionView.anchor(top: titleLabel.bottomAnchor,
+        backgroundCityView.anchor(top: contentView.topAnchor,
+                                  left: contentView.leftAnchor,
+                                  bottom: nil,
+                                  right: contentView.rightAnchor,
+                                  paddingTop: 8,
+                                  paddingLeft: 16,
+                                  paddingBottom: 0,
+                                  paddingRight: 8,
+                                  width: 0,
+                                  height: 50)
+        
+        collectionViewCells.anchor(top: backgroundCityView.bottomAnchor,
                           left: contentView.leftAnchor,
                           bottom: contentView.bottomAnchor,
                           right: contentView.rightAnchor,
@@ -124,33 +122,17 @@ class FavouritesTableViewCell: UITableViewCell {
     }
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+// MARK: - FavouritesCitiesCollectionViewDelegate
 
-extension FavouritesTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension FavouritesTableViewCell: FavouritesCitiesCollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataModel.descriptionCity.count
+    // Нажатие на кнопку избранное в ячейке
+    func tapFavouriteButton() {
+        delegate?.tapFavouriteButton()
     }
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavouritesTableViewCollectionViewCell.identifier, for: indexPath) as? FavouritesTableViewCollectionViewCell else { return UICollectionViewCell() }
-        
-        cell.conigureCell(title: dataModel.descriptionCity[indexPath.row].sightName,
-                          type: dataModel.descriptionCity[indexPath.row].sightType,
-                          image: dataModel.descriptionCity[indexPath.row].sightImage,
-                          favouritesFlag: dataModel.descriptionCity[indexPath.row].sightFavouritesFlag)
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.showSelectedSightOnMap(citiesAvailable[indexPath.row])
+    // Открытие города подробней
+    func showCity(name: String) {
+        delegate?.showCity(name: name)
     }
 }
-
