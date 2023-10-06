@@ -11,6 +11,8 @@ protocol HelperMapsDisplayLogic: AnyObject {
     func displayHelperMaps(viewModel: HelperMapsModels.HelperMaps.ViewModel)
 }
 
+// MARK: - Экран списка карт по городам
+
 class HelperMapsController: UIViewController {
 
     // MARK: - UI Properties

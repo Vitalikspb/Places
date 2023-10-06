@@ -11,6 +11,8 @@ protocol IntrestingEventsDisplayLogic: AnyObject {
     func displayIntrestingEvents(viewModel: IntrestingEventsModels.IntrestingEvents.ViewModel)
 }
 
+// MARK: - Экран Интересные места
+
 class IntrestingEventsController: UIViewController {
     
     // MARK: - UI Properties
@@ -67,6 +69,7 @@ class IntrestingEventsController: UIViewController {
     }
     
     private func setupUI() {
+        title = "Интересные события"
         tableView.register(InterestingEventsTableViewCell.self,
                            forCellReuseIdentifier: InterestingEventsTableViewCell.identifier)
         tableView.delegate = self
@@ -92,9 +95,9 @@ class IntrestingEventsController: UIViewController {
 
 // MARK: - CountryDisplayLogic
 extension IntrestingEventsController: IntrestingEventsDisplayLogic {
+    
     func displayIntrestingEvents(viewModel: IntrestingEventsModels.IntrestingEvents.ViewModel) {
         data = viewModel
-        title = "События в \(data.country)"
         tableView.reloadData()
     }
 }
@@ -102,6 +105,7 @@ extension IntrestingEventsController: IntrestingEventsDisplayLogic {
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data?.events.count ?? 0
     }
@@ -110,19 +114,20 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: InterestingEventsTableViewCell.identifier, for: indexPath) as? InterestingEventsTableViewCell else { return UITableViewCell() }
 
-        cell.configureCell(title: data.events[indexPath.row].name,
-                           description: data.events[indexPath.row].descriptions,
-                           date: data.events[indexPath.row].date,
-                           image: data.events[indexPath.row].image.first!)
+        let model = InterestingEventsTableViewCell.InterestingEventsModel(
+            name: data.events[indexPath.row].name,
+            date: data.events[indexPath.row].date,
+            description: data.events[indexPath.row].descriptions,
+            image: data.events[indexPath.row].image.first!)
+        cell.configureCell(model: model)
         return cell
     }
     
     // высота каждой ячейки
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 270
+        return 230
     }
  
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         router?.dataStore?.name = data.events[indexPath.row].name
         router?.dataStore?.description = data.events[indexPath.row].descriptions

@@ -11,6 +11,8 @@ protocol FavouritesDisplayLogic: AnyObject {
     func displayFavourites(viewModel: FavouritesViewModel.FavouritesSight.ViewModel)
 }
 
+// MARK: - Экран Избранное 
+
 class FavouritesController: UIViewController {
     
     // MARK: - UI Properties

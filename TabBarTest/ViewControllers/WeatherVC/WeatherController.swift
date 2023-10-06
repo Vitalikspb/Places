@@ -11,6 +11,8 @@ protocol WeatherDisplayLogic: AnyObject {
     func displayWeather(viewModel: WeatherModels.Weather.ViewModel)
 }
 
+// MARK: - Экран погоды
+
 class WeatherController: UIViewController {
 
     

@@ -27,7 +27,7 @@ class FavouritesTableViewCell: UITableViewCell {
        let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = .setCustomFont(name: .semibold, andSize: 16)
+        label.font = .setCustomFont(name: .semibold, andSize: 20)
         label.text = "Москва"
         return label
     }()

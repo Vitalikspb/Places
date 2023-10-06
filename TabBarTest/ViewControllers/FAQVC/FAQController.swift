@@ -12,6 +12,8 @@ protocol FAQDisplayLogic: AnyObject {
     func displayFAQ(viewModel: FAQModels.RentAuto.ViewModel)
 }
 
+// MARK: - экран помощи
+
 class FAQController: UIViewController {
     
     // MARK: - Public Properties

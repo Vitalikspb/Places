@@ -22,11 +22,7 @@ class CountryPhotosTableViewCell: UITableViewCell {
     // MARK: - Public properties
     
     static let identifier = "CountryPhotosTableViewCell"
-    private var imageArray: [UIImage] = [UIImage(named: "spb1")!,
-                                         UIImage(named: "spb2")!,
-                                         UIImage(named: "spb3")!,
-                                         UIImage(named: "spb4")!,
-                                         UIImage(named: "spb5")!]
+    private var imageArray = [UIImage]()
     
     // MARK: - Lifecycle
     
@@ -56,8 +52,8 @@ class CountryPhotosTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(title: String) {
-        
+    func configureCell(cityImages: [UIImage]) {
+        imageArray = cityImages
     }
     
     private func setupUI() {
@@ -100,14 +96,14 @@ extension CountryPhotosTableViewCell: UICollectionViewDelegate, UICollectionView
         return count
     }
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        return 1
+//    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsPhotosCollectionViewCell.identifier, for: indexPath) as? CountryCellsPhotosCollectionViewCell else { return UICollectionViewCell() }
         cell.image.image = imageArray[indexPath.row]
-        cell.layer.cornerRadius = 10
+        cell.layer.cornerRadius = 12
         return cell
     }
     

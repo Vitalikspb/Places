@@ -11,6 +11,8 @@ protocol SelectedInterestingEventDisplayLogic: AnyObject {
     func displayAllCities(viewModel: SelectedInterestingEventViewModel.EventModels.ViewModel)
 }
 
+// MARK: - Экран конкретное выбранное место
+
 class SelectedInterestingEventController: UIViewController {
     
     // MARK: - Public Properties
@@ -24,30 +26,40 @@ class SelectedInterestingEventController: UIViewController {
     private var titleName: String = ""
     var viewModel: SelectedInterestingEventViewModel.EventModels.ViewModel!
     
-    
     // MARK: - UI Properties
     
-    private let collectionView = UICollectionView(frame: CGRect.zero,
-                                          collectionViewLayout: UICollectionViewLayout.init())
     private let dateLabel: UILabel = {
        let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.font = .setCustomFont(name: .semibold, andSize: 15)
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
         label.text = "00-00-0000"
         return label
     }()
+    private let collectionView = UICollectionView(frame: CGRect.zero,
+                                          collectionViewLayout: UICollectionViewLayout.init())
+    private let tableView: UITableView = {
+        let table = UITableView()
+        table.separatorStyle = .none
+        table.allowsSelection = false
+        table.isUserInteractionEnabled = true
+        table.isScrollEnabled = false
+        table.showsVerticalScrollIndicator = false
+        return table
+    }()
     private let mainTextView: UITextView = {
        let textView = UITextView()
-        textView.backgroundColor = .white
+        textView.backgroundColor = .clear
         textView.isUserInteractionEnabled = false
-        textView.font = .setCustomFont(name: .regular, andSize: 15)
+        textView.font = .setCustomFont(name: .regular, andSize: 16)
         return textView
     }()
 
-    // MARK: - Public properties
+    // MARK: - Private properties
+    
     private let layout = UICollectionViewFlowLayout()
     private lazy var modelImage = [UIImage]()
+    private var descriptionEvent: String = ""
     
     // MARK: - Lifecycle
     
@@ -87,6 +99,14 @@ class SelectedInterestingEventController: UIViewController {
     }
     
     private func setupUI() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.separatorColor = .clear
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.isScrollEnabled = true
+        
         layout.scrollDirection = .horizontal
         collectionView.register(InterestingEventsCollectionViewCell.self,
                                 forCellWithReuseIdentifier: InterestingEventsCollectionViewCell.identifier)
@@ -98,36 +118,36 @@ class SelectedInterestingEventController: UIViewController {
         layout.itemSize = CGSize(width: 220, height: 170)
         collectionView.setCollectionViewLayout(layout, animated: true)
         
-        view.addSubview(collectionView)
-        view.addSubview(mainTextView)
-        view.addSubview(dateLabel)
+        view.addSubviews(dateLabel, collectionView, tableView)
         
-        collectionView.anchor(top: view.topAnchor,
-                         left: view.leftAnchor,
-                         bottom: dateLabel.topAnchor,
-                         right: view.rightAnchor,
-                         paddingTop: 16,
-                         paddingLeft: 0,
-                         paddingBottom: 0,
-                         paddingRight: 0,
-                         width: 0, height: 280)
-        dateLabel.anchor(top: nil,
+        dateLabel.anchor(top: view.layoutMarginsGuide.topAnchor,
                           left: view.leftAnchor,
-                          bottom: mainTextView.topAnchor,
+                          bottom: nil,
                           right: view.rightAnchor,
                           paddingTop: 0,
                           paddingLeft: 16,
                           paddingBottom: 0,
                           paddingRight: 16,
                           width: 0, height: 25)
-        mainTextView.anchor(top: nil,
+        
+        collectionView.anchor(top: dateLabel.bottomAnchor,
+                         left: view.leftAnchor,
+                         bottom: nil,
+                         right: view.rightAnchor,
+                         paddingTop: 16,
+                         paddingLeft: 0,
+                         paddingBottom: 0,
+                         paddingRight: 0,
+                         width: 0, height: 180)
+        
+        tableView.anchor(top: collectionView.bottomAnchor,
                             left: view.leftAnchor,
-                            bottom: view.bottomAnchor,
+                            bottom: view.layoutMarginsGuide.bottomAnchor,
                             right: view.rightAnchor,
                             paddingTop: 0,
-                            paddingLeft: 14,
-                            paddingBottom: 14,
-                            paddingRight: 14,
+                            paddingLeft: 0,
+                            paddingBottom: 0,
+                            paddingRight: 0,
                             width: 0, height: 0)
     }
     
@@ -143,15 +163,17 @@ extension SelectedInterestingEventController: SelectedInterestingEventDisplayLog
         self.viewModel = viewModel
         title = viewModel.event.nameEvent
         modelImage = viewModel.event.image
-        mainTextView.text = viewModel.event.mainText
-        dateLabel.text = viewModel.event.date
+        descriptionEvent = viewModel.event.mainText
+        dateLabel.text = "Дата проведения \(viewModel.event.date)"
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.collectionView.reloadData()
+            self.tableView.reloadData()
         }
     }
 }
 
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
 extension SelectedInterestingEventController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -174,6 +196,23 @@ extension SelectedInterestingEventController: UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
+}
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
+
+extension SelectedInterestingEventController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = descriptionEvent
+        cell.textLabel?.numberOfLines = 0
+        return cell
+    }
+    
 }
 
 

@@ -9,16 +9,18 @@ import UIKit
 class InterestingEventsTableViewCell: UITableViewCell {
     
     // MARK: - UI properties
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
         label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
+    
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .setCustomColor(color: .subTitleText)
         label.textAlignment = .left
         label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
@@ -31,19 +33,21 @@ class InterestingEventsTableViewCell: UITableViewCell {
         imageView.backgroundColor = .white
         return imageView
     }()
-    private let mainTextLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = .setCustomFont(name: .regular, andSize: 14)
-        label.text = ""
-        return label
-    }()
     
     // MARK: - Public properties
     
     static let identifier = "InterestingEventsTableViewCell"
+    
+    // MARK: - Private properties
+    
+    struct InterestingEventsModel {
+        var name,
+            date,
+            description: String
+        var image: UIImage
+    }
+    
+    private var model: InterestingEventsModel?
     
     // MARK: - Lifecycle
     
@@ -72,63 +76,52 @@ class InterestingEventsTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
+    func configureCell(model: InterestingEventsModel) {
+        self.model = model
+        titleLabel.text = model.name
+        dateLabel.text = model.date
+        mainImageView.image = model.image
+    }
+    
     private func setupUI() {
-        // Для обрезания длинного текста описания события
         self.clipsToBounds = true
         let bgColorView = UIView()
         bgColorView.backgroundColor = .white
         self.selectedBackgroundView = bgColorView
         
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(mainImageView)
-        contentView.addSubview(mainTextLabel)
-        contentView.addSubview(dateLabel)
-        
-        titleLabel.anchor(top: contentView.topAnchor,
-                          left: contentView.leftAnchor,
-                          bottom: nil,
-                          right: nil,
-                          paddingTop: 8,
-                          paddingLeft: 16,
-                          paddingBottom: 0,
-                          paddingRight: 0,
-                          width: 0,
-                          height: 0)
-        dateLabel.anchor(top: contentView.topAnchor,
-                         left: titleLabel.rightAnchor,
-                         bottom: nil,
-                         right: contentView.rightAnchor,
-                         paddingTop: 8,
-                         paddingLeft: 16,
-                         paddingBottom: 0,
-                         paddingRight: 16,
-                         width: 0,
-                         height: 0)
+        contentView.addSubviews(titleLabel, mainImageView, dateLabel)
+
         mainImageView.anchor(top: contentView.topAnchor,
                              left: contentView.leftAnchor,
                              bottom: nil,
                              right: contentView.rightAnchor,
-                             paddingTop: 35,
+                             paddingTop: 16,
                              paddingLeft: 16,
                              paddingBottom: 0,
                              paddingRight: 16,
                              width: 0,
-                             height: 170)
-        mainTextLabel.anchor(top: mainImageView.bottomAnchor,
-                             left: contentView.leftAnchor,
-                             bottom: contentView.bottomAnchor,
-                             right: contentView.rightAnchor,
-                             paddingTop: 10,
-                             paddingLeft: 16,
-                             paddingBottom: 5,
-                             paddingRight: 16,
-                             width: 0, height: 0)
-    }
-    
-    func configureCell(title: String, description: String, date: String, image: UIImage) {
-        mainTextLabel.text = description
-        titleLabel.text = title
-        dateLabel.text = date
-        mainImageView.image = image
+                             height: 0)
+        
+        titleLabel.anchor(top: mainImageView.bottomAnchor,
+                          left: contentView.leftAnchor,
+                          bottom: nil,
+                          right: contentView.rightAnchor,
+                          paddingTop: 0,
+                          paddingLeft: 16,
+                          paddingBottom: 0,
+                          paddingRight: 0,
+                          width: 0,
+                          height: 30)
+        dateLabel.anchor(top: titleLabel.bottomAnchor,
+                         left: contentView.leftAnchor,
+                         bottom: contentView.bottomAnchor,
+                         right: contentView.rightAnchor,
+                         paddingTop: 0,
+                         paddingLeft: 16,
+                         paddingBottom: 8,
+                         paddingRight: 16,
+                         width: 0,
+                         height: 30)
+        
     }
 }

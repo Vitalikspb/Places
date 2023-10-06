@@ -142,6 +142,7 @@ class SightTableViewCell: UITableViewCell {
     }
     
     @objc private func lookAllTapped() {
+        
         delegate?.lookAll()
     }
 }

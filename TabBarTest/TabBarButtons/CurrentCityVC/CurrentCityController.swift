@@ -210,6 +210,11 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier,
                                                            for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
+            cell.configureCell(cityImages: [UIImage(named: "spb1")!,
+                                            UIImage(named: "spb2")!,
+                                            UIImage(named: "spb3")!,
+                                            UIImage(named: "spb4")!,
+                                            UIImage(named: "spb5")!])
             return cell
             
             // описание
@@ -253,7 +258,6 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             // Погода
         case 5:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
-            // MARK: - TODO Координаты берутся из модели
             cell.configureCell(city: titleName,
                                curTemp: Int(viewModel.weather.currentWeather.todayTemp),
                                curImage: viewModel.weather.currentWeather.imageWeather,
@@ -384,7 +388,7 @@ extension CurrentCityController: CountryCitiesTableViewCellDelegate {
 extension CurrentCityController: SightTableViewCellDelegate {
     // нажатие на кнопку смотреть все из "места в окрестностях"
     func lookAll() {
-        print("вернуть на главный, отобразить на карте все точки из места в окрестностях и отдалить карту")
+        print("Нажатие кнопки 'см.все'")
     }
     
     // открываем выбранную достопримечательность на карте

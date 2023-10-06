@@ -65,7 +65,7 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
         imageView.contentMode = .center
         imageView.tintColor = .setCustomColor(color: .titleText)
         imageView.backgroundColor = .clear
-        imageView.image = UIImage(named: "favouriteImage")
+        imageView.image = UIImage(named: "moveToMap")
         return imageView
     }()
     
@@ -96,10 +96,14 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
     
     private func setupUI() {
         let mapTap = UITapGestureRecognizer(target: self, action: #selector(moveToCityViewHandle))
+        mainImageView.isUserInteractionEnabled = true
         mainImageView.addGestureRecognizer(mapTap)
 
         let moveTap = UITapGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
+        favouriteButtonImageView.isUserInteractionEnabled = true
         favouriteButtonImageView.addGestureRecognizer(moveTap)
+        
+        
         
         contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = 12
