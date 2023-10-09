@@ -11,10 +11,7 @@ protocol CurrentCityRoutingLogic: AnyObject {
     func routeToCityVC()
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
-//    func routeToExibitionVC()
-//    func routeToRentAutoVC()
     func routeToFAQVC()
-    func routeToHelperMapsVC()
     func routeToFullWeatherVC()
 }
 
@@ -35,24 +32,14 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         passDataToFullWeather(source: dataStore!, destination: &destinationDS)
         navigateToFullWeather(source: viewController!, destination: destinationVC)
     }
-    
-    // показать модальный экран со списком компаний аренды автомобилей
-//    func routeToRentAutoVC() {
-//        let destination: RentAutoController = RentAutoController.loadFromStoryboard()
-//        presentModalRentAuto(source: viewController!, destination: destination)
-//    }
+
     func routeToFAQVC() {
         let destinationVC: FAQController = FAQController.loadFromStoryboard()
         var destinationDS = destinationVC.router!.dataStore!
         passDataToFaq(source: dataStore!, destination: &destinationDS)
         navigateToFaq(source: viewController!, destination: destinationVC)
     }
-    func routeToHelperMapsVC() {
-        let destinationVC: HelperMapsController = HelperMapsController.loadFromStoryboard()
-        var destinationDS = destinationVC.router!.dataStore!
-        passDataToHelperMaps(source: dataStore!, destination: &destinationDS)
-        navigateToHelperMaps(source: viewController!, destination: destinationVC)
-    }
+
     // на экран сохраненных достопримечательностей
     func routeToFavouritesVC() {
         let destinationVC: FavouritesController = FavouritesController.loadFromStoryboard()
@@ -72,13 +59,6 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         passDataToLeadMore(source: dataStore!, destination: &destinationDS)
         navigateToViewContact(source: viewController!, destination: destinationVC)
     }
-    // на экран билеты на экскурсию
-//    func routeToExibitionVC() {
-//        let destinationVC: ExibitionsController = ExibitionsController.loadFromStoryboard()
-//        var destinationDS = destinationVC.router!.dataStore!
-//        passDataToExibitions(source: dataStore!, destination: &destinationDS)
-//        navigateToExibitions(source: viewController!, destination: destinationVC)
-//    }
 
     // MARK: - Навигация
     
@@ -99,16 +79,7 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     func navigateToViewContact(source: CurrentCityController, destination: CityController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
-    
-//    func navigateToExibitions(source: CurrentCityController!, destination: ExibitionsController) {
-//        source.navigationController?.pushViewController(destination, animated: true)
-//    }
-    func navigateToHelperMaps(source: CurrentCityController, destination: HelperMapsController) {
-        source.navigationController?.pushViewController(destination, animated: true)
-    }
-//    func presentModalRentAuto(source: CurrentCityController!, destination: RentAutoController) {
-//        source.present(destination, animated: true, completion: nil)
-//    }
+
     func navigateToFaq(source: CurrentCityController!, destination: FAQController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
@@ -128,12 +99,6 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
         destination.currentCity = source.currentCity
     }
     
-//    func passDataToExibitions(source: CurrentCityDataStore, destination: inout ExibitionsDataStore) {
-//        destination.currentCity = source.currentCity
-//    }
-    func passDataToHelperMaps(source: CurrentCityDataStore, destination: inout HelperMapsDataStore) {
-        destination.currentCity = source.currentCity
-    }
     func passDataToFaq(source: CurrentCityDataStore, destination: inout FAQDataStore) {
         destination.currentCity = source.currentCity
     }

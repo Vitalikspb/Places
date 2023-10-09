@@ -10,10 +10,7 @@ import Foundation
 protocol CityRoutingLogic: AnyObject {
     func routeToFavouritesVC()
     func routeToInterestingEventsVC()
-//    func routeToExibitionVC()
-//    func routeToRentAutoVC()
     func routeToFAQVC()
-    func routeToHelperMapsVC()
     func routeToFullWeatherVC()
 }
 
@@ -32,25 +29,14 @@ class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
         passDataToFullWeather(source: dataStore!, destination: &destinationDS)
         navigateToFullWeather(source: viewController!, destination: destinationVC)
     }
-    
-//    // показать модальный экран со списком компаний аренды автомобилей
-//    func routeToRentAutoVC() {
-//        let destination: RentAutoController = RentAutoController.loadFromStoryboard()
-//        presentModalRentAuto(source: viewController!, destination: destination)
-//    }
+
     func routeToFAQVC() {
         let destinationVC: FAQController = FAQController.loadFromStoryboard()
         var destinationDS = destinationVC.router!.dataStore!
         passDataToFaq(source: dataStore!, destination: &destinationDS)
         navigateToFaq(source: viewController!, destination: destinationVC)
     }
-    // TODO - доделать роутинг
-    func routeToHelperMapsVC() {
-        let destinationVC: HelperMapsController = HelperMapsController.loadFromStoryboard()
-        var destinationDS = destinationVC.router!.dataStore!
-        passDataToHelperMaps(source: dataStore!, destination: &destinationDS)
-        navigateToHelperMaps(source: viewController!, destination: destinationVC)
-    }
+
     // на экран сохраненных достопримечательностей
     func routeToFavouritesVC() {
         let destinationVC: FavouritesController = FavouritesController.loadFromStoryboard()
@@ -63,13 +49,6 @@ class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
         passDataToIntrestingEvents(source: dataStore!, destination: &destinationDS)
         navigateToIntrestingEvents(source: viewController!, destination: destinationVC)
     }
-    // на экран билеты на экскурсию
-//    func routeToExibitionVC() {
-//        let destinationVC: ExibitionsController = ExibitionsController.loadFromStoryboard()
-//        var destinationDS = destinationVC.router!.dataStore!
-//        passDataToExibitions(source: dataStore!, destination: &destinationDS)
-//        navigateToExibitions(source: viewController!, destination: destinationVC)
-//    }
 
     // MARK: - Навигация
     
@@ -85,18 +64,7 @@ class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
     func navigateToIntrestingEvents(source: CityController, destination: IntrestingEventsController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
-    
 
-    
-//    func navigateToExibitions(source: CityController!, destination: ExibitionsController) {
-//        source.navigationController?.pushViewController(destination, animated: true)
-//    }
-    func navigateToHelperMaps(source: CityController, destination: HelperMapsController) {
-        source.navigationController?.pushViewController(destination, animated: true)
-    }
-//    func presentModalRentAuto(source: CityController!, destination: RentAutoController) {
-//        source.present(destination, animated: true, completion: nil)
-//    }
     func navigateToFaq(source: CityController!, destination: FAQController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
@@ -111,13 +79,7 @@ class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
     func passDataToIntrestingEvents(source: CityDataStore, destination: inout IntrestingEventsDataStore) {
         destination.currentCity = source.currentCity
     }
-    
-//    func passDataToExibitions(source: CityDataStore, destination: inout ExibitionsDataStore) {
-//        destination.currentCity = source.currentCity
-//    }
-    func passDataToHelperMaps(source: CityDataStore, destination: inout HelperMapsDataStore) {
-        destination.currentCity = source.currentCity
-    }
+ 
     func passDataToFaq(source: CityDataStore, destination: inout FAQDataStore) {
         destination.currentCity = source.currentCity
     }

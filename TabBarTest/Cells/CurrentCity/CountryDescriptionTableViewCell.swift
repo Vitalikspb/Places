@@ -27,6 +27,7 @@ class CountryDescriptionTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
+        label.contentMode = .topLeft
         label.numberOfLines = 0
         label.font = .setCustomFont(name: .semibold, andSize: 16)
         label.text = ""
@@ -106,11 +107,11 @@ class CountryDescriptionTableViewCell: UITableViewCell {
                           width: 0, height: 20)
         mainTextLabel.anchor(top: titleLabel.bottomAnchor,
                              left: contentView.leftAnchor,
-                             bottom: contentView.bottomAnchor,
+                             bottom: nil,
                              right: contentView.rightAnchor,
                              paddingTop: 10,
                              paddingLeft: 16,
-                             paddingBottom: 30,
+                             paddingBottom: 50,
                              paddingRight: 16,
                              width: 0, height: 0)
         gradientView.anchor(top: nil,
@@ -119,9 +120,9 @@ class CountryDescriptionTableViewCell: UITableViewCell {
                             right: contentView.rightAnchor,
                             paddingTop: 0,
                             paddingLeft: 16,
-                            paddingBottom: 30,
+                            paddingBottom: 0,
                             paddingRight: 16,
-                            width: 0, height: 85)
+                            width: 0, height: 120)
         moreButtons.anchor(top: nil,
                            left: contentView.leftAnchor,
                            bottom: contentView.bottomAnchor,
