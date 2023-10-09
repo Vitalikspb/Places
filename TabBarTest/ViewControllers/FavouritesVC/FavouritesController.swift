@@ -85,6 +85,7 @@ class FavouritesController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 16, right: 0)
         
         view.addSubviews(countryLabel, tableView)
         countryLabel.anchor(top: view.layoutMarginsGuide.topAnchor,
@@ -98,7 +99,7 @@ class FavouritesController: UIViewController {
                             width: 0, height: 50)
         tableView.anchor(top: countryLabel.bottomAnchor,
                          left: view.leftAnchor,
-                         bottom: view.bottomAnchor,
+                         bottom: view.layoutMarginsGuide.bottomAnchor,
                          right: view.rightAnchor,
                          paddingTop: 8,
                          paddingLeft: 0,

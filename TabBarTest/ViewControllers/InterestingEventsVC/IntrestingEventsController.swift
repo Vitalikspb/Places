@@ -37,7 +37,7 @@ class IntrestingEventsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        view.backgroundColor = .white
+        view.backgroundColor = .setCustomColor(color: .mainView)
         setupUI()
         interactor?.showIntrestingEvents()
     }
@@ -78,11 +78,14 @@ class IntrestingEventsController: UIViewController {
         tableView.showsHorizontalScrollIndicator = false
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 16, right: 0)
+        tableView.allowsSelection = false
         
-        view.addSubview(tableView)
-        tableView.anchor(top: view.topAnchor,
+        view.addSubviews(tableView)
+        
+        tableView.anchor(top: view.layoutMarginsGuide.topAnchor,
                          left: view.leftAnchor,
-                         bottom: view.bottomAnchor,
+                         bottom: view.layoutMarginsGuide.bottomAnchor,
                          right: view.rightAnchor,
                          paddingTop: 0,
                          paddingLeft: 0,
@@ -118,8 +121,10 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
             name: data.events[indexPath.row].name,
             date: data.events[indexPath.row].date,
             description: data.events[indexPath.row].descriptions,
-            image: data.events[indexPath.row].image.first!)
+            image: data.events[indexPath.row].image.first!,
+            id: indexPath.row)
         cell.configureCell(model: model)
+        cell.delegate = self
         return cell
     }
     
@@ -127,12 +132,20 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 230
     }
- 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        router?.dataStore?.name = data.events[indexPath.row].name
-        router?.dataStore?.description = data.events[indexPath.row].descriptions
-        router?.dataStore?.image = data.events[indexPath.row].image
-        router?.dataStore?.date = data.events[indexPath.row].date
+
+}
+
+// MARK: - InterestingEventsTableViewCellDelegate
+
+extension IntrestingEventsController: InterestingEventsTableViewCellDelegate {
+    
+    func selectEvents(id: Int) {
+        router?.dataStore?.name = data.events[id].name
+        router?.dataStore?.description = data.events[id].descriptions
+        router?.dataStore?.image = data.events[id].image
+        router?.dataStore?.date = data.events[id].date
         router?.routeToSelectedEventVC()
     }
+    
+    
 }

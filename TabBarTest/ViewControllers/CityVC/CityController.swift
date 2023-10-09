@@ -15,6 +15,7 @@ class CityController: UIViewController {
     
     
     // MARK: - UI Properties
+    
     private let actionsButtonsCityView = ActionsButtonsCityView(frame: CGRect(x: 0,
                                                                               y: 0,
                                                                               width: UIScreen.main.bounds.width,
@@ -26,6 +27,7 @@ class CityController: UIViewController {
     
     
     // MARK: - TODO Удалить когда сделаю загрузку с сервера
+    
     private var sightsArray: [SightsModel] = [
         SightsModel(name: "Эрмитаж", image: UIImage(named: "museumHermitage")!, favourite: true),
         SightsModel(name: "Русский музей", image: UIImage(named: "museumRusskiy")!, favourite: false),
@@ -63,7 +65,9 @@ class CityController: UIViewController {
                                                 description: "")]
         )
     )
+    
     //MARK: - Private properties
+    
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
@@ -74,7 +78,7 @@ class CityController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        view.backgroundColor = .white
+        view.backgroundColor = .setCustomColor(color: .mainView)
         setupUI()
         interactor?.showCity()
     }

@@ -31,7 +31,7 @@ class WorldController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .setCustomColor(color: .mainView)
         setupClean()
         setupUI()
         title = "Страны"

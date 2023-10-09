@@ -6,6 +6,10 @@
 
 import UIKit
 
+protocol InterestingEventsTableViewCellDelegate: AnyObject {
+    func selectEvents(id: Int)
+}
+
 class InterestingEventsTableViewCell: UITableViewCell {
     
     // MARK: - UI properties
@@ -37,6 +41,7 @@ class InterestingEventsTableViewCell: UITableViewCell {
     // MARK: - Public properties
     
     static let identifier = "InterestingEventsTableViewCell"
+    weak var delegate: InterestingEventsTableViewCellDelegate?
     
     // MARK: - Private properties
     
@@ -45,9 +50,11 @@ class InterestingEventsTableViewCell: UITableViewCell {
             date,
             description: String
         var image: UIImage
+        var id: Int
     }
-    
+
     private var model: InterestingEventsModel?
+    private var id: Int = 0
     
     // MARK: - Lifecycle
     
@@ -81,6 +88,7 @@ class InterestingEventsTableViewCell: UITableViewCell {
         titleLabel.text = model.name
         dateLabel.text = model.date
         mainImageView.image = model.image
+        self.id = model.id
     }
     
     private func setupUI() {
@@ -89,6 +97,9 @@ class InterestingEventsTableViewCell: UITableViewCell {
         bgColorView.backgroundColor = .white
         self.selectedBackgroundView = bgColorView
         
+        let tapEvent = UITapGestureRecognizer(target: self, action: #selector(tapEventTapped))
+        contentView.addGestureRecognizer(tapEvent)
+        contentView.isUserInteractionEnabled = true
         contentView.addSubviews(titleLabel, mainImageView, dateLabel)
 
         mainImageView.anchor(top: contentView.topAnchor,
@@ -123,5 +134,11 @@ class InterestingEventsTableViewCell: UITableViewCell {
                          width: 0,
                          height: 30)
         
+    }
+    
+    // MARK: - Selectors
+    
+    @objc private func tapEventTapped() {
+        delegate?.selectEvents(id: id)
     }
 }

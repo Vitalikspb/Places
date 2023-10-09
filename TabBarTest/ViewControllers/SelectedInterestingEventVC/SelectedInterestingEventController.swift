@@ -66,7 +66,7 @@ class SelectedInterestingEventController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        view.backgroundColor = .white
+        view.backgroundColor = .setCustomColor(color: .mainView)
         setupUI()
         interactor?.showEvent()
     }
@@ -101,7 +101,7 @@ class SelectedInterestingEventController: UIViewController {
     private func setupUI() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.separatorColor = .clear
         tableView.rowHeight = UITableView.automaticDimension
@@ -138,7 +138,7 @@ class SelectedInterestingEventController: UIViewController {
                          paddingLeft: 0,
                          paddingBottom: 0,
                          paddingRight: 0,
-                         width: 0, height: 180)
+                         width: 0, height: 190)
         
         tableView.anchor(top: collectionView.bottomAnchor,
                             left: view.leftAnchor,
