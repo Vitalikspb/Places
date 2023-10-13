@@ -162,7 +162,7 @@ extension SelectedInterestingEventController: SelectedInterestingEventDisplayLog
     func displayAllCities(viewModel: SelectedInterestingEventViewModel.EventModels.ViewModel) {
         self.viewModel = viewModel
         title = viewModel.event.nameEvent
-        modelImage = viewModel.event.image
+        modelImage = [UIImage()]//viewModel.event.image
         descriptionEvent = viewModel.event.mainText
         dateLabel.text = "Дата проведения \(viewModel.event.date)"
         DispatchQueue.main.async { [weak self] in

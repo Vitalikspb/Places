@@ -9,4 +9,10 @@ import Foundation
 
 class IntrestingEventsWorker {
     
+    // Запрос на интересные события
+    static func updateInterestingEnents(model: ModelForRequest, completion: @escaping()->()) {
+        NetworkHelper.shared.makeRequest(type: .events, model: model) {
+            completion()
+        }
+    }
 }

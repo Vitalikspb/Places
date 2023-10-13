@@ -13,6 +13,7 @@ protocol CurrentCityBussinessLogic: AnyObject {
 
 protocol CurrentCityDataStore: AnyObject {
     var currentCity: String { get set }
+    var currentCountry: String { get set }
     var currentWeather: CurrentWeatherSevenDays { get set }
 }
 
@@ -38,6 +39,7 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
                                                 }
                                             }
     var currentCity: String = ""
+    var currentCountry: String = ""
     var presenter: CurrentCityPresentationLogic?
     
     // MARK: - CurrentCityBussinessLogic

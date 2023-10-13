@@ -10,13 +10,6 @@ import UIKit
 
 enum IntrestingEventsModels {
     
-    struct IntrestingEventsModel {
-        let image: [UIImage]
-        let name: String
-        let descriptions: String
-        let date: String
-    }
-    
     enum IntrestingEvents {
 
         // передаем в интерактор
@@ -27,8 +20,7 @@ enum IntrestingEventsModels {
         
         // посылаем все интеренсые события для отображения на экране
         struct ViewModel {
-            var country: String
-            var events: [IntrestingEventsModel]
+            var events: [Events]
         }
     }
 }

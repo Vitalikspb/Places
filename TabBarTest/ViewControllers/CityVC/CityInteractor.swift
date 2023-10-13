@@ -14,6 +14,7 @@ protocol CityBussinessLogic: AnyObject {
 
 protocol CityDataStore: AnyObject {
     var currentCity: String { get set }
+    var currentCountry: String { get set }
     var currentWeather: CurrentWeatherSevenDays { get set }
 }
 
@@ -32,6 +33,7 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
                                             image: UIImage(),
                                             description: "")])
     var currentCity: String = ""
+    var currentCountry: String = ""
     var presenter: CityPresentationLogic?
     
     func showCity() {

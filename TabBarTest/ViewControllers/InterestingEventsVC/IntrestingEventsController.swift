@@ -101,7 +101,9 @@ extension IntrestingEventsController: IntrestingEventsDisplayLogic {
     
     func displayIntrestingEvents(viewModel: IntrestingEventsModels.IntrestingEvents.ViewModel) {
         data = viewModel
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }   
     }
 }
 
@@ -120,8 +122,8 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
         let model = InterestingEventsTableViewCell.InterestingEventsModel(
             name: data.events[indexPath.row].name,
             date: data.events[indexPath.row].date,
-            description: data.events[indexPath.row].descriptions,
-            image: data.events[indexPath.row].image.first!,
+            description: data.events[indexPath.row].description,
+            image: UIImage(),
             id: indexPath.row)
         cell.configureCell(model: model)
         cell.delegate = self
@@ -140,10 +142,10 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
 extension IntrestingEventsController: InterestingEventsTableViewCellDelegate {
     
     func selectEvents(id: Int) {
-        router?.dataStore?.name = data.events[id].name
-        router?.dataStore?.description = data.events[id].descriptions
-        router?.dataStore?.image = data.events[id].image
-        router?.dataStore?.date = data.events[id].date
+//        router?.dataStore?.name = data.events[id].name
+//        router?.dataStore?.description = data.events[id].descriptions
+//        router?.dataStore?.image = data.events[id].image
+//        router?.dataStore?.date = data.events[id].date
         router?.routeToSelectedEventVC()
     }
     

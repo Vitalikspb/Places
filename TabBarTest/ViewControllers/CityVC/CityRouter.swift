@@ -77,7 +77,8 @@ class CityRouter: NSObject, CityRoutingLogic, CityDataPassing {
     }
     
     func passDataToIntrestingEvents(source: CityDataStore, destination: inout IntrestingEventsDataStore) {
-        destination.currentCity = source.currentCity
+        destination.city = source.currentCity
+        destination.country = source.currentCountry
     }
  
     func passDataToFaq(source: CityDataStore, destination: inout FAQDataStore) {

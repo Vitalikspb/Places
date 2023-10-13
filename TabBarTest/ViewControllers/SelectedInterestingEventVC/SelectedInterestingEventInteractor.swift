@@ -12,15 +12,14 @@ protocol SelectedInterestingEventBussinessLogic: AnyObject {
 
 protocol SelectedInterestingEventDataStore: AnyObject {
     var name: String { get set }
-    var image: [UIImage] { get set }
+    var images: Dictionary<String, [ImagesArray]>? { get set }
     var description: String { get set }
     var date: String { get set }
 }
 
 class SelectedInterestingEventInteractor: SelectedInterestingEventBussinessLogic, SelectedInterestingEventDataStore {
-    
+    var images: Dictionary<String, [ImagesArray]>?
     var date: String = ""
-    var image: [UIImage] = []
     var name: String = ""
     var description: String = ""
     var presenter: SelectedInterestingEventPresentationLogic?
@@ -38,7 +37,7 @@ class SelectedInterestingEventInteractor: SelectedInterestingEventBussinessLogic
         presenter?.presentDescription(
             response: SelectedInterestingEventViewModel.EventModels.ViewModel(
                 event: SelectedInterestingEventViewModel.EventModel(
-                    nameEvent: name, mainText: description, image: image, date: date))
+                    nameEvent: name, mainText: description, image: images, date: date))
         )
     }
     

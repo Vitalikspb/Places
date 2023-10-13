@@ -8,6 +8,8 @@ import Foundation
 
 extension UserDefaults {
     
+    // MARK: - Properties
+    
     // текущий язык приложения
     static var currentLang: String { "currentLang" }
     
@@ -29,4 +31,22 @@ extension UserDefaults {
     // для отображения Места на карте из экрана Страна
     static var showSelectedSight: String { "showSelectedSight" }
     static var showSelectedSightName: String { "showSelectedSightName" }
+    
+    // MARK: - Сохранение Моделей
+    
+    /// Сохранение events
+    func saveEvents(value: [Events?]) {
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "events")
+    }
+    
+    // MARK: - Получение Моделей
+    
+    func getEvents() -> [Events] {
+        if let data = UserDefaults.standard.value(forKey:"events") as? Data {
+            let cellUnwrapped = try? PropertyListDecoder().decode(Array<Events>.self,
+                                                                  from: data)
+            return cellUnwrapped ?? []
+        }
+        return []
+    }
 }

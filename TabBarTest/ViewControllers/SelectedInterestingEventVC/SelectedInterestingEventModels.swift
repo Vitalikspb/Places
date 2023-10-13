@@ -12,7 +12,7 @@ enum SelectedInterestingEventViewModel {
     struct EventModel {
         let nameEvent: String
         let mainText: String
-        let image: [UIImage]
+        let image: Dictionary<String, [ImagesArray]>?
         let date: String
     }
     
