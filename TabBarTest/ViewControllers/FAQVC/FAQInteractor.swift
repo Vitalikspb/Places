@@ -9,6 +9,7 @@ import UIKit
 
 protocol FAQBussinessLogic: AnyObject {
     func showFAQ()
+    func showTitleName()
 }
 
 protocol FAQDataStore: AnyObject {
@@ -22,6 +23,10 @@ class FAQInteractor: FAQBussinessLogic, FAQDataStore {
     var country: String = ""
     
     var presenter: FAQPresentationLogic?
+    
+    func showTitleName() {
+        presenter?.presentTitleName(response: city)
+    }
     
     func showFAQ() {
         if country == "" {

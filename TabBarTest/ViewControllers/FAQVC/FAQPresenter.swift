@@ -9,15 +9,19 @@ import Foundation
 
 protocol FAQPresentationLogic: AnyObject {
     func presentFAQ(response: [FAQCity])
+    func presentTitleName(response: String)
 }
 
 final class FAQPresenter: FAQPresentationLogic {
-    
+
     weak var faqController: FAQController?
     
     func presentFAQ(response: [FAQCity]) {
         faqController?.displayFAQ(viewModel: response)
     }
     
+    func presentTitleName(response: String) {
+        faqController?.displayTitleName(viewModel: response)
+    }
     
 }

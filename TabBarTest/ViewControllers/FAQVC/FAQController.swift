@@ -10,6 +10,7 @@ import UIKit
 
 protocol FAQDisplayLogic: AnyObject {
     func displayFAQ(viewModel: [FAQCity])
+    func displayTitleName(viewModel: String)
 }
 
 // MARK: - экран помощи
@@ -32,6 +33,7 @@ class FAQController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
+        interactor?.showTitleName()
         setupUI()
         interactor?.showFAQ()
     }
@@ -113,8 +115,12 @@ extension FAQController: FAQDisplayLogic {
         self.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            title = self.viewModel[0].city.name
             self.tableView.reloadData()
         }
+    }
+    
+    // Установка тайтла экрана - города
+    func displayTitleName(viewModel: String) {
+        title = viewModel
     }
 }
