@@ -35,8 +35,15 @@ extension UserDefaults {
     // MARK: - Сохранение Моделей
     
     /// Сохранение events
-    func saveEvents(value: [Events?]) {
+    func saveEvents(value: [Events?], data: Data) {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "events")
+        UserDefaults.standard.set(data.count, forKey: "eventsData")
+    }
+    
+    /// Сохранение FAQCity
+    func saveFAQCity(value: [FAQCity?], data: Data) {
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "FAQCity")
+        UserDefaults.standard.set(data.count, forKey: "FAQCityData")
     }
     
     // MARK: - Получение Моделей
@@ -44,6 +51,15 @@ extension UserDefaults {
     func getEvents() -> [Events] {
         if let data = UserDefaults.standard.value(forKey:"events") as? Data {
             let cellUnwrapped = try? PropertyListDecoder().decode(Array<Events>.self,
+                                                                  from: data)
+            return cellUnwrapped ?? []
+        }
+        return []
+    }
+    
+    func getFAQCity() -> [FAQCity] {
+        if let data = UserDefaults.standard.value(forKey:"FAQCity") as? Data {
+            let cellUnwrapped = try? PropertyListDecoder().decode(Array<FAQCity>.self,
                                                                   from: data)
             return cellUnwrapped ?? []
         }

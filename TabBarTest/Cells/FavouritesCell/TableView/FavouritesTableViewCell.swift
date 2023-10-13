@@ -105,7 +105,7 @@ class FavouritesTableViewCell: UITableViewCell {
                                   paddingTop: 8,
                                   paddingLeft: 16,
                                   paddingBottom: 0,
-                                  paddingRight: 8,
+                                  paddingRight: 16,
                                   width: 0,
                                   height: 50)
         

@@ -17,7 +17,7 @@ enum FAQModels {
         var answer: String
     }
 
-    enum RentAuto {
+    enum FAQModels {
 
         // передаем в интерактор
         struct Request { }

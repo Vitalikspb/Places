@@ -61,7 +61,30 @@ class NetworkHelper {
     func makeRequest(type: TypeRequest, model: ModelForRequest, completion: @escaping()->()) {
         var reqModel = model
         reqModel.typeRequest = type
-        sendRequestToServer(model: reqModel) {
+        
+        var byte = 0
+        
+        switch type {
+        case .sight:
+            byte = UserDefaults.standard.integer(forKey: "sightData")
+        case .cityAll:
+            byte = UserDefaults.standard.integer(forKey: "cityAllData")
+        case .cityCountryInfo:
+            byte = UserDefaults.standard.integer(forKey: "cityCountryInfoData")
+        case .events:
+            byte = UserDefaults.standard.integer(forKey: "eventsData")
+        case .faq:
+            byte = UserDefaults.standard.integer(forKey: "FAQCityData")
+        }
+
+        // MARK: - TODO
+        // Проверка на байты, нужно доделывать с бэком
+        
+        if byte == 0 {
+            sendRequestToServer(model: reqModel) {
+                completion()
+            }
+        } else {
             completion()
         }
     }
@@ -128,14 +151,18 @@ class NetworkHelper {
                         
                     case .events:
                         self.events = try JSONDecoder().decode([Events].self, from: data)
-                        print("events:\(String(describing: self.events))")
+//                        print("events:\(String(describing: self.events))")
                         if let _events = self.events {
-                            UserDefaults.standard.saveEvents(value: _events)
+                            UserDefaults.standard.saveEvents(value: _events, data: data)
                         }
                         
                     case .faq:
                         self.faqCity = try JSONDecoder().decode([FAQCity].self, from: data)
-//                        print("faqCity:\(self.faqCity)")
+//                        print("faqCity:\(String(describing: self.faqCity))")
+                        
+                        if let _faqCity = self.faqCity {
+                            UserDefaults.standard.saveFAQCity(value: _faqCity, data: data)
+                        }
                     }
                     completion()
                     

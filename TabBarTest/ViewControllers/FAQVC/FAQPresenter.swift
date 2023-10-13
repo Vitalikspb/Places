@@ -8,14 +8,14 @@
 import Foundation
 
 protocol FAQPresentationLogic: AnyObject {
-    func presentFAQ(response: FAQModels.RentAuto.ViewModel)
+    func presentFAQ(response: [FAQCity])
 }
 
 final class FAQPresenter: FAQPresentationLogic {
     
     weak var faqController: FAQController?
     
-    func presentFAQ(response: FAQModels.RentAuto.ViewModel) {
+    func presentFAQ(response: [FAQCity]) {
         faqController?.displayFAQ(viewModel: response)
     }
     

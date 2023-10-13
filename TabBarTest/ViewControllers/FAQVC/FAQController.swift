@@ -9,7 +9,7 @@
 import UIKit
 
 protocol FAQDisplayLogic: AnyObject {
-    func displayFAQ(viewModel: FAQModels.RentAuto.ViewModel)
+    func displayFAQ(viewModel: [FAQCity])
 }
 
 // MARK: - экран помощи
@@ -24,7 +24,7 @@ class FAQController: UIViewController {
     
     var interactor: FAQBussinessLogic?
     var router: (NSObjectProtocol & FAQRoutingLogic & FAQDataPassing)?
-    var viewModel: FAQModels.RentAuto.ViewModel!
+    var viewModel: [FAQCity]!
     
     // MARK: - Lifecycle
     
@@ -32,8 +32,8 @@ class FAQController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
-        interactor?.showFAQ()
         setupUI()
+        interactor?.showFAQ()
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -87,13 +87,16 @@ class FAQController: UIViewController {
 extension FAQController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.FAQModel.count
+        if let viewModel = viewModel {
+            return viewModel.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FAQTableViewCell.identifier, for: indexPath) as? FAQTableViewCell else { return UITableViewCell() }
-        let currentModel = viewModel.FAQModel[indexPath.row]
+        let currentModel = viewModel[indexPath.row]
         cell.configureCell(question: currentModel.question,
                            answer: currentModel.answer)
         return cell
@@ -106,11 +109,11 @@ extension FAQController: FAQDisplayLogic {
     // показ информации о текущем городе
     // отображение обновленной таблицы после заполнения в интеракторе данными модели
     // пока что не работает т.к нету модели
-    func displayFAQ(viewModel: FAQModels.RentAuto.ViewModel) {
+    func displayFAQ(viewModel: [FAQCity]) {
         self.viewModel = viewModel
-        title = self.viewModel.currentCity
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
+            title = self.viewModel[0].city.name
             self.tableView.reloadData()
         }
     }

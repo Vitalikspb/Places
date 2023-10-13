@@ -101,7 +101,8 @@ class CurrentCityRouter: NSObject, CurrentCityRoutingLogic, CurrentCityDataPassi
     }
     
     func passDataToFaq(source: CurrentCityDataStore, destination: inout FAQDataStore) {
-        destination.currentCity = source.currentCity
+        destination.city = source.currentCity
+        destination.country = source.currentCountry
     }
 }
 

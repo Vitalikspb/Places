@@ -27,7 +27,7 @@ class IntrestingEventsInteractor: IntrestingEventsBussinessLogic, IntrestingEven
         if country == "" {
             country = "Россия"
         }
-        IntrestingEventsWorker.updateInterestingEnents(
+        IntrestingEventsWorker.updateInterestingEvents(
             model: ModelForRequest(country: country, city: city)) {
                 let interestingEvent = UserDefaults.standard.getEvents()
                 let viewModel = IntrestingEventsModels.IntrestingEvents.ViewModel(events: interestingEvent)
