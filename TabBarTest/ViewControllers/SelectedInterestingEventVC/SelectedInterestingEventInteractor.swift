@@ -12,13 +12,13 @@ protocol SelectedInterestingEventBussinessLogic: AnyObject {
 
 protocol SelectedInterestingEventDataStore: AnyObject {
     var name: String { get set }
-    var images: Dictionary<String, [ImagesArray]>? { get set }
+    var images: [String] { get set }
     var description: String { get set }
     var date: String { get set }
 }
 
 class SelectedInterestingEventInteractor: SelectedInterestingEventBussinessLogic, SelectedInterestingEventDataStore {
-    var images: Dictionary<String, [ImagesArray]>?
+    var images: [String] = []
     var date: String = ""
     var name: String = ""
     var description: String = ""

@@ -118,13 +118,13 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
     // заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: InterestingEventsTableViewCell.identifier, for: indexPath) as? InterestingEventsTableViewCell else { return UITableViewCell() }
-
-        let model = InterestingEventsTableViewCell.InterestingEventsModel(
-            name: data.events[indexPath.row].name,
-            date: data.events[indexPath.row].date,
-            description: data.events[indexPath.row].description,
-            image: UIImage(),
-            id: indexPath.row)
+        
+        let mdl = data.events[indexPath.row]
+        let model = InterestingEventsTableViewCell.InterestingEventsModel(name: mdl.name,
+                                                                          date: mdl.date,
+                                                                          description: mdl.description,
+                                                                          image: mdl.images[0],
+                                                                          id: indexPath.row)
         cell.configureCell(model: model)
         cell.delegate = self
         return cell
@@ -142,10 +142,11 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
 extension IntrestingEventsController: InterestingEventsTableViewCellDelegate {
     
     func selectEvents(id: Int) {
-//        router?.dataStore?.name = data.events[id].name
-//        router?.dataStore?.description = data.events[id].descriptions
-//        router?.dataStore?.image = data.events[id].image
-//        router?.dataStore?.date = data.events[id].date
+        let data = data.events[id]
+        router?.dataStore?.city = data.name
+        router?.dataStore?.description = data.description
+        router?.dataStore?.images = data.images
+        router?.dataStore?.date = data.date
         router?.routeToSelectedEventVC()
     }
     

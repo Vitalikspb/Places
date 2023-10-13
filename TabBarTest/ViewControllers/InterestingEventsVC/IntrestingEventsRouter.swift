@@ -27,14 +27,17 @@ class IntrestingEventsRouter: NSObject, IntrestingEventsRoutingLogic, Intresting
     func routeToSelectedEventVC() {
         let destinationVC: SelectedInterestingEventController = SelectedInterestingEventController.loadFromStoryboard()
         var destinationDS = destinationVC.router!.dataStore!
-        let sourse = Events(id: 0,
-                            name: "",
-                            description: "",
-                            country: dataStore?.country ?? "Россия",
-                            city: dataStore?.city ?? "Москва",
-                            date: "")
-        passDataToLeadMore(source: sourse, destination: &destinationDS)
-        navigateToViewContact(source: viewController!, destination: destinationVC)
+        if let data = dataStore {
+            let sourse = Events(id: 0,
+                                name: data.name,
+                                description: data.description,
+                                country: data.country,
+                                images: data.images,
+                                city: data.city,
+                                date: data.date)
+            passDataToLeadMore(source: sourse, destination: &destinationDS)
+            navigateToViewContact(source: viewController!, destination: destinationVC)
+        }
     }
 
     // MARK: - Навигация

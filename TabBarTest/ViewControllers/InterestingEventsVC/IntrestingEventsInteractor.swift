@@ -12,12 +12,20 @@ protocol IntrestingEventsBussinessLogic: AnyObject {
 }
 
 protocol IntrestingEventsDataStore: AnyObject {
+    var name: String { get set }
+    var images: [String] { get set }
+    var description: String { get set }
+    var date: String { get set }
     var city: String { get set }
     var country: String { get set }
 }
 
 class IntrestingEventsInteractor: IntrestingEventsBussinessLogic, IntrestingEventsDataStore {
     
+    var name: String = ""
+    var images: [String] = []
+    var description: String = ""
+    var date: String = ""
     var city: String = ""
     var country: String = ""
     var presenter: IntrestingEventsPresentationLogic?

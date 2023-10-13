@@ -61,12 +61,22 @@ struct SightDescription: Codable {
 
 // MARK: - Запрос на интересные события
 // events
-struct Events: Codable {
+struct EventsResponce: Codable {
     var id: Int
     var name: String
     var description: String
     var country: String
     var images: Dictionary<String, [ImagesArray]>?
+    var city: String
+    var date: String
+}
+
+struct Events: Codable {
+    var id: Int
+    var name: String
+    var description: String
+    var country: String
+    var images: [String]
     var city: String
     var date: String
 }

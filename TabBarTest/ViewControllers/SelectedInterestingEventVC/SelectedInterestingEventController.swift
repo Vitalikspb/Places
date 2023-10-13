@@ -58,7 +58,7 @@ class SelectedInterestingEventController: UIViewController {
     // MARK: - Private properties
     
     private let layout = UICollectionViewFlowLayout()
-    private lazy var modelImage = [UIImage]()
+    private lazy var modelImage = [String]()
     private var descriptionEvent: String = ""
     
     // MARK: - Lifecycle
@@ -162,7 +162,7 @@ extension SelectedInterestingEventController: SelectedInterestingEventDisplayLog
     func displayAllCities(viewModel: SelectedInterestingEventViewModel.EventModels.ViewModel) {
         self.viewModel = viewModel
         title = viewModel.event.nameEvent
-        modelImage = [UIImage()]//viewModel.event.image
+        modelImage = viewModel.event.image
         descriptionEvent = viewModel.event.mainText
         dateLabel.text = "Дата проведения \(viewModel.event.date)"
         DispatchQueue.main.async { [weak self] in

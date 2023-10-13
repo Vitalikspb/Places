@@ -49,7 +49,7 @@ class InterestingEventsTableViewCell: UITableViewCell {
         var name,
             date,
             description: String
-        var image: UIImage
+        var image: String
         var id: Int
     }
 
@@ -87,7 +87,11 @@ class InterestingEventsTableViewCell: UITableViewCell {
         self.model = model
         titleLabel.text = model.name
         dateLabel.text = model.date
-        mainImageView.image = model.image
+        
+        let url = URL(string: model.image)!
+        NetworkHelper.shared.downloadImage(from: url) { image in
+            self.mainImageView.image = image
+        }
         self.id = model.id
     }
     

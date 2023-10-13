@@ -57,8 +57,12 @@ class InterestingEventsCollectionViewCell: UICollectionViewCell {
         mainImageView.addConstraintsToFillView(view: contentView)
     }
     
-    func conigureCell(image: UIImage) {
-        cellImage = image
+    func conigureCell(image: String) {
+        let url = URL(string: image)!
+        NetworkHelper.shared.downloadImage(from: url) { image in
+            self.cellImage = image
+        }
+        
     }
 
 }
