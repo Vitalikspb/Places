@@ -13,108 +13,52 @@ protocol WorldBussinessLogic: AnyObject {
 }
 
 protocol WorldDataStore: AnyObject {
-    var currentCity: String { get set }
-    var rentsService: WorldViewModels.AllCountriesInTheWorld.ViewModel { get set }
+    var currentCountry: String { get set }
+    var worldsCountry: [WorldViewModels.AllCountriesInTheWorld.ViewModel]? { get set }
 }
 
 class WorldInteractor: WorldBussinessLogic, WorldDataStore {
     
-    var rentsService = WorldViewModels.AllCountriesInTheWorld.ViewModel(
-        model: [
-            WorldViewModels.WorldViewModel(
-                titlesec: WorldViewModels.TitleSection(name: "Россия",
-                                                       subName: "12 городов, 954 мест",
-                                                       iconCountry: UIImage(named: "iconRussia")!,
-                                                       available: true),
-                items: [
-                    WorldViewModels.ItemData(name: "Санкт-Петерубрг", sights: 1, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Москва", sights: 1, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Краснодар", sights: 1, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Сочи", sights: 1, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Уфа", sights: 1, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Пенза", sights: 1, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Норильск", sights: 1, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Южно-Сахалинск", sights: 1, imageCity: UIImage(named: "hub3")!, available: true)])
-            ,
-            WorldViewModels.WorldViewModel(
-                titlesec: WorldViewModels.TitleSection(name: "США",
-                                                       subName: "18 городов, 1373 мест",
-                                                       iconCountry: UIImage(named: "iconRussia")!,
-                                                       available: false),
-                items: [
-                    WorldViewModels.ItemData(name: "Чикаго", sights: 2, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Лос-Анджелес", sights: 2, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Хьюстон", sights: 2, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Финикс", sights: 2, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Филадельфия", sights: 2, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Сан-Антонио", sights: 2, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Сан-Диего", sights: 2, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Даллас", sights: 2, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Сан-Хосе", sights: 2, imageCity: UIImage(named: "hub3")!, available: false)])
-            ,
-            
-            WorldViewModels.WorldViewModel(
-                titlesec: WorldViewModels.TitleSection(name: "Тайланд",
-                                                       subName: "5 городов, 500 мест",
-                                                       iconCountry: UIImage(named: "iconRussia")!,
-                                                       available: false),
-                items: [
-                    WorldViewModels.ItemData(name: "Бангкок", sights: 3, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Пхукет", sights: 3, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Ко тао", sights: 3, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Самуи", sights: 3, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Чонбури", sights: 3, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Хуахин", sights: 3, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Чумпхон", sights: 3, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Паттайя", sights: 3, imageCity: UIImage(named: "hub3")!, available: false)])
-            ,
-            
-            WorldViewModels.WorldViewModel(
-                titlesec: WorldViewModels.TitleSection(name: "Тайланд1",
-                                                       subName: "5 городов, 500 мест",
-                                                       iconCountry: UIImage(named: "iconRussia")!,
-                                                       available: true),
-                items: [
-                    WorldViewModels.ItemData(name: "Бангкок", sights: 4, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Пхукет", sights: 4, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Ко тао", sights: 4, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Самуи", sights: 4, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Чонбури", sights: 4, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Хуахин", sights: 4, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Чумпхон", sights: 4, imageCity: UIImage(named: "hub3")!, available: true),
-                    WorldViewModels.ItemData(name: "Паттайя", sights: 4, imageCity: UIImage(named: "hub3")!, available: true)])
-            ,
-            
-            WorldViewModels.WorldViewModel(
-                titlesec: WorldViewModels.TitleSection(name: "Тайланд2",
-                                                       subName: "5 городов, 500 мест",
-                                                       iconCountry: UIImage(named: "iconRussia")!,
-                                                       available: false),
-                items: [
-                    WorldViewModels.ItemData(name: "Бангкок", sights: 5, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Пхукет", sights: 5, imageCity: UIImage(named: "hub3")!, available: false),
-                    WorldViewModels.ItemData(name: "Ко тао", sights: 5, imageCity: UIImage(named: "hub3")!, available: false)])
-        ])
-    
+    var worldsCountry: [WorldViewModels.AllCountriesInTheWorld.ViewModel]?
     
     // выбранная страна куда будет осуществляться переход
-    var currentCity: String = ""
+    var currentCountry: String = ""
     
     var presenter: WorldPresentationLogic?
     
     func showCity() {
-        //        adasd
-        //        Здесь создаем модель для текукщего города - заполняем модель все информацией -
-        //        погодой,
-        //        главными картинкам,
-        //        описанием
-        //        ссылками кнопок
-        //        местами
-        //        другими городами
-        //        по этой модели будем заполнять экран а не как сейчас
-        
-        presenter?.presentAllMarkers(response: rentsService)
+        let worldModel = ModelForRequest(country: currentCountry == "" ? "Россия" : currentCountry)
+        WorldWorker.updateCountry(model: worldModel) {
+            self.sendModel()
+        }
     }
+    
+    private func sendModel() {
+        let tempWorldCountry = UserDefaults.standard.getSightDescription()
+        var sightCount: Int = 0
+        tempWorldCountry.forEach {
+            sightCount += $0.sight_count
+        }
+        
+        worldsCountry = [WorldViewModels.AllCountriesInTheWorld.ViewModel(
+            titlesec: WorldViewModels.TitleSection(
+                country: currentCountry == "" ? "Россия" : currentCountry,
+                subTitle: "\(tempWorldCountry.count) городов, \(sightCount) мест",
+                latitude: 55.755863,
+                longitude: 37.617700,
+                available: true,
+                iconName: "iconRussia"),
+            model: tempWorldCountry)]
+        
+        
+
+        if var _worldsCountry = self.worldsCountry {
+            WorldWorker.addTestCountries(&_worldsCountry)
+            self.presenter?.presentAllMarkers(response: _worldsCountry)
+        }
+    }
+    
+    
     
 }
 

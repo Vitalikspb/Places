@@ -38,9 +38,14 @@ class CountryCitiesCollectionView: UIView {
     }()
     
     // MARK: - Public properties
-    
-    private var model: [WorldViewModels.ItemData] = []
     weak var delegate: CountryCitiesCollectionViewDelegate?
+    
+    // MARK: - Private propertiesx
+    
+    private var model: [SightDescription] = []
+    private var availabel: Bool = false
+    
+    
     
     // MARK: - Life cycle
     
@@ -66,8 +71,9 @@ class CountryCitiesCollectionView: UIView {
         collectionView.addConstraintsToFillView(view: containerView)
     }
     
-    public func configureCells(model: [WorldViewModels.ItemData]) {
+    public func configureCells(availabel: Bool, model: [SightDescription]) {
         self.model = model
+        self.availabel = availabel
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
@@ -87,10 +93,10 @@ extension CountryCitiesCollectionView: UICollectionViewDataSource, UICollectionV
         let cell = collectionView.dequeueReusableCell(WorldCityCollectionViewCell.self, for: indexPath)
         let modelCell = model[indexPath.row]
         cell.configureCell(withName: modelCell.name,
-                           sight: modelCell.sights,
-                           andImage: modelCell.imageCity,
-                           alpha: modelCell.available ? 1 : 0.65,
-                           available: modelCell.available)
+                           sight: modelCell.sight_count,
+                           andImage: modelCell.images[0],
+                           alpha: availabel ? 1 : 0.65,
+                           available: availabel)
         cell.delegate = self
         return cell
     }

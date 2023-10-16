@@ -25,15 +25,6 @@ class SelectedInterestingEventInteractor: SelectedInterestingEventBussinessLogic
     var presenter: SelectedInterestingEventPresentationLogic?
     
     func showEvent() {
-        //        Здесь создаем модель для текукщего города - заполняем модель все информацией -
-        //        погодой,
-        //        главными картинкам,
-        //        описанием
-        //        ссылками кнопок
-        //        местами
-        //        другими городами
-        //        по этой модели будем заполнять экран а не как сейчас
-        
         presenter?.presentDescription(
             response: SelectedInterestingEventViewModel.EventModels.ViewModel(
                 event: SelectedInterestingEventViewModel.EventModel(

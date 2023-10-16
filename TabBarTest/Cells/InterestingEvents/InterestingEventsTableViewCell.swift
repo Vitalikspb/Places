@@ -87,11 +87,7 @@ class InterestingEventsTableViewCell: UITableViewCell {
         self.model = model
         titleLabel.text = model.name
         dateLabel.text = model.date
-        
-        let url = URL(string: model.image)!
-        NetworkHelper.shared.downloadImage(from: url) { image in
-            self.mainImageView.image = image
-        }
+        self.mainImageView.image = UIImage(named: model.image)
         self.id = model.id
     }
     

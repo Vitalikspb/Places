@@ -120,6 +120,7 @@ extension IntrestingEventsController: UITableViewDelegate, UITableViewDataSource
         guard let cell = tableView.dequeueReusableCell(withIdentifier: InterestingEventsTableViewCell.identifier, for: indexPath) as? InterestingEventsTableViewCell else { return UITableViewCell() }
         
         let mdl = data.events[indexPath.row]
+        print("mdl.images[0]:\(mdl.images[0])")
         let model = InterestingEventsTableViewCell.InterestingEventsModel(name: mdl.name,
                                                                           date: mdl.date,
                                                                           description: mdl.description,

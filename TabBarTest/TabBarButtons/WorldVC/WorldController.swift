@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WorldDisplayLogic: AnyObject {
-    func displayAllCities(viewModel: WorldViewModels.AllCountriesInTheWorld.ViewModel)
+    func displayAllCities(viewModel: [WorldViewModels.AllCountriesInTheWorld.ViewModel])
 }
 
 class WorldController: UIViewController {
@@ -21,7 +21,7 @@ class WorldController: UIViewController {
     
     var interactor: WorldBussinessLogic?
     var router: (NSObjectProtocol & WorldRoutingLogic & WorldDataPassing)?
-    var viewModel: WorldViewModels.AllCountriesInTheWorld.ViewModel!
+    var viewModel: [WorldViewModels.AllCountriesInTheWorld.ViewModel]!
     
     // MARK: - Private Properties
     
@@ -103,7 +103,7 @@ extension WorldController: WorldDisplayLogic {
     
     // отображение обновленной таблицы после заполнения в интеракторе данными модели
     // пока что не работает т.к нету модели
-    func displayAllCities(viewModel: WorldViewModels.AllCountriesInTheWorld.ViewModel) {
+    func displayAllCities(viewModel: [WorldViewModels.AllCountriesInTheWorld.ViewModel]) {
         self.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -117,15 +117,17 @@ extension WorldController: WorldDisplayLogic {
 extension WorldController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.model.count
+        return viewModel?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: WorldCollectionViewCell.identifier,
-                                                       for: indexPath) as? WorldCollectionViewCell else { return UITableViewCell() }
-        let item = viewModel.model[indexPath.row]
+                                                       for: indexPath) as? WorldCollectionViewCell,
+              let modelCities = viewModel[indexPath.row].model else { return UITableViewCell() }
+        
+        let item = viewModel[indexPath.row]
         cell.configureHeaderCell(header: item.titlesec,
-                                 cities: item.items,
+                                 cities: modelCities,
                                  alpha: item.titlesec.available ? 1 : 0.65,
                                  available: item.titlesec.available)
         cell.delegate = self
@@ -150,7 +152,7 @@ extension WorldController: WorldCollectionViewCellDelegate {
     // Переход на выбранный город подробней
     func showSelectedCityDescription(name: String) {
         print("Переход на выбранный город подробней:\(name)")
-        router?.dataStore?.currentCity = name
+        router?.dataStore?.currentCountry = name
         router?.routeToCityVC()
     }
     

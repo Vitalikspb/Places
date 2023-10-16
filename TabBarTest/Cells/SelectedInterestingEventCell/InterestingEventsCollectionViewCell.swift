@@ -58,12 +58,8 @@ class InterestingEventsCollectionViewCell: UICollectionViewCell {
     }
     
     func conigureCell(image: String) {
-        let url = URL(string: image)!
-        NetworkHelper.shared.downloadImage(from: url) { image in
-            self.cellImage = image
-        }
-        
+        self.cellImage = UIImage(named: image) ?? UIImage()
     }
-
+    
 }
 

@@ -15,7 +15,7 @@ class WorldCollectionViewCell: UITableViewCell {
     
     // MARK: - UI properties
     private let headerView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.layer.cornerRadius = 12
         view.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
         return view
@@ -30,7 +30,7 @@ class WorldCollectionViewCell: UITableViewCell {
     }()
     private let countyIconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .center
+        imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
         return imageView
     }()
@@ -44,7 +44,7 @@ class WorldCollectionViewCell: UITableViewCell {
     }()
     private let showCoutryOnMapButton = FilterView(withName: Constants.Views.look)
     private let collectionViewCells: CountryCitiesCollectionView = {
-       let view = CountryCitiesCollectionView()
+        let view = CountryCitiesCollectionView()
         return view
         
     }()
@@ -58,7 +58,7 @@ class WorldCollectionViewCell: UITableViewCell {
     // MARK: - Private properties
     
     private var modelHeader: WorldViewModels.TitleSection!
-    private var modelCities: [WorldViewModels.ItemData] = []
+    private var modelCities: [SightDescription] = []
     
     // MARK: - Lifecycle
     
@@ -94,22 +94,23 @@ class WorldCollectionViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configureHeaderCell(header: WorldViewModels.TitleSection, cities: [WorldViewModels.ItemData], alpha: CGFloat, available: Bool) {
+    func configureHeaderCell(header: WorldViewModels.TitleSection, cities: [SightDescription], alpha: CGFloat, available: Bool) {
         modelHeader = header
         modelCities = cities
         
-        countryNameLabel.text = modelHeader.name
-        subTitleLabel.text = modelHeader.subName
-        countyIconImageView.image = modelHeader.iconCountry
+        countryNameLabel.text = header.country
+        subTitleLabel.text = header.subTitle
+        countyIconImageView.image = UIImage(named: header.iconName)
+        
         [countryNameLabel, subTitleLabel, countyIconImageView, showCoutryOnMapButton].forEach {
             $0.alpha = alpha
         }
-        collectionViewCells.configureCells(model: cities)
+        collectionViewCells.configureCells(availabel: header.available, model: cities)
         collectionViewCells.delegate = self
         showCoutryOnMapButton.isUserInteractionEnabled = available
     }
     
-
+    
     
     private func setupUI() {
         let tapShowMap = UITapGestureRecognizer(target: self, action: #selector(showCountryOnMapTapped))
@@ -120,17 +121,17 @@ class WorldCollectionViewCell: UITableViewCell {
         contentView.addSubviews(headerView, showCoutryOnMapButton, collectionViewCells)
         
         headerView.addSubviews(countryNameLabel, countyIconImageView, subTitleLabel)
-
+        
         headerView.anchor(top: contentView.topAnchor,
-                           left: contentView.leftAnchor,
-                           bottom: nil,
+                          left: contentView.leftAnchor,
+                          bottom: nil,
                           right: contentView.rightAnchor,
-                           paddingTop: 12,
-                           paddingLeft: 16,
-                           paddingBottom: 0,
-                           paddingRight: 16,
-                           width: 0,
-                           height: 74)
+                          paddingTop: 12,
+                          paddingLeft: 16,
+                          paddingBottom: 0,
+                          paddingRight: 16,
+                          width: 0,
+                          height: 74)
         showCoutryOnMapButton.centerY(inView: headerView)
         showCoutryOnMapButton.anchor(top: nil,
                                      left: nil,
@@ -143,15 +144,15 @@ class WorldCollectionViewCell: UITableViewCell {
                                      width: 108,
                                      height: 35)
         collectionViewCells.anchor(top: headerView.bottomAnchor,
-                          left: contentView.leftAnchor,
-                          bottom: contentView.bottomAnchor,
-                          right: contentView.rightAnchor,
-                          paddingTop: 8,
-                          paddingLeft: 0,
-                          paddingBottom: 0,
-                          paddingRight: 0,
-                          width: 0,
-                          height: 0)
+                                   left: contentView.leftAnchor,
+                                   bottom: contentView.bottomAnchor,
+                                   right: contentView.rightAnchor,
+                                   paddingTop: 8,
+                                   paddingLeft: 0,
+                                   paddingBottom: 0,
+                                   paddingRight: 0,
+                                   width: 0,
+                                   height: 0)
         
         countryNameLabel.anchor(top: headerView.topAnchor,
                                 left: headerView.leftAnchor,
@@ -190,7 +191,8 @@ class WorldCollectionViewCell: UITableViewCell {
     // MARK: - Selectors
     
     @objc private func showCountryOnMapTapped() {
-        delegate?.showOnMap(name: modelHeader.name)
+        print("showCountryOnMapTapped: \(modelHeader.country)")
+        delegate?.showOnMap(name: modelHeader.country)
     }
     
 }
@@ -208,5 +210,5 @@ extension WorldCollectionViewCell: CountryCitiesCollectionViewDelegate {
     func showCity(name: String) {
         delegate?.showSelectedCityDescription(name: name)
     }
-
+    
 }

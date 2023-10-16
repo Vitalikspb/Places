@@ -75,13 +75,19 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        mainImageView.image = nil
+    }
+    
     // MARK: - Helper functions
     
-    func configureCell(withName title: String, sight: Int, andImage image: UIImage, alpha: CGFloat, available: Bool) {
+    func configureCell(withName title: String, sight: Int, andImage image: String, alpha: CGFloat, available: Bool) {
         mainView.alpha = alpha
         titleLabel.text = title
         numberOfSightLabel.text = "\(sight) мест"
-        mainImageView.image = image
+
+        self.mainImageView.image = UIImage(named: image)
         
         [mainImageView, titleLabel, numberOfSightLabel].forEach {
             $0.alpha = alpha

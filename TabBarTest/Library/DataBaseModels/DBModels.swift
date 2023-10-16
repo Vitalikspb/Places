@@ -5,12 +5,12 @@
 //  Created by VITALIY SVIRIDOV on 13.10.2023.
 //
 
-import Foundation
+import UIKit
 
 
 // MARK: - Запрашиваем все достопримечательности по конкретному городу и стране
 // sight
-struct Sight: Codable {
+struct SightResponse: Codable {
     var id: Int
     var name: String
     var country: String
@@ -36,6 +36,32 @@ struct Sight: Codable {
     var images: Dictionary<String, [ImagesArray]>?
 }
 
+struct Sight: Codable {
+    var id: Int
+    var name: String
+    var country: String
+    var city: String
+    var type: TypeSight
+    var category: CategoryTypeSight
+    var rating: String
+    var price: Int?
+    var latitude: Double
+    var longitude: Double
+    var address: String
+    var main_phone: String?
+    var additional_phone: String?
+    var test: Bool
+    var site: String?
+    var vk: String?
+    var facebook: String?
+    var instagram: String?
+    var youtube: String?
+    var workmode: Workmode?
+    var big_image: String
+    var small_image: String
+    var images: [String]
+}
+
 // MARK: - Запрос описания тестовых данных всех стран
 // cityCountryInfo
 struct CountryCityInfo: Codable {
@@ -48,7 +74,7 @@ struct CountryCityInfo: Codable {
 
 // MARK: - Запрос описания города + другие города по данной стране и Запрос описания города по стране (без отправки города)
 // cityAll
-struct SightDescription: Codable {
+struct SightDescriptionResponse: Codable {
     var id: Int
     var name: String
     var description: String
@@ -57,6 +83,17 @@ struct SightDescription: Codable {
     var latitude: Double
     var longitude: Double
     var images: Dictionary<String, [ImagesArray]>?
+}
+
+struct SightDescription: Codable {
+    var id: Int
+    var name: String
+    var description: String
+    var price: Int
+    var sight_count: Int
+    var latitude: Double
+    var longitude: Double
+    var images: [String]
 }
 
 // MARK: - Запрос на интересные события

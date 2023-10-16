@@ -32,15 +32,13 @@ class IntrestingEventsInteractor: IntrestingEventsBussinessLogic, IntrestingEven
     
     func showIntrestingEvents() {
         // создаем модель из БД из избранного
-        if country == "" {
-            country = "Россия"
+        let model = ModelForRequest(country: country == "" ? "Россия" : country,
+                                    city: city)
+        IntrestingEventsWorker.updateInterestingEvents(model: model) {
+            let interestingEvent = UserDefaults.standard.getEvents()
+            let viewModel = IntrestingEventsModels.IntrestingEvents.ViewModel(events: interestingEvent)
+            self.presenter?.presentIntrestingEvents(response: viewModel)
         }
-        IntrestingEventsWorker.updateInterestingEvents(
-            model: ModelForRequest(country: country, city: city)) {
-                let interestingEvent = UserDefaults.standard.getEvents()
-                let viewModel = IntrestingEventsModels.IntrestingEvents.ViewModel(events: interestingEvent)
-                self.presenter?.presentIntrestingEvents(response: viewModel)
-            }
     }
     
 }

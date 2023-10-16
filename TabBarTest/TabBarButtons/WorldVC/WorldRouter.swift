@@ -58,7 +58,7 @@ class WorldRouter: NSObject, WorldRoutingLogic, WorldDataPassing {
 //    }
     
     func passDataToLeadMore(source: WorldDataStore, destination: inout CityDataStore) {
-        destination.currentCity = source.currentCity
+        destination.currentCity = source.currentCountry
     }
 }
 
