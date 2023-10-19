@@ -95,11 +95,6 @@ class MapController: UIViewController {
                                                                           width: UIScreen.main.bounds.width,
                                                                           height: 88))
     
-    //    private let showCurrentCityView = CurrentCityButtonView(frame: CGRect(x: 0,
-    //                                                                          y: 0,
-    //                                                                          width: 60,
-    //                                                                          height: 60))
-    
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -172,8 +167,6 @@ class MapController: UIViewController {
         
         bottomCollectionView.delegate = self
         
-        //        showCurrentCityView.delegate = self
-        
         mapView.delegate = self
         mapView.settings.compassButton = false
         mapView.settings.myLocationButton = false
@@ -194,7 +187,6 @@ class MapController: UIViewController {
         view.addSubview(floatingView)
         view.addSubview(buttonsView)
         view.addSubview(bottomCollectionView)
-        //        view.addSubview(showCurrentCityView)
         
         topScrollView.anchor(top: view.layoutMarginsGuide.topAnchor,
                              left: view.leftAnchor,
@@ -243,16 +235,6 @@ class MapController: UIViewController {
                                     paddingRight: 0,
                                     width: 0,
                                     height: 88)
-        //        showCurrentCityView.anchor(top: topScrollView.bottomAnchor,
-        //                                   left: nil,
-        //                                   bottom: nil,
-        //                                   right: view.rightAnchor,
-        //                                   paddingTop: 0,
-        //                                   paddingLeft: 0,
-        //                                   paddingBottom: 0,
-        //                                   paddingRight: 15,
-        //                                   width: 60,
-        //                                   height: 60)
         buttonsView.alpha = 0
     }
     
@@ -424,15 +406,15 @@ extension MapController: GMSMapViewDelegate {
     
     // Вызывается по нажатию на свое местоположение
     // MARK: - TODO УДАЛИТЬ
-    func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
-        
-        let alert = UIAlertController(
-            title: "Location Tapped",
-            message: "Current location: <\(location.latitude), \(location.longitude)>",
-            preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
-    }
+//    func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
+//        
+//        let alert = UIAlertController(
+//            title: "Location Tapped",
+//            message: "Current location: <\(location.latitude), \(location.longitude)>",
+//            preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default))
+//        present(alert, animated: true)
+//    }
     
     // вызывается при нажатии на маркер
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {

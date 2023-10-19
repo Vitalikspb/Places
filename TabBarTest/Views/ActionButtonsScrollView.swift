@@ -29,10 +29,40 @@ class ActionButtonsScrollView: UIScrollView {
     // MARK: - UI properties
     
     let routeButton = FilterView(withName: Constants.Views.travelGuide)
+    private let animateRouteButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 0)
+        return button
+    }()
+    
     let addToFavouritesButton = FilterView(withName: Constants.Views.toFeatures)
+    private let animateAddToFavouritesButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 1)
+        return button
+    }()
+    
     let callButton = FilterView(withName: Constants.Views.makeCall)
+    private let animateCallButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 2)
+        return button
+    }()
+    
     let shareButton = FilterView(withName: Constants.Views.share)
+    private let animateShareButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 3)
+        return button
+    }()
+    
     let siteButton = FilterView(withName: Constants.Views.toSite)
+    private let animateSiteButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 4)
+        return button
+    }()
+    
     
     // MARK: - Life cycle
     
@@ -45,26 +75,13 @@ class ActionButtonsScrollView: UIScrollView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Selectors
-    
-    @objc func handleRouteButton() {
-        actionButtonDelegate?.routeButtonTapped()
-    }
-    @objc func handleAddToFavouritesButton() {
-        actionButtonDelegate?.addToFavouritesButtonTapped()
-    }
-    @objc func handleCallButton() {
-        actionButtonDelegate?.callButtonTapped()
-    }
-    @objc func handleShareButton() {
-        actionButtonDelegate?.shareButtonTapped()
-    }
-    @objc func handleSiteButton() {
-        actionButtonDelegate?.siteButtonTapped()
-    }
     // MARK: - Helper Functions
     
     private func setupUI() {
+        [animateRouteButton, animateAddToFavouritesButton,
+         animateCallButton, animateShareButton, animateSiteButton].forEach {
+            $0.delegate = self
+        }
         self.backgroundColor = .setCustomColor(color: .filterbuttonFloatingScreen)
         self.isScrollEnabled = true
         self.isDirectionalLockEnabled = true
@@ -75,23 +92,26 @@ class ActionButtonsScrollView: UIScrollView {
             $0.layer.cornerRadius = 12
             $0.backgroundColor = .setCustomColor(color: .filterView)
         }
+        animateRouteButton.addSubviews(routeButton)
+        routeButton.addConstraintsToFillView(view: animateRouteButton)
+        addSubview(animateRouteButton)
         
-        let tapRouteButton = UITapGestureRecognizer(target: self, action: #selector(handleRouteButton))
-        routeButton.addGestureRecognizer(tapRouteButton)
-        let tapFavouriteButton = UITapGestureRecognizer(target: self, action: #selector(handleAddToFavouritesButton))
-        addToFavouritesButton.addGestureRecognizer(tapFavouriteButton)
-        let tapCallButton = UITapGestureRecognizer(target: self, action: #selector(handleCallButton))
-        callButton.addGestureRecognizer(tapCallButton)
-        let tapShareButton = UITapGestureRecognizer(target: self, action: #selector(handleShareButton))
-        shareButton.addGestureRecognizer(tapShareButton)
-        let tapSiteButton = UITapGestureRecognizer(target: self, action: #selector(handleSiteButton))
-        siteButton.addGestureRecognizer(tapSiteButton)
+        animateAddToFavouritesButton.addSubviews(addToFavouritesButton)
+        addToFavouritesButton.addConstraintsToFillView(view: animateAddToFavouritesButton)
+        addSubview(animateAddToFavouritesButton)
         
-        addSubview(routeButton)
-        addSubview(addToFavouritesButton)
-        addSubview(callButton)
-        addSubview(shareButton)
-        addSubview(siteButton)
+        animateCallButton.addSubviews(callButton)
+        callButton.addConstraintsToFillView(view: animateCallButton)
+        addSubview(animateCallButton)
+        
+        animateShareButton.addSubviews(shareButton)
+        shareButton.addConstraintsToFillView(view: animateShareButton)
+        addSubview(animateShareButton)
+        
+        animateSiteButton.addSubviews(siteButton)
+        siteButton.addConstraintsToFillView(view: animateSiteButton)
+        addSubview(animateSiteButton)
+        
         updateFullWidth()
     }
     
@@ -107,30 +127,35 @@ class ActionButtonsScrollView: UIScrollView {
                                 width: routeButtonWidth,
                                 height: 36)
         routeButton.frame = frameRoute
+        animateRouteButton.frame = frameRoute
         
         let frameFavourites = CGRect(x: routeButtonWidth + 28,
                                      y: 10,
                                      width: addToFavouritesButtonWidth,
                                      height: 36)
         addToFavouritesButton.frame = frameFavourites
+        animateAddToFavouritesButton.frame = frameFavourites
         
         let frameCall = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + 40,
                                y: 10,
                                width: callButtonWidth,
                                height: 36)
         callButton.frame = frameCall
+        animateCallButton.frame = frameCall
         
         let frameShare = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + 52,
                                 y: 10,
                                 width: shareButtonWidth,
                                 height: 36)
         shareButton.frame = frameShare
+        animateShareButton.frame = frameShare
         
         let frameSite = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + shareButtonWidth + 64,
                                y: 10,
                                width: siteButtonWidth,
                                height: 36)
         siteButton.frame = frameSite
+        animateSiteButton.frame = frameSite
         
         self.contentSize = CGSize(width: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + shareButtonWidth + siteButtonWidth + 76,
                                   height: self.frame.height)
@@ -141,4 +166,31 @@ class ActionButtonsScrollView: UIScrollView {
     
 }
 
+// MARK: - CustomAnimatedButtonDelegate
+
+extension ActionButtonsScrollView: CustomAnimatedButtonDelegate {
+    
+    func continueButton(model: ButtonCallBackModel) {
+        switch model.id {
+        case 0:
+            actionButtonDelegate?.routeButtonTapped()
+            
+        case 1:
+            actionButtonDelegate?.addToFavouritesButtonTapped()
+            
+        case 2:
+            actionButtonDelegate?.callButtonTapped()
+            
+        case 3:
+            actionButtonDelegate?.shareButtonTapped()
+            
+        case 4:
+            actionButtonDelegate?.siteButtonTapped()
+            
+        default:
+            break
+        }
+    }
+
+}
 

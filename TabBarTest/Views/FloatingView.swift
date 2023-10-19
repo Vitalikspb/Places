@@ -203,10 +203,4 @@ extension FloatingView: MainFloatingViewDelegate {
     func openYoutube() {
         delegate?.openYoutube()
     }
-    
-//    func closeFloatingView() {
-//        animateInputView(targetPosition: screenHeight, state: .NotExpanded)
-//        delegate?.floatingPanelIsHidden()
-//        mainView.floatingPanelIsHidden()
-//    }
 }

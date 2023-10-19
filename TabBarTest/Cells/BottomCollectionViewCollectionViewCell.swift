@@ -6,6 +6,9 @@
 
 import UIKit
 
+protocol BottomCollectionViewCollectionViewCellDelegate: AnyObject {
+    func tapSight(name: String)
+}
 
 class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
     
@@ -47,9 +50,19 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private let animateButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        return button
+    }()
+    
     // MARK: - Public properties
     
     static let identifier = "BottomCollectionViewCollectionViewCell"
+    weak var delegate: BottomCollectionViewCollectionViewCellDelegate?
+    
+    // MARK: - Private properties
+    
+    private var name: String = ""
     
     // MARK: - LifeCycle
     
@@ -70,12 +83,18 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        self.backgroundColor = .setCustomColor(color: .mainView)
-        self.layer.cornerRadius = 12
-        self.clipsToBounds = true
+        contentView.backgroundColor = .clear
         
-        contentView.addSubviews(sightImageView, sightNameLabel, sightTypeLabel, sightTypeImageView)
+        animateButton.delegate = self
+        animateButton.layer.cornerRadius = 12
+        animateButton.clipsToBounds = true
+        animateButton.backgroundColor = .setCustomColor(color: .mainView)
+        
+        contentView.addSubviews(animateButton)
+        animateButton.addSubviews(sightImageView, sightNameLabel, sightTypeLabel, sightTypeImageView)
 
+        animateButton.addConstraintsToFillView(view: contentView)
+        
         sightImageView.anchor(top: contentView.topAnchor,
                               left: contentView.leftAnchor,
                               bottom: contentView.bottomAnchor,
@@ -115,10 +134,20 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
     }
     
     func conigureCell(type: String, name: String, image: UIImage, typeSight: TypeSightsImageName) {
+        self.name = name
         sightTypeLabel.text = type
         sightNameLabel.text = name
         sightImageView.image = image
         sightTypeImageView.image = UIImage(named: typeSight.rawValue)
+    }
+}
+
+// MARK: - BottomCollectionViewCollectionViewCell
+
+extension BottomCollectionViewCollectionViewCell: CustomAnimatedButtonDelegate {
+    
+    func continueButton(model: ButtonCallBackModel) {
+        delegate?.tapSight(name: name)
     }
 }
 

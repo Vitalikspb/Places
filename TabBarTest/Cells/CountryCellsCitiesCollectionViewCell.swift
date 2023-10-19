@@ -75,6 +75,12 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private let favouriteButton: CustomAnimatedButton = {
+        let button = CustomAnimatedButton()
+        return button
+    }()
+    
+    
     // MARK: - Public properties
     
     weak var delegate: CountryCellsCitiesCollectionViewCellDelegate?
@@ -127,10 +133,7 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
     // MARK: - Helper functions
     
     private func setupUI() {
-        let moveTap = UITapGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
-        moveToChoosenCityButton.isUserInteractionEnabled = true
-        moveToChoosenCityButton.addGestureRecognizer(moveTap)
-        
+        favouriteButton.delegate = self
         let mapTap = UITapGestureRecognizer(target: self, action: #selector(moveToCityViewHandle))
         mainImageView.isUserInteractionEnabled = true
         mainImageView.addGestureRecognizer(mapTap)
@@ -139,30 +142,31 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 12
         self.clipsToBounds = true
         
-        contentView.addSubviews(mainImageView, titleLabel, numberOfSightLabel, moveToChoosenCityView)
+        contentView.addSubviews(mainImageView, titleLabel, numberOfSightLabel, favouriteButton)
+        favouriteButton.addSubviews(moveToChoosenCityView)
         moveToChoosenCityView.addSubviews(moveToChoosenCityButton)
     }
     
     private func setupConstraints() {
         mainImageView.anchor(top: contentView.topAnchor,
-                     left: contentView.leftAnchor,
-                     bottom: titleLabel.topAnchor,
-                     right: contentView.rightAnchor,
-                     paddingTop: 0,
-                     paddingLeft: 0,
-                     paddingBottom: 4,
-                     paddingRight: 0,
-                     width: 0, height: 0)
+                             left: contentView.leftAnchor,
+                             bottom: titleLabel.topAnchor,
+                             right: contentView.rightAnchor,
+                             paddingTop: 0,
+                             paddingLeft: 0,
+                             paddingBottom: 4,
+                             paddingRight: 0,
+                             width: 0, height: 0)
         
         titleLabel.anchor(top: nil,
-                     left: contentView.leftAnchor,
-                     bottom: nil,
-                     right: moveToChoosenCityButton.leftAnchor,
-                     paddingTop: 0,
-                     paddingLeft: 0,
-                     paddingBottom: 0,
-                     paddingRight: 0,
-                     width: 0, height: 25)
+                          left: contentView.leftAnchor,
+                          bottom: nil,
+                          right: moveToChoosenCityButton.leftAnchor,
+                          paddingTop: 0,
+                          paddingLeft: 0,
+                          paddingBottom: 0,
+                          paddingRight: 0,
+                          width: 0, height: 25)
         numberOfSightLabel.anchor(top: titleLabel.bottomAnchor,
                                   left: contentView.leftAnchor,
                                   bottom: contentView.bottomAnchor,
@@ -172,15 +176,16 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
                                   paddingBottom: 8,
                                   paddingRight: 0,
                                   width: 0, height: 20)
-        moveToChoosenCityView.anchor(top: mainImageView.topAnchor,
-                                     left: nil,
-                                     bottom: nil,
-                                     right: mainImageView.rightAnchor,
-                                     paddingTop: 8,
-                                     paddingLeft: 0,
-                                     paddingBottom: 0,
-                                     paddingRight: 8,
-                                     width: 35, height: 35)
+        favouriteButton.anchor(top: mainImageView.topAnchor,
+                               left: nil,
+                               bottom: nil,
+                               right: mainImageView.rightAnchor,
+                               paddingTop: 8,
+                               paddingLeft: 0,
+                               paddingBottom: 0,
+                               paddingRight: 8,
+                               width: 35, height: 35)
+        moveToChoosenCityView.addConstraintsToFillView(view: favouriteButton)
         moveToChoosenCityButton.addConstraintsToFillView(view: moveToChoosenCityView)
     }
     
@@ -223,6 +228,14 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
         default:
             break
         }
+    }
+}
+
+// MARK: - CustomAnimatedButtonDelegate
+
+extension CountryCellsCitiesCollectionViewCell: CustomAnimatedButtonDelegate {
+    func continueButton(model: ButtonCallBackModel) {
+        moveToMapViewHandle()
     }
 }
 

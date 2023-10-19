@@ -47,6 +47,11 @@ class SightCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private let favouriteButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        return button
+    }()
+    
     // MARK: - Private properties
     
     private var putToFavouritesList: Bool = false
@@ -88,14 +93,12 @@ class SightCollectionViewCell: UICollectionViewCell {
     private func setupUI() {
         self.backgroundColor = .clear
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapFavouriteHandle))
-        imageFavourite.isUserInteractionEnabled = true
-        imageFavourite.addGestureRecognizer(tap)
-        
+        favouriteButton.delegate = self
         favouriteView.backgroundColor = putToFavouritesList
         ? .setCustomColor(color: .tabBarIconSelected)
         : .setCustomColor(color: .mainView)
-        contentView.addSubviews(image, title, favouriteView)
+        contentView.addSubviews(image, title, favouriteButton)
+        favouriteButton.addSubviews(favouriteView)
         favouriteView.addSubviews(imageFavourite)
     }
     
@@ -124,8 +127,7 @@ class SightCollectionViewCell: UICollectionViewCell {
                      paddingBottom: 4,
                      paddingRight: 4,
                      width: 0, height: 24)
-        
-        favouriteView.anchor(top: image.topAnchor,
+        favouriteButton.anchor(top: image.topAnchor,
                              left: nil,
                              bottom: nil,
                              right: image.rightAnchor,
@@ -134,6 +136,7 @@ class SightCollectionViewCell: UICollectionViewCell {
                              paddingBottom: 0,
                              paddingRight: 8,
                              width: 35, height: 35)
+        favouriteView.addConstraintsToFillView(view: favouriteButton)
         
         imageFavourite.anchor(top: nil,
                               left: nil,
@@ -144,7 +147,7 @@ class SightCollectionViewCell: UICollectionViewCell {
                               paddingBottom: 0,
                               paddingRight: 0,
                               width: 35, height: 35)
-        imageFavourite.center(inView: favouriteView) 
+        imageFavourite.center(inView: favouriteView)
     }
     
     func conigureCell(name: String, image: UIImage) {
@@ -152,5 +155,15 @@ class SightCollectionViewCell: UICollectionViewCell {
         cellTitle = name
     }
 
+}
+
+// MARK: - CustomAnimatedButtonDelegate
+
+extension SightCollectionViewCell: CustomAnimatedButtonDelegate {
+    
+    func continueButton(model: ButtonCallBackModel) {
+        tapFavouriteHandle()
+    }
+    
 }
 

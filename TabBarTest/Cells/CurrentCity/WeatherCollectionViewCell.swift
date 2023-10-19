@@ -113,14 +113,21 @@ class WeatherCollectionViewCell: UITableViewCell {
         return label
     }()
    
-    let fullWeatherButtons: UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .clear
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = .setCustomFont(name: .semibold, andSize: 16)
-        button.setTitle("Погода на 7 дней", for: .normal)
+    let fullWeatherButtons: UILabel = {
+       let label = UILabel()
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.font = .setCustomFont(name: .semibold, andSize: 16)
+        label.text = "Погода на 7 дней"
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let favouriteButton: CustomAnimatedButton = {
+        let button = CustomAnimatedButton()
         return button
     }()
+    
     // MARK: -  Public Properties
     
     static let identifier = "WeatherCollectionViewCell"
@@ -158,14 +165,14 @@ class WeatherCollectionViewCell: UITableViewCell {
     private func setupUI() {
         self.backgroundColor = .clear
         mainView.backgroundColor = .clear
-        
-        fullWeatherButtons.addTarget(self, action: #selector(fullWeatherTapped), for: .touchUpInside)
+        favouriteButton.delegate = self
         
         contentView.addSubviews(mainView)
-        mainView.addSubviews(titleLabel, topContainerView, buttonContainerView)
+        mainView.addSubviews(titleLabel, topContainerView, favouriteButton)
         topContainerView.addSubviews(todayLabel, lightSmallRectangleView, curTempLabel,
                                      tempFeelsLikeLabel, sunriseLabel, sunsetLabel)
         lightSmallRectangleView.addSubviews(curImageLabel)
+        favouriteButton.addSubviews(buttonContainerView)
         buttonContainerView.addSubviews(fullWeatherButtons)
         
         mainView.addConstraintsToFillView(view: contentView)
@@ -182,7 +189,7 @@ class WeatherCollectionViewCell: UITableViewCell {
         
         topContainerView.anchor(top: titleLabel.bottomAnchor,
                                 left: contentView.leftAnchor,
-                                bottom: buttonContainerView.topAnchor,
+                                bottom: favouriteButton.topAnchor,
                                 right: contentView.rightAnchor,
                                 paddingTop: 16,
                                 paddingLeft: 16,
@@ -251,8 +258,7 @@ class WeatherCollectionViewCell: UITableViewCell {
                            paddingBottom: 16,
                            paddingRight: 24,
                            width: 0, height: 18)
-        
-        buttonContainerView.anchor(top: nil,
+        favouriteButton.anchor(top: nil,
                                    left: contentView.leftAnchor,
                                    bottom: contentView.bottomAnchor,
                                    right: contentView.rightAnchor,
@@ -261,7 +267,7 @@ class WeatherCollectionViewCell: UITableViewCell {
                                    paddingBottom: 0,
                                    paddingRight: 16,
                                    width: 0, height: 40)
-        
+        buttonContainerView.addConstraintsToFillView(view: favouriteButton)
         fullWeatherButtons.addConstraintsToFillView(view: buttonContainerView)
     }
     
@@ -278,8 +284,13 @@ class WeatherCollectionViewCell: UITableViewCell {
             sunsetLabel.text = "\(Constants.Cells.sunset) \(sunsetString)"
         })
     }
-    
-    @objc func fullWeatherTapped() {
+
+}
+
+// MARK: - CustomAnimatedButtonDelegate
+
+extension WeatherCollectionViewCell: CustomAnimatedButtonDelegate {
+    func continueButton(model: ButtonCallBackModel) {
         delegate?.showFullWeather()
     }
     

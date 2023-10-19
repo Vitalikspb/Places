@@ -58,6 +58,10 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
         imageView.image = UIImage(named: "moveToMap")
         return imageView
     }()
+    private let animateButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        return button
+    }()
     
     // MARK: - Public properties
     
@@ -94,14 +98,13 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
         }
         mainImageView.isUserInteractionEnabled = available
         moveToChoosenCityButton.isUserInteractionEnabled = available
+        animateButton.isUserInteractionEnabled = available
     }
     
     private func setupUI() {
+        animateButton.delegate = self
         let mapTap = UITapGestureRecognizer(target: self, action: #selector(moveToCityViewHandle))
         mainImageView.addGestureRecognizer(mapTap)
-
-        let moveTap = UITapGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
-        moveToChoosenCityButton.addGestureRecognizer(moveTap)
         
         contentView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
         contentView.layer.cornerRadius = 12
@@ -109,7 +112,8 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
         
         contentView.addSubviews(mainView)
         mainView.addConstraintsToFillView(view: contentView)
-        mainView.addSubviews(mainImageView, titleLabel, numberOfSightLabel, moveToChoosenCityView)
+        mainView.addSubviews(mainImageView, titleLabel, numberOfSightLabel, animateButton)
+        animateButton.addSubviews(moveToChoosenCityView)
         moveToChoosenCityView.addSubviews(moveToChoosenCityButton)
 
         
@@ -142,7 +146,7 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
                                   paddingBottom: 4,
                                   paddingRight: 0,
                                   width: 0, height: 20)
-        moveToChoosenCityView.anchor(top: mainImageView.topAnchor,
+        animateButton.anchor(top: mainImageView.topAnchor,
                                      left: nil,
                                      bottom: nil,
                                      right: mainImageView.rightAnchor,
@@ -151,6 +155,7 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
                                      paddingBottom: 0,
                                      paddingRight: 8,
                                      width: 35, height: 35)
+        moveToChoosenCityView.addConstraintsToFillView(view: animateButton)
         moveToChoosenCityButton.addConstraintsToFillView(view: moveToChoosenCityView)
     }
     
@@ -161,9 +166,16 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
         delegate?.selectCity(name: titleLabel.text ?? "")
     }
     
-    @objc private func moveToMapViewHandle() {
+}
+
+// MARK: - CustomAnimatedButtonDelegate
+
+extension WorldCityCollectionViewCell: CustomAnimatedButtonDelegate {
+    
+    func continueButton(model: ButtonCallBackModel) {
         print("переход на город на карте")
         delegate?.showCityOnMap(name: titleLabel.text ?? "")
     }
+    
     
 }

@@ -26,8 +26,22 @@ class ActionsButtonsCityView: UIScrollView {
     // MARK: - UI properties
     
     let favouriteButton = FilterView(withName: Constants.Views.favourite)
+    private let animateFavouriteButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        return button
+    }()
+    
     let interestingButton = FilterView(withName: Constants.Views.interesting)
+    private let animateInterestingButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        return button
+    }()
+    
     let faqButton = FilterView(withName: Constants.Views.faq)
+    private let animateFaqButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        return button
+    }()
     
     // MARK: - Life cycle
     
@@ -55,6 +69,15 @@ class ActionsButtonsCityView: UIScrollView {
     // MARK: - Helper Functions
     
     private func setupUI() {
+        animateFavouriteButton.delegate = self
+        animateFavouriteButton.setupId(id: 0)
+        
+        animateInterestingButton.delegate = self
+        animateInterestingButton.setupId(id: 1)
+        
+        animateFaqButton.delegate = self
+        animateFaqButton.setupId(id: 2)
+        
         self.backgroundColor = .setCustomColor(color: .filterbuttonFloatingScreen)
         self.isScrollEnabled = true
         self.isDirectionalLockEnabled = true
@@ -65,16 +88,18 @@ class ActionsButtonsCityView: UIScrollView {
             $0.backgroundColor = .setCustomColor(color: .filterView)
         }
         
-        let tapFavouriteButton = UITapGestureRecognizer(target: self, action: #selector(handleFavouriteButton))
-        favouriteButton.addGestureRecognizer(tapFavouriteButton)
-        let tapInterestingButton = UITapGestureRecognizer(target: self, action: #selector(handleInterestingButton))
-        interestingButton.addGestureRecognizer(tapInterestingButton)
-        let tapFaqButton = UITapGestureRecognizer(target: self, action: #selector(handleFaqButton))
-        faqButton.addGestureRecognizer(tapFaqButton)
+        addSubview(animateFavouriteButton)
+        animateFavouriteButton.addSubviews(favouriteButton)
+        favouriteButton.addConstraintsToFillView(view: animateFavouriteButton)
         
-        addSubview(favouriteButton)
-        addSubview(interestingButton)
-        addSubview(faqButton)
+        addSubview(animateInterestingButton)
+        animateInterestingButton.addSubviews(interestingButton)
+        interestingButton.addConstraintsToFillView(view: animateInterestingButton)
+        
+        addSubview(animateFaqButton)
+        animateFaqButton.addSubviews(faqButton)
+        faqButton.addConstraintsToFillView(view: animateFaqButton)
+
         updateFullWidth()
     }
     
@@ -88,24 +113,47 @@ class ActionsButtonsCityView: UIScrollView {
                                 width: routeButtonWidth,
                                 height: 36)
         favouriteButton.frame = frameRoute
+        animateFavouriteButton.frame = frameRoute
         
         let frameFavourites = CGRect(x: routeButtonWidth + 28,
                                      y: 10,
                                      width: addToFavouritesButtonWidth,
                                      height: 36)
         interestingButton.frame = frameFavourites
+        animateInterestingButton.frame = frameFavourites
         
         let frameCall = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + 40,
                                y: 10,
                                width: callButtonWidth,
                                height: 36)
         faqButton.frame = frameCall
+        animateFaqButton.frame = frameCall
         
         self.contentSize = CGSize(width: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth  + 52,
                                   height: self.frame.height)
     }
+}
+
+// MARK: - CustomAnimatedButtonDelegate
+
+extension ActionsButtonsCityView: CustomAnimatedButtonDelegate {
     
-    
+    func continueButton(model: ButtonCallBackModel) {
+        switch model.id {
+            
+        case 0:
+            handleFavouriteButton()
+            
+        case 1:
+            handleInterestingButton()
+            
+        case 2:
+            handleFaqButton()
+            
+        default:
+            break
+        }
+    }
     
     
 }

@@ -22,14 +22,6 @@ class SightTableViewCell: UITableViewCell {
         label.text = Constants.Cells.mustSeeSights
         return label
     }()
-    private let lookAllLabel: UILabel = {
-       let label = UILabel()
-        label.textColor = .setCustomColor(color: .subTitleText)
-        label.textAlignment = .right
-        label.font = .setCustomFont(name: .semibold, andSize: 16)
-        label.text = Constants.Cells.lookAll
-        return label
-    }()
     let collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: UICollectionViewLayout.init())
     
@@ -86,10 +78,6 @@ class SightTableViewCell: UITableViewCell {
         layout.minimumLineSpacing = 10.0
         layout.minimumInteritemSpacing = 10.0
         
-        let tapLookAll = UITapGestureRecognizer(target: self, action: #selector(lookAllTapped))
-        lookAllLabel.isUserInteractionEnabled = true
-        lookAllLabel.addGestureRecognizer(tapLookAll)
-        
         collectionView.register(SightCollectionViewCell.self,
                                 forCellWithReuseIdentifier: SightCollectionViewCell.identifier)
         collectionView.delegate = self
@@ -98,28 +86,19 @@ class SightTableViewCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.setCollectionViewLayout(layout, animated: true)
-        contentView.addSubviews(titleLabel, collectionView, lookAllLabel)
+        contentView.addSubviews(titleLabel, collectionView)
 
         titleLabel.anchor(top: contentView.topAnchor,
                           left: contentView.leftAnchor,
                           bottom: nil,
-                          right: lookAllLabel.leftAnchor,
+                          right: contentView.rightAnchor,
                           paddingTop: 8,
                           paddingLeft: 16,
                           paddingBottom: 0,
                           paddingRight: 8,
                           width: 0,
                           height: 32)
-        lookAllLabel.anchor(top: contentView.topAnchor,
-                          left: nil,
-                          bottom: nil,
-                          right: contentView.rightAnchor,
-                          paddingTop: 8,
-                          paddingLeft: 0,
-                          paddingBottom: 0,
-                          paddingRight: 16,
-                          width: 85,
-                          height: 35)
+
         collectionView.anchor(top: titleLabel.bottomAnchor,
                           left: contentView.leftAnchor,
                           bottom: contentView.bottomAnchor,

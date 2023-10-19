@@ -43,6 +43,10 @@ class WorldCollectionViewCell: UITableViewCell {
         return label
     }()
     private let showCoutryOnMapButton = FilterView(withName: Constants.Views.look)
+    private let animateButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        return button
+    }()
     private let collectionViewCells: CountryCitiesCollectionView = {
         let view = CountryCitiesCollectionView()
         return view
@@ -108,17 +112,15 @@ class WorldCollectionViewCell: UITableViewCell {
         collectionViewCells.configureCells(availabel: header.available, model: cities)
         collectionViewCells.delegate = self
         showCoutryOnMapButton.isUserInteractionEnabled = available
+        animateButton.isUserInteractionEnabled = available
     }
     
-    
-    
     private func setupUI() {
-        let tapShowMap = UITapGestureRecognizer(target: self, action: #selector(showCountryOnMapTapped))
-        showCoutryOnMapButton.addGestureRecognizer(tapShowMap)
-        
+        animateButton.delegate = self
+
         contentView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
-        
-        contentView.addSubviews(headerView, showCoutryOnMapButton, collectionViewCells)
+        contentView.addSubviews(headerView, animateButton, collectionViewCells)
+        animateButton.addSubviews(showCoutryOnMapButton)
         
         headerView.addSubviews(countryNameLabel, countyIconImageView, subTitleLabel)
         
@@ -132,8 +134,9 @@ class WorldCollectionViewCell: UITableViewCell {
                           paddingRight: 16,
                           width: 0,
                           height: 74)
-        showCoutryOnMapButton.centerY(inView: headerView)
-        showCoutryOnMapButton.anchor(top: nil,
+        
+        animateButton.centerY(inView: headerView)
+        animateButton.anchor(top: nil,
                                      left: nil,
                                      bottom: nil,
                                      right: headerView.rightAnchor,
@@ -143,6 +146,8 @@ class WorldCollectionViewCell: UITableViewCell {
                                      paddingRight: 16,
                                      width: 108,
                                      height: 35)
+        showCoutryOnMapButton.addConstraintsToFillView(view: animateButton)
+        
         collectionViewCells.anchor(top: headerView.bottomAnchor,
                                    left: contentView.leftAnchor,
                                    bottom: contentView.bottomAnchor,
@@ -187,14 +192,6 @@ class WorldCollectionViewCell: UITableViewCell {
                              height: 20)
         
     }
-    
-    // MARK: - Selectors
-    
-    @objc private func showCountryOnMapTapped() {
-        print("showCountryOnMapTapped: \(modelHeader.country)")
-        delegate?.showOnMap(name: modelHeader.country)
-    }
-    
 }
 
 // MARK: - CountryCitiesCollectionViewDelegate
@@ -209,6 +206,17 @@ extension WorldCollectionViewCell: CountryCitiesCollectionViewDelegate {
     // переход на город подробней
     func showCity(name: String) {
         delegate?.showSelectedCityDescription(name: name)
+    }
+    
+}
+
+// MARK: - CustomAnimatedButtonDelegate
+
+extension WorldCollectionViewCell: CustomAnimatedButtonDelegate {
+    
+    func continueButton(model: ButtonCallBackModel) {
+        print("showCountryOnMapTapped: \(modelHeader.country)")
+        delegate?.showOnMap(name: modelHeader.country)
     }
     
 }

@@ -92,6 +92,12 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         label.text = "+7(123)-456-78-90"
         return label
     }()
+    private let animateContactsPhone: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 5)
+        return button
+    }()
+    
     let buttonsStackView: UIStackView = {
         let stack = UIStackView()
         stack.distribution = .fillEqually
@@ -99,51 +105,83 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         stack.axis = .horizontal
         return stack
     }()
-    let siteButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
-        button.layer.cornerRadius = 4
-        button.setImage(UIImage(named: "site"), for: .normal)
-        button.imageView?.contentMode = .center
+    
+    let siteButton: UIImageView = {
+        let ImageView = UIImageView()
+        ImageView.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
+        ImageView.layer.cornerRadius = 4
+        ImageView.image = UIImage(named: "site")
+        ImageView.contentMode = .center
+        return ImageView
+    }()
+    private let animateSiteButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 0)
         return button
     }()
-    let vkButton: UIButton = {
-        let button = UIButton()
+    
+    let vkButton: UIImageView = {
+        let button = UIImageView()
         button.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
         button.layer.cornerRadius = 4
-        button.setImage(UIImage(named: "vkontakte"), for: .normal)
-        button.imageView?.contentMode = .center
+        button.image = UIImage(named: "vkontakte")
+        button.contentMode = .center
         return button
     }()
-    let fbButton: UIButton = {
-        let button = UIButton()
+    private let animateVKButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 1)
+        return button
+    }()
+    
+    let fbButton: UIImageView = {
+        let button = UIImageView()
         button.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
         button.layer.cornerRadius = 4
-        button.setImage(UIImage(named: "facebook"), for: .normal)
-        button.imageView?.contentMode = .center
+        button.image = UIImage(named: "facebook")
+        button.contentMode = .center
         return button
     }()
-    let instButton: UIButton = {
-        let button = UIButton()
+    private let animateFBButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 2)
+        return button
+    }()
+    
+    let instButton: UIImageView = {
+        let button = UIImageView()
         button.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
         button.layer.cornerRadius = 4
-        button.setImage(UIImage(named: "instagram"), for: .normal)
-        button.imageView?.contentMode = .center
+        button.image = UIImage(named: "instagram")
+        button.contentMode = .center
         return button
     }()
-    let ytButton: UIButton = {
-        let button = UIButton()
+    private let animateInstButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 3)
+        return button
+    }()
+    
+    let ytButton: UIImageView = {
+        let button = UIImageView()
         button.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
         button.layer.cornerRadius = 4
-        button.setImage(UIImage(named: "youtube"), for: .normal)
-        button.imageView?.contentMode = .center
+        button.image = UIImage(named: "youtube")
+        button.contentMode = .center
         return button
     }()
+    private let animateYOUButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        button.setupId(id: 4)
+        return button
+    }()
+    
     
     // MARK: - Public properties
     
     static let identifier = "FloatingViewThirdTableViewCell"
     weak var delegate: FloatingViewThirdTableViewCellDelegate?
+    
     // MARK: - Private properties
     
     var urlSite = "www.awesomemuseum.ru"
@@ -191,26 +229,39 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
     }
 
     private func setupUI() {
-        let tapPhone = UITapGestureRecognizer(target: self, action: #selector(phoneTapped))
-        contactsPhoneLabel.isUserInteractionEnabled = true
-        contactsPhoneLabel.addGestureRecognizer(tapPhone)
-        siteButton.addTarget(self, action: #selector(siteTapped), for: .touchUpInside)
-        vkButton.addTarget(self, action: #selector(vkTapped), for: .touchUpInside)
-        fbButton.addTarget(self, action: #selector(facebookTapped), for: .touchUpInside)
-        instButton.addTarget(self, action: #selector(instagramTapped), for: .touchUpInside)
-        ytButton.addTarget(self, action: #selector(youtubeTapped), for: .touchUpInside)
-        
+        [animateSiteButton, animateVKButton, animateFBButton,
+         animateInstButton, animateYOUButton, animateContactsPhone].forEach {
+            $0.delegate = self
+        }
+                
         contentView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
         
         contentView.addSubviews(addresView, contactsView)
         addresView.addSubviews(addressImage, addressLabel, addressDescriptionLabel)
-        contactsView.addSubviews(contactsImage, contactsLabel, contactsDescriptionLabel, contactsPhoneLabel, buttonsStackView)
-
-        buttonsStackView.addArrangedSubview(siteButton)
-        buttonsStackView.addArrangedSubview(vkButton)
-        buttonsStackView.addArrangedSubview(fbButton)
-        buttonsStackView.addArrangedSubview(instButton)
-        buttonsStackView.addArrangedSubview(ytButton)
+        contactsView.addSubviews(contactsImage, contactsLabel, contactsDescriptionLabel, animateContactsPhone, buttonsStackView)
+        
+        animateContactsPhone.addSubviews(contactsPhoneLabel)
+        contactsPhoneLabel.addConstraintsToFillView(view: animateContactsPhone)
+        
+        animateSiteButton.addSubviews(siteButton)
+        siteButton.addConstraintsToFillView(view: animateSiteButton)
+        buttonsStackView.addArrangedSubview(animateSiteButton)
+        
+        animateVKButton.addSubviews(vkButton)
+        vkButton.addConstraintsToFillView(view: animateVKButton)
+        buttonsStackView.addArrangedSubview(animateVKButton)
+        
+        animateFBButton.addSubviews(fbButton)
+        fbButton.addConstraintsToFillView(view: animateFBButton)
+        buttonsStackView.addArrangedSubview(animateFBButton)
+        
+        animateInstButton.addSubviews(instButton)
+        instButton.addConstraintsToFillView(view: animateInstButton)
+        buttonsStackView.addArrangedSubview(animateInstButton)
+        
+        animateYOUButton.addSubviews(ytButton)
+        ytButton.addConstraintsToFillView(view: animateYOUButton)
+        buttonsStackView.addArrangedSubview(animateYOUButton)
         
         setupButtons()
         setupConstraints()
@@ -321,30 +372,37 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
                                 width: 233, height: 56)
 
     }
+
+}
+
+// MARK: - CustomAnimatedButtonDelegate
+ 
+extension FloatingViewThirdTableViewCell: CustomAnimatedButtonDelegate {
     
-    // MARK: - Selectors
-    
-    @objc private func phoneTapped() {
-        delegate?.makeCall()
+    func continueButton(model: ButtonCallBackModel) {
+        switch model.id {
+        case 0:
+            delegate?.openSite()
+            
+        case 1:
+            delegate?.openVK()
+            
+        case 2:
+            delegate?.openFaceBook()
+            
+        case 3:
+            delegate?.openInstagram()
+            
+        case 4:
+            delegate?.openYoutube()
+            
+        case 5:
+            delegate?.makeCall()
+            
+        default:
+            break
+        }
     }
     
-    @objc private func siteTapped() {
-        delegate?.openSite()
-    }
     
-    @objc private func vkTapped() {
-        delegate?.openVK()
-    }
-    
-    @objc private func facebookTapped() {
-        delegate?.openFaceBook()
-    }
-    
-    @objc private func instagramTapped() {
-        delegate?.openInstagram()
-    }
-    
-    @objc private func youtubeTapped() {
-        delegate?.openYoutube()
-    }
 }

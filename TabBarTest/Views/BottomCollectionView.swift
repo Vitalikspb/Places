@@ -105,11 +105,8 @@ extension BottomCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
                           name: dataModel[indexPath.row].nameOfSight,
                           image: dataModel[indexPath.row].image,
                           typeSight: dataModel[indexPath.row].typeSight)
+        cell.delegate = self
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.showSight(nameSight: dataModel[indexPath.row].nameOfSight)
     }
     
     // Размер ячейки
@@ -126,4 +123,14 @@ extension BottomCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
+}
+
+// MARK: - BottomCollectionViewCollectionViewCellDelegate
+
+extension BottomCollectionView: BottomCollectionViewCollectionViewCellDelegate {
+    
+    func tapSight(name: String) {
+        delegate?.showSight(nameSight: name)
+    }
+
 }
