@@ -32,6 +32,9 @@ extension UserDefaults {
     static var showSelectedSight: String { "showSelectedSight" }
     static var showSelectedSightName: String { "showSelectedSightName" }
     
+    // для отображения Страны на карте из экрана Страна
+    static var showSelectedCountry: String { "showSelectedCountry" }
+    
     // MARK: - Сохранение Моделей
     
     /// Сохранение Sight

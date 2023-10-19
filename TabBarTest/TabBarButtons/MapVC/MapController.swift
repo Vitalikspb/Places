@@ -25,6 +25,7 @@ class MapController: UIViewController {
     enum MapViewZoom {
         case mapViewZoom
         case countryViewZoom
+        case countryView
     }
     
     // MARK: - Public Properties
@@ -61,7 +62,9 @@ class MapController: UIViewController {
     }
     private var locationManager = CLLocationManager()
     private let userDefault = UserDefaults.standard
-    private var show: Bool = false
+    private var showCity: Bool = false
+    private var showSight: Bool = false
+    private var showCountry: Bool = false
     private var timer = Timer()
     private var currentCountry: String = ""
     private var selectMark: Bool = false
@@ -123,8 +126,17 @@ class MapController: UIViewController {
         super.viewDidAppear(animated)
         
         // проверяем было ли нажатие на кнопку "карты" на экране Страны и делаем анимацию камеры и переход на нужные координаты
-        show = userDefault.bool(forKey: UserDefaults.showSelectedCity)
-        if show {
+        
+        
+        showCity = userDefault.bool(forKey: UserDefaults.showSelectedCity)
+        showCountry = userDefault.bool(forKey: UserDefaults.showSelectedCountry)
+        showSight = userDefault.bool(forKey: UserDefaults.showSelectedSight)
+        
+        print("showCity:\(showCity)")
+        print("showCountry:\(showCountry)")
+        print("showSight:\(showSight)")
+        
+        if showCity {
             let latitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLatitude)
             let longitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLongitude)
             animateCameraToPoint(latitude: latitude,
@@ -133,9 +145,18 @@ class MapController: UIViewController {
             userDefault.set(false, forKey: UserDefaults.showSelectedCity)
         }
         
+        if showCountry {
+            let latitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLatitude)
+            let longitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLongitude)
+            animateCameraToPoint(latitude: latitude,
+                                 longitude: longitude,
+                                 from: .countryView)
+            userDefault.set(false, forKey: UserDefaults.showSelectedCountry)
+        }
+        
         // проверяем было ли нажатие на кнопку "Места" на экране Страны и делаем анимацию камеры и переход на нужные координаты
-        show = userDefault.bool(forKey: UserDefaults.showSelectedSight)
-        if show {
+        
+        if showSight {
             userDefault.set(false, forKey: UserDefaults.showSelectedSight)
             guard let name = userDefault.string(forKey: UserDefaults.showSelectedSightName),
                   let marker = interactor?.fetchSelectedSightWithAllMarkers(withName: name) else { return }
@@ -348,6 +369,8 @@ class MapController: UIViewController {
             zoom = self.cameraZoom + 1
         case .countryViewZoom:
             zoom = 10
+        case .countryView:
+            zoom = 5
         }
         let camera = GMSCameraPosition(target: location, zoom: zoom)
         mapView.animate(to: camera)

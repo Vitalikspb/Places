@@ -95,6 +95,16 @@ class WorldController: UIViewController {
                          width: 0, height: 0)
     }
     
+    // Переход на карту
+    
+    func showSelectedItemOnMap(city: Bool, latitude lat: Double, longitude lon: Double) {
+        userDefault.set(lat, forKey: UserDefaults.showSelectedCityWithLatitude)
+        userDefault.set(lon, forKey: UserDefaults.showSelectedCityWithLongitude)
+        userDefault.set(true, forKey: city == true
+                        ? UserDefaults.showSelectedCity
+                        : UserDefaults.showSelectedCountry)
+        tabBarController?.selectedIndex = 0
+    }
 }
 
 // MARK: - CountryDisplayLogic
@@ -147,6 +157,12 @@ extension WorldController: WorldCollectionViewCellDelegate {
     // Переход на карту с выбранным городом или страной
     func showOnMap(name: String) {
         print("Переход на карту с выбранной страной:\(name)")
+        // открываем выбранный город на карте
+        //        Россия 55.755863, 37.617700
+        showSelectedItemOnMap(city: name == "Россия" ? false : true,
+                              latitude: 55.755863,
+                              longitude: 37.617700)
+        
     }
     
     // Переход на выбранный город подробней
