@@ -46,13 +46,13 @@ extension UserDefaults {
     /// Сохранение saveAllCity
     func saveAllCity(value: [SightDescription?], data: Data) {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "SightDescription")
-        UserDefaults.standard.set(data.count, forKey: "SaveAllCityData")
+        UserDefaults.standard.set(data.count, forKey: "CityAllData")
     }
     
     /// Сохранение saveAllCity
     func saveCityCountryInfo(value: [CountryCityInfo?], data: Data) {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "CountryCityInfo")
-        UserDefaults.standard.set(data.count, forKey: "SaveCountryCityInfo")
+        UserDefaults.standard.set(data.count, forKey: "CityCountryInfoData")
     }
     
     /// Сохранение events

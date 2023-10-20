@@ -62,31 +62,41 @@ class NetworkHelper {
         var reqModel = model
         reqModel.typeRequest = type
         
-        //        var byte = 0
-        //
-        //        switch type {
-        //        case .sight:
-        //            byte = UserDefaults.standard.integer(forKey: "SightData")
-        //        case .cityAll:
-        //            byte = UserDefaults.standard.integer(forKey: "CityAllData")
-        //        case .cityCountryInfo:
-        //            byte = UserDefaults.standard.integer(forKey: "CityCountryInfoData")
-        //        case .events:
-        //            byte = UserDefaults.standard.integer(forKey: "EventsData")
-        //        case .faq:
-        //            byte = UserDefaults.standard.integer(forKey: "FAQCityData")
-        //        }
+        var byte = 0
+        
+        switch type {
+        case .sight:
+            break
+//          byte = UserDefaults.standard.integer(forKey: "SightData")
+//          print("sight byte:\(byte)")
+            
+        case .cityAll:
+            byte = UserDefaults.standard.integer(forKey: "CityAllData")
+            print("cityAll byte:\(byte)")
+            
+        case .cityCountryInfo:
+            break
+//          byte = UserDefaults.standard.integer(forKey: "CityCountryInfoData")
+//          print("cityCountryInfo byte:\(byte)")
+            
+        case .events:
+            byte = UserDefaults.standard.integer(forKey: "eventsData")
+            print("events byte:\(byte)")
+            
+        case .faq:
+            byte = UserDefaults.standard.integer(forKey: "FAQCityData")
+            print("faq byte:\(byte)")
+        }
         
         // MARK: - TODO
         // Проверка на байты, нужно доделывать с бэком
-        
-        //        if byte == 0 {
-        sendRequestToServer(model: reqModel) {
+        if byte == 0 {
+            sendRequestToServer(model: reqModel) {
+                completion()
+            }
+        } else {
             completion()
         }
-        //        } else {
-        //            completion()
-        //        }
     }
     
     private func sendRequestToServer(model: ModelForRequest, completion: @escaping()->()) {
@@ -129,14 +139,13 @@ class NetworkHelper {
                 print("Error took place \(error)")
                 return
             }
-            
-            
-            
+
             if let data = data {
                 do {
                     switch model.typeRequest! {
                         
                         // MARK: - Загрузка достопримечательностей
+                        
                     case .sight:
                         self.sight = try JSONDecoder().decode([SightResponse].self, from: data)
                         if let _sight = self.sight {
@@ -164,6 +173,7 @@ class NetworkHelper {
                         
                         
                         // MARK: - Запрос описании города для стране
+                        
                     case .cityAll:
                         self.allCity = try JSONDecoder().decode([SightDescriptionResponse].self, from: data)
                         if let _allCountry = self.allCity {
@@ -185,7 +195,7 @@ class NetworkHelper {
                         }
                         
                         
-                        // MARK: - Запрос инфы о городе
+                        // MARK: - Заx
                     case .cityCountryInfo:
                         self.countryCityInfo = try JSONDecoder().decode([CountryCityInfo].self, from: data)
                         if let _countryCityInfo = self.countryCityInfo {
@@ -195,33 +205,34 @@ class NetworkHelper {
                         }
                         
                         
-                        
-                        
                         // MARK: - загрузка интересныз событий
+                        
                     case .events:
                         self.events = try JSONDecoder().decode([EventsResponce].self, from: data)
                         if let _events = self.events {
+                            print("_events:\(_events)")
                             var tempEvents = [Events?]()
                             _events.forEach { itemEvent in
                                 let tempStringImages = self.decodeImages(images: itemEvent?.images?["image"])
-                                    tempEvents.append(Events(id: itemEvent?.id ?? 0,
-                                                             name: itemEvent?.name ?? "",
-                                                             description: itemEvent?.description ?? "",
-                                                             country: itemEvent?.country ?? "",
-                                                             images: tempStringImages,
-                                                             city: itemEvent?.city ?? "",
-                                                             date: itemEvent?.date ?? ""))
-                                    UserDefaults.standard.saveEvents(value: tempEvents, data: data)
-                                    let interestingEvent = UserDefaults.standard.getEvents()
-                                    completion()
+                                tempEvents.append(Events(id: itemEvent?.id ?? 0,
+                                                         name: itemEvent?.name ?? "",
+                                                         description: itemEvent?.description ?? "",
+                                                         country: itemEvent?.country ?? "",
+                                                         images: tempStringImages,
+                                                         city: itemEvent?.city ?? "",
+                                                         date: itemEvent?.date ?? ""))
+                                UserDefaults.standard.saveEvents(value: tempEvents, data: data)
+                                completion()
                             }
                         }
                         
                         
                         // MARK: - Вопросов и ответов
+                        
                     case .faq:
                         self.faqCity = try JSONDecoder().decode([FAQCity].self, from: data)
                         if let _faqCity = self.faqCity {
+                            print("_faqCity:\(_faqCity)")
                             UserDefaults.standard.saveFAQCity(value: _faqCity, data: data)
                         }
                         completion()
