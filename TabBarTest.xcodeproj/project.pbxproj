@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1255,7 +1255,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 8.11.0;
+				minimumVersion = 10.15.0;
 			};
 		};
 		53EF2C0E27B1ADE80019684F /* XCRemoteSwiftPackageReference "lottie-ios" */ = {

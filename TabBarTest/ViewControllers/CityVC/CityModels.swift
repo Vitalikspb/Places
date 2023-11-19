@@ -9,6 +9,21 @@ import Foundation
 import UIKit
 
 enum CityViewModel {
+
+    enum AllCountriesInTheWorld {
+
+        // передаем в интерактор
+        struct Request { }
+        
+        // передаем все города в перезнтер для последующего отображения на экране
+        struct Response { }
+        
+        // посылаем все города для отображения на экране
+        struct ViewModel {
+            var titlesec: TitleSection
+            var model: [SightDescription]?
+        }
+    }
     
     enum CurrentCity {
 

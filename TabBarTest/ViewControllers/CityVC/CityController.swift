@@ -8,7 +8,8 @@
 import UIKit
 
 protocol CityDisplayLogic: AnyObject {
-    func displayCurrentCity(viewModel: CityViewModel.CurrentCity.ViewModel)
+    func displayCurrentCity(viewModelWeather: CityViewModel.CurrentCity.ViewModel, viewModelCityData: CityViewModel.AllCountriesInTheWorld.ViewModel)
+    func updateWeather(viewModel: CityViewModel.CurrentCity.ViewModel)
 }
 
 class CityController: UIViewController {
@@ -48,23 +49,28 @@ class CityController: UIViewController {
     var interactor: CityBussinessLogic?
     
     var router: (NSObjectProtocol & CityRoutingLogic & CityDataPassing)?
-    var viewModel = CityViewModel.CurrentCity.ViewModel(
+    var viewModelWeather = CityViewModel.CurrentCity.ViewModel(
         city: "",
-        weather: CurrentWeatherSevenDays(
-            
-            currentWeather: CurrentWeatherOfSevenDays(todayTemp: 0.0,
-                                                      imageWeather: UIImage(),
-                                                      description: "",
-                                                      feelsLike: 0.0,
-                                                      sunrise: 0,
-                                                      sunset: 0),
-            sevenDaysWeather: [WeatherSevenDays(dayOfWeek: 0,
-                                                tempFrom: 0.0,
-                                                tempTo: 0.0,
-                                                image: UIImage(),
-                                                description: "")]
-        )
-    )
+        weather: CurrentWeatherSevenDays(currentWeather: CurrentWeatherOfSevenDays(todayTemp: 0.0,
+                                                                                   imageWeather: UIImage(),
+                                                                                   description: "",
+                                                                                   feelsLike: 0.0,
+                                                                                   sunrise: 0,
+                                                                                   sunset: 0),
+                                         sevenDaysWeather: [WeatherSevenDays(dayOfWeek: 0,
+                                                                             tempFrom: 0.0,
+                                                                             tempTo: 0.0,
+                                                                             image: UIImage(),
+                                                                             description: "")]))
+    
+    var viewModelCity: CityViewModel.AllCountriesInTheWorld.ViewModel = CityViewModel.AllCountriesInTheWorld.ViewModel(
+        titlesec: TitleSection(country: "11",
+                               subTitle: "11",
+                               latitude: 0.0,
+                               longitude: 0.0,
+                               available: true,
+                               iconName: ""),
+        model: [])
     
     //MARK: - Private properties
     
@@ -186,6 +192,7 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier,
                                                            for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
+            cell.configureCell(cityImages: viewModelCity.model?[0].images ?? [])
             return cell
             
             // описание
@@ -193,7 +200,8 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryDescriptionTableViewCell.identifier,
                                                            for: indexPath) as? CountryDescriptionTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.configureCell(titleName: "Описание города", description: "Санкт-Петербург – русский портовый город на побережье Балтийского моря, который в течение двух веков служил столицей Российской империи. Он был основан в 1703 году Петром I, которому воздвигнут знаменитый памятник Медный всадник. Город по праву считается культурным центром страны. Санкт-Петербург – русский портовый город на побережье Балтийского моря, который в течение двух веков служил столицей Российской империи. Он был основан в 1703 году Петром I, которому воздвигнут знаменитый памятник Медный всадник. Город по праву считается культурным центром страны.")
+            cell.configureCell(titleName: "Описание города", 
+                               description: viewModelCity.model?[0].description ?? "Описание города")
             selectedDescriptionCell
             ? cell.moreButtons.setTitle(Constants.Cells.hideDescription, for: .normal)
             : cell.moreButtons.setTitle(Constants.Cells.readMore, for: .normal)
@@ -231,13 +239,14 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
             
             // MARK: - TODO Координаты берутся из модели
+            let weatherData = viewModelWeather.weather.currentWeather
             cell.configureCell(city: titleName,
-                               curTemp: Int(viewModel.weather.currentWeather.todayTemp),
-                               curImage: viewModel.weather.currentWeather.imageWeather,
-                               description: viewModel.weather.currentWeather.description,
-                               feelLike: Int(viewModel.weather.currentWeather.feelsLike),
-                               sunrise: viewModel.weather.currentWeather.sunrise,
-                               sunset: viewModel.weather.currentWeather.sunset)
+                               curTemp: Int(weatherData.todayTemp),
+                               curImage: weatherData.imageWeather,
+                               description: weatherData.description,
+                               feelLike: Int(weatherData.feelsLike),
+                               sunrise: weatherData.sunrise,
+                               sunset: weatherData.sunset)
             cell.delegate = self
             return cell
             
@@ -311,17 +320,34 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - CountryDisplayLogic
 extension CityController: CityDisplayLogic {
+    
+        // Обновить ячейку погоды после того как произошла загрузка с интернета данных
+    func updateWeather(viewModel: CityViewModel.CurrentCity.ViewModel) {
+            self.viewModelWeather.weather = viewModel.weather
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.tableView.reloadRows(at: [IndexPath(row: 6, section: 0)], with: .automatic)
+            }
+        }
+    
     // показ информации о текущем городе
     // отображение обновленной таблицы после заполнения в интеракторе данными модели
     // пока что не работает т.к нету модели
-    func displayCurrentCity(viewModel: CityViewModel.CurrentCity.ViewModel) {
-        title = viewModel.city
-        self.viewModel = viewModel
+    func displayCurrentCity(viewModelWeather: CityViewModel.CurrentCity.ViewModel, 
+                            viewModelCityData: CityViewModel.AllCountriesInTheWorld.ViewModel) {
+        title = viewModelWeather.city
+        print("displayAllCities viewModelWeather:\(viewModelWeather)")
+        print("displayAllCities viewModelCityData:\(viewModelCityData)")
+        
+        self.viewModelWeather = viewModelWeather
+        self.viewModelCity = viewModelCityData
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()
         }
     }
+    
+    // Показ данных из прошлого экрана
 }
 
 // MARK: - CountryDescriptionTableViewCellDelegate

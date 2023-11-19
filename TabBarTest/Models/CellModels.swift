@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 enum TypeSights: String {
     /// Достопримечательность
@@ -43,6 +44,7 @@ struct SightsModel {
     var name: String
     var image: UIImage
     var favourite: Bool
+//    var coordinates: CLLocationCoordinate2D
 }
 
 struct CityArray {

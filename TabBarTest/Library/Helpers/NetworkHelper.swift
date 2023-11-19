@@ -71,8 +71,9 @@ class NetworkHelper {
 //          print("sight byte:\(byte)")
             
         case .cityAll:
-            byte = UserDefaults.standard.integer(forKey: "CityAllData")
-            print("cityAll byte:\(byte)")
+            break
+//            byte = UserDefaults.standard.integer(forKey: "CityAllData")
+//            print("cityAll byte:\(byte)")
             
         case .cityCountryInfo:
             break
@@ -80,12 +81,14 @@ class NetworkHelper {
 //          print("cityCountryInfo byte:\(byte)")
             
         case .events:
-            byte = UserDefaults.standard.integer(forKey: "eventsData")
-            print("events byte:\(byte)")
+            break
+//            byte = UserDefaults.standard.integer(forKey: "eventsData")
+//            print("events byte:\(byte)")
             
         case .faq:
-            byte = UserDefaults.standard.integer(forKey: "FAQCityData")
-            print("faq byte:\(byte)")
+            break
+//            byte = UserDefaults.standard.integer(forKey: "FAQCityData")
+//            print("faq byte:\(byte)")
         }
         
         // MARK: - TODO

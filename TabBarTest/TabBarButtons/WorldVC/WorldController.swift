@@ -162,7 +162,6 @@ extension WorldController: WorldCollectionViewCellDelegate {
         showSelectedItemOnMap(city: name == "Россия" ? false : true,
                               latitude: 55.755863,
                               longitude: 37.617700)
-        
     }
     
     // Переход на выбранный город подробней

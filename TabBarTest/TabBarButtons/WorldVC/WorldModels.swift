@@ -8,17 +8,17 @@
 import Foundation
 import UIKit
 
+struct TitleSection: Hashable {
+    let country: String
+    let subTitle: String
+    let latitude: Double
+    let longitude: Double
+    let available: Bool
+    let iconName: String
+}
+
 enum WorldViewModels {
-    
-    struct TitleSection: Hashable {
-        let country: String
-        let subTitle: String
-        let latitude: Double
-        let longitude: Double
-        let available: Bool
-        let iconName: String
-    }
-    
+
     enum AllCountriesInTheWorld {
 
         // передаем в интерактор

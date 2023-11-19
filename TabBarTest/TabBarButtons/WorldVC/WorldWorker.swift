@@ -17,7 +17,7 @@ class WorldWorker {
     }
     
     static func addTestCountries(_ mainModel: inout [WorldViewModels.AllCountriesInTheWorld.ViewModel]) {
-        let titleModelTai = WorldViewModels.TitleSection(country: "Тайланд",
+        let titleModelTai = TitleSection(country: "Тайланд",
                                                       subTitle: "9 городов, 141 места",
                                                       latitude: 13.771374,
                                                       longitude: 100.513785,

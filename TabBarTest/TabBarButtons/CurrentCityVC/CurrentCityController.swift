@@ -55,6 +55,7 @@ class CurrentCityController: UIViewController {
         GuideSightsModel(image: UIImage(named: "exhblebed")!, name: "Лебединое озеро", price: 2341, rating: 4.2, reviews: 46),
         GuideSightsModel(image: UIImage(named: "exhbrusmuseum")!, name: "Государственный Русский музей", price: 928, rating: 4.1, reviews: 11)
     ]
+    
     var viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(
         weather: CurrentWeatherSevenDays(
             currentWeather: CurrentWeatherOfSevenDays(todayTemp: 0.0,
@@ -180,6 +181,8 @@ extension CurrentCityController: CurrentCityDisplayLogic {
     // отображение обновленной таблицы после заполнения в интеракторе данными модели
     // пока что не работает т.к нету модели
     func displayAllCities(viewModel: CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel) {
+        print("displayAllCities viewModel:\(viewModel)")
+        
         self.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -210,11 +213,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryPhotosTableViewCell.identifier,
                                                            for: indexPath) as? CountryPhotosTableViewCell else { return UITableViewCell() }
-            cell.configureCell(cityImages: [UIImage(named: "spb1")!,
-                                            UIImage(named: "spb2")!,
-                                            UIImage(named: "spb3")!,
-                                            UIImage(named: "spb4")!,
-                                            UIImage(named: "spb5")!])
+            cell.configureCell(cityImages: ["spb1", "spb2", "spb3", "spb4", "spb5"])
             return cell
             
             // описание
@@ -258,6 +257,9 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             // Погода
         case 5:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
+            
+            
+            print("viewModel.weather.currentWeather:\(viewModel.weather.currentWeather)")
             cell.configureCell(city: titleName,
                                curTemp: Int(viewModel.weather.currentWeather.todayTemp),
                                curImage: viewModel.weather.currentWeather.imageWeather,

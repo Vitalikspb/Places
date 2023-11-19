@@ -47,7 +47,8 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
     func showCity(lat: CLLocationDegrees, lon: CLLocationDegrees) {
         let viewModel = CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel(
             weather: currentWeather,
-            cities: CurrentCityViewModel.CityModel(name: currentCity, image: UIImage()))
+            cities: CurrentCityViewModel.CityModel(name: currentCity, 
+                                                   image: UIImage()))
         updateWeather(latitude: lat, longitude: lon)
         presenter?.presentAllMarkers(response: viewModel)
     }
@@ -58,6 +59,7 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
         WeatherAPI().descriptionCurrentWeatherForSevenDays(latitude: latitude, longitude: longitude) { [weak self] weatherSevernDays in
             guard let self = self else { return }
             self.currentWeather = weatherSevernDays
+            print("0 updateWeather currentWeather:\(currentWeather)")
             self.currentWeather.sevenDaysWeather.removeFirst()
         }
     }

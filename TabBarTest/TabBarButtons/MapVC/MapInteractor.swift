@@ -130,6 +130,7 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
         switch request {
         case .Alltest, .AllRelease:
             presenter?.presentAllMarkers(response: returnAllTestMarkers())
+            
         case .Museum, .Park, .POI, .Beach:
             presenter?.presentAllMarkers(response: returnAllTestFilterMarkers())
         }

@@ -41,8 +41,8 @@ class WorldInteractor: WorldBussinessLogic, WorldDataStore {
         }
         
         worldsCountry = [WorldViewModels.AllCountriesInTheWorld.ViewModel(
-            titlesec: WorldViewModels.TitleSection(
-                country: currentCountry == "" ? "Россия" : currentCountry,
+            titlesec: TitleSection(
+                country: "Россия",
                 subTitle: "\(tempWorldCountry.count) городов, \(sightCount) мест",
                 latitude: 55.755863,
                 longitude: 37.617700,
