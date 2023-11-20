@@ -9,42 +9,12 @@ import Foundation
 import UIKit
 import CoreLocation
 
-enum TypeSights: String {
-    /// Достопримечательность
-    case dostoprimechtelnost = "Достопримечательность"
-    /// Транспорт
-    case transport = "Транспорт"
-    /// Досуг
-    case dosug = "Досуг"
-    /// Рынок
-    case market = "Рынок"
-    /// Пляж
-    case beach = "Пляж"
-    /// Богослужение
-    case god = "Богослужение"
-}
-
-enum TypeSightsImageName: String {
-    /// Достопримечательность
-    case museum = "museum"
-    /// Транспорт
-    case transport = "transport"
-    /// Досуг
-    case sight = "sight"
-    /// Рынок
-    case market = "market"
-    /// Пляж
-    case beach = "beach"
-    /// Богослужение
-    case temple = "temple"
-}
-
 struct SightsModel {
-//    var type: TypeSights
+    var categoryType: CategoryTypeSight
+    var typeSight: TypeSight
     var name: String
-    var image: UIImage
-    var favourite: Bool
-//    var coordinates: CLLocationCoordinate2D
+    var image: String
+    var coordinates: CLLocationCoordinate2D
 }
 
 struct CityArray {

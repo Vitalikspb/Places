@@ -142,14 +142,28 @@ struct City: Codable {
 
 // тип достопримечательности
 enum TypeSight: String, Codable {
-    case sightSeen = "достопримечательность"
-    case two = "Музей"
+    /// Достопримечательность
+    case sightSeen = "Достопримечательность"
+    /// Музей
+    case museum = "Музей"
+    /// Культурный объект
+    case cultureObject = "Культурный объект"
+    /// Богослужение
+    case god = "Богослужение"
 }
 
 // категория достопримечательности
 enum CategoryTypeSight: String, Codable {
-    case mustSee = "обязательно к просмотру"
-    case two = "Ближайшие места"
+    /// В окрестностях
+    case farSight = "В окрестностях"
+    /// Обязательно к просмотру
+    case mustSee = "Обязательно к просмотру"
+    /// Выбор редакции
+    case selection = "Выбор редакции"
+    /// Интересное
+    case interesting = "Интересное"
+    /// Самое посещаемое
+    case mostViewed = "Самое посещаемое"
 }
 
 // режим работы достопримечательности

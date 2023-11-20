@@ -24,11 +24,14 @@ protocol MapDataStore: AnyObject {
 class MapInteractor: MapBussinessLogic, MapDataStore {
     
     var presenter: MapPresentationLogic?
-    var worker = MapWorker()
     var markers: GMSMarker?
     var mapMarkers = [GMSMarker]()
     
     func appendAllMarkers() {
+        let worldModel = ModelForRequest(country: "Россия")
+        MapWorker.downloadAllSight(worldModel: worldModel) {
+            print("Загружены и сохранены все достопримечательности")
+        }
         
         let australiaMarker = GMSMarker(
           position: CLLocationCoordinate2D(latitude: 59.9422, longitude: 30.3945))
@@ -92,17 +95,6 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
         alphaLayer.addSubview(markImage)
         australiaMarker.iconView?.addSubview(alphaLayer)
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
- 
-        
         let sydneyMarker1 = GMSMarker(
             position: CLLocationCoordinate2D(latitude: 59.9122, longitude: 30.3445))
         sydneyMarker1.title = "Русский музей"

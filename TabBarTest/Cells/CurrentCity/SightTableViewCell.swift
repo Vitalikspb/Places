@@ -14,6 +14,7 @@ protocol SightTableViewCellDelegate: AnyObject {
 class SightTableViewCell: UITableViewCell {
     
     // MARK: - UI properties
+    
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
@@ -27,19 +28,17 @@ class SightTableViewCell: UITableViewCell {
     
     // MARK: - Public properties
     
-    var model: [SightsModel] = []
     static let identifier = "SightTableViewCell"
     weak var delegate: SightTableViewCellDelegate?
-    var titleCell: String = "" {
-        didSet {
-            titleLabel.text = titleCell
-        }
-    }
-    var sizeCell = CGSize(width: 200, height: 140) {
+    
+    // MARK: - Private properties
+    
+    private var sizeCell = CGSize(width: 200, height: 140) {
         didSet {
             layout.itemSize = CGSize(width: sizeCell.width, height: sizeCell.height)
         }
     }
+    private var model: [SightsModel] = []
     
     // MARK: - Private properties
     
@@ -72,6 +71,12 @@ class SightTableViewCell: UITableViewCell {
     }
     
     // MARK: - Helper functions
+    
+    func configureCell(model: [SightsModel], title: String, size: CGSize) {
+        self.model = model
+        titleLabel.text = title
+        sizeCell = size
+    }
     
     private func setupUI() {
         layout.scrollDirection = .horizontal
@@ -121,7 +126,6 @@ class SightTableViewCell: UITableViewCell {
     }
     
     @objc private func lookAllTapped() {
-        
         delegate?.lookAll()
     }
 }
@@ -141,7 +145,7 @@ extension SightTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SightCollectionViewCell.identifier, for: indexPath) as? SightCollectionViewCell else { return UICollectionViewCell() }
         cell.conigureCell(name: model[indexPath.row].name,
-                          image: model[indexPath.row].image)
+                          image: UIImage(named: model[indexPath.row].image) ?? UIImage())
         return cell
     }
     

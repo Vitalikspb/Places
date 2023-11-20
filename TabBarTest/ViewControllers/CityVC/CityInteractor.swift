@@ -17,9 +17,12 @@ protocol CityDataStore: AnyObject {
     var currentCountry: String { get set }
     var currentWeather: CurrentWeatherSevenDays { get set }
     var cityInfo: CityViewModel.AllCountriesInTheWorld.ViewModel { get set }
+    var sights: [SightsModel] { get set }
 }
 
 class CityInteractor: CityBussinessLogic, CityDataStore {
+    var sights: [SightsModel] = []
+    
     var cityInfo: CityViewModel.AllCountriesInTheWorld.ViewModel = CityViewModel.AllCountriesInTheWorld.ViewModel(
         titlesec: TitleSection(country: "",
                                subTitle: "",
@@ -58,19 +61,37 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
         let lat: CLLocationDegrees = cityInfo.model?[0].latitude ?? 0.0
         let lon: CLLocationDegrees = cityInfo.model?[0].longitude ?? 0.0
         
-        print("lat:\(lat)---lon:\(lon)")
-        
         updateWeather(latitude: lat, longitude: lon)
-        presenter?.presentCity(response: viewModelWeather, viewModelCityData: cityInfo)
+        loadSights(currentCity: currentCity)
+        presenter?.presentCity(response: viewModelWeather, viewModelCityData: cityInfo, viewModelSightData: sights)
     }
     
-    func updateWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+    // Загружаем погоду
+    private func updateWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         WeatherAPI().descriptionCurrentWeatherForSevenDays(latitude: latitude, longitude: longitude) { [weak self] weatherSevernDays in
             guard let self = self else { return }
             self.currentWeather = weatherSevernDays
-            print("1 updateWeather currentWeather:\(currentWeather)")
             self.currentWeather.sevenDaysWeather.removeFirst()
         }
+    }
+    
+    // Сохраняем достопримечательности для конкретного города
+    private func loadSights(currentCity: String) {
+        let allSights = UserDefaults.standard.getSight()
+        var tempSight = [SightsModel]()
+        for (_,val) in allSights.enumerated() {
+            if val.city == currentCity {
+                let location = CLLocationCoordinate2D(latitude: val.latitude,
+                                                      longitude: val.longitude)
+                let currentSight: SightsModel = SightsModel(categoryType: val.category,
+                                                            typeSight: val.type,
+                                                            name: val.name,
+                                                            image: val.big_image,
+                                                            coordinates: location)
+                tempSight.append(currentSight)
+            }
+        }
+        self.sights = tempSight
     }
 }
 

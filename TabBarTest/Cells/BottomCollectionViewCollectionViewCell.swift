@@ -133,7 +133,7 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
                                   width: 16, height: 16)
     }
     
-    func conigureCell(type: String, name: String, image: UIImage, typeSight: TypeSightsImageName) {
+    func conigureCell(type: String, name: String, image: UIImage, typeSight: TypeSight) {
         self.name = name
         sightTypeLabel.text = type
         sightNameLabel.text = name

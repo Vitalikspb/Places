@@ -93,13 +93,13 @@ class NetworkHelper {
         
         // MARK: - TODO
         // Проверка на байты, нужно доделывать с бэком
-        if byte == 0 {
+//        if byte == 0 {
             sendRequestToServer(model: reqModel) {
                 completion()
             }
-        } else {
-            completion()
-        }
+//        } else {
+//            completion()
+//        }
     }
     
     private func sendRequestToServer(model: ModelForRequest, completion: @escaping()->()) {
@@ -152,7 +152,6 @@ class NetworkHelper {
                     case .sight:
                         self.sight = try JSONDecoder().decode([SightResponse].self, from: data)
                         if let _sight = self.sight {
-                            print("sight:\(_sight)")
                             var tempAllCountry = [Sight?]()
                             _sight.forEach {
                                 tempAllCountry.append(Sight(id: $0?.id ?? 0,
@@ -166,8 +165,8 @@ class NetworkHelper {
                                                             longitude: $0?.longitude ?? 0.0,
                                                             address: $0?.address ?? "",
                                                             test: $0?.test ?? false,
-                                                            big_image: $0?.big_image ?? "",
-                                                            small_image: $0?.small_image ?? "",
+                                                            big_image: self.decodeImage(image: $0?.big_image ?? ""),
+                                                            small_image: self.decodeImage(image: $0?.small_image ?? ""),
                                                             images: self.decodeImages(images: $0?.images?["image"])))
                             }
                             UserDefaults.standard.saveSight(value: tempAllCountry, data: data)
@@ -265,6 +264,18 @@ class NetworkHelper {
             imgArray.append(String(imageName.reversed()))
         }
         return imgArray
+    }
+    
+    // Из полного пути от сервара оставляет только название фотки
+    private func decodeImage(image: String) -> String {
+        var imageName = ""
+        for (_,val) in image.reversed().enumerated() {
+            if val == "/" {
+                break
+            }
+            imageName += "\(val)"
+        }
+        return String(imageName.reversed())
     }
     
 }

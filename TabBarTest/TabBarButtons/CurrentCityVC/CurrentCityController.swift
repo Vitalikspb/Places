@@ -32,13 +32,7 @@ class CurrentCityController: UIViewController {
     private var titleName: String = ""
     
     // MARK: - TODO Удалить когда сделаю загрузку с сервера
-    private var sightsArray: [SightsModel] = [
-        SightsModel(name: "Эрмитаж", image: UIImage(named: "museumHermitage")!, favourite: true),
-        SightsModel(name: "Русский музей", image: UIImage(named: "museumRusskiy")!, favourite: false),
-        SightsModel(name: "Купчино", image: UIImage(named: "kupchino")!, favourite: false),
-        SightsModel(name: "Петропавловская крепость", image: UIImage(named: "petropavlovskaiaKrepost")!, favourite: true),
-        SightsModel(name: "Казанский собор", image: UIImage(named: "kazanskiySobor")!, favourite: true),
-        SightsModel(name: "Исаакиевский собор", image: UIImage(named: "isaakievskiySobor")!, favourite: true)]
+    private var sightsArray = [SightsModel]()
     
     private var cityArray: [CityArray] = [
         CityArray(name: "Москва", image: UIImage(named: "moskva")!),
@@ -205,6 +199,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
+    
     // MARK: - заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
@@ -231,9 +226,9 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
-            cell.titleCell = Constants.Cells.sightNearMe
-            cell.sizeCell = CGSize(width: 230, height: 190)
-            cell.model = sightsArray
+            cell.configureCell(model: sightsArray,
+                               title: Constants.Cells.sightNearMe,
+                               size: CGSize(width: 230, height: 190))
             return cell
             
             // Обязательно к просмотру
@@ -241,9 +236,9 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.model = sightsArray
-            cell.titleCell = Constants.Cells.mustSeeSights
-            cell.sizeCell = CGSize(width: 230, height: 190)
+            cell.configureCell(model: sightsArray,
+                               title: Constants.Cells.mustSeeSights,
+                               size: CGSize(width: 230, height: 190))
             return cell
             
             // Билеты на экскурсии
@@ -257,9 +252,6 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             // Погода
         case 5:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier, for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
-            
-            
-            print("viewModel.weather.currentWeather:\(viewModel.weather.currentWeather)")
             cell.configureCell(city: titleName,
                                curTemp: Int(viewModel.weather.currentWeather.todayTemp),
                                curImage: viewModel.weather.currentWeather.imageWeather,
@@ -273,9 +265,9 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             // Выбор редакции
         case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
-            cell.model = sightsArray
-            cell.titleCell = Constants.Cells.chooseOfRedaction
-            cell.sizeCell = CGSize(width: 230, height: 180)
+            cell.configureCell(model: sightsArray,
+                               title: Constants.Cells.chooseOfRedaction,
+                               size: CGSize(width: 230, height: 180))
             return cell
             
             // Музеи
@@ -283,9 +275,9 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.model = sightsArray
-            cell.titleCell = Constants.Cells.museums
-            cell.sizeCell = CGSize(width: 230, height: 180)
+            cell.configureCell(model: sightsArray,
+                               title: Constants.Cells.museums,
+                               size: CGSize(width: 230, height: 180))
             return cell
             
             // Парки
@@ -293,9 +285,9 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            cell.model = sightsArray
-            cell.titleCell = Constants.Cells.parks
-            cell.sizeCell = CGSize(width: 230, height: 180)
+            cell.configureCell(model: sightsArray,
+                               title: Constants.Cells.parks,
+                               size: CGSize(width: 230, height: 180))
             return cell
             
             // другие города

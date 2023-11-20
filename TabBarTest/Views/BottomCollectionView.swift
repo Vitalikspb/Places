@@ -16,7 +16,7 @@ class BottomCollectionView: UIView {
         var type: String
         var image: UIImage
         var nameOfSight: String
-        var typeSight: TypeSightsImageName
+        var typeSight: TypeSight
     }
     
     // MARK: - Public properties
@@ -59,7 +59,7 @@ class BottomCollectionView: UIView {
                     BottomCollectionViewModel(type: "Парк",
                                               image: UIImage(named: "parkMarsovoPole")!,
                                               nameOfSight: "Парк марсово поле",
-                                              typeSight: .sight),
+                                              typeSight: .sightSeen),
                     BottomCollectionViewModel(type: "Музей",
                                               image: UIImage(named: "museumHermitage")!,
                                               nameOfSight: "Эрмитаж",
@@ -67,7 +67,7 @@ class BottomCollectionView: UIView {
                     BottomCollectionViewModel(type: "Достопримечательность",
                                               image: UIImage(named: "dostoprimechatelnostPetrPerviy")!,
                                               nameOfSight: "Пямятник Петру 1",
-                                              typeSight: .temple)]
+                                              typeSight: .god)]
         dataModel = data
         
         let layout = UICollectionViewFlowLayout()

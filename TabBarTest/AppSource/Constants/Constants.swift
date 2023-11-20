@@ -75,8 +75,8 @@ enum Constants {
         static let hideDescription = "Скрыть"
         /// "Избранное"
         static let favourites = "Избранное"
-        /// "Интересные события"
-        static let intrestingViews = "Интересные события"
+        /// "Интересные места"
+        static let intrestingViews = "Интересные места"
         /// "Билеты на экскурсии"
         static let ticketToSights = "Билеты на экскурсии"
         /// "Вопросы и ответы"
@@ -107,6 +107,9 @@ enum Constants {
         static let museums = "Музеи"
         /// "Парки"
         static let parks = "Парки"
+        /// "Самое посещаемое"
+        static let mostViewed = "Самое посещаемое"
+        
         
     }
     

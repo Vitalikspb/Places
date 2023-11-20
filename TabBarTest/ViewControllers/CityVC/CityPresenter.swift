@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CityPresentationLogic: AnyObject {
-    func presentCity(response: CityViewModel.CurrentCity.ViewModel, viewModelCityData: CityViewModel.AllCountriesInTheWorld.ViewModel)
+    func presentCity(response: CityViewModel.CurrentCity.ViewModel, viewModelCityData: CityViewModel.AllCountriesInTheWorld.ViewModel, viewModelSightData: [SightsModel])
     func updateWeather(response: CityViewModel.CurrentCity.ViewModel)
 }
 
@@ -16,8 +16,10 @@ final class CityPresenter: CityPresentationLogic {
     
     weak var cityController: CityController?
     
-    func presentCity(response: CityViewModel.CurrentCity.ViewModel, viewModelCityData: CityViewModel.AllCountriesInTheWorld.ViewModel) {
-        cityController?.displayCurrentCity(viewModelWeather: response, viewModelCityData: viewModelCityData)
+    func presentCity(response: CityViewModel.CurrentCity.ViewModel, viewModelCityData: CityViewModel.AllCountriesInTheWorld.ViewModel, viewModelSightData: [SightsModel]) {
+        cityController?.displayCurrentCity(viewModelWeather: response,
+                                           viewModelCityData: viewModelCityData,
+                                           viewModelSightData: viewModelSightData)
     }
     
     func updateWeather(response: CityViewModel.CurrentCity.ViewModel) {
