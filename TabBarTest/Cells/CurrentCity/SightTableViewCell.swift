@@ -8,7 +8,6 @@ import UIKit
 
 protocol SightTableViewCellDelegate: AnyObject {
     func handleSelectedSight(_ name: String)
-    func lookAll()
 }
 
 class SightTableViewCell: UITableViewCell {
@@ -117,16 +116,7 @@ class SightTableViewCell: UITableViewCell {
     }
     
     @objc private func moveToMapViewHandle(name: String) {
-        switch name {
-        case "Эрмитаж":       delegate?.handleSelectedSight(name)
-        case "Русский музей": delegate?.handleSelectedSight(name)
-        default:
-            break
-        }
-    }
-    
-    @objc private func lookAllTapped() {
-        delegate?.lookAll()
+        delegate?.handleSelectedSight(name)
     }
 }
 

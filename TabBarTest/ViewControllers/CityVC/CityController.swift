@@ -67,9 +67,8 @@ class CityController: UIViewController {
         GuideSightsModel(image: UIImage(named: "hermitage2")!, name: "Эрмитаж", price: 1060, rating: 4.5, reviews: 79),
         GuideSightsModel(image: UIImage(named: "exhbgrandmaket")!, name: "Гранд Макет Россия", price: 6500, rating: 4.5, reviews: 1231),
         GuideSightsModel(image: UIImage(named: "exhbroof")!, name: "Экскурсия по крышам", price: 5305, rating: 0, reviews: 53),
-        GuideSightsModel(image: UIImage(named: "exhblebed")!, name: "Лебединое озеро", price: 2341, rating: 4.2, reviews: 46),
-        GuideSightsModel(image: UIImage(named: "exhbrusmuseum")!, name: "Государственный Русский музей", price: 928, rating: 4.1, reviews: 11)
-    ]
+        GuideSightsModel(image: UIImage(named: "exhbrusmuseum")!, name: "Государственный Русский музей", price: 928, rating: 4.1, reviews: 11),
+        GuideSightsModel(image: UIImage(named: "exhblebed")!, name: "Лебединое озеро", price: 2341, rating: 4.2, reviews: 46)]
     
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
@@ -140,10 +139,6 @@ class CityController: UIViewController {
         tableView.register(WeatherCollectionViewCell.self,
                            forCellReuseIdentifier: WeatherCollectionViewCell.identifier)
         
-        // +1
-        //        tableView.register(MuseumsTableViewCell.self,
-        //                                forCellReuseIdentifier: MuseumsTableViewCell.identifier)
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
@@ -209,6 +204,7 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             let filteredModel = sightsArray.filter({ $0.categoryType == .interesting })
+            cell.delegate = self
             cell.configureCell(model: filteredModel,
                                title: Constants.Cells.mostViewed,
                                size: CGSize(width: 230, height: 190))
@@ -252,6 +248,7 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
         case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             let filteredModel = sightsArray.filter({ $0.categoryType == .selection })
+            cell.delegate = self
             cell.configureCell(model: filteredModel,
                                title: Constants.Cells.chooseOfRedaction,
                                size: CGSize(width: 230, height: 180))
@@ -267,23 +264,6 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
                                title: Constants.Cells.intrestingViews,
                                size: CGSize(width: 230, height: 180))
             return cell
-            
-//            // Места в окресностях
-//        case 8:
-//            guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
-//                                                           for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
-//            cell.delegate = self
-//            let filteredModel = [SightsModel(categoryType: .farSight,
-//                                             typeSight: .cultureObject,
-//                                             name: "123",
-//                                             image: "",
-//                                             coordinates: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0))]
-////            sightsArray.filter({ $0.categoryType == .farSight })
-//            print("case 8 filteredModel:\(filteredModel)")
-//            cell.configureCell(model: filteredModel,
-//                               title: Constants.Cells.sightNearMe,
-//                               size: CGSize(width: 230, height: 180))
-//            return cell
             
         default: return UITableViewCell()
         }
@@ -356,13 +336,10 @@ extension CityController: CountryDescriptionTableViewCellDelegate {
 // MARK: - SightTableViewCellDelegate
 
 extension CityController: SightTableViewCellDelegate {
-    // нажатие на кнопку смотреть все из "места в окрестностях"
-    func lookAll() {
-        print("вернуть на главный, отобразить на карте все точки из места в окрестностях и отдалить карту")
-    }
     
     // открываем выбранную достопримечательность на карте
     func handleSelectedSight(_ name: String) {
+        print("переход на карту и выбор достопримечательности: \(name)")
         userDefault.set(true, forKey: UserDefaults.showSelectedSight)
         userDefault.set(name, forKey: UserDefaults.showSelectedSightName)
         tabBarController?.selectedIndex = 0
@@ -375,7 +352,7 @@ extension CityController: TicketCollectionViewCellDelegate {
     
     // открыть страницу всех билетов
     func lookAllTickets() {
-        print("открыть страницу всех билетов")
+        interactor?.openTicketSite()
     }
 }
 

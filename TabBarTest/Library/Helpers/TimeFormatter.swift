@@ -61,7 +61,7 @@ class TimeFormatter {
         
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.dateFormat = "dd MMMM yyyy"
         let date = Date(timeIntervalSince1970: midnight)
         var tempDate = dateFormatter.string(from: date)
         

@@ -10,6 +10,7 @@ import CoreLocation
 
 protocol CityBussinessLogic: AnyObject {
     func showCity()
+    func openTicketSite()
 }
 
 protocol CityDataStore: AnyObject {
@@ -64,6 +65,10 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
         updateWeather(latitude: lat, longitude: lon)
         loadSights(currentCity: currentCity)
         presenter?.presentCity(response: viewModelWeather, viewModelCityData: cityInfo, viewModelSightData: sights)
+    }
+    
+    func openTicketSite() {
+        print("открыть сайт с билетами для города \(currentCity)")
     }
     
     // Загружаем погоду
