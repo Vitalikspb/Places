@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 
 protocol CityDisplayLogic: AnyObject {
-    func displayCurrentCity(viewModelWeather: CityViewModel.CurrentCity.ViewModel, viewModelCityData: CityViewModel.AllCountriesInTheWorld.ViewModel, viewModelSightData: [SightsModel])
+    func displayCurrentCity(viewModelWeather: CityViewModel.CurrentCity.ViewModel, viewModelCityData: CityViewModel.AllCountriesInTheWorld.ViewModel, viewModelSightData: [Sight])
     func updateWeather(viewModel: CityViewModel.CurrentCity.ViewModel)
 }
 
@@ -60,7 +60,7 @@ class CityController: UIViewController {
     private var titleName: String = ""
     
     // Модель всех достопримечательностей
-    private var sightsArray = [SightsModel]()
+    private var sightsArray = [Sight]()
     
     // Модель Билетов на экскурсии
     private var guidesArray: [GuideSightsModel] = [
@@ -203,7 +203,7 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
-            let filteredModel = sightsArray.filter({ $0.categoryType == .interesting })
+            let filteredModel = sightsArray.filter({ $0.category == .interesting })
             cell.delegate = self
             cell.configureCell(model: filteredModel,
                                title: Constants.Cells.mostViewed,
@@ -215,7 +215,7 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            let filteredModel = sightsArray.filter({ $0.categoryType == .mustSee })
+            let filteredModel = sightsArray.filter({ $0.category == .mustSee })
             cell.configureCell(model: filteredModel,
                                title: Constants.Cells.mustSeeSights,
                                size: CGSize(width: 230, height: 190))
@@ -247,7 +247,7 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             // Выбор редакции
         case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
-            let filteredModel = sightsArray.filter({ $0.categoryType == .selection })
+            let filteredModel = sightsArray.filter({ $0.category == .selection })
             cell.delegate = self
             cell.configureCell(model: filteredModel,
                                title: Constants.Cells.chooseOfRedaction,
@@ -259,7 +259,7 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            let filteredModel = sightsArray.filter({ $0.categoryType == .mostViewed })
+            let filteredModel = sightsArray.filter({ $0.category == .mostViewed })
             cell.configureCell(model: filteredModel,
                                title: Constants.Cells.intrestingViews,
                                size: CGSize(width: 230, height: 180))
@@ -290,7 +290,7 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
 extension CityController: CityDisplayLogic {
     
     // показ информации о текущем городе
-    func displayCurrentCity(viewModelWeather: CityViewModel.CurrentCity.ViewModel, viewModelCityData: CityViewModel.AllCountriesInTheWorld.ViewModel, viewModelSightData: [SightsModel]) {
+    func displayCurrentCity(viewModelWeather: CityViewModel.CurrentCity.ViewModel, viewModelCityData: CityViewModel.AllCountriesInTheWorld.ViewModel, viewModelSightData: [Sight]) {
         title = viewModelWeather.city
         self.viewModelWeather = viewModelWeather
         self.viewModelCity = viewModelCityData
@@ -336,6 +336,11 @@ extension CityController: CountryDescriptionTableViewCellDelegate {
 // MARK: - SightTableViewCellDelegate
 
 extension CityController: SightTableViewCellDelegate {
+    
+    // Было нажатие на избранное
+    func favoritesTapped(name: String) {
+        interactor?.updateFavorites(withName: name)
+    }
     
     // открываем выбранную достопримечательность на карте
     func handleSelectedSight(_ name: String) {

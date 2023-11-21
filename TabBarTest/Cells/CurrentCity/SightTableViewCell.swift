@@ -8,6 +8,7 @@ import UIKit
 
 protocol SightTableViewCellDelegate: AnyObject {
     func handleSelectedSight(_ name: String)
+    func favoritesTapped(name: String)
 }
 
 class SightTableViewCell: UITableViewCell {
@@ -37,7 +38,7 @@ class SightTableViewCell: UITableViewCell {
             layout.itemSize = CGSize(width: sizeCell.width, height: sizeCell.height)
         }
     }
-    private var model: [SightsModel] = []
+    private var model: [Sight] = []
     
     // MARK: - Private properties
     
@@ -71,7 +72,7 @@ class SightTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configureCell(model: [SightsModel], title: String, size: CGSize) {
+    func configureCell(model: [Sight], title: String,  size: CGSize) {
         self.model = model
         titleLabel.text = title
         sizeCell = size
@@ -134,8 +135,11 @@ extension SightTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SightCollectionViewCell.identifier, for: indexPath) as? SightCollectionViewCell else { return UICollectionViewCell() }
-        cell.conigureCell(name: model[indexPath.row].name,
-                          image: UIImage(named: model[indexPath.row].image) ?? UIImage())
+        let model = model[indexPath.row]
+        cell.conigureCell(name: model.name,
+                          image: UIImage(named: model.big_image) ?? UIImage(),
+                          favotite: model.favorite)
+        cell.delegate = self
         return cell
     }
     
@@ -148,4 +152,13 @@ extension SightTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     }
 }
 
+// MARK: - SightCollectionViewCellDelegate
+
+extension SightTableViewCell: SightCollectionViewCellDelegate {
+    func favoritesTapped(name: String) {
+        delegate?.favoritesTapped(name: name)
+    }
+    
+    
+}
 

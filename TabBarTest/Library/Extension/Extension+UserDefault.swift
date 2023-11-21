@@ -67,13 +67,17 @@ extension UserDefaults {
         UserDefaults.standard.set(data.count, forKey: "FAQCityData")
     }
     
+    /// Сохранение Избранного
+    func saveFavorites(value: [Sight?]) {
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "favorites")
+    }
+    
     // MARK: - Получение Моделей
     
     /// Запрос достопримечательностей
     func getSight() -> [Sight] {
-        if let data = UserDefaults.standard.value(forKey:"Sight") as? Data {
-            let cellUnwrapped = try? PropertyListDecoder().decode(Array<Sight>.self,
-                                                                  from: data)
+        if let data = UserDefaults.standard.value(forKey: "Sight") as? Data {
+            let cellUnwrapped = try? PropertyListDecoder().decode(Array<Sight>.self, from: data)
             return cellUnwrapped ?? []
         }
         return []
@@ -81,9 +85,8 @@ extension UserDefaults {
     
     /// Запрос описании города для стране
     func getSightDescription() -> [SightDescription] {
-        if let data = UserDefaults.standard.value(forKey:"SightDescription") as? Data {
-            let cellUnwrapped = try? PropertyListDecoder().decode(Array<SightDescription>.self,
-                                                                  from: data)
+        if let data = UserDefaults.standard.value(forKey: "SightDescription") as? Data {
+            let cellUnwrapped = try? PropertyListDecoder().decode(Array<SightDescription>.self, from: data)
             return cellUnwrapped ?? []
         }
         return []
@@ -91,9 +94,8 @@ extension UserDefaults {
     
     /// Запрос города инфы
     func getCountryCityInfo() -> [CountryCityInfo] {
-        if let data = UserDefaults.standard.value(forKey:"CountryCityInfo") as? Data {
-            let cellUnwrapped = try? PropertyListDecoder().decode(Array<CountryCityInfo>.self,
-                                                                  from: data)
+        if let data = UserDefaults.standard.value(forKey: "CountryCityInfo") as? Data {
+            let cellUnwrapped = try? PropertyListDecoder().decode(Array<CountryCityInfo>.self, from: data)
             return cellUnwrapped ?? []
         }
         return []
@@ -101,9 +103,8 @@ extension UserDefaults {
     
     /// Интересные события
     func getEvents() -> [Events] {
-        if let data = UserDefaults.standard.value(forKey:"events") as? Data {
-            let cellUnwrapped = try? PropertyListDecoder().decode(Array<Events>.self,
-                                                                  from: data)
+        if let data = UserDefaults.standard.value(forKey: "events") as? Data {
+            let cellUnwrapped = try? PropertyListDecoder().decode(Array<Events>.self, from: data)
             return cellUnwrapped ?? []
         }
         return []
@@ -111,9 +112,17 @@ extension UserDefaults {
     
     /// Вопросы и ответы
     func getFAQCity() -> [FAQCity] {
-        if let data = UserDefaults.standard.value(forKey:"FAQCity") as? Data {
-            let cellUnwrapped = try? PropertyListDecoder().decode(Array<FAQCity>.self,
-                                                                  from: data)
+        if let data = UserDefaults.standard.value(forKey: "FAQCity") as? Data {
+            let cellUnwrapped = try? PropertyListDecoder().decode(Array<FAQCity>.self, from: data)
+            return cellUnwrapped ?? []
+        }
+        return []
+    }
+    
+    /// Запрос избранного
+    func getFavorites() -> [Sight] {
+        if let data = UserDefaults.standard.value(forKey: "favorites") as? Data {
+            let cellUnwrapped = try? PropertyListDecoder().decode(Array<Sight>.self, from: data)
             return cellUnwrapped ?? []
         }
         return []

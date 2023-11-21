@@ -152,6 +152,7 @@ class NetworkHelper {
                     case .sight:
                         self.sight = try JSONDecoder().decode([SightResponse].self, from: data)
                         if let _sight = self.sight {
+//                            print("sight:\(_sight)")
                             var tempAllCountry = [Sight?]()
                             _sight.forEach {
                                 tempAllCountry.append(Sight(id: $0?.id ?? 0,
@@ -167,7 +168,8 @@ class NetworkHelper {
                                                             test: $0?.test ?? false,
                                                             big_image: self.decodeImage(image: $0?.big_image ?? ""),
                                                             small_image: self.decodeImage(image: $0?.small_image ?? ""),
-                                                            images: self.decodeImages(images: $0?.images?["image"])))
+                                                            images: self.decodeImages(images: $0?.images?["image"]), 
+                                                            favorite: false))
                             }
                             UserDefaults.standard.saveSight(value: tempAllCountry, data: data)
                             completion()
@@ -179,7 +181,7 @@ class NetworkHelper {
                     case .cityAll:
                         self.allCity = try JSONDecoder().decode([SightDescriptionResponse].self, from: data)
                         if let _allCountry = self.allCity {
-                            print("allCity:\(_allCountry)")
+//                            print("allCity:\(_allCountry)")
                             var tempAllCountry = [SightDescription?]()
                             _allCountry.forEach {
                                 tempAllCountry.append(SightDescription(
@@ -201,7 +203,7 @@ class NetworkHelper {
                     case .cityCountryInfo:
                         self.countryCityInfo = try JSONDecoder().decode([CountryCityInfo].self, from: data)
                         if let _countryCityInfo = self.countryCityInfo {
-                            print("countryCityInfo:\(_countryCityInfo)")
+//                            print("countryCityInfo:\(_countryCityInfo)")
                             UserDefaults.standard.saveCityCountryInfo(value: _countryCityInfo, data: data)
                             completion()
                         }
@@ -212,7 +214,7 @@ class NetworkHelper {
                     case .events:
                         self.events = try JSONDecoder().decode([EventsResponce].self, from: data)
                         if let _events = self.events {
-                            print("_events:\(_events)")
+//                            print("_events:\(_events)")
                             var tempEvents = [Events?]()
                             _events.forEach { itemEvent in
                                 let tempStringImages = self.decodeImages(images: itemEvent?.images?["image"])
@@ -234,7 +236,7 @@ class NetworkHelper {
                     case .faq:
                         self.faqCity = try JSONDecoder().decode([FAQCity].self, from: data)
                         if let _faqCity = self.faqCity {
-                            print("_faqCity:\(_faqCity)")
+//                            print("_faqCity:\(_faqCity)")
                             UserDefaults.standard.saveFAQCity(value: _faqCity, data: data)
                         }
                         completion()

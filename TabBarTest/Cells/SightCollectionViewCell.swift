@@ -6,6 +6,9 @@
 
 import UIKit
 
+protocol SightCollectionViewCellDelegate: AnyObject {
+    func favoritesTapped(name: String)
+}
 
 class SightCollectionViewCell: UICollectionViewCell {
     
@@ -58,6 +61,7 @@ class SightCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Public properties
     
+    weak var delegate: SightCollectionViewCellDelegate?
     static let identifier = "SightCollectionViewCell"
     var cellImage: UIImage = UIImage() {
         didSet {
@@ -105,24 +109,25 @@ class SightCollectionViewCell: UICollectionViewCell {
     @objc private func tapFavouriteHandle() {
         putToFavouritesList = !putToFavouritesList
         favouriteView.backgroundColor = putToFavouritesList ? .setCustomColor(color: .tabBarIconSelected) : .setCustomColor(color: .mainView)
+        delegate?.favoritesTapped(name: cellTitle)
     }
     
     private func setupConstraints() {
         image.anchor(top: contentView.topAnchor,
                       left: contentView.leftAnchor,
-                      bottom: nil,
+                     bottom: title.topAnchor,
                       right: contentView.rightAnchor,
-                      paddingTop: 0,
+                      paddingTop: 10,
                       paddingLeft: 0,
                       paddingBottom: 0,
                       paddingRight: 0,
                       width: 0, height: 0)
         
-        title.anchor(top: image.bottomAnchor,
+        title.anchor(top: nil,
                      left: contentView.leftAnchor,
                      bottom: contentView.bottomAnchor,
                      right: contentView.rightAnchor,
-                     paddingTop: 10,
+                     paddingTop: 0,
                      paddingLeft: 0,
                      paddingBottom: 4,
                      paddingRight: 4,
@@ -150,9 +155,12 @@ class SightCollectionViewCell: UICollectionViewCell {
         imageFavourite.center(inView: favouriteView)
     }
     
-    func conigureCell(name: String, image: UIImage) {
+    func conigureCell(name: String, image: UIImage, favotite: Bool) {
         cellImage = image
         cellTitle = name
+        
+        putToFavouritesList = favotite
+        favouriteView.backgroundColor = favotite ? .setCustomColor(color: .tabBarIconSelected) : .setCustomColor(color: .mainView)
     }
 
 }

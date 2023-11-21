@@ -32,7 +32,7 @@ class CurrentCityController: UIViewController {
     private var titleName: String = ""
     
     // MARK: - TODO Удалить когда сделаю загрузку с сервера
-    private var sightsArray = [SightsModel]()
+    private var sightsArray = [Sight]()
     
     private var cityArray: [CityArray] = [
         CityArray(name: "Москва", image: UIImage(named: "moskva")!),
@@ -380,6 +380,10 @@ extension CurrentCityController: CountryCitiesTableViewCellDelegate {
 // MARK: - SightTableViewCellDelegate
 
 extension CurrentCityController: SightTableViewCellDelegate {
+    func favoritesTapped(name: String) {
+        print("favoritesTapped: \(name)")
+    }
+    
     // нажатие на кнопку смотреть все из "места в окрестностях"
     func lookAll() {
         print("Нажатие кнопки 'см.все'")

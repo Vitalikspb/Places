@@ -7,15 +7,6 @@
 
 import Foundation
 import UIKit
-import CoreLocation
-
-struct SightsModel {
-    var categoryType: CategoryTypeSight
-    var typeSight: TypeSight
-    var name: String
-    var image: String
-    var coordinates: CLLocationCoordinate2D
-}
 
 struct CityArray {
     var name: String

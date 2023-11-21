@@ -11,6 +11,7 @@ import CoreLocation
 protocol CityBussinessLogic: AnyObject {
     func showCity()
     func openTicketSite()
+    func updateFavorites(withName name: String)
 }
 
 protocol CityDataStore: AnyObject {
@@ -18,11 +19,11 @@ protocol CityDataStore: AnyObject {
     var currentCountry: String { get set }
     var currentWeather: CurrentWeatherSevenDays { get set }
     var cityInfo: CityViewModel.AllCountriesInTheWorld.ViewModel { get set }
-    var sights: [SightsModel] { get set }
+    var sights: [Sight] { get set }
 }
 
 class CityInteractor: CityBussinessLogic, CityDataStore {
-    var sights: [SightsModel] = []
+    var sights: [Sight] = []
     
     var cityInfo: CityViewModel.AllCountriesInTheWorld.ViewModel = CityViewModel.AllCountriesInTheWorld.ViewModel(
         titlesec: TitleSection(country: "",
@@ -64,11 +65,41 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
         
         updateWeather(latitude: lat, longitude: lon)
         loadSights(currentCity: currentCity)
+//        print("showCity sights:\(sights)")
         presenter?.presentCity(response: viewModelWeather, viewModelCityData: cityInfo, viewModelSightData: sights)
     }
     
+    // Открываем сайт с дилетами для текущего города
     func openTicketSite() {
         print("открыть сайт с билетами для города \(currentCity)")
+    }
+    
+    // Обновляем список избранного
+    func updateFavorites(withName nameFavorites: String) {
+        
+        var newFavorites = true
+        var curIndexOfFavorite = -1
+        var favorites = UserDefaults.standard.getFavorites()
+        
+        for (ind,val) in favorites.enumerated() {
+            if val.name == nameFavorites {
+                newFavorites = false
+                curIndexOfFavorite = ind
+            }
+        }
+        
+        
+        if newFavorites {
+            // если нету в списке избранного, добавляем в список избранного
+            if let item = sights.filter({ $0.name == nameFavorites }).last {
+                favorites.append(item)
+            }
+        } else {
+            // если уже есть в списке избранного, удаляем из списока избранного
+            favorites.remove(at: curIndexOfFavorite)
+        }
+        print("saveFavorites favorites:\(favorites)")
+        UserDefaults.standard.saveFavorites(value: favorites)
     }
     
     // Загружаем погоду
@@ -83,20 +114,37 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
     // Сохраняем достопримечательности для конкретного города
     private func loadSights(currentCity: String) {
         let allSights = UserDefaults.standard.getSight()
-        var tempSight = [SightsModel]()
+        var tempSight = [Sight]()
+        var tempSightWithFavorites = [Sight]()
+        // Из всех достопримечательностей оставлям только для текущего города
         for (_,val) in allSights.enumerated() {
             if val.city == currentCity {
-                let location = CLLocationCoordinate2D(latitude: val.latitude,
-                                                      longitude: val.longitude)
-                let currentSight: SightsModel = SightsModel(categoryType: val.category,
-                                                            typeSight: val.type,
-                                                            name: val.name,
-                                                            image: val.big_image,
-                                                            coordinates: location)
-                tempSight.append(currentSight)
+                tempSight.append(val)
             }
         }
-        self.sights = tempSight
+        
+        let favorites = UserDefaults.standard.getFavorites()
+//        print("loadSights favorites:\(favorites)")
+        // Из избранного достопримечательностей сравниваем со списком достопримечательностей есть ли они в списке и перезаписываем список достопримечательностей
+        
+        for (_,valFavorite) in favorites.enumerated() {
+            for (_,valAllSight) in tempSight.enumerated() {
+                var valAllSightTemp = valAllSight
+                print("\(valFavorite.name) == \(valAllSight.name)")
+                if valFavorite.name == valAllSight.name {
+                    valAllSightTemp.favorite = true
+                } else {
+                    valAllSightTemp.favorite = false
+                }
+                tempSightWithFavorites.append(valAllSightTemp)
+            }
+        }
+        
+        if favorites.isEmpty {
+            tempSightWithFavorites = tempSight
+        }
+//        print("tempSightWithFavorites:\(tempSightWithFavorites)")
+        self.sights = tempSightWithFavorites
     }
 }
 
