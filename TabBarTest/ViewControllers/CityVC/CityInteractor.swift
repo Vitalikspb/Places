@@ -76,30 +76,7 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
     
     // Обновляем список избранного
     func updateFavorites(withName nameFavorites: String) {
-        
-        var newFavorites = true
-        var curIndexOfFavorite = -1
-        var favorites = UserDefaults.standard.getFavorites()
-        
-        for (ind,val) in favorites.enumerated() {
-            if val.name == nameFavorites {
-                newFavorites = false
-                curIndexOfFavorite = ind
-            }
-        }
-        
-        
-        if newFavorites {
-            // если нету в списке избранного, добавляем в список избранного
-            if let item = sights.filter({ $0.name == nameFavorites }).last {
-                favorites.append(item)
-            }
-        } else {
-            // если уже есть в списке избранного, удаляем из списока избранного
-            favorites.remove(at: curIndexOfFavorite)
-        }
-        print("saveFavorites favorites:\(favorites)")
-        UserDefaults.standard.saveFavorites(value: favorites)
+        ManagesFavorites.updateFavorites(sights: &sights, withName: nameFavorites)
     }
     
     // Загружаем погоду

@@ -7,7 +7,7 @@
 import UIKit
 
 protocol FavouritesTableViewCellDelegate: AnyObject {
-    func tapFavouriteButton()
+    func tapFavouriteButton(name: String)
     func showCity(name: String)
 }
 
@@ -41,7 +41,7 @@ class FavouritesTableViewCell: UITableViewCell {
     
     // MARK: - Public properties
     
-    var dataModel: [FavouritesViewModel.ItemData]!
+    var dataModel: [Sight]!
     weak var delegate: FavouritesTableViewCellDelegate?
     static let identifier = "FavouritesTableViewCell"
     
@@ -73,7 +73,7 @@ class FavouritesTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(city: String, data: [FavouritesViewModel.ItemData]) {
+    func configCell(city: String, data: [Sight]) {
         dataModel = data
         cityLabel.text = city
         
@@ -127,8 +127,8 @@ class FavouritesTableViewCell: UITableViewCell {
 extension FavouritesTableViewCell: FavouritesCitiesCollectionViewDelegate {
     
     // Нажатие на кнопку избранное в ячейке
-    func tapFavouriteButton() {
-        delegate?.tapFavouriteButton()
+    func tapFavouriteButton(name: String) {
+        delegate?.tapFavouriteButton(name: name)
     }
     
     // Открытие города подробней

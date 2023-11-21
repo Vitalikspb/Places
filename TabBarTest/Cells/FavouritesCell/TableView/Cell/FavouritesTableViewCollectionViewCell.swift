@@ -7,7 +7,7 @@
 import UIKit
 
 protocol FavouritesTableViewCollectionViewCellDelegate: AnyObject {
-    func tapFavouriteButton()
+    func tapFavouriteButton(name: String)
     func showCity(name: String)
 }
 
@@ -22,7 +22,6 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
         view.backgroundColor = .clear
         return view
     }()
-    
     let mainImageView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -54,6 +53,10 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
         label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
+    private let favouriteButton: CustomAnimatedButton = {
+       let button = CustomAnimatedButton()
+        return button
+    }()
     private let favouriteButtonView: UIView = {
         let view = UIView()
         view.backgroundColor = .setCustomColor(color: .mainView)
@@ -65,10 +68,9 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
         imageView.contentMode = .center
         imageView.tintColor = .setCustomColor(color: .titleText)
         imageView.backgroundColor = .clear
-        imageView.image = UIImage(named: "moveToMap")
+        imageView.image = UIImage(named: "favouriteImage")
         return imageView
     }()
-    
     
     // MARK: - Public properties
     
@@ -92,18 +94,15 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
         titleLabel.text = title
         typeSightLabel.text = typeSight
         mainImageView.image = image
+        favouriteButtonView.backgroundColor = .setCustomColor(color: .tabBarIconSelected)
     }
     
     private func setupUI() {
         let mapTap = UITapGestureRecognizer(target: self, action: #selector(moveToCityViewHandle))
         mainImageView.isUserInteractionEnabled = true
         mainImageView.addGestureRecognizer(mapTap)
-
-        let moveTap = UITapGestureRecognizer(target: self, action: #selector(moveToMapViewHandle))
-        favouriteButtonImageView.isUserInteractionEnabled = true
-        favouriteButtonImageView.addGestureRecognizer(moveTap)
         
-        
+        favouriteButton.delegate = self
         
         contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = 12
@@ -112,7 +111,8 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
         contentView.addSubviews(mainView)
         mainView.addConstraintsToFillView(view: contentView)
         
-        mainView.addSubviews(mainImageView, titleLabel, typeSightLabel, typeSightImageView, favouriteButtonView)
+        mainView.addSubviews(mainImageView, titleLabel, typeSightLabel, typeSightImageView, favouriteButton)
+        favouriteButton.addSubviews(favouriteButtonView)
         favouriteButtonView.addSubviews(favouriteButtonImageView)
 
         
@@ -153,28 +153,33 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
                                   paddingBottom: 4,
                                   paddingRight: 0,
                                   width: 0, height: 20)
-        favouriteButtonView.anchor(top: mainImageView.topAnchor,
-                                     left: nil,
-                                     bottom: nil,
-                                     right: mainImageView.rightAnchor,
-                                     paddingTop: 8,
-                                     paddingLeft: 0,
-                                     paddingBottom: 0,
-                                     paddingRight: 8,
-                                     width: 35, height: 35)
-        favouriteButtonView.addConstraintsToFillView(view: favouriteButtonImageView)
+        favouriteButton.anchor(top: mainImageView.topAnchor,
+                             left: nil,
+                             bottom: nil,
+                             right: mainImageView.rightAnchor,
+                             paddingTop: 8,
+                             paddingLeft: 0,
+                             paddingBottom: 0,
+                             paddingRight: 8,
+                             width: 35, height: 35)
+        favouriteButtonView.addConstraintsToFillView(view: favouriteButton)
+        favouriteButtonImageView.addConstraintsToFillView(view: favouriteButtonView)
     }
     
     // MARK: - Selectors
     
     @objc private func moveToCityViewHandle() {
-        print("переход на город подробней: \(titleLabel.text)")
         delegate?.showCity(name: titleLabel.text ?? "")
     }
-    
-    @objc private func moveToMapViewHandle() {
-        print("переход на город на карте")
-        delegate?.tapFavouriteButton()
+
+}
+
+// MARK: - CustomAnimatedButtonDelegate
+
+extension FavouritesTableViewCollectionViewCell: CustomAnimatedButtonDelegate {
+
+    func continueButton(model: ButtonCallBackModel) {
+        delegate?.tapFavouriteButton(name: titleLabel.text ?? "")
     }
     
 }

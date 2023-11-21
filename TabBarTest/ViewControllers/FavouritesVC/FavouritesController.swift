@@ -9,6 +9,7 @@ import UIKit
 
 protocol FavouritesDisplayLogic: AnyObject {
     func displayFavourites(viewModel: FavouritesViewModel.FavouritesSight.ViewModel)
+    func dismissScreen()
 }
 
 // MARK: - Экран Избранное 
@@ -68,10 +69,6 @@ class FavouritesController: UIViewController {
         router.viewController = viewController
     }
     
-    private func setupUserDefault() {
-        
-    }
-    
     private func setupUI() {
         title = Constants.Favourites.titleScreen
         self.view.backgroundColor = .setCustomColor(color: .mainView)
@@ -114,6 +111,15 @@ class FavouritesController: UIViewController {
 
 extension FavouritesController: FavouritesDisplayLogic {
     
+    func dismissScreen() {
+        let alertVC = UIAlertController(title: "В избранном отсутствуют достопримечательности",
+                                        message: "Добавьте интересные места в избранное.",
+                                        preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "Хорошо", style: .default)
+        alertVC.addAction(okButton)
+        self.present(alertVC, animated: true)
+    }
+    
     func displayFavourites(viewModel: FavouritesViewModel.FavouritesSight.ViewModel) {
         data = viewModel
         tableView.reloadData()
@@ -150,12 +156,13 @@ extension FavouritesController: UITableViewDelegate, UITableViewDataSource {
 
 extension FavouritesController: FavouritesTableViewCellDelegate {
     
-    func tapFavouriteButton() {
+    func tapFavouriteButton(name: String) {
         print("Добавить или удалить выбранный гоорд")
+        interactor?.updateFavorites(withName: name)
     }
     
     func showCity(name: String) {
-        print("открыть выбранный город из избранного")
+        print("открыть выбранный город: \(name) из избранного")
     }
 
 }

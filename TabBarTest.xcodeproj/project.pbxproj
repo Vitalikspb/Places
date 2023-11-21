@@ -13,6 +13,7 @@
 		1F73AC652AD940B100AB359A /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F73AC642AD940B100AB359A /* NetworkHelper.swift */; };
 		1F73AC672AD940EA00AB359A /* DBModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F73AC662AD940EA00AB359A /* DBModels.swift */; };
 		1F771FB22ACD8801005C5BB7 /* FavouritesCitiesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F771FB12ACD8801005C5BB7 /* FavouritesCitiesCollectionView.swift */; };
+		1F8E4B222B0CEBDA00A7EC61 /* ManagesFavorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8E4B212B0CEBDA00A7EC61 /* ManagesFavorites.swift */; };
 		1F9D9D1B2ADFBE2900A74AEC /* CustomAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D9D1A2ADFBE2900A74AEC /* CustomAnimatedButton.swift */; };
 		1FCF6F382ACBEB0D00727B58 /* CountryCitiesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCF6F372ACBEB0D00727B58 /* CountryCitiesCollectionView.swift */; };
 		1FF45ACD2AC1CE6100FBA23E /* Extension+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */; };
@@ -168,6 +169,7 @@
 		1F73AC642AD940B100AB359A /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 		1F73AC662AD940EA00AB359A /* DBModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBModels.swift; sourceTree = "<group>"; };
 		1F771FB12ACD8801005C5BB7 /* FavouritesCitiesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesCitiesCollectionView.swift; sourceTree = "<group>"; };
+		1F8E4B212B0CEBDA00A7EC61 /* ManagesFavorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagesFavorites.swift; sourceTree = "<group>"; };
 		1F9D9D1A2ADFBE2900A74AEC /* CustomAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimatedButton.swift; sourceTree = "<group>"; };
 		1FCF6F372ACBEB0D00727B58 /* CountryCitiesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCitiesCollectionView.swift; sourceTree = "<group>"; };
 		1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIFont.swift"; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 				53EF561E270F720E00CD3786 /* WeatherAPI.swift */,
 				C24A7EAB27731DA200D4751F /* TimeFormatter.swift */,
 				1F73AC642AD940B100AB359A /* NetworkHelper.swift */,
+				1F8E4B212B0CEBDA00A7EC61 /* ManagesFavorites.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1001,6 +1004,7 @@
 				5323BA16274D3DBE00F6BA5E /* SightCollectionViewCell.swift in Sources */,
 				C26BFE452768A01B00ABD119 /* WorldPresenter.swift in Sources */,
 				C24A7EB427735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift in Sources */,
+				1F8E4B222B0CEBDA00A7EC61 /* ManagesFavorites.swift in Sources */,
 				53F3E2FE273FDD4D004B278E /* CurrentCityRouter.swift in Sources */,
 				C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */,
 				C259AA1127204DA600B03921 /* Extension+UserDefault.swift in Sources */,

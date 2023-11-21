@@ -9,6 +9,7 @@ import Foundation
 
 protocol FavouritesPresentationLogic: AnyObject {
     func presentFavourites(response: FavouritesViewModel.FavouritesSight.ViewModel)
+    func dismissScreen()
 }
 
 final class FavouritesPresenter: FavouritesPresentationLogic {
@@ -19,4 +20,7 @@ final class FavouritesPresenter: FavouritesPresentationLogic {
         favouritesController?.displayFavourites(viewModel: viewModel)
     }
     
+    func dismissScreen() {
+        favouritesController?.dismissScreen()
+    }
 }

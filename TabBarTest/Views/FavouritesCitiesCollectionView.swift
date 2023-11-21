@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FavouritesCitiesCollectionViewDelegate: AnyObject {
-    func tapFavouriteButton()
+    func tapFavouriteButton(name: String)
     func showCity(name: String)
 }
 
@@ -43,7 +43,7 @@ class FavouritesCitiesCollectionView: UIView {
     static let identifier = "FavouritesCitiesCollectionView"
     
     // MARK: - Private properties
-    private var model: [FavouritesViewModel.ItemData] = []
+    private var model: [Sight] = []
     
     // MARK: - Life cycle
     
@@ -69,7 +69,7 @@ class FavouritesCitiesCollectionView: UIView {
         collectionView.addConstraintsToFillView(view: containerView)
     }
     
-    public func configureCells(model: [FavouritesViewModel.ItemData]) {
+    public func configureCells(model: [Sight]) {
         self.model = model
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -90,8 +90,8 @@ extension FavouritesCitiesCollectionView: UICollectionViewDataSource, UICollecti
         let cell = collectionView.dequeueReusableCell(FavouritesTableViewCollectionViewCell.self, for: indexPath)
         let modelCell = model[indexPath.row]
         cell.configureCell(withName: modelCell.name,
-                           typeSight: modelCell.type,
-                           andImage: modelCell.image)
+                           typeSight: modelCell.type.rawValue,
+                           andImage: UIImage(named: modelCell.big_image) ?? UIImage())
         cell.delegate = self
         return cell
     }
@@ -106,8 +106,8 @@ extension FavouritesCitiesCollectionView: UICollectionViewDataSource, UICollecti
 extension FavouritesCitiesCollectionView: FavouritesTableViewCollectionViewCellDelegate {
     
     // Нажатие на кнопку избранное в ячейке
-    func tapFavouriteButton() {
-        delegate?.tapFavouriteButton()
+    func tapFavouriteButton(name: String) {
+        delegate?.tapFavouriteButton(name: name)
     }
     
     // Открытие города подробней

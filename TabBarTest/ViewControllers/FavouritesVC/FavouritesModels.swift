@@ -11,16 +11,16 @@ import UIKit
 
 enum FavouritesViewModel {
     
-    struct FavouritesViewModel: Hashable {
+    struct FavouritesViewModel {
         var titlesec: TitleSection
-        var items: [ItemData]
+        var items: [Sight]
     }
-    struct ItemData: Hashable {
+    struct ItemData {
         let name: String
         let type: String
         let image: UIImage
     }
-    struct TitleSection: Hashable {
+    struct TitleSection {
         let country: String
         let city: String
     }
