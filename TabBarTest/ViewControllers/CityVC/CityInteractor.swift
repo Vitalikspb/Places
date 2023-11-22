@@ -59,13 +59,41 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
     var presenter: CityPresentationLogic?
     
     func showCity() {
+        var cities = UserDefaults.standard.getSightDescription()
+        var country: SightDescription?
         let viewModelWeather = CityViewModel.CurrentCity.ViewModel(city: currentCity, weather: currentWeather)
-        let lat: CLLocationDegrees = cityInfo.model?[0].latitude ?? 0.0
-        let lon: CLLocationDegrees = cityInfo.model?[0].longitude ?? 0.0
+
+        // оставляем только текущий город
+        cities.forEach {
+            if $0.name == currentCity {
+                country = $0
+            }
+        }
         
-        updateWeather(latitude: lat, longitude: lon)
+        guard let country = country else { return }
+        let titleSecData = TitleSection(country: "Россия",
+                                        subTitle: "",
+                                        latitude: 0.0,
+                                        longitude: 0.0,
+                                        available: true,
+                                        iconName: "")
+        let curCityModelData = SightDescription(id: country.id,
+                                                name: country.name,
+                                                description: country.description,
+                                                price: country.price,
+                                                sight_count: country.sight_count,
+                                                latitude: country.latitude,
+                                                longitude: country.longitude,
+                                                images: country.images)
+        
+        cityInfo = CityViewModel.AllCountriesInTheWorld.ViewModel(titlesec: titleSecData,
+                                                                  model: [curCityModelData])
+        updateWeather(latitude: country.latitude,
+                      longitude: country.longitude)
         loadSights(currentCity: currentCity)
-        presenter?.presentCity(response: viewModelWeather, viewModelCityData: cityInfo, viewModelSightData: sights)
+        presenter?.presentCity(response: viewModelWeather, 
+                               viewModelCityData: cityInfo,
+                               viewModelSightData: sights)
     }
     
     // Открываем сайт с дилетами для текущего города

@@ -29,7 +29,7 @@ class CountryCitiesTableViewCell: UITableViewCell {
     
     weak var delegate: CountryCitiesTableViewCellDelegate?
     static let identifier = "CountryCitiesTableViewCell"
-    var model: [CityArray] = []
+    private var model: [SightDescription] = []
     
     // MARK: - Private properties
     
@@ -62,8 +62,8 @@ class CountryCitiesTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(title: String) {
-        
+    func configCell(model: [SightDescription]) {
+        self.model = model
     }
     
     private func setupUI() {
@@ -121,12 +121,12 @@ extension CountryCitiesTableViewCell: UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsCitiesCollectionViewCell.identifier, for: indexPath) as? CountryCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
-        
-        let model = CountryCellCitiesModel(title: model[indexPath.row].name,
-                                           image: model[indexPath.row].image,
-                                           numberOfSight: 15,
-                                           latitude: 55.7529517,
-                                           longitude: 37.6232801,
+        let data = model[indexPath.row]
+        let model = CountryCellCitiesModel(title: data.name,
+                                           image: UIImage(named: data.images.first!) ?? UIImage(),
+                                           numberOfSight: data.sight_count,
+                                           latitude: data.latitude,
+                                           longitude: data.longitude,
                                            available: true,
                                            worldScreen: .cities)
         cell.conigureCell(model: model)

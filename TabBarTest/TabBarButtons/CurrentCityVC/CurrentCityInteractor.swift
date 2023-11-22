@@ -9,7 +9,7 @@ import CoreLocation
 
 
 protocol CurrentCityBussinessLogic: AnyObject {
-    func showCity()
+    func showCity(named: String)
     func openTicketSite()
     func updateFavorites(withName name: String)
 }
@@ -59,14 +59,49 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
     var currentCountry: String = ""
     var presenter: CurrentCityPresenterLogic?
     
-    func showCity() {
+    func showCity(named: String) {
+        var cities = UserDefaults.standard.getSightDescription()
+        var otherCityData = [SightDescription]()
+        var country: SightDescription?
         let viewModelWeather = CurrentCityViewModel.CurrentCity.ViewModel(city: currentCity, weather: currentWeather)
-        let lat: CLLocationDegrees = 0.0
-        let lon: CLLocationDegrees = 0.0
+
+        // оставляем только текущий город
+        cities.forEach {
+            if $0.name == named {
+                country = $0
+            }
+        }
+        // Удаляем текущий город для "других городов"
+        for (_,val) in cities.enumerated() {
+            if val.name != named {
+                otherCityData.append(val)
+            }
+        }
+        guard let country = country else { return }
+        let titleSecData = TitleSection(country: "Россия",
+                                        subTitle: "",
+                                        latitude: 0.0,
+                                        longitude: 0.0,
+                                        available: true,
+                                        iconName: "")
+        let curCityModelData = SightDescription(id: country.id,
+                                                name: country.name,
+                                                description: country.description,
+                                                price: country.price,
+                                                sight_count: country.sight_count,
+                                                latitude: country.latitude,
+                                                longitude: country.longitude,
+                                                images: country.images)
         
-        updateWeather(latitude: lat, longitude: lon)
-        loadSights(currentCity: currentCity)
-        presenter?.presentCity(response: viewModelWeather, viewModelCityData: cityInfo, viewModelSightData: sights)
+        cityInfo = CurrentCityViewModel.AllCountriesInTheWorld.ViewModel(titlesec: titleSecData,
+                                                                         model: [curCityModelData])
+        updateWeather(latitude: country.latitude,
+                      longitude: country.longitude)
+        loadSights(currentCity: named)
+        presenter?.presentCity(response: viewModelWeather, 
+                               viewModelCityData: cityInfo,
+                               viewModelSightData: sights, 
+                               otherCityData: otherCityData)
     }
     
     // Открываем сайт с дилетами для текущего города
