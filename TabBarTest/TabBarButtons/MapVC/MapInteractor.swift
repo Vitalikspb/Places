@@ -15,6 +15,7 @@ protocol MapBussinessLogic: AnyObject {
     func fetchSelectedSightWithAllMarkers(withName name: String) -> GMSMarker?
     
     func appendAllMarkers()
+    func updateFavorites(name: String)
 }
 
 protocol MapDataStore: AnyObject {
@@ -223,5 +224,9 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
         //            для теста пока нету кор даты пока что только название
                     presenter?.presentSelectedDestinationView(response: mapMarkers)
                 }
+    }
+    
+    func updateFavorites(name: String) {
+        ManagesFavorites.updateFavorite(withName: name)
     }
 }

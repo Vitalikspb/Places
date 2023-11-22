@@ -61,6 +61,10 @@ class CityController: UIViewController {
     
     // Модель всех достопримечательностей
     private var sightsArray = [Sight]()
+    private var sightsMostViewsArray = [Sight]()
+    private var sightsMustSeeArray = [Sight]()
+    private var sightsChooseRedactionArray = [Sight]()
+    private var sightsInterestingArray = [Sight]()
     
     // Модель Билетов на экскурсии
     private var guidesArray: [GuideSightsModel] = [
@@ -176,8 +180,10 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 8
     }
+    
     // MARK: - заполнение каждой ячейки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        print("sightsArray:\(sightsArray)")
         switch indexPath.row {
             
             // картинки города
@@ -203,9 +209,8 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
-            let filteredModel = sightsArray.filter({ $0.category == .interesting })
             cell.delegate = self
-            cell.configureCell(model: filteredModel,
+            cell.configureCell(model: sightsInterestingArray,
                                title: Constants.Cells.mostViewed,
                                size: CGSize(width: 230, height: 190))
             return cell
@@ -215,8 +220,7 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            let filteredModel = sightsArray.filter({ $0.category == .mustSee })
-            cell.configureCell(model: filteredModel,
+            cell.configureCell(model: sightsMustSeeArray,
                                title: Constants.Cells.mustSeeSights,
                                size: CGSize(width: 230, height: 190))
             return cell
@@ -247,9 +251,8 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             // Выбор редакции
         case 6:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier, for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
-            let filteredModel = sightsArray.filter({ $0.category == .selection })
             cell.delegate = self
-            cell.configureCell(model: filteredModel,
+            cell.configureCell(model: sightsChooseRedactionArray,
                                title: Constants.Cells.chooseOfRedaction,
                                size: CGSize(width: 230, height: 180))
             return cell
@@ -259,8 +262,7 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SightTableViewCell.identifier,
                                                            for: indexPath) as? SightTableViewCell else { return UITableViewCell() }
             cell.delegate = self
-            let filteredModel = sightsArray.filter({ $0.category == .mostViewed })
-            cell.configureCell(model: filteredModel,
+            cell.configureCell(model: sightsMostViewsArray,
                                title: Constants.Cells.intrestingViews,
                                size: CGSize(width: 230, height: 180))
             return cell
@@ -296,6 +298,11 @@ extension CityController: CityDisplayLogic {
         self.viewModelCity = viewModelCityData
         self.sightsArray = viewModelSightData
         
+        sightsMostViewsArray = sightsArray.filter({ $0.category == .mostViewed })
+        sightsMustSeeArray = sightsArray.filter({ $0.category == .mustSee })
+        sightsChooseRedactionArray = sightsArray.filter({ $0.category == .selection })
+        sightsInterestingArray = sightsArray.filter({ $0.category == .interesting })
+
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()

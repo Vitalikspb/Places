@@ -6,20 +6,25 @@
 
 import Foundation
 
-protocol CurrentCityPresentationLogic: AnyObject {
-    func presentAllMarkers(response: CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel)
-    func updateWeather(response: CurrentCityViewModel.WeatherCurrentCountry.ViewModel)
+protocol CurrentCityPresenterLogic: AnyObject {
+    func presentCity(response: CurrentCityViewModel.CurrentCity.ViewModel,
+                     viewModelCityData: CurrentCityViewModel.AllCountriesInTheWorld.ViewModel,
+                     viewModelSightData: [Sight])
+    func updateWeather(response: CurrentCityViewModel.CurrentCity.ViewModel)
 }
 
-final class CurrentCityPresenter: CurrentCityPresentationLogic {
-    weak var currentCityController: CurrentCityController?
+final class CurrentCityPresenter: CurrentCityPresenterLogic {
     
-    func presentAllMarkers(response: CurrentCityViewModel.AllCitiesInCurrentCountry.ViewModel) {
-        currentCityController?.displayAllCities(viewModel: response)
+    weak var сurrentCityController: CurrentCityController?
+    
+    func presentCity(response: CurrentCityViewModel.CurrentCity.ViewModel, viewModelCityData: CurrentCityViewModel.AllCountriesInTheWorld.ViewModel, viewModelSightData: [Sight]) {
+        сurrentCityController?.displayCurrentCity(viewModelWeather: response,
+                                           viewModelCityData: viewModelCityData,
+                                           viewModelSightData: viewModelSightData)
+        
     }
     
-    func updateWeather(response: CurrentCityViewModel.WeatherCurrentCountry.ViewModel) {
-        currentCityController?.updateWeather(viewModel: response)
+    func updateWeather(response: CurrentCityViewModel.CurrentCity.ViewModel) {
+        сurrentCityController?.updateWeather(viewModel: response)
     }
-    
 }

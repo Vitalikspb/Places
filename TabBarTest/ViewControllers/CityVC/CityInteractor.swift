@@ -65,7 +65,6 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
         
         updateWeather(latitude: lat, longitude: lon)
         loadSights(currentCity: currentCity)
-//        print("showCity sights:\(sights)")
         presenter?.presentCity(response: viewModelWeather, viewModelCityData: cityInfo, viewModelSightData: sights)
     }
     
@@ -101,26 +100,25 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
         }
         
         let favorites = UserDefaults.standard.getFavorites()
-//        print("loadSights favorites:\(favorites)")
         // Из избранного достопримечательностей сравниваем со списком достопримечательностей есть ли они в списке и перезаписываем список достопримечательностей
+        var valAllSightTemp = tempSight
         
-        for (_,valFavorite) in favorites.enumerated() {
-            for (_,valAllSight) in tempSight.enumerated() {
-                var valAllSightTemp = valAllSight
-                print("\(valFavorite.name) == \(valAllSight.name)")
+        for (ind,_) in tempSight.enumerated() {
+            valAllSightTemp[ind].favorite = "AddtofavoritesUnselected"
+        }
+        
+        for (ind,valAllSight) in tempSight.enumerated() {
+            for (_,valFavorite) in favorites.enumerated() {
                 if valFavorite.name == valAllSight.name {
-                    valAllSightTemp.favorite = true
-                } else {
-                    valAllSightTemp.favorite = false
+                    valAllSightTemp[ind].favorite =  "AddtofavoritesSelected"
                 }
-                tempSightWithFavorites.append(valAllSightTemp)
             }
         }
+        tempSightWithFavorites = valAllSightTemp
         
         if favorites.isEmpty {
             tempSightWithFavorites = tempSight
         }
-//        print("tempSightWithFavorites:\(tempSightWithFavorites)")
         self.sights = tempSightWithFavorites
     }
 }

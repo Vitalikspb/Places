@@ -397,6 +397,7 @@ class MapController: UIViewController {
     private func showMarkerSightWithAnimating(marker: GMSMarker, showFloatingViewMark: Bool) {
         // делаем запрос на данные для floatinView
         if let nameLocation = marker.title {
+            buttonsView.setupFavoriteName(name: nameLocation)
             interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
             animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
                                  longitude: marker.position.longitude,
@@ -407,6 +408,7 @@ class MapController: UIViewController {
     private func showSelectMarkerSightWithAnimating(marker: GMSMarker, showFloatingViewMark: Bool) {
         // делаем запрос на данные для floatinView
         if let nameLocation = marker.title {
+            buttonsView.setupFavoriteName(name: nameLocation)
             interactor?.showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
             animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
                                  longitude: marker.position.longitude,
@@ -697,8 +699,10 @@ extension MapController: ActionButtonsScrollViewDelegate {
         print("Постоение маршрута")
     }
     
-    func addToFavouritesButtonTapped() {
-        print("Добавление в избранное")
+    func addToFavouritesButtonTapped(name: String) {
+        print("Добавление в избранное: \(name)")
+
+        interactor?.updateFavorites(name: name)
     }
     
     func callButtonTapped() {

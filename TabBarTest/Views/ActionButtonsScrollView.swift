@@ -9,7 +9,7 @@ import UIKit
 
 protocol ActionButtonsScrollViewDelegate: AnyObject {
     func routeButtonTapped()
-    func addToFavouritesButtonTapped()
+    func addToFavouritesButtonTapped(name: String)
     func callButtonTapped()
     func shareButtonTapped()
     func siteButtonTapped()
@@ -77,11 +77,18 @@ class ActionButtonsScrollView: UIScrollView {
     
     // MARK: - Helper Functions
     
+    func setupFavoriteName(name: String) {
+        print("name:\(name)")
+        
+        animateAddToFavouritesButton.setupFavoriteName(favoriteName: name)
+    }
+    
     private func setupUI() {
         [animateRouteButton, animateAddToFavouritesButton,
          animateCallButton, animateShareButton, animateSiteButton].forEach {
             $0.delegate = self
         }
+        
         self.backgroundColor = .setCustomColor(color: .filterbuttonFloatingScreen)
         self.isScrollEnabled = true
         self.isDirectionalLockEnabled = true
@@ -176,7 +183,7 @@ extension ActionButtonsScrollView: CustomAnimatedButtonDelegate {
             actionButtonDelegate?.routeButtonTapped()
             
         case 1:
-            actionButtonDelegate?.addToFavouritesButtonTapped()
+            actionButtonDelegate?.addToFavouritesButtonTapped(name: model.name ?? "")
             
         case 2:
             actionButtonDelegate?.callButtonTapped()

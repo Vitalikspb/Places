@@ -10,11 +10,11 @@ protocol SightCollectionViewCellDelegate: AnyObject {
     func favoritesTapped(name: String)
 }
 
-class SightCollectionViewCell: UICollectionViewCell {
+class SightCollectionViewCell: UICollectionViewCell, Reusable {
     
     // MARK: - UI properties
     
-    private let image: UIImageView = {
+    private var image: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 12
@@ -36,17 +36,19 @@ class SightCollectionViewCell: UICollectionViewCell {
     
     private let favouriteView: UIView = {
         let view = UIView()
-        view.backgroundColor = .setCustomColor(color: .mainView)
+        view.backgroundColor = .clear
         view.layer.cornerRadius = 6
         return view
     }()
     
-    private let imageFavourite: UIImageView = {
+    private var imageFavourite: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .center
+        imageView.contentMode = .scaleAspectFit
         imageView.tintColor = .setCustomColor(color: .titleText)
         imageView.backgroundColor = .clear
         imageView.image = UIImage(named: "favouriteImage")
+        imageView.layer.cornerRadius = 6
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -66,6 +68,11 @@ class SightCollectionViewCell: UICollectionViewCell {
     var cellImage: UIImage = UIImage() {
         didSet {
             image.image = cellImage
+        }
+    }
+    var cellSelectedImage: UIImage = UIImage() {
+        didSet {
+            imageFavourite.image = cellSelectedImage
         }
     }
     var cellTitle: String = "" {
@@ -90,17 +97,24 @@ class SightCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        title.text = ""
+        image.image = UIImage()
+        imageFavourite.image = UIImage()
     }
     
     // MARK: - Helper functions
+    
+    func conigureCell(name: String, image: UIImage, favotite: UIImage) {
+        cellImage = image
+        cellTitle = name
+        cellSelectedImage = favotite
+        putToFavouritesList = cellSelectedImage == UIImage(named: "AddtofavoritesSelected") ? true : false
+    }
     
     private func setupUI() {
         self.backgroundColor = .clear
         
         favouriteButton.delegate = self
-        favouriteView.backgroundColor = putToFavouritesList
-        ? .setCustomColor(color: .tabBarIconSelected)
-        : .setCustomColor(color: .mainView)
         contentView.addSubviews(image, title, favouriteButton)
         favouriteButton.addSubviews(favouriteView)
         favouriteView.addSubviews(imageFavourite)
@@ -108,7 +122,9 @@ class SightCollectionViewCell: UICollectionViewCell {
     
     @objc private func tapFavouriteHandle() {
         putToFavouritesList = !putToFavouritesList
-        favouriteView.backgroundColor = putToFavouritesList ? .setCustomColor(color: .tabBarIconSelected) : .setCustomColor(color: .mainView)
+        cellSelectedImage = (cellSelectedImage == UIImage(named: "AddtofavoritesSelected")
+                             ? UIImage(named: "AddtofavoritesUnselected")
+                             : UIImage(named: "AddtofavoritesSelected")) ?? UIImage()
         delegate?.favoritesTapped(name: cellTitle)
     }
     
@@ -122,7 +138,6 @@ class SightCollectionViewCell: UICollectionViewCell {
                       paddingBottom: 0,
                       paddingRight: 0,
                       width: 0, height: 0)
-        
         title.anchor(top: nil,
                      left: contentView.leftAnchor,
                      bottom: contentView.bottomAnchor,
@@ -142,7 +157,6 @@ class SightCollectionViewCell: UICollectionViewCell {
                              paddingRight: 8,
                              width: 35, height: 35)
         favouriteView.addConstraintsToFillView(view: favouriteButton)
-        
         imageFavourite.anchor(top: nil,
                               left: nil,
                               bottom: nil,
@@ -153,14 +167,6 @@ class SightCollectionViewCell: UICollectionViewCell {
                               paddingRight: 0,
                               width: 35, height: 35)
         imageFavourite.center(inView: favouriteView)
-    }
-    
-    func conigureCell(name: String, image: UIImage, favotite: Bool) {
-        cellImage = image
-        cellTitle = name
-        
-        putToFavouritesList = favotite
-        favouriteView.backgroundColor = favotite ? .setCustomColor(color: .tabBarIconSelected) : .setCustomColor(color: .mainView)
     }
 
 }

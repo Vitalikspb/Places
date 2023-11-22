@@ -23,8 +23,11 @@ class SightTableViewCell: UITableViewCell {
         label.text = Constants.Cells.mustSeeSights
         return label
     }()
-    let collectionView = UICollectionView(frame: CGRect.zero,
-                                          collectionViewLayout: UICollectionViewLayout.init())
+    
+    private let collectionViewCells: CityCollectionView = {
+        let view = CityCollectionView()
+        return view
+    }()
     
     // MARK: - Public properties
     
@@ -38,7 +41,6 @@ class SightTableViewCell: UITableViewCell {
             layout.itemSize = CGSize(width: sizeCell.width, height: sizeCell.height)
         }
     }
-    private var model: [Sight] = []
     
     // MARK: - Private properties
     
@@ -64,6 +66,7 @@ class SightTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        titleLabel.text = ""
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -73,25 +76,14 @@ class SightTableViewCell: UITableViewCell {
     // MARK: - Helper functions
     
     func configureCell(model: [Sight], title: String,  size: CGSize) {
-        self.model = model
         titleLabel.text = title
         sizeCell = size
+        collectionViewCells.configureCells(model: model)
+        collectionViewCells.delegate = self
     }
     
     private func setupUI() {
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10.0
-        layout.minimumInteritemSpacing = 10.0
-        
-        collectionView.register(SightCollectionViewCell.self,
-                                forCellWithReuseIdentifier: SightCollectionViewCell.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        collectionView.setCollectionViewLayout(layout, animated: true)
-        contentView.addSubviews(titleLabel, collectionView)
+        contentView.addSubviews(titleLabel, collectionViewCells)
 
         titleLabel.anchor(top: contentView.topAnchor,
                           left: contentView.leftAnchor,
@@ -104,7 +96,7 @@ class SightTableViewCell: UITableViewCell {
                           width: 0,
                           height: 32)
 
-        collectionView.anchor(top: titleLabel.bottomAnchor,
+        collectionViewCells.anchor(top: titleLabel.bottomAnchor,
                           left: contentView.leftAnchor,
                           bottom: contentView.bottomAnchor,
                           right: contentView.rightAnchor,
@@ -121,44 +113,18 @@ class SightTableViewCell: UITableViewCell {
     }
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
-
-extension SightTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return model.count
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SightCollectionViewCell.identifier, for: indexPath) as? SightCollectionViewCell else { return UICollectionViewCell() }
-        let model = model[indexPath.row]
-        cell.conigureCell(name: model.name,
-                          image: UIImage(named: model.big_image) ?? UIImage(),
-                          favotite: model.favorite)
-        cell.delegate = self
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            moveToMapViewHandle(name: model[indexPath.row].name)
-    }
-}
 
 // MARK: - SightCollectionViewCellDelegate
 
-extension SightTableViewCell: SightCollectionViewCellDelegate {
-    func favoritesTapped(name: String) {
-        delegate?.favoritesTapped(name: name)
+extension SightTableViewCell: CityCollectionViewDelegate {
+    
+    func openCityOnMap(name: String) {
+        delegate?.handleSelectedSight(name)
     }
     
-    
+    func favoriteTapped(name: String) {
+        delegate?.favoritesTapped(name: name)
+    }
+
 }
 

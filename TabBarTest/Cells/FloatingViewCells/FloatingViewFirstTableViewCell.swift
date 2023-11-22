@@ -199,16 +199,16 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
 // MARK: - ActionButtonsScrollViewDelegate
 
 extension FloatingViewFirstTableViewCell: ActionButtonsScrollViewDelegate {
+    func addToFavouritesButtonTapped(name: String) {
+        print("addToFavouritesButtonTapped name:\(name)")
+    }
+    
     func siteButtonTapped() {
         print("siteButtonTapped")
     }
     
     func routeButtonTapped() {
         print("routeButtonTapped")
-    }
-    
-    func addToFavouritesButtonTapped() {
-        print("addToFavouritesButtonTapped")
     }
     
     func callButtonTapped() {

@@ -16,6 +16,7 @@
 		1F8E4B222B0CEBDA00A7EC61 /* ManagesFavorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8E4B212B0CEBDA00A7EC61 /* ManagesFavorites.swift */; };
 		1F9D9D1B2ADFBE2900A74AEC /* CustomAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D9D1A2ADFBE2900A74AEC /* CustomAnimatedButton.swift */; };
 		1FCF6F382ACBEB0D00727B58 /* CountryCitiesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCF6F372ACBEB0D00727B58 /* CountryCitiesCollectionView.swift */; };
+		1FE1B0422B0CFADF00525DF8 /* CityCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1B0412B0CFADF00525DF8 /* CityCollectionView.swift */; };
 		1FF45ACD2AC1CE6100FBA23E /* Extension+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */; };
 		5323BA12274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA11274CEB6100F6BA5E /* ButtonsCollectionViewCell.swift */; };
 		5323BA14274D3BA500F6BA5E /* SightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5323BA13274D3BA500F6BA5E /* SightTableViewCell.swift */; };
@@ -172,6 +173,7 @@
 		1F8E4B212B0CEBDA00A7EC61 /* ManagesFavorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagesFavorites.swift; sourceTree = "<group>"; };
 		1F9D9D1A2ADFBE2900A74AEC /* CustomAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimatedButton.swift; sourceTree = "<group>"; };
 		1FCF6F372ACBEB0D00727B58 /* CountryCitiesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCitiesCollectionView.swift; sourceTree = "<group>"; };
+		1FE1B0412B0CFADF00525DF8 /* CityCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCollectionView.swift; sourceTree = "<group>"; };
 		1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIFont.swift"; sourceTree = "<group>"; };
 		2FD7A97CE38913470C19A8E5 /* Pods-TabBarTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.debug.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.debug.xcconfig"; sourceTree = "<group>"; };
 		3505CAED9B5A4C1483709BEE /* Pods-TabBarTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabBarTest.release.xcconfig"; path = "Target Support Files/Pods-TabBarTest/Pods-TabBarTest.release.xcconfig"; sourceTree = "<group>"; };
@@ -595,6 +597,7 @@
 				C2588FA0270307280014CCDC /* ScrollViewOnMap.swift */,
 				1F4654772AC6B43400B29CDA /* WorldCityCollectionViewCell.swift */,
 				1FCF6F372ACBEB0D00727B58 /* CountryCitiesCollectionView.swift */,
+				1FE1B0412B0CFADF00525DF8 /* CityCollectionView.swift */,
 				53D9BB1B272B39CE00CC14A8 /* ActionButtonsScrollView.swift */,
 				1F771FB12ACD8801005C5BB7 /* FavouritesCitiesCollectionView.swift */,
 				FE93D3CB2AAB130900052FC1 /* ActionsButtonsCityView.swift */,
@@ -975,6 +978,7 @@
 				C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */,
 				C24A7EAC27731DA200D4751F /* TimeFormatter.swift in Sources */,
 				53403D68275FF1B5004087F7 /* FavouritesTableViewCell.swift in Sources */,
+				1FE1B0422B0CFADF00525DF8 /* CityCollectionView.swift in Sources */,
 				FE451D242AA85CAD00831485 /* Extension+UIColor.swift in Sources */,
 				53F0D7AE275E98990087A9BB /* FavouritesModels.swift in Sources */,
 				C2A0C243276CD6740023BF60 /* FAQModels.swift in Sources */,

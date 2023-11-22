@@ -13,14 +13,36 @@ class ManagesFavorites {
         var curIndexOfFavorite = -1
         var favorites = UserDefaults.standard.getFavorites()
         for (ind,val) in favorites.enumerated() {
-            print("\(val.name) == \(name)")
-            
             if val.name == name {
                 newFavorites = false
                 curIndexOfFavorite = ind
             }
         }
         if newFavorites {
+            // если нету в списке избранного, добавляем в список избранного
+            if let item = sights.filter({ $0.name == name }).last {
+                favorites.append(item)
+            }
+        } else {
+            // если уже есть в списке избранного, удаляем из списока избранного
+            favorites.remove(at: curIndexOfFavorite)
+        }
+        UserDefaults.standard.saveFavorites(value: favorites)
+    }
+    
+    static func updateFavorite(withName name: String) {
+        var newFavorites = true
+        var curIndexOfFavorite = -1
+        var favorites = UserDefaults.standard.getFavorites()
+        var sights = UserDefaults.standard.getSight()
+        for (ind,val) in favorites.enumerated() {
+            if val.name == name {
+                newFavorites = false
+                curIndexOfFavorite = ind
+            }
+        }
+        if newFavorites {
+            // если нету в списке избранного, добавляем в список избранного
             // если нету в списке избранного, добавляем в список избранного
             if let item = sights.filter({ $0.name == name }).last {
                 favorites.append(item)

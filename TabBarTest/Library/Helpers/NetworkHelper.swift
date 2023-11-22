@@ -169,7 +169,7 @@ class NetworkHelper {
                                                             big_image: self.decodeImage(image: $0?.big_image ?? ""),
                                                             small_image: self.decodeImage(image: $0?.small_image ?? ""),
                                                             images: self.decodeImages(images: $0?.images?["image"]), 
-                                                            favorite: false))
+                                                            favorite: "AddtofavoritesUnselected"))
                             }
                             UserDefaults.standard.saveSight(value: tempAllCountry, data: data)
                             completion()

@@ -60,7 +60,7 @@ struct Sight: Codable {
     var big_image: String
     var small_image: String
     var images: [String]
-    var favorite: Bool 
+    var favorite: String
 }
 
 // MARK: - Запрос описания тестовых данных всех стран

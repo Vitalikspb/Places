@@ -50,7 +50,6 @@ class WorldCollectionViewCell: UITableViewCell {
     private let collectionViewCells: CountryCitiesCollectionView = {
         let view = CountryCitiesCollectionView()
         return view
-        
     }()
     
     // MARK: - Public properties

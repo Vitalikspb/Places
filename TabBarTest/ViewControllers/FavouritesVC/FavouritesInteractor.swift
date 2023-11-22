@@ -52,7 +52,6 @@ class FavouritesInteractor: FavouritesBussinessLogic {
     func updateFavorites(withName name: String) {
         ManagesFavorites.updateFavorites(sights: &sights, withName: name)
         showFavourites()
-        print("sights.count:\(sights.count)")
         if sights.count == 0 {
             presenter?.dismissScreen()
         }

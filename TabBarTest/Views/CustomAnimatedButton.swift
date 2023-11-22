@@ -33,6 +33,9 @@ final class CustomAnimatedButton: UIButton {
     private var idButton: Int = 0
     // Имя кнопки
     private var nameButton: String = ""
+    // название для избранного
+    private var favoriteName: String = ""
+    
     
     // границы кнопки для отслеживания touchesEnd
     private var buttonBounds: CGRect!
@@ -54,8 +57,12 @@ final class CustomAnimatedButton: UIButton {
         idButton = id
     }
     
-    func setuId(name: String) {
+    func setupId(name: String) {
         nameButton = name
+    }
+    
+    func setupFavoriteName(favoriteName: String) {
+        self.favoriteName = favoriteName
     }
     
     // Анимация завершения аминирования кнопки
@@ -73,7 +80,8 @@ final class CustomAnimatedButton: UIButton {
             if success {
                 if self.buttonBounds.contains((touches.first?.location(in: self))!) {
                     let sendModel = ButtonCallBackModel(id: self.idButton,
-                                                        name: nil)
+                                                        name: favoriteName)
+                    print("sendModel:\(sendModel)")
                     self.delegate?.continueButton(model: sendModel)
                 }
             }
