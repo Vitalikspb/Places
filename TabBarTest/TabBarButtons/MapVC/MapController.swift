@@ -107,7 +107,7 @@ class MapController: UIViewController {
         // вызываем только 1 раз для заполнения массива маркерами
         setupLang()
         interactor?.appendAllMarkers()
-        addDefaultMarkers()
+//        addDefaultMarkers()
         setupLocationManager()
         // обновление погоды каждые 60 сек
         timer = Timer.scheduledTimer(timeInterval: 60.0,
@@ -315,10 +315,10 @@ class MapController: UIViewController {
     }
     
     // Начальная функция показа всех тестовых/реальных маркеров в зависимости от оплаты страны
-    private func addDefaultMarkers() {
-        let request = MapViewModel.FilterName.Alltest
-        interactor?.fetchAllTestMarkers(request: request)
-    }
+//    private func addDefaultMarkers() {
+//        let request = MapViewModel.FilterName.All
+//        interactor?.fetchAllTestMarkers(request: request)
+//    }
     
     // Сокрытие поисковой строки и отображение строки с фильтрами
     private func hideTopSearchView() {
@@ -455,7 +455,7 @@ extension MapController: GMSMapViewDelegate {
         floatingView.hideFloatingView()
         showScrollAndWeatherView()
         if selectMark || selectMarkFromBottomView {
-            addDefaultMarkers()
+//            addDefaultMarkers()
             selectMark = false
             selectMarkFromBottomView = false
         }
@@ -483,29 +483,29 @@ extension MapController: ScrollViewOnMapDelegate {
             selectedFilter = true
             hideWeatherView()
         } else {
-            request = MapViewModel.FilterName.Alltest
+            request = MapViewModel.FilterName.All
             selectedFilter = false
             showWeatherView()
         }
-        interactor?.fetchAllTestMarkers(request: request)
+//        interactor?.fetchAllTestMarkers(request: request)
     }
     
     // Фильтрация маркеров по парку
     func chooseParkFilter() {
         let request = MapViewModel.FilterName.Park
-        interactor?.fetchAllTestMarkers(request: request)
+//        interactor?.fetchAllTestMarkers(request: request)
     }
     
     // Фильтрация маркеров по достопримечательностям
     func choosePoiFilter() {
         let request = MapViewModel.FilterName.POI
-        interactor?.fetchAllTestMarkers(request: request)
+//        interactor?.fetchAllTestMarkers(request: request)
     }
     
     // Фильтрация маркеров по пляжам
     func chooseBeachFilter() {
         let request = MapViewModel.FilterName.Beach
-        interactor?.fetchAllTestMarkers(request: request)
+//        interactor?.fetchAllTestMarkers(request: request)
     }
     
     // Отображение поисковой строки и сокрытие строки с фильтрами
@@ -680,7 +680,7 @@ extension MapController: FloatingViewDelegate {
             }
         }
         if selectMark {
-            addDefaultMarkers()
+//            addDefaultMarkers()
             selectMark = false
         }
         mapView.settings.myLocationButton = true
@@ -717,6 +717,7 @@ extension MapController: ActionButtonsScrollViewDelegate {
 // MARK: - MapDisplayLogic
 
 extension MapController: MapDisplayLogic {
+    
     // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String) {
         print(#function)
@@ -724,9 +725,11 @@ extension MapController: MapDisplayLogic {
     
     // Отображаем маркеры при нажатии на фильтры в ScrollView
     func displayMarkers(filter: [GMSMarker]) {
-        mapView.clear()
-        filter.forEach {
-            $0.map = mapView
+        DispatchQueue.main.async {
+            self.mapView.clear()
+            filter.forEach {
+                $0.map = self.mapView
+            }
         }
     }
     
@@ -782,7 +785,7 @@ extension MapController: CurrentCityButtonViewDelegate {
 extension MapController: BottomCollectionViewDelegate {
     func showSight(nameSight: String) {
         print(nameSight)
-        addDefaultMarkers()
+//        addDefaultMarkers()
         selectMark = false
         selectMarkFromBottomView = true
         guard let marker = interactor?.fetchSelectedSightWithAllMarkers(withName: nameSight) else { return }
