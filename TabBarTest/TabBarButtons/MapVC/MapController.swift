@@ -70,6 +70,7 @@ class MapController: UIViewController {
     private var selectMark: Bool = false
     private var selectedFilter: Bool = false
     private var selectMarkFromBottomView: Bool = false
+    private var enableMapInteractive: Bool = false
     
     // MARK: - UI Properties
     
@@ -107,7 +108,6 @@ class MapController: UIViewController {
         // вызываем только 1 раз для заполнения массива маркерами
         setupLang()
         interactor?.appendAllMarkers()
-        addDefaultMarkers()
         setupLocationManager()
         // обновление погоды каждые 60 сек
         timer = Timer.scheduledTimer(timeInterval: 60.0,
@@ -131,11 +131,7 @@ class MapController: UIViewController {
         showCity = userDefault.bool(forKey: UserDefaults.showSelectedCity)
         showCountry = userDefault.bool(forKey: UserDefaults.showSelectedCountry)
         showSight = userDefault.bool(forKey: UserDefaults.showSelectedSight)
-        
-        print("showCity:\(showCity)")
-        print("showCountry:\(showCountry)")
-        print("showSight:\(showSight)")
-        
+
         if showCity {
             let latitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLatitude)
             let longitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLongitude)
@@ -316,8 +312,7 @@ class MapController: UIViewController {
     
     // Начальная функция показа всех тестовых/реальных маркеров в зависимости от оплаты страны
     private func addDefaultMarkers() {
-        let request = MapViewModel.FilterName.Alltest
-        interactor?.fetchAllTestMarkers(request: request)
+        interactor?.fetchAllTestMarkers(request: .All)
     }
     
     // Сокрытие поисковой строки и отображение строки с фильтрами
@@ -396,6 +391,7 @@ class MapController: UIViewController {
     
     private func showMarkerSightWithAnimating(marker: GMSMarker, showFloatingViewMark: Bool) {
         // делаем запрос на данные для floatinView
+        print("showMarkerSight marker.title:\(marker.title)")
         if let nameLocation = marker.title {
             buttonsView.setupFavoriteName(name: nameLocation)
             interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
@@ -405,11 +401,16 @@ class MapController: UIViewController {
             selectMark = showFloatingViewMark
         }
     }
-    private func showSelectMarkerSightWithAnimating(marker: GMSMarker, showFloatingViewMark: Bool) {
+    
+    // Работа маркеров, анимации когда тыкнули нижниюю коллекцию
+    private func showSelectMarkerSightWithAnimating(animateMarkers: Bool = true, marker: GMSMarker, showFloatingViewMark: Bool) {
         // делаем запрос на данные для floatinView
+        print("showSelectMarker marker.title:\(marker.title)")
         if let nameLocation = marker.title {
-            buttonsView.setupFavoriteName(name: nameLocation)
-            interactor?.showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
+            if animateMarkers {
+                buttonsView.setupFavoriteName(name: nameLocation)
+                interactor?.showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
+            }
             animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
                                  longitude: marker.position.longitude,
                                  from: .mapViewZoom)
@@ -423,7 +424,6 @@ extension MapController: GMSMapViewDelegate {
     
     // Вызывается при изменении позиции карты
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-        
         // определение текущего местоположения
         cameraLatitude = mapView.camera.target.latitude
         cameraLongitude = mapView.camera.target.longitude
@@ -443,21 +443,32 @@ extension MapController: GMSMapViewDelegate {
     
     // вызывается при нажатии на маркер
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        
-        // делаем запрос на данные для floatinView
-        showMarkerSightWithAnimating(marker: marker, showFloatingViewMark: true)
-        return true
+        enableMapInteractive = true
+        if !selectMark {
+            selectMark = true
+            // делаем запрос на данные для floatinView
+            showMarkerSightWithAnimating(marker: marker, showFloatingViewMark: true)
+            return true
+        } else {
+            return false
+        }
     }
     
     // вызывается при нажатии на карту
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        hideTopSearchView()
-        floatingView.hideFloatingView()
-        showScrollAndWeatherView()
-        if selectMark || selectMarkFromBottomView {
-            addDefaultMarkers()
-            selectMark = false
-            selectMarkFromBottomView = false
+        if enableMapInteractive {
+            selectMark = true
+            hideTopSearchView()
+            floatingView.hideFloatingView()
+            showScrollAndWeatherView()
+            
+            print("selectMark:\(selectMark) || selectMarkFromBottomView:\(selectMarkFromBottomView)")
+            if selectMark || selectMarkFromBottomView {
+                addDefaultMarkers()
+                selectMark = false
+                selectMarkFromBottomView = false
+            }
+            enableMapInteractive = false
         }
     }
     
@@ -483,29 +494,26 @@ extension MapController: ScrollViewOnMapDelegate {
             selectedFilter = true
             hideWeatherView()
         } else {
-            request = MapViewModel.FilterName.Alltest
+            request = MapViewModel.FilterName.All
             selectedFilter = false
             showWeatherView()
         }
-        interactor?.fetchAllTestMarkers(request: request)
+//        interactor?.fetchAllTestMarkers(request: request)
     }
     
     // Фильтрация маркеров по парку
     func chooseParkFilter() {
-        let request = MapViewModel.FilterName.Park
-        interactor?.fetchAllTestMarkers(request: request)
+//        interactor?.fetchAllTestMarkers(request: request)
     }
     
     // Фильтрация маркеров по достопримечательностям
     func choosePoiFilter() {
-        let request = MapViewModel.FilterName.POI
-        interactor?.fetchAllTestMarkers(request: request)
+//        interactor?.fetchAllTestMarkers(request: request)
     }
     
     // Фильтрация маркеров по пляжам
     func chooseBeachFilter() {
-        let request = MapViewModel.FilterName.Beach
-        interactor?.fetchAllTestMarkers(request: request)
+//        interactor?.fetchAllTestMarkers(request: request)
     }
     
     // Отображение поисковой строки и сокрытие строки с фильтрами
@@ -559,7 +567,9 @@ extension MapController: ConnectivityDelegate {
 }
 
 // MARK: - CLLocationManagerDelegate
+
 extension MapController: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             myCurrentLatitude = location.coordinate.latitude
@@ -568,7 +578,6 @@ extension MapController: CLLocationManagerDelegate {
             cameraLongitude = myCurrentLongitude
             WeatherAPI().loadCurrentWeather(latitude: myCurrentLatitude,
                                             longitude: myCurrentLongitude) { temp, image in
-                
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     UIView.animate(withDuration: 0.5) {
@@ -577,7 +586,6 @@ extension MapController: CLLocationManagerDelegate {
                         self.weatherView.weatherViewImage = image
                     }
                 }
-                
             }
             manager.stopUpdatingLocation()
         }
@@ -717,6 +725,7 @@ extension MapController: ActionButtonsScrollViewDelegate {
 // MARK: - MapDisplayLogic
 
 extension MapController: MapDisplayLogic {
+    
     // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String) {
         print(#function)
@@ -724,9 +733,16 @@ extension MapController: MapDisplayLogic {
     
     // Отображаем маркеры при нажатии на фильтры в ScrollView
     func displayMarkers(filter: [GMSMarker]) {
-        mapView.clear()
-        filter.forEach {
-            $0.map = mapView
+        DispatchQueue.main.async {
+            self.mapView.clear()
+            filter.forEach {
+                $0.map = self.mapView
+            }
+        }
+        let sight = UserDefaults.standard.getSight()
+        bottomCollectionView.setupModel(model: sight)
+        DispatchQueue.main.async {
+            self.bottomCollectionView.collectionView.reloadData()
         }
     }
     
@@ -772,6 +788,7 @@ extension MapController: MapDisplayLogic {
 // MARK: - CurrentCityButtonViewDelegate
 
 extension MapController: CurrentCityButtonViewDelegate {
+    
     func showCurrentCityViewController() {
         router?.routeToCityVC()
     }
@@ -780,12 +797,13 @@ extension MapController: CurrentCityButtonViewDelegate {
 // MARK: - BottomCollectionViewDelegate
 
 extension MapController: BottomCollectionViewDelegate {
+    
+    // Выбор достопримечательности из скролл коллекции снизу экрана
     func showSight(nameSight: String) {
-        print(nameSight)
-        addDefaultMarkers()
         selectMark = false
         selectMarkFromBottomView = true
         guard let marker = interactor?.fetchSelectedSightWithAllMarkers(withName: nameSight) else { return }
-        showSelectMarkerSightWithAnimating(marker: marker, showFloatingViewMark: false)
+        showSelectMarkerSightWithAnimating(animateMarkers: false, marker: marker, showFloatingViewMark: false)
     }
+    
 }

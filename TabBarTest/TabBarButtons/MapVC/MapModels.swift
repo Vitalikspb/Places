@@ -15,13 +15,11 @@ enum MapViewModel {
     
     // фильтры маркеров на карте
     enum FilterName {
-        case Alltest
-        case AllRelease
+        case All
         case Museum
         case Park
         case POI
         case Beach
-//        case Selected
     }
     
     enum ChoosenDestinationView {

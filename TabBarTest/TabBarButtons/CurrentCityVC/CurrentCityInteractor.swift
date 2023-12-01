@@ -60,7 +60,7 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
     var presenter: CurrentCityPresenterLogic?
     
     func showCity(named: String) {
-        var cities = UserDefaults.standard.getSightDescription()
+        let cities = UserDefaults.standard.getSightDescription()
         var otherCityData = [SightDescription]()
         var country: SightDescription?
         let viewModelWeather = CurrentCityViewModel.CurrentCity.ViewModel(city: currentCity, weather: currentWeather)
