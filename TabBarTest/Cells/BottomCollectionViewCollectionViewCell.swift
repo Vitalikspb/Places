@@ -78,6 +78,10 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        sightImageView.image = nil
+        sightNameLabel.text = nil
+        sightTypeLabel.text = nil
+        sightTypeImageView.image = nil
     }
     
     // MARK: - Helper functions

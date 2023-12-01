@@ -78,8 +78,6 @@ class ActionButtonsScrollView: UIScrollView {
     // MARK: - Helper Functions
     
     func setupFavoriteName(name: String) {
-        print("name:\(name)")
-        
         animateAddToFavouritesButton.setupFavoriteName(favoriteName: name)
     }
     

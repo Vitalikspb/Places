@@ -14,7 +14,7 @@ class BottomCollectionView: UIView {
     
     struct BottomCollectionViewModel {
         var type: String
-        var image: UIImage
+        var image: String
         var nameOfSight: String
         var typeSight: TypeSight
     }
@@ -45,31 +45,18 @@ class BottomCollectionView: UIView {
     
     // MARK: - Helper functions
     
-    func setupModel(model: [BottomCollectionViewModel]) {
-        // MARK: - TODO передавать сюда из главного экрана ифну по маркерам
-        dataModel = model
+    func setupModel(model: [Sight]) {
+        model.forEach {
+            let tempModel = BottomCollectionViewModel(type: $0.type.rawValue,
+                                                      image: $0.big_image,
+                                                      nameOfSight: $0.name,
+                                                      typeSight: $0.type)
+            dataModel.append(tempModel)
+        }
     }
     
     private func configureUI() {
         self.backgroundColor = .clear
-        let data = [BottomCollectionViewModel(type: "Музей",
-                                              image: UIImage(named: "museumRusskiy")!,
-                                              nameOfSight: "Русский музей",
-                                              typeSight: .museum),
-                    BottomCollectionViewModel(type: "Парк",
-                                              image: UIImage(named: "parkMarsovoPole")!,
-                                              nameOfSight: "Парк марсово поле",
-                                              typeSight: .sightSeen),
-                    BottomCollectionViewModel(type: "Музей",
-                                              image: UIImage(named: "museumHermitage")!,
-                                              nameOfSight: "Эрмитаж",
-                                              typeSight: .museum),
-                    BottomCollectionViewModel(type: "Достопримечательность",
-                                              image: UIImage(named: "dostoprimechatelnostPetrPerviy")!,
-                                              nameOfSight: "Пямятник Петру 1",
-                                              typeSight: .god)]
-        dataModel = data
-        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         collectionView.register(BottomCollectionViewCollectionViewCell.self,
@@ -101,10 +88,11 @@ extension BottomCollectionView: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BottomCollectionViewCollectionViewCell.identifier, for: indexPath) as? BottomCollectionViewCollectionViewCell else { return UICollectionViewCell() }
-        cell.conigureCell(type: dataModel[indexPath.row].type,
-                          name: dataModel[indexPath.row].nameOfSight,
-                          image: dataModel[indexPath.row].image,
-                          typeSight: dataModel[indexPath.row].typeSight)
+        let data = dataModel[indexPath.row]
+        cell.conigureCell(type: data.type,
+                          name: data.nameOfSight,
+                          image: UIImage(named: data.image) ?? UIImage(),
+                          typeSight: data.typeSight)
         cell.delegate = self
         return cell
     }
