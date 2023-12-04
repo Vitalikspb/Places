@@ -160,6 +160,9 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
     private func returnAllTestMarkers() -> [GMSMarker] {
         var mapMarkersAll = [GMSMarker]()
         let allSights = UserDefaults.standard.getSight()
+        
+        print("allSights:\(allSights)")
+        
         for (_, val) in allSights.enumerated() {
             let marker = setMarker(name: val.name,
                       location: CLLocation(latitude: val.latitude,

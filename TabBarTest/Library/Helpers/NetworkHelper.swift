@@ -68,6 +68,7 @@ class NetworkHelper {
         makeRequest(type: .sight, model: .init(country: "Россия")) {
             print("download .sight")
         }
+        
     }
     
     func makeRequest(type: TypeRequest, model: ModelForRequest, completion: @escaping()->()) {
