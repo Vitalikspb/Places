@@ -14,13 +14,11 @@ protocol FloatingViewDelegate: AnyObject {
     func floatingPanelIsHidden()
     func floatingPanelFullScreen()
     func floatingPanelPatriallyScreen()
-    func makeCall()
-    func openSite()
-    func openVK()
-    func openFaceBook()
-    func openInstagram()
-    func openYoutube()
+    func makeCall(withNumber: String)
+    func openUrl(name: String)
 }
+
+// Бэк для всплывающей вьюхи с подробностями достопримечательности
 
 class FloatingView: UIView {
     
@@ -89,6 +87,10 @@ class FloatingView: UIView {
     }
     
     // MARK: - Helpers function
+    
+    func configureCell(model: Sight) {
+        mainView.configureCell(model: model)
+    }
     
     func showFloatingView() {
         switch expansionState {
@@ -180,27 +182,14 @@ class FloatingView: UIView {
 // MARK: - MainFloatingViewDelegate
 
 extension FloatingView: MainFloatingViewDelegate {
-    func makeCall() {
-        delegate?.makeCall()
+    
+    // Делаем вызов номера телефона
+    func makeCall(toNumber: String) {
+        delegate?.makeCall(withNumber: toNumber)
     }
     
-    func openSite() {
-        delegate?.openSite()
-    }
-    
-    func openVK() {
-        delegate?.openVK()
-    }
-    
-    func openFaceBook() {
-        delegate?.openFaceBook()
-    }
-    
-    func openInstagram() {
-        delegate?.openInstagram()
-    }
-    
-    func openYoutube() {
-        delegate?.openYoutube()
+    // Открываем сайт/соц сеть или др
+    func openUrl(name: String) {
+        delegate?.openUrl(name: name)
     }
 }

@@ -7,13 +7,11 @@
 import UIKit
 
 protocol MainFloatingViewDelegate: AnyObject {
-    func makeCall()
-    func openSite()
-    func openVK()
-    func openFaceBook()
-    func openInstagram()
-    func openYoutube()
+    func makeCall(toNumber: String)
+    func openUrl(name: String)
 }
+
+// Вьюха с подробностями достопримечательности
 
 class MainFloatingView: UIView {
     
@@ -21,6 +19,7 @@ class MainFloatingView: UIView {
     
     weak var delegate: MainFloatingViewDelegate?
     var stateFloatingFullView: Bool = false
+    var model: Sight?
     
     // MARK: - UI properties
 
@@ -92,6 +91,11 @@ class MainFloatingView: UIView {
     }
     
     // MARK: - Helper functions
+    
+    func configureCell(model: Sight) {
+        self.model = model
+        imageView.image = UIImage(named: model.big_image)
+    }
     
     private func configureUI() {
         self.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
@@ -169,29 +173,59 @@ extension MainFloatingView: UIScrollViewDelegate {
 
 extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return model != nil ? 3 : 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewFirstTableViewCell.identifier, for: indexPath) as! FloatingViewFirstTableViewCell
-            cell.configCell(title: "Самый лучший музей",
-                            type: "Музей",
-                            showButtons: tableView.isScrollEnabled == true ? true : false,
-                            smallView: smallView)
-            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewFirstTableViewCell.identifier, 
+                                                     for: indexPath) as! FloatingViewFirstTableViewCell
+            if let model = model {
+                cell.configCell(title: model.name,
+                                type: model.type.rawValue,
+                                showButtons: tableView.isScrollEnabled == true ? true : false,
+                                smallView: smallView, 
+                                rating: model.rating)
+                return cell
+            }
+            return UITableViewCell()
             
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewSecondTableViewCell.identifier, for: indexPath) as! FloatingViewSecondTableViewCell
-            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewSecondTableViewCell.identifier, 
+                                                     for: indexPath) as! FloatingViewSecondTableViewCell
+            if let model = model {
+                cell.configCell(model: model.images)
+                return cell
+            }
+            return UITableViewCell()
             
         case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewThirdTableViewCell.identifier, for: indexPath) as! FloatingViewThirdTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewThirdTableViewCell.identifier, 
+                                                     for: indexPath) as! FloatingViewThirdTableViewCell
             cell.delegate = self
-            return cell
+            if let model = model {
+                var phone: String?
+                if model.main_phone != nil{
+                    phone = model.main_phone
+                } else if model.additional_phone != nil{
+                    phone = model.additional_phone
+                }
+                
+                let modelCell = FloatingViewThirdTableViewCell.modelThirdCell(address: model.address,
+                                                                              phone: phone,
+                                                                              siteUrl: model.site,
+                                                                              vkUrl: model.vk,
+                                                                              fbUrl: model.facebook,
+                                                                              instUrl: model.instagram,
+                                                                              ytUrl: model.youtube)
+                cell.configCell(model: modelCell)
+                return cell
+            }
+            return UITableViewCell()
             
         default:
+            print("default return cell")
             return UITableViewCell()
         }
     }
@@ -217,30 +251,17 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - FloatingViewThirdTableViewCellDelegate
+
 extension MainFloatingView: FloatingViewThirdTableViewCellDelegate {
-    func makeCall() {
-        delegate?.makeCall()
+    
+    // Открываем сайт, соц сеть или другое
+    func openUrl(name: String) {
+        delegate?.openUrl(name: name)
     }
     
-    func openSite() {
-        delegate?.openSite()
+    // Делаем вызов по номеру
+    func makeCall(withNumber: String) {
+        delegate?.makeCall(toNumber: withNumber)
     }
-    
-    func openVK() {
-        delegate?.openVK()
-    }
-    
-    func openFaceBook() {
-        delegate?.openFaceBook()
-    }
-    
-    func openInstagram() {
-        delegate?.openInstagram()
-    }
-    
-    func openYoutube() {
-        delegate?.openYoutube()
-    }
-    
-    
 }

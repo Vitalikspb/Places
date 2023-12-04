@@ -11,9 +11,9 @@ class WorldWorker {
     
     // Запрос на интересные события
     static func updateCountry(model: ModelForRequest, completion: @escaping()->()) {
-        NetworkHelper.shared.makeRequest(type: .cityAll, model: model) {
+//        NetworkHelper.shared.makeRequest(type: .cityAll, model: model) {
             completion()
-        }
+//        }
     }
     
     static func addTestCountries(_ mainModel: inout [WorldViewModels.AllCountriesInTheWorld.ViewModel]) {

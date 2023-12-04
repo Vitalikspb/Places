@@ -58,51 +58,25 @@ class NetworkHelper {
     private var faqCity: [FAQCity?]?
     
     
+    func downloadAllRequest() {
+        makeRequest(type: .cityAll, model: .init(country: "Россия")) {
+            print("download .cityAll")
+        }
+        makeRequest(type: .cityCountryInfo, model: .init(country: "Россия")) {
+            print("download .cityCountryInfo")
+        }
+        makeRequest(type: .sight, model: .init(country: "Россия")) {
+            print("download .sight")
+        }
+    }
+    
     func makeRequest(type: TypeRequest, model: ModelForRequest, completion: @escaping()->()) {
         var reqModel = model
         reqModel.typeRequest = type
-        
-        var byte = 0
-        
-        switch type {
-        case .sight:
-            break
-//          byte = UserDefaults.standard.integer(forKey: "SightData")
-//          print("sight byte:\(byte)")
-            
-        case .cityAll:
-            break
-//            byte = UserDefaults.standard.integer(forKey: "CityAllData")
-//            print("cityAll byte:\(byte)")
-            
-        case .cityCountryInfo:
-            break
-//          byte = UserDefaults.standard.integer(forKey: "CityCountryInfoData")
-//          print("cityCountryInfo byte:\(byte)")
-            
-        case .events:
-            break
-//            byte = UserDefaults.standard.integer(forKey: "eventsData")
-//            print("events byte:\(byte)")
-            
-        case .faq:
-            break
-//            byte = UserDefaults.standard.integer(forKey: "FAQCityData")
-//            print("faq byte:\(byte)")
-        }
-        
-        // MARK: - TODO
-        // Проверка на байты, нужно доделывать с бэком
-//        if byte == 0 {
-            sendRequestToServer(model: reqModel) {
-                completion()
-            }
-//        } else {
-//            completion()
-//        }
+        sendRequestToServer(model: reqModel)
     }
     
-    private func sendRequestToServer(model: ModelForRequest, completion: @escaping()->()) {
+    private func sendRequestToServer(model: ModelForRequest) {
         
         var queryItems: [URLQueryItem]!
         
@@ -172,7 +146,6 @@ class NetworkHelper {
                                                             favorite: "AddtofavoritesUnselected"))
                             }
                             UserDefaults.standard.saveSight(value: tempAllCountry, data: data)
-                            completion()
                         }
                         
                         
@@ -195,7 +168,6 @@ class NetworkHelper {
                                     images: self.decodeImages(images: $0?.images?["image"])))
                             }
                             UserDefaults.standard.saveAllCity(value: tempAllCountry, data: data)
-                            completion()
                         }
                         
                         
@@ -205,7 +177,6 @@ class NetworkHelper {
                         if let _countryCityInfo = self.countryCityInfo {
 //                            print("countryCityInfo:\(_countryCityInfo)")
                             UserDefaults.standard.saveCityCountryInfo(value: _countryCityInfo, data: data)
-                            completion()
                         }
                         
                         
@@ -226,7 +197,6 @@ class NetworkHelper {
                                                          city: itemEvent?.city ?? "",
                                                          date: itemEvent?.date ?? ""))
                                 UserDefaults.standard.saveEvents(value: tempEvents, data: data)
-                                completion()
                             }
                         }
                         
@@ -239,13 +209,11 @@ class NetworkHelper {
 //                            print("_faqCity:\(_faqCity)")
                             UserDefaults.standard.saveFAQCity(value: _faqCity, data: data)
                         }
-                        completion()
                     }
                     
                     
                 } catch let error {
                     print("request type:\(String(describing: model.typeRequest!.rawValue)), \(String(describing: error))")
-                    completion()
                 }
             }
         }

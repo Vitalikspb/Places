@@ -7,12 +7,8 @@
 import UIKit
 
 protocol FloatingViewThirdTableViewCellDelegate: AnyObject {
-    func makeCall()
-    func openSite()
-    func openVK()
-    func openFaceBook()
-    func openInstagram()
-    func openYoutube()
+    func makeCall(withNumber: String)
+    func openUrl(name: String)
 }
 
 class FloatingViewThirdTableViewCell: UITableViewCell {
@@ -184,7 +180,12 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
     
     // MARK: - Private properties
     
-    var urlSite = "www.awesomemuseum.ru"
+    private var siteUrl: String? = nil
+    private var vkUrl: String? = nil
+    private var fbUrl: String? = nil
+    private var instUrl: String? = nil
+    private var ytUrl: String? = nil
+    private var phoneNumber: String? = nil
     
     // MARK: - Lifecycle
     
@@ -214,28 +215,59 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
     // MARK: - Selectors
     
     @objc func makeCall() {
-        
+        delegate?.makeCall(withNumber: phoneNumber ?? "")
     }
     
-    @objc func gotoSite() {
-        
+    struct modelThirdCell {
+        let address: String
+        let phone: String?
+        let siteUrl: String?
+        let vkUrl: String?
+        let fbUrl: String?
+        let instUrl: String?
+        let ytUrl: String?
     }
     
     // MARK: - Helper functions
     
-    func configCell(address: String, phone: String) {
-        addressDescriptionLabel.text = "Невский проспект д.48"
-        contactsPhoneLabel.text = "+7(123)-456-78-90"
+    func configCell(model: modelThirdCell) {
+        addressDescriptionLabel.text = model.address
+        contactsPhoneLabel.text = model.phone
+        phoneNumber = model.phone
+        siteUrl = model.siteUrl
+        vkUrl = model.vkUrl
+        fbUrl = model.fbUrl
+        instUrl = model.instUrl
+        ytUrl = model.ytUrl
+        
+        if siteUrl != nil {
+            animateSiteButton.isHidden = false
+        }
+        if vkUrl != nil {
+            animateVKButton.isHidden = false
+        }
+        if fbUrl != nil {
+            animateFBButton.isHidden = false
+        }
+        if instUrl != nil {
+            animateInstButton.isHidden = false
+        }
+        if ytUrl != nil {
+            animateYOUButton.isHidden = false
+        }
+        if phoneNumber != nil, phoneNumber != "" {
+            contactsDescriptionLabel.isUserInteractionEnabled = false
+        }
     }
 
     private func setupUI() {
         [animateSiteButton, animateVKButton, animateFBButton,
          animateInstButton, animateYOUButton, animateContactsPhone].forEach {
             $0.delegate = self
+            $0.isHidden = true
         }
                 
         contentView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
-        
         contentView.addSubviews(addresView, contactsView)
         addresView.addSubviews(addressImage, addressLabel, addressDescriptionLabel)
         contactsView.addSubviews(contactsImage, contactsLabel, contactsDescriptionLabel, animateContactsPhone, buttonsStackView)
@@ -382,22 +414,19 @@ extension FloatingViewThirdTableViewCell: CustomAnimatedButtonDelegate {
     func continueButton(model: ButtonCallBackModel) {
         switch model.id {
         case 0:
-            delegate?.openSite()
+            delegate?.openUrl(name: siteUrl ?? "")
             
         case 1:
-            delegate?.openVK()
+            delegate?.openUrl(name: vkUrl ?? "")
             
         case 2:
-            delegate?.openFaceBook()
+            delegate?.openUrl(name: fbUrl ?? "")
             
         case 3:
-            delegate?.openInstagram()
+            delegate?.openUrl(name: instUrl ?? "")
             
         case 4:
-            delegate?.openYoutube()
-            
-        case 5:
-            delegate?.makeCall()
+            delegate?.openUrl(name: ytUrl ?? "")
             
         default:
             break

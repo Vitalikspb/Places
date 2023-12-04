@@ -10,20 +10,16 @@ class FloatingViewSecondTableViewCell: UITableViewCell {
     
     // MARK: - UI properties
     
-    let collectionView = UICollectionView(frame: CGRect.zero,
-                                          collectionViewLayout: UICollectionViewLayout.init())
+    private let collectionView = UICollectionView(frame: CGRect.zero,
+                                                  collectionViewLayout: UICollectionViewLayout.init())
     
     // MARK: - Public properties
     
     static let identifier = "FloatingViewSecondTableViewCell"
-    var model: [UIImage] = [UIImage(named: "hermitage1")!,
-                            UIImage(named: "hermitage2")!,
-                            UIImage(named: "hermitage3")!,
-                            UIImage(named: "hermitage4")!,
-                            UIImage(named: "hermitage5")!,
-                            UIImage(named: "hermitage6")!,
-                            UIImage(named: "hermitage7")!,
-                            UIImage(named: "hermitage8")!]
+    
+    // MARK: - Private properties
+    
+    private var model: [String] = []
     
     // MARK: - Lifecycle
     
@@ -40,7 +36,6 @@ class FloatingViewSecondTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        
     }
     
     override func prepareForReuse() {
@@ -53,8 +48,8 @@ class FloatingViewSecondTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(title: String) {
-        
+    func configCell(model: [String]) {
+        self.model = model
     }
     
     private func setupUI() {
@@ -71,9 +66,6 @@ class FloatingViewSecondTableViewCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
         collectionView.setCollectionViewLayout(layout, animated: true)
-        
-        
-        
         contentView.addSubview(collectionView)
         collectionView.addConstraintsToFillView(view: contentView)
     }
@@ -92,8 +84,9 @@ extension FloatingViewSecondTableViewCell: UICollectionViewDelegate, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FloatingCollectionViewCell.identifier, for: indexPath) as? FloatingCollectionViewCell else { return UICollectionViewCell() }
-        cell.image.image = model[indexPath.row]
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FloatingCollectionViewCell.identifier, 
+                                                            for: indexPath) as? FloatingCollectionViewCell else { return UICollectionViewCell() }
+        cell.configureCell(imageName: model[indexPath.row])
         return cell
     }
     

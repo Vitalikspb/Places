@@ -15,7 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let connectivity = Connectivity.shared
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        // Загружаем данные с базы
+        NetworkHelper.shared.downloadAllRequest()
         GMSServices.provideAPIKey(Constants.apiKey)
         connectivity.startNetworkReachabilityObserver()
         configureFirebase()

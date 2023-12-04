@@ -9,10 +9,10 @@ import UIKit
 
 protocol ScrollViewOnMapDelegate: AnyObject {
     func showSearchView()
-    func chooseSightFilter(completion: @escaping() -> (Bool))
-    func chooseParkFilter()
-    func choosePoiFilter()
-    func chooseBeachFilter()
+    func chooseSight()
+    func chooseMuseum()
+    func chooseCultureObject()
+    func chooseGod()
 }
 
 // Скролл фильтрации на карте сверху
@@ -69,14 +69,18 @@ class ScrollViewOnMap: UIScrollView {
         
         let tapSearch = UITapGestureRecognizer(target: self, action: #selector(handleSearchFilter))
         searchFilter.addGestureRecognizer(tapSearch)
+        
         let tapSearchSight = UITapGestureRecognizer(target: self, action: #selector(handleSightFilter))
         sightFilter.addGestureRecognizer(tapSearchSight)
-        let tapSearchTransport = UITapGestureRecognizer(target: self, action: #selector(handleTransportFilter))
-        transportFilter.addGestureRecognizer(tapSearchTransport)
-        let tapSearchLeisure = UITapGestureRecognizer(target: self, action: #selector(handleLeisureFilter))
-        leisureFilter.addGestureRecognizer(tapSearchLeisure)
-        let tapSearchWorship = UITapGestureRecognizer(target: self, action: #selector(handleWorshipFilter))
-        worshipFilter.addGestureRecognizer(tapSearchWorship)
+        
+        let tapMuseum = UITapGestureRecognizer(target: self, action: #selector(handleMuseumFilter))
+        transportFilter.addGestureRecognizer(tapMuseum)
+        
+        let tapCultureObject = UITapGestureRecognizer(target: self, action: #selector(handleCultureObjectFilter))
+        leisureFilter.addGestureRecognizer(tapCultureObject)
+        
+        let tapGod = UITapGestureRecognizer(target: self, action: #selector(handleGodFilter))
+        worshipFilter.addGestureRecognizer(tapGod)
         
         addSubview(searchFilter)
         addSubview(sightFilter)
@@ -198,18 +202,18 @@ class ScrollViewOnMap: UIScrollView {
     }
     
     @objc func handleSightFilter() {
-        onMapdelegate?.chooseSightFilter(completion: { 
-            return self.isSelected ? false : true
-        })
+        onMapdelegate?.chooseSight()
+        
         setupAnimate(filterView: sightFilter)
     }
-    @objc func handleTransportFilter() {
+    @objc func handleMuseumFilter() {
+        onMapdelegate?.chooseMuseum()
         setupAnimate(filterView: transportFilter)
     }
-    @objc func handleLeisureFilter() {
+    @objc func handleCultureObjectFilter() {
         setupAnimate(filterView: leisureFilter)
     }
-    @objc func handleWorshipFilter() {
+    @objc func handleGodFilter() {
         setupAnimate(filterView: worshipFilter)
     }
     

@@ -11,10 +11,11 @@ import GoogleMaps
 protocol MapBussinessLogic: AnyObject {
     func showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request)
     func showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request)
-    func fetchAllTestMarkers(request: MapViewModel.FilterName)
+    func fetchAllTestMarkers(request: TypeSight)
     func fetchSelectedSightWithAllMarkers(withName name: String) -> GMSMarker?
     func appendAllMarkers()
     func updateFavorites(name: String)
+    func searchWithCaracter(character: String)
 }
 
 protocol MapDataStore: AnyObject {
@@ -29,42 +30,71 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
     
     
     func appendAllMarkers() {
-        // грузим все досторпримечательности
-        let worldModel = ModelForRequest(country: "Россия")
-        MapWorker.downloadAllSight(worldModel: worldModel)
-        fetchAllTestMarkers(request: .All)
+        presenter?.presentAllMarkers(response: returnAllTestMarkers())
     }
     
-    func fetchAllTestMarkers(request: MapViewModel.FilterName) {
-        switch request {
-        case .All:
-            presenter?.presentAllMarkers(response: returnAllTestMarkers())
-            
-        case .Museum: break
-        case .Park: break
-        case .POI: break
-        case .Beach:
-            presenter?.presentAllMarkers(response: returnAllTestFilterMarkers())
+    // Фильтрация по нажатию кнопок из верхних фильтров
+    func fetchAllTestMarkers(request: TypeSight) {
+            presenter?.presentAllMarkers(response: returnAllTestFilterMarkers(request: request))
+    }
+    
+    // Инициализация стандартного маркера
+    func setMarker(name: String, location: CLLocation, imageName: String) -> GMSMarker {
+        let australiaMarker = GMSMarker(
+            position: CLLocationCoordinate2D(latitude: location.coordinate.latitude,
+                                             longitude: location.coordinate.longitude))
+        australiaMarker.title = name
+        australiaMarker.appearAnimation = .pop
+        australiaMarker.isFlat = true
+        australiaMarker.isDraggable = true
+        australiaMarker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
+        australiaMarker.iconView = UIImageView(image: UIImage(named: imageName))
+        australiaMarker.iconView?.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        australiaMarker.iconView?.contentMode = .scaleAspectFill
+        australiaMarker.iconView?.layer.cornerRadius = 25
+        australiaMarker.iconView?.clipsToBounds = true
+        
+        let border = UIView()
+        border.backgroundColor = .clear
+        border.layer.borderColor = UIColor.white.cgColor
+        border.layer.borderWidth = 2
+        border.layer.cornerRadius = (australiaMarker.iconView?.frame.width)! / 2
+        border.frame = australiaMarker.iconView!.frame
+        border.center = australiaMarker.iconView!.center
+        australiaMarker.iconView?.addSubview(border)
+        
+        return australiaMarker
+    }
+    
+    // Фильтрация по тексту из поиска
+    func searchWithCaracter(character: String) {
+        var filteredMarkers: [GMSMarker] = []
+        let allSight = UserDefaults.standard.getSight()
+        for (_,val) in allSight.enumerated() where val.name.contains(character) {
+            let marker = setMarker(name: val.name,
+                      location: CLLocation(latitude: val.latitude,
+                                           longitude: val.longitude),
+                      imageName: val.big_image)
+            filteredMarkers.append(marker)
         }
+        presenter?.presentAllMarkers(response: filteredMarkers)
     }
     
-    private func returnAllTestFilterMarkers() -> [GMSMarker] {
-        var mapMarkersFilters = [GMSMarker]()
-        let sydneyMarker = GMSMarker(
-            position: CLLocationCoordinate2D(latitude: 59.9422, longitude: 30.3945))
-        sydneyMarker.title = "New Point!"
-        sydneyMarker.icon = UIImage(systemName: "sunrise")!
+    // Фильтрация по нажатию кнопок из верхних фильтров
+    private func returnAllTestFilterMarkers(request: TypeSight) -> [GMSMarker] {
+        let allSight = UserDefaults.standard.getSight()
+        let resultSight = allSight.filter( { $0.type.rawValue ==  request.rawValue} )
+        var mapMarkersAll = [GMSMarker]()
         
-        // Add a custom 'arrow' marker pointing to Melbourne.
-        let melbourneMarker = GMSMarker(
-            position: CLLocationCoordinate2D(latitude: 59.88422, longitude: 30.2545))
-        melbourneMarker.title = "Another Point!"
-        melbourneMarker.icon = UIImage(systemName: "sunrise")!
+        for (_, val) in resultSight.enumerated() {
+            let marker = setMarker(name: val.name,
+                      location: CLLocation(latitude: val.latitude,
+                                           longitude: val.longitude),
+                      imageName: val.big_image)
+            mapMarkersAll.append(marker)
+        }
         
-        mapMarkersFilters.append(sydneyMarker)
-        mapMarkersFilters.append(melbourneMarker)
-        
-        return mapMarkersFilters
+        return mapMarkersAll
     }
     
     // Делаем выбранный маркер с градиентом
@@ -131,32 +161,13 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
         var mapMarkersAll = [GMSMarker]()
         let allSights = UserDefaults.standard.getSight()
         for (_, val) in allSights.enumerated() {
-            let australiaMarker = GMSMarker(
-                position: CLLocationCoordinate2D(latitude: val.latitude,
-                                                 longitude: val.longitude))
-            australiaMarker.title = val.name
-            australiaMarker.appearAnimation = .pop
-            australiaMarker.isFlat = true
-            australiaMarker.isDraggable = true
-            australiaMarker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
-            australiaMarker.iconView = UIImageView(image: UIImage(named: val.big_image))
-            australiaMarker.iconView?.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-            australiaMarker.iconView?.contentMode = .scaleAspectFill
-            australiaMarker.iconView?.layer.cornerRadius = 25
-            australiaMarker.iconView?.clipsToBounds = true
+            let marker = setMarker(name: val.name,
+                      location: CLLocation(latitude: val.latitude,
+                                           longitude: val.longitude),
+                      imageName: val.big_image)
             
-            let border = UIView()
-            border.backgroundColor = .clear
-            border.layer.borderColor = UIColor.white.cgColor
-            border.layer.borderWidth = 2
-            border.layer.cornerRadius = (australiaMarker.iconView?.frame.width)! / 2
-            border.frame = australiaMarker.iconView!.frame
-            border.center = australiaMarker.iconView!.center
-            australiaMarker.iconView?.addSubview(border)
-            
-            mapMarkersAll.append(australiaMarker)
+            mapMarkersAll.append(marker)
         }
-        print("mapMarkersAll:\(mapMarkersAll)")
         mapMarkers = mapMarkersAll
         return mapMarkersAll
     }
@@ -177,9 +188,8 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
             //            когда нашли нужное место с его данными - передаем в перентер
             //            изменить модель response для дальнейшего отображения
             //            для теста пока нету кор даты пока что только название
-            print("request.marker:\(request.marker) == val.name:\(val.name)")
-            
-            presenter?.presentChoosenDestinationView(response: returnAllTextSelectedMarkers(selectedMarkerName: val.name))
+            presenter?.presentChoosenDestinationView(response: returnAllTextSelectedMarkers(selectedMarkerName: val.name), 
+                                                     selectedSight: val)
         }
     }
     
@@ -190,8 +200,6 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
             //            когда нашли нужное место с его данными - передаем в перентер
             //            изменить модель response для дальнейшего отображения
             //            для теста пока нету кор даты пока что только название
-            
-            print("request.marker:\(request.marker) == val.name:\(val.name)")
             presenter?.presentSelectedDestinationView(response: mapMarkers)
         }
     }

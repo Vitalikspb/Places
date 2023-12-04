@@ -9,7 +9,7 @@ import UIKit
 
 protocol TopSearchViewDelegate: AnyObject {
     func clearTextField()
-//    var textOfSearchTextField: String { set }
+    func findSight(withCharacter: String)
 }
 
 class TopSearchView: UIView {
@@ -83,4 +83,9 @@ extension TopSearchView: UITextFieldDelegate {
         topSearchDelegate?.clearTextField()
         return true
     }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        topSearchDelegate?.findSight(withCharacter: textField.text ?? "")
+    }
+    
 }

@@ -10,9 +10,9 @@ import UIKit
 protocol ActionButtonsScrollViewDelegate: AnyObject {
     func routeButtonTapped()
     func addToFavouritesButtonTapped(name: String)
-    func callButtonTapped()
+    func callButtonTapped(withNumber: String)
     func shareButtonTapped()
-    func siteButtonTapped()
+    func siteButtonTapped(urlString: String)
 }
 
 class ActionButtonsScrollView: UIScrollView {
@@ -77,8 +77,8 @@ class ActionButtonsScrollView: UIScrollView {
     
     // MARK: - Helper Functions
     
-    func setupFavoriteName(name: String) {
-        animateAddToFavouritesButton.setupFavoriteName(favoriteName: name)
+    func setupFavoriteName(name: String, phone: String, url: String) {
+        animateAddToFavouritesButton.setupFavoriteName(favoriteName: name, phone: phone, url: url)
     }
     
     private func setupUI() {
@@ -184,13 +184,13 @@ extension ActionButtonsScrollView: CustomAnimatedButtonDelegate {
             actionButtonDelegate?.addToFavouritesButtonTapped(name: model.name ?? "")
             
         case 2:
-            actionButtonDelegate?.callButtonTapped()
+            actionButtonDelegate?.callButtonTapped(withNumber: model.phone ?? "")
             
         case 3:
             actionButtonDelegate?.shareButtonTapped()
             
         case 4:
-            actionButtonDelegate?.siteButtonTapped()
+            actionButtonDelegate?.siteButtonTapped(urlString: model.url ?? "")
             
         default:
             break

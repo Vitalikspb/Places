@@ -13,15 +13,6 @@ import GoogleMaps
 
 enum MapViewModel {
     
-    // фильтры маркеров на карте
-    enum FilterName {
-        case All
-        case Museum
-        case Park
-        case POI
-        case Beach
-    }
-    
     enum ChoosenDestinationView {
 
         // передаем в интерактор название маркера для последующей обработки

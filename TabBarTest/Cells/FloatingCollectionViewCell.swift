@@ -15,7 +15,14 @@ class FloatingCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Private properties
     
-    let image = UIImageView()
+    private let sightImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .clear
+        return imageView
+    }()
     
     // MARK: - LifeCycle
     
@@ -28,18 +35,23 @@ class FloatingCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        sightImageView.image = nil
+    }
+    
+    // MARK: - Helper functions
+    
+    func configureCell(imageName: String) {
+        let name = imageName.components(separatedBy: ".").first ?? ""
+        sightImageView.image = UIImage(named: name)
+    }
+    
     private func setupUI() {
         self.backgroundColor = .clear
         contentView.backgroundColor = .clear
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 12
-        image.layer.masksToBounds = true
-        image.backgroundColor = .clear
-        image.image = UIImage(named: "hub3")
-        
-        contentView.addSubview(image)
-        
-        image.addConstraintsToFillView(view: contentView)
+        contentView.addSubview(sightImageView)
+        sightImageView.addConstraintsToFillView(view: contentView)
     }
     
 }

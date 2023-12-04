@@ -10,6 +10,8 @@ import UIKit
 struct ButtonCallBackModel {
     var id: Int?
     var name: String?
+    var phone: String?
+    var url: String?
 }
 
 protocol CustomAnimatedButtonDelegate: AnyObject {
@@ -35,10 +37,12 @@ final class CustomAnimatedButton: UIButton {
     private var nameButton: String = ""
     // название для избранного
     private var favoriteName: String = ""
-    
-    
     // границы кнопки для отслеживания touchesEnd
     private var buttonBounds: CGRect!
+    // номер телефона
+    private var phone: String?
+    // ссылка для использования
+    private var url: String?
     
     // MARK: - Life cycle
     
@@ -61,8 +65,10 @@ final class CustomAnimatedButton: UIButton {
         nameButton = name
     }
     
-    func setupFavoriteName(favoriteName: String) {
+    func setupFavoriteName(favoriteName: String, phone: String, url: String) {
         self.favoriteName = favoriteName
+        self.phone = phone
+        self.url = url
     }
     
     // Анимация завершения аминирования кнопки
@@ -80,8 +86,9 @@ final class CustomAnimatedButton: UIButton {
             if success {
                 if self.buttonBounds.contains((touches.first?.location(in: self))!) {
                     let sendModel = ButtonCallBackModel(id: self.idButton,
-                                                        name: favoriteName)
-                    print("sendModel:\(sendModel)")
+                                                        name: favoriteName,
+                                                        phone: phone ?? "",
+                                                        url: url ?? "")
                     self.delegate?.continueButton(model: sendModel)
                 }
             }

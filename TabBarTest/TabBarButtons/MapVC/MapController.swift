@@ -11,7 +11,7 @@ import CoreLocation
 
 protocol MapDisplayLogic: AnyObject {
     // выбран маркер и показывается floating view
-    func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel)
+    func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel, selectedSight: Sight)
     // выбран маркер и только выделен
     func displaySelectedDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel)
     // показываем все маркеры
@@ -32,7 +32,7 @@ class MapController: UIViewController {
     
     var interactor: MapBussinessLogic?
     var router: (NSObjectProtocol & MapRoutingLogic)?
-    var citiesAvailable = ["Москва","Санкт-Петербург","Сочи","Краснодар","Гатчина","Cupertino"]
+    var citiesAvailable = ["Москва", "Санкт-Петербург", "Екатеринбург", "Казань"]
     
     // MARK: - Private Properties
     
@@ -312,7 +312,7 @@ class MapController: UIViewController {
     
     // Начальная функция показа всех тестовых/реальных маркеров в зависимости от оплаты страны
     private func addDefaultMarkers() {
-        interactor?.fetchAllTestMarkers(request: .All)
+        interactor?.appendAllMarkers()
     }
     
     // Сокрытие поисковой строки и отображение строки с фильтрами
@@ -391,9 +391,12 @@ class MapController: UIViewController {
     
     private func showMarkerSightWithAnimating(marker: GMSMarker, showFloatingViewMark: Bool) {
         // делаем запрос на данные для floatinView
-        print("showMarkerSight marker.title:\(marker.title)")
         if let nameLocation = marker.title {
-            buttonsView.setupFavoriteName(name: nameLocation)
+            let sights = UserDefaults.standard.getSight()
+            let currentSight = sights.first(where: { $0.name == nameLocation })
+            buttonsView.setupFavoriteName(name: nameLocation,
+                                          phone: currentSight?.main_phone ?? "",
+                                          url: currentSight?.site ?? "")
             interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
             animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
                                  longitude: marker.position.longitude,
@@ -405,10 +408,13 @@ class MapController: UIViewController {
     // Работа маркеров, анимации когда тыкнули нижниюю коллекцию
     private func showSelectMarkerSightWithAnimating(animateMarkers: Bool = true, marker: GMSMarker, showFloatingViewMark: Bool) {
         // делаем запрос на данные для floatinView
-        print("showSelectMarker marker.title:\(marker.title)")
         if let nameLocation = marker.title {
+            let sights = UserDefaults.standard.getSight()
+            let currentSight = sights.first(where: { $0.name == nameLocation })
             if animateMarkers {
-                buttonsView.setupFavoriteName(name: nameLocation)
+                buttonsView.setupFavoriteName(name: nameLocation,
+                                              phone: currentSight?.main_phone ?? "",
+                                              url: currentSight?.site ?? "")
                 interactor?.showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
             }
             animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
@@ -461,8 +467,6 @@ extension MapController: GMSMapViewDelegate {
             hideTopSearchView()
             floatingView.hideFloatingView()
             showScrollAndWeatherView()
-            
-            print("selectMark:\(selectMark) || selectMarkFromBottomView:\(selectMarkFromBottomView)")
             if selectMark || selectMarkFromBottomView {
                 addDefaultMarkers()
                 selectMark = false
@@ -486,36 +490,26 @@ extension MapController: GMSMapViewDelegate {
 // MARK: - ScrollViewOnMapDelegate
 extension MapController: ScrollViewOnMapDelegate {
     
-    // Фильтрация маркеров по музею
-    func chooseSightFilter(completion: @escaping () -> (Bool)) {
-        var request: MapViewModel.FilterName
-        if completion() {
-            request = MapViewModel.FilterName.Museum
-            selectedFilter = true
-            hideWeatherView()
-        } else {
-            request = MapViewModel.FilterName.All
-            selectedFilter = false
-            showWeatherView()
-        }
-//        interactor?.fetchAllTestMarkers(request: request)
+    // Фильтрация маркеров по достопримечательности
+    func chooseSight() {
+        interactor?.fetchAllTestMarkers(request: .sightSeen)
     }
     
-    // Фильтрация маркеров по парку
-    func chooseParkFilter() {
-//        interactor?.fetchAllTestMarkers(request: request)
+    // Фильтрация маркеров по музеям
+    func chooseMuseum() {
+        interactor?.fetchAllTestMarkers(request: .museum)
     }
     
-    // Фильтрация маркеров по достопримечательностям
-    func choosePoiFilter() {
-//        interactor?.fetchAllTestMarkers(request: request)
+    // Фильтрация маркеров по культурным объектам
+    func chooseCultureObject() {
+        interactor?.fetchAllTestMarkers(request: .cultureObject)
     }
     
-    // Фильтрация маркеров по пляжам
-    func chooseBeachFilter() {
-//        interactor?.fetchAllTestMarkers(request: request)
+    // Фильтрация маркеров по Богослужению
+    func chooseGod() {
+        interactor?.fetchAllTestMarkers(request: .god)
     }
-    
+
     // Отображение поисковой строки и сокрытие строки с фильтрами
     func showSearchView() {
         UIView.animate(withDuration: 0.25) { [weak self] in
@@ -534,6 +528,12 @@ extension MapController: ScrollViewOnMapDelegate {
 
 // MARK: - TopSearchViewDelegate
 extension MapController: TopSearchViewDelegate {
+    
+    // Фильтрация по вводу текста в поиске в самом верху
+    func findSight(withCharacter: String) {
+        interactor?.searchWithCaracter(character: withCharacter)
+    }
+    
     // Скрываем поисковую строку и клавиатуру при нажатии на крестик в textField
     func clearTextField() {
         hideTopSearchView()
@@ -593,63 +593,61 @@ extension MapController: CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        if CLLocationManager.locationServicesEnabled() {
-            if #available(iOS 14.0, *) {
-                switch(locationManager.authorizationStatus) {
-                case .notDetermined, .restricted, .denied:
-                    showAlert(Constants.Errors.allowLocationPermision)
-                    hideWeatherView()
-                case .authorizedAlways, .authorizedWhenInUse:
-                    break
-                @unknown default:
-                    break
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                if #available(iOS 14.0, *) {
+                    switch(self.locationManager.authorizationStatus) {
+                    case .notDetermined, .restricted, .denied:
+                        self.showAlert(Constants.Errors.allowLocationPermision)
+                        self.hideWeatherView()
+                    case .authorizedAlways, .authorizedWhenInUse:
+                        break
+                    @unknown default:
+                        break
+                    }
+                } else {
+                    switch(CLLocationManager.authorizationStatus()) {
+                    case .notDetermined, .restricted, .denied:
+                        self.showAlert(Constants.Errors.allowLocationPermision)
+                        self.hideWeatherView()
+                    case .authorizedAlways, .authorizedWhenInUse:
+                        break
+                    @unknown default:
+                        break
+                    }
                 }
             } else {
-                switch(CLLocationManager.authorizationStatus()) {
-                case .notDetermined, .restricted, .denied:
-                    showAlert(Constants.Errors.allowLocationPermision)
-                    hideWeatherView()
-                case .authorizedAlways, .authorizedWhenInUse:
-                    break
-                @unknown default:
-                    break
-                }
+                self.showAlert(Constants.Errors.allowLocationOnDevice)
+                self.hideWeatherView()
             }
-        } else {
-            showAlert(Constants.Errors.allowLocationOnDevice)
-            hideWeatherView()
+            manager.stopUpdatingLocation()
         }
-        manager.stopUpdatingLocation()
     }
 }
 
 // MARK: - FloatingViewDelegate
 extension MapController: FloatingViewDelegate {
     
-    func makeCall() {
-        print(#function)
+    // Делаем вызов номера телефона достопримечательности из всплывающей подробностей
+    func makeCall(withNumber: String) {
+        var uc = URLComponents()
+        uc.scheme = "tel"
+        uc.path = withNumber
+        if let phoneURL = uc.url {
+            let application = UIApplication.shared
+            if application.canOpenURL(phoneURL) {
+                application.open(phoneURL, options: [:], completionHandler: nil)
+            } else {
+                debugPrint("[DEBUGSSS]: \(#function) Ошибка: не возможно сделать вызов на устройстве")
+            }
+        }
     }
     
-    func openSite() {
-        print(#function)
+    // Открываем сайт/соц сеть или др достопримечательности из всплывающей подробностей
+    func openUrl(name: String) {
+        guard let openUrl = URL(string: name) else { return }
+        UIApplication.shared.open(openUrl)
     }
-    
-    func openVK() {
-        print(#function)
-    }
-    
-    func openFaceBook() {
-        print(#function)
-    }
-    
-    func openInstagram() {
-        print(#function)
-    }
-    
-    func openYoutube() {
-        print(#function)
-    }
-    
     
     func floatingPanelFullScreen() {
         bottomCollectionViewhide()
@@ -699,26 +697,53 @@ extension MapController: FloatingViewDelegate {
 // MARK: - ActionButtonsScrollViewDelegate
 
 extension MapController: ActionButtonsScrollViewDelegate {
-    func siteButtonTapped() {
-        print("Открытие сайта если он есть")
+    
+    // Вызов номера из меню в низу во всплывающей вьюхе
+    func callButtonTapped(withNumber: String) {
+        makeCall(withNumber: withNumber)
     }
     
+    // Открыть Url сайт/соц сеть или др из меню в низу во всплывающей вьюхе
+    func siteButtonTapped(urlString: String) {
+        openUrl(name: urlString)
+    }
+    
+    // из меню в низу во всплывающей вьюхе
     func routeButtonTapped() {
         print("Постоение маршрута")
     }
     
+    // Добавление или удаление избранного из меню в низу во всплывающей вьюхе
     func addToFavouritesButtonTapped(name: String) {
-        print("Добавление в избранное: \(name)")
-
         interactor?.updateFavorites(name: name)
     }
     
-    func callButtonTapped() {
-        print("Позвонить")
-    }
-    
+    // из меню в низу во всплывающей вьюхе
     func shareButtonTapped() {
-        print("Поделиться - ActionView")
+        let firstActivityItem = "Пригласить друзей"
+        let secondActivityItem = Constants.shareLink
+        let image: UIImage = UIImage(named: "AppIcon") ?? UIImage()
+        let activityViewController: UIActivityViewController = UIActivityViewController(
+            activityItems: [firstActivityItem, secondActivityItem, image], applicationActivities: nil)
+        activityViewController.activityItemsConfiguration = [UIActivity.ActivityType.message] as? UIActivityItemsConfigurationReading
+        
+        // Убираем не нужные кнопки
+        activityViewController.excludedActivityTypes = [
+            UIActivity.ActivityType.postToWeibo,
+            UIActivity.ActivityType.print,
+            UIActivity.ActivityType.addToReadingList,
+            UIActivity.ActivityType.postToFlickr,
+            UIActivity.ActivityType.postToVimeo,
+            UIActivity.ActivityType.postToTencentWeibo,
+            UIActivity.ActivityType.postToFacebook
+        ]
+        activityViewController.completionWithItemsHandler = { activity, success, items, error in
+            if success {
+                self.dismiss(animated: true)
+            }
+        }
+        activityViewController.isModalInPresentation = true
+        self.present(activityViewController, animated: true, completion: nil)
     }
 }
 
@@ -728,7 +753,7 @@ extension MapController: MapDisplayLogic {
     
     // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String) {
-        print(#function)
+        print("displayFetchedMarkersFromSearchView:\(withString)")
     }
     
     // Отображаем маркеры при нажатии на фильтры в ScrollView
@@ -746,13 +771,13 @@ extension MapController: MapDisplayLogic {
         }
     }
     
-    func displayAllReleaseMarkers(filler: MapViewModel.FilterName) {
-        print(#function)
+    func displayAllReleaseMarkers(filler: TypeSight) {
+        print("displayAllReleaseMarkers:\(filler)")
     }
     
     // при нажатии на маркер на экране
     // заполнение floating view данными из текущей модели viewModel
-    func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel) {
+    func displayChoosenDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel, selectedSight: Sight) {
         // всю эту логику перенести в метод от презентера - показ FloatingView конкретной меткой и данными по ней.
         
         mapView.clear()
@@ -765,6 +790,7 @@ extension MapController: MapDisplayLogic {
                 self.tabBarController?.tabBar.alpha = 0
                 self.mapView.settings.myLocationButton = false
             } completion: { _ in
+                self.floatingView.configureCell(model: selectedSight)
                 self.floatingView.showFloatingView()
             }
             UIView.animate(withDuration: 0.5) {
@@ -775,6 +801,7 @@ extension MapController: MapDisplayLogic {
             }
         }
     }
+    
     // при нажатии на ячейку на collection bottom view на экране
     func displaySelectedDestination(viewModel: MapViewModel.ChoosenDestinationView.ViewModel) {
         mapView.clear()
