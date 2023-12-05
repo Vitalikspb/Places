@@ -133,6 +133,8 @@ enum Constants {
         static let worship = "Богослужение"
         /// "Маршрут"
         static let travelGuide = "Маршрут"
+        /// "Избранное"
+        static let features = "Избранное"
         /// "В избранное"
         static let toFeatures = "В избранное"
         /// "Позвонить"

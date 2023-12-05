@@ -9,10 +9,8 @@ import UIKit
 
 protocol ScrollViewOnMapDelegate: AnyObject {
     func showSearchView()
-    func chooseSight()
-    func chooseMuseum()
-    func chooseCultureObject()
-    func chooseGod()
+    func chooseFavorites(selected: Bool)
+    func chooseSightSelected(selected: Bool, request: TypeSight)
 }
 
 // Скролл фильтрации на карте сверху
@@ -22,19 +20,28 @@ class ScrollViewOnMap: UIScrollView {
     // MARK: - UI properties
     
     // поиск
-    private let searchFilter = FilterView(withName: Constants.Views.search, andImage: UIImage(named: "search")!)
+    private let searchFilter = FilterView(withName: Constants.Views.search, 
+                                          andImage: UIImage(named: "search")!)
+    
+    // избранное
+    private let favoriteFilter = FilterView(withName: Constants.Views.features,
+                                             andImage: UIImage(systemName: "heart.fill")!)
     
     // Достопримечательность (замок, заповедник, водопад, пещеры, Смотровая площадка, Транспорт, Парки, скверы, Рынок, еда
-    private let sightFilter = FilterView(withName: Constants.Views.sights, andImage: UIImage(named: "museum")!)
+    private let sightFilter = FilterView(withName: Constants.Views.sights, 
+                                         andImage: UIImage(named: "museum")!)
     
     // Музей (выставка, зоопарк)
-    private let transportFilter = FilterView(withName: Constants.Views.museum, andImage: UIImage(named: "transport")!)
+    private let transportFilter = FilterView(withName: Constants.Views.museum, 
+                                             andImage: UIImage(named: "transport")!)
     
     // Культурный объект (Статуя, памятник (дом писателя, мост, оперы, )
-    private let leisureFilter = FilterView(withName: Constants.Views.cultureObject, andImage: UIImage(named: "sight")!)
+    private let leisureFilter = FilterView(withName: Constants.Views.cultureObject, 
+                                           andImage: UIImage(named: "sight")!)
     
     // Богослужение (церкви, храмы, мечети и тд)
-    private let worshipFilter = FilterView(withName: Constants.Views.worship, andImage: UIImage(named: "temple")!)
+    private let worshipFilter = FilterView(withName: Constants.Views.worship, 
+                                           andImage: UIImage(named: "temple")!)
     
     // MARK: - Public properties
     
@@ -63,12 +70,15 @@ class ScrollViewOnMap: UIScrollView {
         self.isDirectionalLockEnabled = true
         self.showsHorizontalScrollIndicator = false
         
-        [searchFilter, sightFilter, transportFilter, leisureFilter, worshipFilter].forEach {
+        [searchFilter, favoriteFilter, sightFilter, transportFilter, leisureFilter, worshipFilter].forEach {
             $0.backgroundColor = .setCustomColor(color: .filterViewMainSearch)
         }
         
         let tapSearch = UITapGestureRecognizer(target: self, action: #selector(handleSearchFilter))
         searchFilter.addGestureRecognizer(tapSearch)
+        
+        let tapFavorites = UITapGestureRecognizer(target: self, action: #selector(handleFavoritesFilter))
+        favoriteFilter.addGestureRecognizer(tapFavorites)
         
         let tapSearchSight = UITapGestureRecognizer(target: self, action: #selector(handleSightFilter))
         sightFilter.addGestureRecognizer(tapSearchSight)
@@ -83,6 +93,7 @@ class ScrollViewOnMap: UIScrollView {
         worshipFilter.addGestureRecognizer(tapGod)
         
         addSubview(searchFilter)
+        addSubview(favoriteFilter)
         addSubview(sightFilter)
         addSubview(transportFilter)
         addSubview(leisureFilter)
@@ -93,6 +104,7 @@ class ScrollViewOnMap: UIScrollView {
     
     func updateFullWidth() {
         let searchWidth = searchFilter.frame.width
+        let favoritesWidth = favoriteFilter.frame.width
         let sightWidth = sightFilter.frame.width
         let transportWidth = transportFilter.frame.width
         let leisureWidth = leisureFilter.frame.width
@@ -104,19 +116,25 @@ class ScrollViewOnMap: UIScrollView {
                                  height: 40)
         searchFilter.frame = frameSearch
         
-        let frameSight = CGRect(x: searchWidth + 28,
+        let frameFavorites = CGRect(x: searchWidth + 28,
+                                 y: 2,
+                                 width: favoritesWidth,
+                                 height: 40)
+        favoriteFilter.frame = frameFavorites
+        
+        let frameSight = CGRect(x: frameFavorites + searchWidth + 28,
                                 y: 2,
                                 width: sightWidth,
                                 height: 40)
         sightFilter.frame = frameSight
         
-        let frameTransport = CGRect(x: searchWidth + sightWidth + 40,
+        let frameTransport = CGRect(x: frameFavorites + searchWidth + sightWidth + 40,
                                     y: 2,
                                     width: transportWidth,
                                     height: 40)
         transportFilter.frame = frameTransport
         
-        let frameLeisure = CGRect(x: searchWidth + sightWidth + transportWidth + 52,
+        let frameLeisure = CGRect(x: frameFavorites + searchWidth + sightWidth + transportWidth + 52,
                                   y: 2,
                                   width: leisureWidth,
                                   height: 40)
@@ -125,19 +143,17 @@ class ScrollViewOnMap: UIScrollView {
        
        
         
-        let frameWorship = CGRect(x: searchWidth + sightWidth + transportWidth + leisureWidth + 64,
+        let frameWorship = CGRect(x: frameFavorites + searchWidth + sightWidth + transportWidth + leisureWidth + 64,
                                   y: 2,
                                   width: worshipWidth,
                                   height: 40)
         worshipFilter.frame = frameWorship
 
-        self.contentSize = CGSize(width: searchWidth + sightWidth + transportWidth + leisureWidth + worshipWidth + 76,
+        self.contentSize = CGSize(width: frameFavorites + searchWidth + sightWidth + transportWidth + leisureWidth + worshipWidth + 76,
                                   height: 40)
     }
     
-    @objc func handleSearchFilter() {
-        onMapdelegate?.showSearchView()
-    }
+    
     
     // показать все фильтры
     private func showAllFilters() {
@@ -148,7 +164,7 @@ class ScrollViewOnMap: UIScrollView {
         // анимация появления
         UIView.animate(withDuration: 0.55) { [weak self] in
             guard let self = self else { return }
-            [self.searchFilter, self.sightFilter, self.transportFilter,
+            [self.searchFilter, self.favoriteFilter, self.sightFilter, self.transportFilter,
              self.leisureFilter, self.worshipFilter].forEach {
                 $0.alpha = 1
             }
@@ -179,7 +195,8 @@ class ScrollViewOnMap: UIScrollView {
     }
     
     func setupAnimate(filterView: FilterView) {
-        [searchFilter, sightFilter, transportFilter, leisureFilter, worshipFilter].forEach { currentView in
+        [searchFilter, favoriteFilter, sightFilter, transportFilter,
+         leisureFilter, worshipFilter].forEach { currentView in
             
             if currentView === filterView {
                 filterView.backgroundColor = .setCustomColor(color: .filterViewMainSearch)
@@ -201,19 +218,38 @@ class ScrollViewOnMap: UIScrollView {
         }
     }
     
+    // Поиск
+    @objc func handleSearchFilter() {
+        onMapdelegate?.showSearchView()
+    }
+    
+    // Избранное
+    @objc func handleFavoritesFilter() {
+        onMapdelegate?.chooseFavorites(selected: isSelected)
+        setupAnimate(filterView: favoriteFilter)
+    }
+    
+    // Достопримечательность
     @objc func handleSightFilter() {
-        onMapdelegate?.chooseSight()
-        
+        onMapdelegate?.chooseSightSelected(selected: isSelected, request: .sightSeen)
         setupAnimate(filterView: sightFilter)
     }
+    
+    // Музей
     @objc func handleMuseumFilter() {
-        onMapdelegate?.chooseMuseum()
+        onMapdelegate?.chooseSightSelected(selected: isSelected, request: .museum)
         setupAnimate(filterView: transportFilter)
     }
+    
+    // Культурный объект
     @objc func handleCultureObjectFilter() {
+        onMapdelegate?.chooseSightSelected(selected: isSelected, request: .cultureObject)
         setupAnimate(filterView: leisureFilter)
     }
+    
+    // Богослужение
     @objc func handleGodFilter() {
+        onMapdelegate?.chooseSightSelected(selected: isSelected, request: .god)
         setupAnimate(filterView: worshipFilter)
     }
     

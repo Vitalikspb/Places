@@ -16,6 +16,7 @@ protocol MapBussinessLogic: AnyObject {
     func appendAllMarkers()
     func updateFavorites(name: String)
     func searchWithCaracter(character: String)
+    func fetchAllFavorites(selected: Bool)
 }
 
 protocol MapDataStore: AnyObject {
@@ -29,13 +30,33 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
     var mapMarkers = [GMSMarker]()
     
     
+    // Показать все начальные маркеры
     func appendAllMarkers() {
         presenter?.presentAllMarkers(response: returnAllTestMarkers())
     }
     
+    // Фильтрация по избранным достопримечательностям
+    func fetchAllFavorites(selected: Bool) {
+        if selected {
+            appendAllMarkers()
+        } else {
+            var filteredMarkers: [GMSMarker] = []
+            let favorites = UserDefaults.standard.getFavorites()
+            for (_,val) in favorites.enumerated() {
+                let marker = setMarker(name: val.name,
+                                       location: CLLocation(latitude: val.latitude,
+                                                            longitude: val.longitude),
+                                       imageName: val.big_image)
+                filteredMarkers.append(marker)
+            }
+            presenter?.presentAllMarkers(response: filteredMarkers)
+        }
+    }
+    
     // Фильтрация по нажатию кнопок из верхних фильтров
     func fetchAllTestMarkers(request: TypeSight) {
-            presenter?.presentAllMarkers(response: returnAllTestFilterMarkers(request: request))
+        let model = returnAllTestFilterMarkers(request: request)
+        presenter?.presentAllMarkers(response: model)
     }
     
     // Инициализация стандартного маркера
@@ -68,16 +89,20 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
     
     // Фильтрация по тексту из поиска
     func searchWithCaracter(character: String) {
-        var filteredMarkers: [GMSMarker] = []
-        let allSight = UserDefaults.standard.getSight()
-        for (_,val) in allSight.enumerated() where val.name.contains(character) {
-            let marker = setMarker(name: val.name,
-                      location: CLLocation(latitude: val.latitude,
-                                           longitude: val.longitude),
-                      imageName: val.big_image)
-            filteredMarkers.append(marker)
+        if character == "" {
+            appendAllMarkers()
+        } else {
+            var filteredMarkers: [GMSMarker] = []
+            let allSight = UserDefaults.standard.getSight()
+            for (_,val) in allSight.enumerated() where val.name.contains(character) {
+                let marker = setMarker(name: val.name,
+                                       location: CLLocation(latitude: val.latitude,
+                                                            longitude: val.longitude),
+                                       imageName: val.big_image)
+                filteredMarkers.append(marker)
+            }
+            presenter?.presentAllMarkers(response: filteredMarkers)
         }
-        presenter?.presentAllMarkers(response: filteredMarkers)
     }
     
     // Фильтрация по нажатию кнопок из верхних фильтров

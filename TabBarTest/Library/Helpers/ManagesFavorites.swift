@@ -8,6 +8,7 @@
 import Foundation
 
 class ManagesFavorites {
+    
     static func updateFavorites(sights: inout [Sight], withName name: String) {
         var newFavorites = true
         var curIndexOfFavorite = -1

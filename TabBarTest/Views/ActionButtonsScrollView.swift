@@ -11,7 +11,6 @@ protocol ActionButtonsScrollViewDelegate: AnyObject {
     func routeButtonTapped()
     func addToFavouritesButtonTapped(name: String)
     func callButtonTapped(withNumber: String)
-    func shareButtonTapped()
     func siteButtonTapped(urlString: String)
 }
 
@@ -49,17 +48,10 @@ class ActionButtonsScrollView: UIScrollView {
         return button
     }()
     
-    let shareButton = FilterView(withName: Constants.Views.share)
-    private let animateShareButton: CustomAnimatedButton = {
-       let button = CustomAnimatedButton()
-        button.setupId(id: 3)
-        return button
-    }()
-    
     let siteButton = FilterView(withName: Constants.Views.toSite)
     private let animateSiteButton: CustomAnimatedButton = {
        let button = CustomAnimatedButton()
-        button.setupId(id: 4)
+        button.setupId(id: 3)
         return button
     }()
     
@@ -83,7 +75,7 @@ class ActionButtonsScrollView: UIScrollView {
     
     private func setupUI() {
         [animateRouteButton, animateAddToFavouritesButton,
-         animateCallButton, animateShareButton, animateSiteButton].forEach {
+         animateCallButton, animateSiteButton].forEach {
             $0.delegate = self
         }
         
@@ -92,8 +84,7 @@ class ActionButtonsScrollView: UIScrollView {
         self.isDirectionalLockEnabled = true
         self.showsHorizontalScrollIndicator = false
         
-        [routeButton, addToFavouritesButton, callButton,
-         shareButton, siteButton].forEach {
+        [routeButton, addToFavouritesButton, callButton, siteButton].forEach {
             $0.layer.cornerRadius = 12
             $0.backgroundColor = .setCustomColor(color: .filterView)
         }
@@ -109,10 +100,6 @@ class ActionButtonsScrollView: UIScrollView {
         callButton.addConstraintsToFillView(view: animateCallButton)
         addSubview(animateCallButton)
         
-        animateShareButton.addSubviews(shareButton)
-        shareButton.addConstraintsToFillView(view: animateShareButton)
-        addSubview(animateShareButton)
-        
         animateSiteButton.addSubviews(siteButton)
         siteButton.addConstraintsToFillView(view: animateSiteButton)
         addSubview(animateSiteButton)
@@ -124,7 +111,6 @@ class ActionButtonsScrollView: UIScrollView {
         let routeButtonWidth = routeButton.frame.width
         let addToFavouritesButtonWidth = addToFavouritesButton.frame.width
         let callButtonWidth = callButton.frame.width
-        let shareButtonWidth = shareButton.frame.width
         let siteButtonWidth = siteButton.frame.width
         
         let frameRoute = CGRect(x: 16,
@@ -148,27 +134,18 @@ class ActionButtonsScrollView: UIScrollView {
         callButton.frame = frameCall
         animateCallButton.frame = frameCall
         
-        let frameShare = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + 52,
-                                y: 10,
-                                width: shareButtonWidth,
-                                height: 36)
-        shareButton.frame = frameShare
-        animateShareButton.frame = frameShare
-        
-        let frameSite = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + shareButtonWidth + 64,
+        let frameSite = CGRect(x: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + 52,
                                y: 10,
                                width: siteButtonWidth,
                                height: 36)
         siteButton.frame = frameSite
         animateSiteButton.frame = frameSite
         
-        self.contentSize = CGSize(width: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth + shareButtonWidth + siteButtonWidth + 76,
+        let allWidth = routeButtonWidth + addToFavouritesButtonWidth + 
+        callButtonWidth + siteButtonWidth + 64
+        self.contentSize = CGSize(width: allWidth,
                                   height: self.frame.height)
     }
-    
-    
-    
-    
 }
 
 // MARK: - CustomAnimatedButtonDelegate
@@ -187,9 +164,6 @@ extension ActionButtonsScrollView: CustomAnimatedButtonDelegate {
             actionButtonDelegate?.callButtonTapped(withNumber: model.phone ?? "")
             
         case 3:
-            actionButtonDelegate?.shareButtonTapped()
-            
-        case 4:
             actionButtonDelegate?.siteButtonTapped(urlString: model.url ?? "")
             
         default:

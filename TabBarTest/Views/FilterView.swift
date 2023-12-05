@@ -56,7 +56,9 @@ class FilterView: UIView {
         self.layer.cornerRadius = 12
         self.isUserInteractionEnabled = true
 
-        if title == "Поиск" || title == "Search" {
+        // Для фильров поиска и избранного оставляем только картинку
+        if title == "Поиск" || title == "Search" ||
+            title == "Избранное" || title == "Favorites"{
             myImage.image = image
             self.addSubview(myImage)
             myImage.frame = CGRect(x: 12,
@@ -68,6 +70,7 @@ class FilterView: UIView {
                                 width: myImage.frame.width+24,
                                 height: 40)
         } else {
+            // Для остальных фильтров картинка + текст
             myImage.image = image
             label.text = title
             self.addSubview(myImage)

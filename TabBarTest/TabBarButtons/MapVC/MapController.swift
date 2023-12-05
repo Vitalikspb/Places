@@ -74,26 +74,34 @@ class MapController: UIViewController {
     
     // MARK: - UI Properties
     
+    // Всплывающее вьюха подробней о достопримечательности
     private var floatingView = FloatingView(frame: CGRect(x: 0,
                                                           y: UIScreen.main.bounds.height,
                                                           width: UIScreen.main.bounds.width,
                                                           height: UIScreen.main.bounds.height))
+    // Фильтр скролл
     private let topScrollView = ScrollViewOnMap(frame: CGRect(x: 0,
                                                               y: 0,
                                                               width: UIScreen.main.bounds.width,
                                                               height: 42))
+    // появляющийся поиск сверху
     private let topSearchView = TopSearchView(frame: CGRect(x: 0,
                                                             y: 0,
                                                             width: UIScreen.main.bounds.width-32,
                                                             height: 60))
+    // вьюха погоды
     private var weatherView = WeatherView(frame: CGRect(x: 0,
                                                         y: 0,
                                                         width: 48,
                                                         height: 40))
+    
+    // вьюха с кнопками "маршрут", "в избранное" и тд
     private let buttonsView = ActionButtonsScrollView(frame: CGRect(x: 0,
                                                                     y: 0,
                                                                     width: UIScreen.main.bounds.width,
                                                                     height: 60))
+    
+    // скролл из достопримечательностей внизу
     private let bottomCollectionView = BottomCollectionView(frame: CGRect(x: 0,
                                                                           y: 0,
                                                                           width: UIScreen.main.bounds.width,
@@ -490,24 +498,16 @@ extension MapController: GMSMapViewDelegate {
 // MARK: - ScrollViewOnMapDelegate
 extension MapController: ScrollViewOnMapDelegate {
     
-    // Фильтрация маркеров по достопримечательности
-    func chooseSight() {
-        interactor?.fetchAllTestMarkers(request: .sightSeen)
+    // Фильтрация по избранным
+    func chooseFavorites(selected: Bool) {
+//        interactor?.fetchAllFavorites(selected: selected)
     }
     
-    // Фильтрация маркеров по музеям
-    func chooseMuseum() {
-        interactor?.fetchAllTestMarkers(request: .museum)
-    }
-    
-    // Фильтрация маркеров по культурным объектам
-    func chooseCultureObject() {
-        interactor?.fetchAllTestMarkers(request: .cultureObject)
-    }
-    
-    // Фильтрация маркеров по Богослужению
-    func chooseGod() {
-        interactor?.fetchAllTestMarkers(request: .god)
+    // Фильтрация маркеров
+    func chooseSightSelected(selected: Bool, request: TypeSight) {
+        selected
+        ? interactor?.appendAllMarkers()
+        : interactor?.fetchAllTestMarkers(request: request)
     }
 
     // Отображение поисковой строки и сокрытие строки с фильтрами
@@ -581,7 +581,10 @@ extension MapController: CLLocationManagerDelegate {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
                     UIView.animate(withDuration: 0.5) {
-                        self.weatherView.alpha = 1
+                        // При открытом поиске не показываем вьюху погоды
+                        if self.selectedFilter {
+                            self.weatherView.alpha = 1
+                        }
                         self.weatherView.weatherViewTemperature = temp
                         self.weatherView.weatherViewImage = image
                     }
@@ -718,33 +721,35 @@ extension MapController: ActionButtonsScrollViewDelegate {
         interactor?.updateFavorites(name: name)
     }
     
-    // из меню в низу во всплывающей вьюхе
-    func shareButtonTapped() {
-        let firstActivityItem = "Пригласить друзей"
-        let secondActivityItem = Constants.shareLink
-        let image: UIImage = UIImage(named: "AppIcon") ?? UIImage()
-        let activityViewController: UIActivityViewController = UIActivityViewController(
-            activityItems: [firstActivityItem, secondActivityItem, image], applicationActivities: nil)
-        activityViewController.activityItemsConfiguration = [UIActivity.ActivityType.message] as? UIActivityItemsConfigurationReading
-        
-        // Убираем не нужные кнопки
-        activityViewController.excludedActivityTypes = [
-            UIActivity.ActivityType.postToWeibo,
-            UIActivity.ActivityType.print,
-            UIActivity.ActivityType.addToReadingList,
-            UIActivity.ActivityType.postToFlickr,
-            UIActivity.ActivityType.postToVimeo,
-            UIActivity.ActivityType.postToTencentWeibo,
-            UIActivity.ActivityType.postToFacebook
-        ]
-        activityViewController.completionWithItemsHandler = { activity, success, items, error in
-            if success {
-                self.dismiss(animated: true)
-            }
-        }
-        activityViewController.isModalInPresentation = true
-        self.present(activityViewController, animated: true, completion: nil)
-    }
+    // MARK: - TODO оставить для экрана настроек
+    
+//    // из меню в низу во всплывающей вьюхе
+//    func shareButtonTapped() {
+//        let firstActivityItem = "Пригласить друзей"
+//        let secondActivityItem = Constants.shareLink
+//        let image: UIImage = UIImage(named: "AppIcon") ?? UIImage()
+//        let activityViewController: UIActivityViewController = UIActivityViewController(
+//            activityItems: [firstActivityItem, secondActivityItem, image], applicationActivities: nil)
+//        activityViewController.activityItemsConfiguration = [UIActivity.ActivityType.message] as? UIActivityItemsConfigurationReading
+//        
+//        // Убираем не нужные кнопки
+//        activityViewController.excludedActivityTypes = [
+//            UIActivity.ActivityType.postToWeibo,
+//            UIActivity.ActivityType.print,
+//            UIActivity.ActivityType.addToReadingList,
+//            UIActivity.ActivityType.postToFlickr,
+//            UIActivity.ActivityType.postToVimeo,
+//            UIActivity.ActivityType.postToTencentWeibo,
+//            UIActivity.ActivityType.postToFacebook
+//        ]
+//        activityViewController.completionWithItemsHandler = { activity, success, items, error in
+//            if success {
+//                self.dismiss(animated: true)
+//            }
+//        }
+//        activityViewController.isModalInPresentation = true
+//        self.present(activityViewController, animated: true, completion: nil)
+//    }
 }
 
 // MARK: - MapDisplayLogic
