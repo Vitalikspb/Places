@@ -404,7 +404,7 @@ class MapController: UIViewController {
         case .countryViewZoom:
             zoom = 10
         case .countryView:
-            zoom = 5
+            zoom = 2.65
         }
         let camera = GMSCameraPosition(target: location, zoom: zoom)
         mapView.animate(to: camera)

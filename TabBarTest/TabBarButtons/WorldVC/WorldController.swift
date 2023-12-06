@@ -158,10 +158,12 @@ extension WorldController: WorldCollectionViewCellDelegate {
     func showOnMap(name: String) {
         print("Переход на карту с выбранной страной:\(name)")
         // открываем выбранный город на карте
-        //        Россия 55.755863, 37.617700
+        let selectedCity = UserDefaults.standard.getSightDescription().first(where: { $0.name == name })
+        var latitude = selectedCity?.latitude ?? 0.0
+        var longitude = selectedCity?.longitude ?? 0.0
         showSelectedItemOnMap(city: name == "Россия" ? false : true,
-                              latitude: 55.755863,
-                              longitude: 37.617700)
+                              latitude: name == "Россия" ? 61.237414 : latitude,
+                              longitude: name == "Россия" ? 93.177739 : longitude)
     }
     
     // Переход на выбранный город подробней
