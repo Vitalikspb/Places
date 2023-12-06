@@ -178,7 +178,7 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
 
 extension FavouritesTableViewCollectionViewCell: CustomAnimatedButtonDelegate {
 
-    func continueButton(model: ButtonCallBackModel) {
+    func continueButton() {
         delegate?.tapFavouriteButton(name: titleLabel.text ?? "")
     }
     

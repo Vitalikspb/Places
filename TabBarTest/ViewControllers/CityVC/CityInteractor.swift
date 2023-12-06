@@ -59,7 +59,7 @@ class CityInteractor: CityBussinessLogic, CityDataStore {
     var presenter: CityPresentationLogic?
     
     func showCity() {
-        var cities = UserDefaults.standard.getSightDescription()
+        let cities = UserDefaults.standard.getSightDescription()
         var country: SightDescription?
         let viewModelWeather = CityViewModel.CurrentCity.ViewModel(city: currentCity, weather: currentWeather)
 

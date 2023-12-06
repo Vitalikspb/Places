@@ -44,7 +44,9 @@ class BottomCollectionView: UIView {
     
     
     // MARK: - Helper functions
-    
+    func clearModel() {
+        dataModel.removeAll()
+    }
     func setupModel(model: [Sight]) {
         model.forEach {
             let tempModel = BottomCollectionViewModel(type: $0.type.rawValue,

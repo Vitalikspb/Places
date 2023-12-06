@@ -33,7 +33,7 @@ class ScrollViewOnMap: UIScrollView {
     
     // Музей (выставка, зоопарк)
     private let transportFilter = FilterView(withName: Constants.Views.museum, 
-                                             andImage: UIImage(named: "transport")!)
+                                             andImage: UIImage(named: "museumSearch")!)
     
     // Культурный объект (Статуя, памятник (дом писателя, мост, оперы, )
     private let leisureFilter = FilterView(withName: Constants.Views.cultureObject, 
@@ -122,34 +122,31 @@ class ScrollViewOnMap: UIScrollView {
                                  height: 40)
         favoriteFilter.frame = frameFavorites
         
-        let frameSight = CGRect(x: frameFavorites + searchWidth + 28,
+        let frameSight = CGRect(x: favoritesWidth + searchWidth + 40,
                                 y: 2,
                                 width: sightWidth,
                                 height: 40)
         sightFilter.frame = frameSight
         
-        let frameTransport = CGRect(x: frameFavorites + searchWidth + sightWidth + 40,
+        let frameTransport = CGRect(x: favoritesWidth + searchWidth + sightWidth + 52,
                                     y: 2,
                                     width: transportWidth,
                                     height: 40)
         transportFilter.frame = frameTransport
         
-        let frameLeisure = CGRect(x: frameFavorites + searchWidth + sightWidth + transportWidth + 52,
+        let frameLeisure = CGRect(x: favoritesWidth + searchWidth + sightWidth + transportWidth + 64,
                                   y: 2,
                                   width: leisureWidth,
                                   height: 40)
         leisureFilter.frame = frameLeisure
         
-       
-       
-        
-        let frameWorship = CGRect(x: frameFavorites + searchWidth + sightWidth + transportWidth + leisureWidth + 64,
+        let frameWorship = CGRect(x: favoritesWidth + searchWidth + sightWidth + transportWidth + leisureWidth + 76,
                                   y: 2,
                                   width: worshipWidth,
                                   height: 40)
         worshipFilter.frame = frameWorship
 
-        self.contentSize = CGSize(width: frameFavorites + searchWidth + sightWidth + transportWidth + leisureWidth + worshipWidth + 76,
+        self.contentSize = CGSize(width: favoritesWidth + searchWidth + sightWidth + transportWidth + leisureWidth + worshipWidth + 88,
                                   height: 40)
     }
     
@@ -179,7 +176,7 @@ class ScrollViewOnMap: UIScrollView {
     private func hideAllFilters(withCurrent filterView: FilterView) {
         UIView.animate(withDuration: 0.55) { [weak self] in
             guard let self = self else { return }
-            let frame = CGRect(x: 24,
+            let frame = CGRect(x: 16,
                                y: 2,
                                width: filterView.frame.width,
                                height: 40)

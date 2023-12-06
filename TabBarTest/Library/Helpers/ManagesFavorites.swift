@@ -35,7 +35,7 @@ class ManagesFavorites {
         var newFavorites = true
         var curIndexOfFavorite = -1
         var favorites = UserDefaults.standard.getFavorites()
-        var sights = UserDefaults.standard.getSight()
+        let sights = UserDefaults.standard.getSight()
         for (ind,val) in favorites.enumerated() {
             if val.name == name {
                 newFavorites = false

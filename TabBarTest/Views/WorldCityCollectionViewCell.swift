@@ -162,7 +162,6 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
     // MARK: - Selectors
     
     @objc private func moveToCityViewHandle() {
-        print("переход на город подробней: \(titleLabel.text)")
         delegate?.selectCity(name: titleLabel.text ?? "")
     }
     
@@ -172,7 +171,7 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
 
 extension WorldCityCollectionViewCell: CustomAnimatedButtonDelegate {
     
-    func continueButton(model: ButtonCallBackModel) {
+    func continueButton() {
         print("переход на город на карте")
         delegate?.showCityOnMap(name: titleLabel.text ?? "")
     }

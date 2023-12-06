@@ -411,26 +411,26 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
  
 extension FloatingViewThirdTableViewCell: CustomAnimatedButtonDelegate {
     
-    func continueButton(model: ButtonCallBackModel) {
-        switch model.id {
-        case 0:
-            delegate?.openUrl(name: siteUrl ?? "")
-            
-        case 1:
-            delegate?.openUrl(name: vkUrl ?? "")
-            
-        case 2:
-            delegate?.openUrl(name: fbUrl ?? "")
-            
-        case 3:
-            delegate?.openUrl(name: instUrl ?? "")
-            
-        case 4:
-            delegate?.openUrl(name: ytUrl ?? "")
-            
-        default:
-            break
-        }
+    func continueButton() {
+//        switch model.id {
+//        case 0:
+//            delegate?.openUrl(name: siteUrl ?? "")
+//            
+//        case 1:
+//            delegate?.openUrl(name: vkUrl ?? "")
+//            
+//        case 2:
+//            delegate?.openUrl(name: fbUrl ?? "")
+//            
+//        case 3:
+//            delegate?.openUrl(name: instUrl ?? "")
+//            
+//        case 4:
+//            delegate?.openUrl(name: ytUrl ?? "")
+//            
+//        default:
+//            break
+//        }
     }
     
     

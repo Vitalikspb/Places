@@ -150,7 +150,7 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
 
 extension BottomCollectionViewCollectionViewCell: CustomAnimatedButtonDelegate {
     
-    func continueButton(model: ButtonCallBackModel) {
+    func continueButton() {
         delegate?.tapSight(name: name)
     }
 }

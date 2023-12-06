@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol ActionButtonsScrollViewDelegate: AnyObject {
-    func routeButtonTapped()
+    func routeButtonTapped(location: CLLocationCoordinate2D)
     func addToFavouritesButtonTapped(name: String)
     func callButtonTapped(withNumber: String)
     func siteButtonTapped(urlString: String)
@@ -18,7 +19,6 @@ class ActionButtonsScrollView: UIScrollView {
     
     // MARK: - Public properties
     
-    weak var onMapdelegate: ScrollViewOnMapDelegate?
     weak var actionButtonDelegate: ActionButtonsScrollViewDelegate?
     
     // MARK: - Private properties
@@ -28,33 +28,34 @@ class ActionButtonsScrollView: UIScrollView {
     // MARK: - UI properties
     
     let routeButton = FilterView(withName: Constants.Views.travelGuide)
-    private let animateRouteButton: CustomAnimatedButton = {
-       let button = CustomAnimatedButton()
-        button.setupId(id: 0)
+    private let animateRouteButton: UIView = {
+        let button = UIView()
         return button
     }()
     
     let addToFavouritesButton = FilterView(withName: Constants.Views.toFeatures)
-    private let animateAddToFavouritesButton: CustomAnimatedButton = {
-       let button = CustomAnimatedButton()
-        button.setupId(id: 1)
+    private let animateAddToFavouritesButton: UIView = {
+        let button = UIView()
         return button
     }()
     
     let callButton = FilterView(withName: Constants.Views.makeCall)
-    private let animateCallButton: CustomAnimatedButton = {
-       let button = CustomAnimatedButton()
-        button.setupId(id: 2)
+    private let animateCallButton: UIView = {
+        let button = UIView()
         return button
     }()
     
     let siteButton = FilterView(withName: Constants.Views.toSite)
-    private let animateSiteButton: CustomAnimatedButton = {
-       let button = CustomAnimatedButton()
-        button.setupId(id: 3)
+    private let animateSiteButton: UIView = {
+        let button = UIView()
         return button
     }()
     
+    private var favoriteName: String = ""
+    private var phone: String = ""
+    private var url: String = ""
+    private var currentLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0,
+                                                                                 longitude: 0.0)
     
     // MARK: - Life cycle
     
@@ -69,16 +70,16 @@ class ActionButtonsScrollView: UIScrollView {
     
     // MARK: - Helper Functions
     
-    func setupFavoriteName(name: String, phone: String, url: String) {
-        animateAddToFavouritesButton.setupFavoriteName(favoriteName: name, phone: phone, url: url)
+    func setupFavoriteName(name: String, phone: String, url: String, location: CLLocationCoordinate2D) {
+        favoriteName = name
+        self.phone = phone
+        self.url = url
+        print("000 currentLocation:\(currentLocation)")
+        currentLocation = location
+        print("111 currentLocation:\(currentLocation)")
     }
     
     private func setupUI() {
-        [animateRouteButton, animateAddToFavouritesButton,
-         animateCallButton, animateSiteButton].forEach {
-            $0.delegate = self
-        }
-        
         self.backgroundColor = .setCustomColor(color: .filterbuttonFloatingScreen)
         self.isScrollEnabled = true
         self.isDirectionalLockEnabled = true
@@ -103,6 +104,19 @@ class ActionButtonsScrollView: UIScrollView {
         animateSiteButton.addSubviews(siteButton)
         siteButton.addConstraintsToFillView(view: animateSiteButton)
         addSubview(animateSiteButton)
+        
+        let tapSearch = UITapGestureRecognizer(target: self, action: #selector(handleRouteButton))
+        routeButton.addGestureRecognizer(tapSearch)
+        
+        let tapFavorites = UITapGestureRecognizer(target: self, action: #selector(handleAddToFavouritesButton))
+        addToFavouritesButton.addGestureRecognizer(tapFavorites)
+        
+        let tapSearchSight = UITapGestureRecognizer(target: self, action: #selector(handleCallButton))
+        callButton.addGestureRecognizer(tapSearchSight)
+        
+        let tapMuseum = UITapGestureRecognizer(target: self, action: #selector(handleSiteButton))
+        siteButton.addGestureRecognizer(tapMuseum)
+        
         
         updateFullWidth()
     }
@@ -141,35 +155,34 @@ class ActionButtonsScrollView: UIScrollView {
         siteButton.frame = frameSite
         animateSiteButton.frame = frameSite
         
-        let allWidth = routeButtonWidth + addToFavouritesButtonWidth + 
+        let allWidth = routeButtonWidth + addToFavouritesButtonWidth +
         callButtonWidth + siteButtonWidth + 64
         self.contentSize = CGSize(width: allWidth,
                                   height: self.frame.height)
     }
-}
-
-// MARK: - CustomAnimatedButtonDelegate
-
-extension ActionButtonsScrollView: CustomAnimatedButtonDelegate {
     
-    func continueButton(model: ButtonCallBackModel) {
-        switch model.id {
-        case 0:
-            actionButtonDelegate?.routeButtonTapped()
-            
-        case 1:
-            actionButtonDelegate?.addToFavouritesButtonTapped(name: model.name ?? "")
-            
-        case 2:
-            actionButtonDelegate?.callButtonTapped(withNumber: model.phone ?? "")
-            
-        case 3:
-            actionButtonDelegate?.siteButtonTapped(urlString: model.url ?? "")
-            
-        default:
-            break
-        }
+    // Поиск
+    @objc func handleRouteButton() {
+        print("currentLocation:\(currentLocation)")
+        actionButtonDelegate?.routeButtonTapped(location: currentLocation)
     }
-
+    
+    // Избранное
+    @objc func handleAddToFavouritesButton() {
+        print("favoriteName:\(favoriteName)")
+        actionButtonDelegate?.addToFavouritesButtonTapped(name: favoriteName)
+    }
+    
+    // Достопримечательность
+    @objc func handleCallButton() {
+        print("phone:\(phone)")
+        actionButtonDelegate?.callButtonTapped(withNumber: phone)
+    }
+    
+    // Музей
+    @objc func handleSiteButton() {
+        print("url:\(url)")
+        actionButtonDelegate?.siteButtonTapped(urlString: url)
+    }
 }
 

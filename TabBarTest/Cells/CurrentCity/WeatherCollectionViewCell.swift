@@ -290,7 +290,7 @@ class WeatherCollectionViewCell: UITableViewCell {
 // MARK: - CustomAnimatedButtonDelegate
 
 extension WeatherCollectionViewCell: CustomAnimatedButtonDelegate {
-    func continueButton(model: ButtonCallBackModel) {
+    func continueButton() {
         delegate?.showFullWeather()
     }
     

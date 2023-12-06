@@ -69,14 +69,14 @@ class ActionsButtonsCityView: UIScrollView {
     // MARK: - Helper Functions
     
     private func setupUI() {
-        animateFavouriteButton.delegate = self
-        animateFavouriteButton.setupId(id: 0)
+//        animateFavouriteButton.delegate = self
+//        animateFavouriteButton.setupId(id: 0)
         
-        animateInterestingButton.delegate = self
-        animateInterestingButton.setupId(id: 1)
+//        animateInterestingButton.delegate = self
+//        animateInterestingButton.setupId(id: 1)
         
-        animateFaqButton.delegate = self
-        animateFaqButton.setupId(id: 2)
+//        animateFaqButton.delegate = self
+//        animateFaqButton.setupId(id: 2)
         
         self.backgroundColor = .setCustomColor(color: .filterbuttonFloatingScreen)
         self.isScrollEnabled = true
@@ -138,21 +138,21 @@ class ActionsButtonsCityView: UIScrollView {
 
 extension ActionsButtonsCityView: CustomAnimatedButtonDelegate {
     
-    func continueButton(model: ButtonCallBackModel) {
-        switch model.id {
-            
-        case 0:
-            handleFavouriteButton()
-            
-        case 1:
-            handleInterestingButton()
-            
-        case 2:
-            handleFaqButton()
-            
-        default:
-            break
-        }
+    func continueButton() {
+//        switch model.id {
+//            
+//        case 0:
+//            handleFavouriteButton()
+//            
+//        case 1:
+//            handleInterestingButton()
+//            
+//        case 2:
+//            handleFaqButton()
+//            
+//        default:
+//            break
+//        }
     }
     
     

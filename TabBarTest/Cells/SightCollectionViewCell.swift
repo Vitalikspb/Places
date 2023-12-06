@@ -175,7 +175,7 @@ class SightCollectionViewCell: UICollectionViewCell, Reusable {
 
 extension SightCollectionViewCell: CustomAnimatedButtonDelegate {
     
-    func continueButton(model: ButtonCallBackModel) {
+    func continueButton() {
         tapFavouriteHandle()
     }
     

@@ -37,11 +37,11 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
     
     // Фильтрация по избранным достопримечательностям
     func fetchAllFavorites(selected: Bool) {
-        if selected {
+        let favorites = UserDefaults.standard.getFavorites()
+        if selected || favorites.isEmpty {
             appendAllMarkers()
         } else {
             var filteredMarkers: [GMSMarker] = []
-            let favorites = UserDefaults.standard.getFavorites()
             for (_,val) in favorites.enumerated() {
                 let marker = setMarker(name: val.name,
                                        location: CLLocation(latitude: val.latitude,

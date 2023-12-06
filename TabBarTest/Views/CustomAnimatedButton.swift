@@ -6,16 +6,10 @@
 //
 
 import UIKit
-
-struct ButtonCallBackModel {
-    var id: Int?
-    var name: String?
-    var phone: String?
-    var url: String?
-}
+import CoreLocation
 
 protocol CustomAnimatedButtonDelegate: AnyObject {
-    func continueButton(model: ButtonCallBackModel)
+    func continueButton()
 }
 
 final class CustomAnimatedButton: UIButton {
@@ -39,10 +33,7 @@ final class CustomAnimatedButton: UIButton {
     private var favoriteName: String = ""
     // границы кнопки для отслеживания touchesEnd
     private var buttonBounds: CGRect!
-    // номер телефона
-    private var phone: String?
-    // ссылка для использования
-    private var url: String?
+
     
     // MARK: - Life cycle
     
@@ -65,12 +56,6 @@ final class CustomAnimatedButton: UIButton {
         nameButton = name
     }
     
-    func setupFavoriteName(favoriteName: String, phone: String, url: String) {
-        self.favoriteName = favoriteName
-        self.phone = phone
-        self.url = url
-    }
-    
     // Анимация завершения аминирования кнопки
     private func animationEnded(_ touches: Set<UITouch>, canceling: Bool = false, end: Bool = false) {
         // Анимируем в исходное состояние кнопку
@@ -85,11 +70,7 @@ final class CustomAnimatedButton: UIButton {
             // Выполняем делегат и восстанавливаем цвет кнопки в начальный
             if success {
                 if self.buttonBounds.contains((touches.first?.location(in: self))!) {
-                    let sendModel = ButtonCallBackModel(id: self.idButton,
-                                                        name: favoriteName,
-                                                        phone: phone ?? "",
-                                                        url: url ?? "")
-                    self.delegate?.continueButton(model: sendModel)
+                    self.delegate?.continueButton()
                 }
             }
         }

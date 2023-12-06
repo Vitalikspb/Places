@@ -67,10 +67,14 @@ class MapController: UIViewController {
     private var showCountry: Bool = false
     private var timer = Timer()
     private var currentCountry: String = ""
+    private var currentCity: String = ""
     private var selectMark: Bool = false
     private var selectedFilter: Bool = false
     private var selectMarkFromBottomView: Bool = false
     private var enableMapInteractive: Bool = false
+    
+    // показ нижнего скролл из достопримечательностей внизу
+    private var showBottomCollectionSight: Bool = true
     
     // MARK: - UI Properties
     
@@ -95,17 +99,17 @@ class MapController: UIViewController {
                                                         width: 48,
                                                         height: 40))
     
-    // вьюха с кнопками "маршрут", "в избранное" и тд
-    private let buttonsView = ActionButtonsScrollView(frame: CGRect(x: 0,
-                                                                    y: 0,
-                                                                    width: UIScreen.main.bounds.width,
-                                                                    height: 60))
-    
     // скролл из достопримечательностей внизу
     private let bottomCollectionView = BottomCollectionView(frame: CGRect(x: 0,
                                                                           y: 0,
                                                                           width: UIScreen.main.bounds.width,
                                                                           height: 88))
+    
+    // вьюха с кнопками "маршрут", "в избранное" и тд
+    private let buttonsView = ActionButtonsScrollView(frame: CGRect(x: 0,
+                                                                    y: 0,
+                                                                    width: UIScreen.main.bounds.width,
+                                                                    height: 60))
     
     // MARK: - LifeCycle
     
@@ -132,7 +136,8 @@ class MapController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        let cityName = userDefault.string(forKey: UserDefaults.currentCity)
+        tabBarController?.tabBar.items?[1].title = cityName
         // проверяем было ли нажатие на кнопку "карты" на экране Страны и делаем анимацию камеры и переход на нужные координаты
         
         
@@ -271,24 +276,47 @@ class MapController: UIViewController {
     }
     // Скрываем нижнее вью с коллекцией маркеров
     func bottomCollectionViewhide() {
-        bottomCollectionView.alpha = 0
+        UIView.animate(withDuration: 0.5) {
+            self.bottomCollectionView.alpha = 0
+        }
     }
     
     // сохраняем текущее местоположение в виде Страны и Города
-    private func setCurrentLocation() {
+    private func setCurrentLocation(hiden: Bool) {
         let location = CLLocation(latitude: cameraLatitude, longitude: cameraLongitude)
         location.fetchCityAndCountry { [weak self] (city, country, error) in
             guard let self = self,
-                  let city = city,
+                  let curCity = city,
                   let country = country,
                   error == nil
             else { return }
             self.userDefault.set("\(country)", forKey: UserDefaults.currentLocation)
             // MARK: - TODO - сделать сравнение текущего города если в структуре у этого города есть метки тогда отображаем кнопку на карте - переход на достопримечательности текущего города, если нету меток тогда не записываем в юзер дефолт и не показываем кнопку перехода.
             self.citiesAvailable.forEach {
-                if $0 == city {
-                    self.userDefault.set("\(city)", forKey: UserDefaults.currentCity)
-                    self.tabBarController?.tabBar.items?[1].title = city
+                if $0 == curCity, self.currentCity != curCity {
+                    self.userDefault.set(curCity, forKey: UserDefaults.currentCity)
+                    self.tabBarController?.tabBar.items?[1].title = curCity
+                    
+                    let sight = UserDefaults.standard.getSight()
+                    let filteredSights = sight.filter( { $0.city == curCity })
+                    
+                    print("curCity:\(curCity)")
+                    print("filteredSights:\(filteredSights)")
+                    self.bottomCollectionViewhide()
+                    self.bottomCollectionView.clearModel()
+                    if curCity == "Город" || curCity == "" {
+                        self.bottomCollectionView.setupModel(model: sight)
+                    } else {
+                        self.bottomCollectionView.setupModel(model: filteredSights)
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                        self.bottomCollectionView.collectionView.reloadData()
+                        if hiden {
+                            self.bottomCollectionViewShow()
+                        }
+                    }
+                    self.currentCity = curCity
                 }
             }
             
@@ -401,15 +429,19 @@ class MapController: UIViewController {
         // делаем запрос на данные для floatinView
         if let nameLocation = marker.title {
             let sights = UserDefaults.standard.getSight()
-            let currentSight = sights.first(where: { $0.name == nameLocation })
-            buttonsView.setupFavoriteName(name: nameLocation,
-                                          phone: currentSight?.main_phone ?? "",
-                                          url: currentSight?.site ?? "")
-            interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
-            animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
-                                 longitude: marker.position.longitude,
-                                 from: .mapViewZoom)
-            selectMark = showFloatingViewMark
+            if let currentSight = sights.first(where: { $0.name == nameLocation }) {
+                let location = CLLocationCoordinate2D(latitude: currentSight.latitude,
+                                                      longitude: currentSight.longitude)
+                buttonsView.setupFavoriteName(name: nameLocation,
+                                              phone: currentSight.main_phone ?? "",
+                                              url: currentSight.site ?? "",
+                                              location: location)
+                interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
+                animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
+                                     longitude: marker.position.longitude,
+                                     from: .mapViewZoom)
+                selectMark = showFloatingViewMark
+            }
         }
     }
     
@@ -418,17 +450,33 @@ class MapController: UIViewController {
         // делаем запрос на данные для floatinView
         if let nameLocation = marker.title {
             let sights = UserDefaults.standard.getSight()
-            let currentSight = sights.first(where: { $0.name == nameLocation })
-            if animateMarkers {
-                buttonsView.setupFavoriteName(name: nameLocation,
-                                              phone: currentSight?.main_phone ?? "",
-                                              url: currentSight?.site ?? "")
-                interactor?.showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
+            if sights.first(where: { $0.name == nameLocation }) != nil {
+                if animateMarkers {
+                    interactor?.showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request(
+                            marker: nameLocation))
+                }
+                animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
+                                     longitude: marker.position.longitude,
+                                     from: .mapViewZoom)
+                selectMark = showFloatingViewMark
             }
-            animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
-                                 longitude: marker.position.longitude,
-                                 from: .mapViewZoom)
-            selectMark = showFloatingViewMark
+        }
+    }
+    
+    private func updateBottomCollectionView(zoom: Float) {
+        // При приближении и отдалении карты
+        if zoom < 9.0 {
+            // Скрыаем нижний скролл с достопримечательностями
+            if showBottomCollectionSight {
+                bottomCollectionViewhide()
+                showBottomCollectionSight = false
+            }
+        } else {
+            // Показываем нижний скролл с достопримечательностями
+            if !showBottomCollectionSight {
+                bottomCollectionViewShow()
+                showBottomCollectionSight = true
+            }
         }
     }
 }
@@ -441,6 +489,7 @@ extension MapController: GMSMapViewDelegate {
         // определение текущего местоположения
         cameraLatitude = mapView.camera.target.latitude
         cameraLongitude = mapView.camera.target.longitude
+        updateBottomCollectionView(zoom: mapView.camera.zoom)
     }
     
     // Вызывается по нажатию на свое местоположение
@@ -470,6 +519,7 @@ extension MapController: GMSMapViewDelegate {
     
     // вызывается при нажатии на карту
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
+        hideTopSearchView()
         if enableMapInteractive {
             selectMark = true
             hideTopSearchView()
@@ -485,13 +535,30 @@ extension MapController: GMSMapViewDelegate {
     }
     
     // вызывается когда начинается передвижение карты
-    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
-        hideTopSearchView()
-        
-    }
+//    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
+//        hideTopSearchView()
+//    }
+    
     // Вызывается когда камера перестала двигатся
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        setCurrentLocation()
+        updateBottomCollectionView(zoom: mapView.camera.zoom)
+        setCurrentLocation(hiden: showBottomCollectionSight)
+    }
+    
+    // Построение маршрута
+    func fetchRoute(from source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D) {
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            let stringUrl = "comgooglemaps-x-callback://?saddr=&daddr=\(destination.latitude),\(destination.longitude)&directionsmode=driving"
+            if let url = URL(string: stringUrl) {
+                UIApplication.shared.open(url, options: [:])
+            }}
+        else {
+            //Open in browser
+            let stringUrl = "https://www.google.co.in/maps/dir/?saddr=&daddr=\(destination.latitude),\(destination.longitude)&directionsmode=driving"
+            if let urlDestination = URL.init(string: stringUrl) {
+                UIApplication.shared.open(urlDestination)
+            }
+        }
     }
 }
 
@@ -500,7 +567,7 @@ extension MapController: ScrollViewOnMapDelegate {
     
     // Фильтрация по избранным
     func chooseFavorites(selected: Bool) {
-//        interactor?.fetchAllFavorites(selected: selected)
+        interactor?.fetchAllFavorites(selected: selected)
     }
     
     // Фильтрация маркеров
@@ -633,6 +700,7 @@ extension MapController: FloatingViewDelegate {
     
     // Делаем вызов номера телефона достопримечательности из всплывающей подробностей
     func makeCall(withNumber: String) {
+        print("makeCall:\(withNumber)")
         var uc = URLComponents()
         uc.scheme = "tel"
         uc.path = withNumber
@@ -648,6 +716,7 @@ extension MapController: FloatingViewDelegate {
     
     // Открываем сайт/соц сеть или др достопримечательности из всплывающей подробностей
     func openUrl(name: String) {
+        print("openUrl:\(name)")
         guard let openUrl = URL(string: name) else { return }
         UIApplication.shared.open(openUrl)
     }
@@ -703,21 +772,27 @@ extension MapController: ActionButtonsScrollViewDelegate {
     
     // Вызов номера из меню в низу во всплывающей вьюхе
     func callButtonTapped(withNumber: String) {
+        print("Позвонить если есть номер")
         makeCall(withNumber: withNumber)
     }
     
     // Открыть Url сайт/соц сеть или др из меню в низу во всплывающей вьюхе
     func siteButtonTapped(urlString: String) {
+        print("Открыть сайт если есть")
         openUrl(name: urlString)
     }
     
     // из меню в низу во всплывающей вьюхе
-    func routeButtonTapped() {
-        print("Постоение маршрута")
+    func routeButtonTapped(location: CLLocationCoordinate2D) {
+        let fromCurrentLocation = CLLocationCoordinate2D(latitude: cameraLatitude,
+                                                         longitude: cameraLongitude)
+        fetchRoute(from: fromCurrentLocation, to: location)
     }
+    
     
     // Добавление или удаление избранного из меню в низу во всплывающей вьюхе
     func addToFavouritesButtonTapped(name: String) {
+        print("Добавление в избранное")
         interactor?.updateFavorites(name: name)
     }
     
@@ -770,7 +845,13 @@ extension MapController: MapDisplayLogic {
             }
         }
         let sight = UserDefaults.standard.getSight()
-        bottomCollectionView.setupModel(model: sight)
+        let cityName = userDefault.string(forKey: UserDefaults.currentCity)
+        print("cityName:\(cityName)")
+        if cityName == "Город" || cityName == "" || cityName == nil {
+            bottomCollectionView.setupModel(model: sight)
+        } else {
+            bottomCollectionView.setupModel(model: sight.filter( { $0.city == cityName }))
+        }
         DispatchQueue.main.async {
             self.bottomCollectionView.collectionView.reloadData()
         }
@@ -803,6 +884,7 @@ extension MapController: MapDisplayLogic {
                 self.topScrollView.alpha = 0
                 self.weatherView.alpha = 0
                 self.topSearchView.alpha = 0
+                self.topSearchView.inputTextField.resignFirstResponder()
             }
         }
     }
@@ -832,10 +914,13 @@ extension MapController: BottomCollectionViewDelegate {
     
     // Выбор достопримечательности из скролл коллекции снизу экрана
     func showSight(nameSight: String) {
-        selectMark = false
-        selectMarkFromBottomView = true
         guard let marker = interactor?.fetchSelectedSightWithAllMarkers(withName: nameSight) else { return }
-        showSelectMarkerSightWithAnimating(animateMarkers: false, marker: marker, showFloatingViewMark: false)
+        enableMapInteractive = true
+        if !selectMark {
+            selectMark = true
+            // делаем запрос на данные для floatinView
+            showMarkerSightWithAnimating(marker: marker, showFloatingViewMark: true)
+        }
     }
     
 }

@@ -5,9 +5,10 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol FloatingViewFirstTableViewCellDelegate: AnyObject {
-    func routeButtonTapped()
+    func routeButtonTapped(location: CLLocationCoordinate2D)
     func addToFavouritesButtonTapped(name: String)
     func callButtonTapped(withNumber: String)
     func shareButtonTapped()
@@ -197,8 +198,8 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
 
 extension FloatingViewFirstTableViewCell: ActionButtonsScrollViewDelegate {
     
-    func routeButtonTapped() {
-        delegate?.routeButtonTapped()
+    func routeButtonTapped(location: CLLocationCoordinate2D) {
+        delegate?.routeButtonTapped(location: location)
     }
     
     func addToFavouritesButtonTapped(name: String) {
