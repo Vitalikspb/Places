@@ -15,6 +15,7 @@ class FilterView: UIView {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
         image.tintColor = .setCustomColor(color: .titleText)
+        image.backgroundColor = .clear
         return image
     }()
     let label: UILabel = {

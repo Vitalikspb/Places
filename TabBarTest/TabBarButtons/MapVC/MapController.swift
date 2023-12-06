@@ -138,6 +138,7 @@ class MapController: UIViewController {
         super.viewDidAppear(animated)
         let cityName = userDefault.string(forKey: UserDefaults.currentCity)
         tabBarController?.tabBar.items?[1].title = cityName
+        currentCity = cityName ?? ""
         // проверяем было ли нажатие на кнопку "карты" на экране Страны и делаем анимацию камеры и переход на нужные координаты
         
         
@@ -304,6 +305,8 @@ class MapController: UIViewController {
                     print("filteredSights:\(filteredSights)")
                     self.bottomCollectionViewhide()
                     self.bottomCollectionView.clearModel()
+                    print("curCity:\(curCity)")
+                    
                     if curCity == "Город" || curCity == "" {
                         self.bottomCollectionView.setupModel(model: sight)
                     } else {

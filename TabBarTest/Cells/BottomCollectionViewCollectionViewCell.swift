@@ -43,7 +43,7 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
     
     private let sightTypeImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .center
+        imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(named: "sun")
         imageView.tintColor = .setCustomColor(color: .tabBarIconSelected)
         imageView.backgroundColor = .clear
@@ -131,10 +131,10 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
                                   bottom: contentView.bottomAnchor,
                                   right: nil,
                                   paddingTop: 0,
-                                  paddingLeft: 16,
-                                  paddingBottom: 23,
+                                  paddingLeft: 12,
+                                  paddingBottom: 21,
                                   paddingRight: 0,
-                                  width: 16, height: 16)
+                                  width: 24, height: 24)
     }
     
     func conigureCell(type: String, name: String, image: UIImage, typeSight: TypeSight) {
@@ -142,7 +142,18 @@ class BottomCollectionViewCollectionViewCell: UICollectionViewCell {
         sightTypeLabel.text = type
         sightNameLabel.text = name
         sightImageView.image = image
-        sightTypeImageView.image = UIImage(named: typeSight.rawValue)
+        var iconName = UIImage()
+        switch typeSight {
+        case .sightSeen:
+            iconName = UIImage(named: "museum") ?? UIImage()
+        case .museum:
+            iconName = UIImage(named: "museumSearch") ?? UIImage()
+        case .cultureObject:
+            iconName = UIImage(named: "museumSearch") ?? UIImage()
+        case .god:
+            iconName = UIImage(named: "temple") ?? UIImage()
+        }
+        sightTypeImageView.image = iconName
     }
 }
 
