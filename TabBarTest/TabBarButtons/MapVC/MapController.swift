@@ -116,6 +116,7 @@ class MapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupClean()
+        
         setupUI()
         // вызываем только 1 раз для заполнения массива маркерами
         setupLang()
@@ -131,6 +132,8 @@ class MapController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        openUnboardingScreen()
+        UserDefaults.standard.setValue(false, forKey: UserDefaults.firstOpenApp)
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -179,6 +182,13 @@ class MapController: UIViewController {
     }
     
     // MARK: - Helper Functions
+    
+    private func openUnboardingScreen() {
+        let showUnboarding = userDefault.bool(forKey: UserDefaults.firstOpenApp)
+        if !showUnboarding {
+            router?.routeToUnboardingVC()
+        }
+    }
     
     // Определение текущего языка приложения
     private func setupLang() {

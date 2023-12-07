@@ -15,6 +15,13 @@
 		1F771FB22ACD8801005C5BB7 /* FavouritesCitiesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F771FB12ACD8801005C5BB7 /* FavouritesCitiesCollectionView.swift */; };
 		1F8E4B222B0CEBDA00A7EC61 /* ManagesFavorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8E4B212B0CEBDA00A7EC61 /* ManagesFavorites.swift */; };
 		1F9D9D1B2ADFBE2900A74AEC /* CustomAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D9D1A2ADFBE2900A74AEC /* CustomAnimatedButton.swift */; };
+		1FB214372B21B0300078A014 /* UnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB214362B21B0300078A014 /* UnboardingController.swift */; };
+		1FB214392B21B03D0078A014 /* UnboardingController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FB214382B21B03D0078A014 /* UnboardingController.storyboard */; };
+		1FB2143B2B21B04A0078A014 /* UnboardingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB2143A2B21B04A0078A014 /* UnboardingInteractor.swift */; };
+		1FB2143D2B21B0520078A014 /* UnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB2143C2B21B0520078A014 /* UnboardingRouter.swift */; };
+		1FB2143F2B21B05C0078A014 /* UnboardingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB2143E2B21B05C0078A014 /* UnboardingWorker.swift */; };
+		1FB214412B21B0640078A014 /* UnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB214402B21B0640078A014 /* UnboardingPresenter.swift */; };
+		1FB214432B21B06F0078A014 /* UnboardingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB214422B21B06F0078A014 /* UnboardingModels.swift */; };
 		1FCF6F382ACBEB0D00727B58 /* CountryCitiesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCF6F372ACBEB0D00727B58 /* CountryCitiesCollectionView.swift */; };
 		1FE1B0422B0CFADF00525DF8 /* CityCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1B0412B0CFADF00525DF8 /* CityCollectionView.swift */; };
 		1FF45ACD2AC1CE6100FBA23E /* Extension+UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */; };
@@ -172,6 +179,13 @@
 		1F771FB12ACD8801005C5BB7 /* FavouritesCitiesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesCitiesCollectionView.swift; sourceTree = "<group>"; };
 		1F8E4B212B0CEBDA00A7EC61 /* ManagesFavorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagesFavorites.swift; sourceTree = "<group>"; };
 		1F9D9D1A2ADFBE2900A74AEC /* CustomAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimatedButton.swift; sourceTree = "<group>"; };
+		1FB214362B21B0300078A014 /* UnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnboardingController.swift; sourceTree = "<group>"; };
+		1FB214382B21B03D0078A014 /* UnboardingController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UnboardingController.storyboard; sourceTree = "<group>"; };
+		1FB2143A2B21B04A0078A014 /* UnboardingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnboardingInteractor.swift; sourceTree = "<group>"; };
+		1FB2143C2B21B0520078A014 /* UnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnboardingRouter.swift; sourceTree = "<group>"; };
+		1FB2143E2B21B05C0078A014 /* UnboardingWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnboardingWorker.swift; sourceTree = "<group>"; };
+		1FB214402B21B0640078A014 /* UnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnboardingPresenter.swift; sourceTree = "<group>"; };
+		1FB214422B21B06F0078A014 /* UnboardingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnboardingModels.swift; sourceTree = "<group>"; };
 		1FCF6F372ACBEB0D00727B58 /* CountryCitiesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCitiesCollectionView.swift; sourceTree = "<group>"; };
 		1FE1B0412B0CFADF00525DF8 /* CityCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCollectionView.swift; sourceTree = "<group>"; };
 		1FF45ACC2AC1CE6100FBA23E /* Extension+UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIFont.swift"; sourceTree = "<group>"; };
@@ -350,6 +364,20 @@
 				1F73AC662AD940EA00AB359A /* DBModels.swift */,
 			);
 			path = DataBaseModels;
+			sourceTree = "<group>";
+		};
+		1FB214352B21B00A0078A014 /* UnboardingVC */ = {
+			isa = PBXGroup;
+			children = (
+				1FB214382B21B03D0078A014 /* UnboardingController.storyboard */,
+				1FB214362B21B0300078A014 /* UnboardingController.swift */,
+				1FB2143A2B21B04A0078A014 /* UnboardingInteractor.swift */,
+				1FB2143C2B21B0520078A014 /* UnboardingRouter.swift */,
+				1FB2143E2B21B05C0078A014 /* UnboardingWorker.swift */,
+				1FB214402B21B0640078A014 /* UnboardingPresenter.swift */,
+				1FB214422B21B06F0078A014 /* UnboardingModels.swift */,
+			);
+			path = UnboardingVC;
 			sourceTree = "<group>";
 		};
 		533D8DD3270392C50006B0EE /* AppSource */ = {
@@ -660,6 +688,7 @@
 		C26BFE4C2768D67D00ABD119 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				1FB214352B21B00A0078A014 /* UnboardingVC */,
 				C24A7E942771DCA600D4751F /* WeatherVC */,
 				C2A0C235276CD5E40023BF60 /* FAQVC */,
 				C26BFE4D2768D68900ABD119 /* InterestingEventsVC */,
@@ -856,6 +885,7 @@
 				53F0D7A2275E98340087A9BB /* FavouritesController.storyboard in Resources */,
 				53EF2BFE27B1A7FB0019684F /* GoogleService-Info.plist in Resources */,
 				534E20E62769193000442F29 /* WorldStoryboard.storyboard in Resources */,
+				1FB214392B21B03D0078A014 /* UnboardingController.storyboard in Resources */,
 				C2CA35DB26FDCDAF00795EF6 /* Main.storyboard in Resources */,
 				C26BFE63276A1BD200ABD119 /* SelectedInterestingEventController.storyboard in Resources */,
 				C2588F982702F5D40014CCDC /* CurrentCityStoryboard.storyboard in Resources */,
@@ -979,6 +1009,7 @@
 				C2588F9E2702F6960014CCDC /* WorldController.swift in Sources */,
 				C24A7EAC27731DA200D4751F /* TimeFormatter.swift in Sources */,
 				53403D68275FF1B5004087F7 /* FavouritesTableViewCell.swift in Sources */,
+				1FB2143D2B21B0520078A014 /* UnboardingRouter.swift in Sources */,
 				1FE1B0422B0CFADF00525DF8 /* CityCollectionView.swift in Sources */,
 				FE451D242AA85CAD00831485 /* Extension+UIColor.swift in Sources */,
 				53F0D7AE275E98990087A9BB /* FavouritesModels.swift in Sources */,
@@ -990,11 +1021,13 @@
 				5397795D27443872006644D3 /* CountryPhotosTableViewCell.swift in Sources */,
 				C2A0C23F276CD6640023BF60 /* FAQWorker.swift in Sources */,
 				C26BFE572768D7D900ABD119 /* IntrestingEventsWorker.swift in Sources */,
+				1FB2143B2B21B04A0078A014 /* UnboardingInteractor.swift in Sources */,
 				C26BFE512768D7BB00ABD119 /* IntrestingEventsController.swift in Sources */,
 				1F4654762AC5C5E800B29CDA /* Extension+UICollectionView.swift in Sources */,
 				C2588FA527030D6E0014CCDC /* FilterView.swift in Sources */,
 				53F0D7AC275E98940087A9BB /* FavouritesPresenter.swift in Sources */,
 				C2A0C245276CDA5E0023BF60 /* FAQTableViewCell.swift in Sources */,
+				1FB214412B21B0640078A014 /* UnboardingPresenter.swift in Sources */,
 				C26BFE552768D7D400ABD119 /* IntrestingEventsRouter.swift in Sources */,
 				C2A0C23D276CD65A0023BF60 /* FAQRouter.swift in Sources */,
 				53F0D7A6275E987F0087A9BB /* FavouritesInteractor.swift in Sources */,
@@ -1002,6 +1035,7 @@
 				C24A7E9E2771DCEA00D4751F /* WeatherWorker.swift in Sources */,
 				C254487A2706ED32000B9439 /* ModelWeather.swift in Sources */,
 				5397795627442BC4006644D3 /* AvailableCities.swift in Sources */,
+				1FB214372B21B0300078A014 /* UnboardingController.swift in Sources */,
 				53F3E2F2273FD7D7004B278E /* CityController.swift in Sources */,
 				C24A7EAE277339A600D4751F /* RentAutoCollectionViewCell.swift in Sources */,
 				5323BA18274D509700F6BA5E /* TicketCollectionViewCell.swift in Sources */,
@@ -1010,6 +1044,7 @@
 				C26BFE452768A01B00ABD119 /* WorldPresenter.swift in Sources */,
 				C24A7EB427735C1700D4751F /* BottomCollectionViewCollectionViewCell.swift in Sources */,
 				1F8E4B222B0CEBDA00A7EC61 /* ManagesFavorites.swift in Sources */,
+				1FB2143F2B21B05C0078A014 /* UnboardingWorker.swift in Sources */,
 				53F3E2FE273FDD4D004B278E /* CurrentCityRouter.swift in Sources */,
 				C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */,
 				C259AA1127204DA600B03921 /* Extension+UserDefault.swift in Sources */,
@@ -1021,6 +1056,7 @@
 				1F73AC672AD940EA00AB359A /* DBModels.swift in Sources */,
 				C2C985EB2744FCC600CCC2F7 /* CountryCellsPhotosCollectionViewCell.swift in Sources */,
 				C259AA1727214A6300B03921 /* CurrentCityWorker.swift in Sources */,
+				1FB214432B21B06F0078A014 /* UnboardingModels.swift in Sources */,
 				C24A7E9A2771DCD900D4751F /* WeatherInteractor.swift in Sources */,
 				53F3E2F8273FD7FB004B278E /* CityPresenter.swift in Sources */,
 				C2350E07273AC39F000BA2A7 /* FloatingViewThirdTableViewCell.swift in Sources */,

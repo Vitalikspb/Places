@@ -9,6 +9,7 @@ import UIKit
 
 protocol MapRoutingLogic: AnyObject {
     func routeToCityVC()
+    func routeToUnboardingVC()
 }
 
 protocol MapDataPassing: AnyObject {
@@ -25,10 +26,21 @@ class MapRouter: NSObject, MapRoutingLogic {
         let destinationVC: CityController = CityController.loadFromStoryboard()
         navigateToViewContact(source: viewController!, destination: destinationVC)
     }
+    
+    // На экран онбординга
+    func routeToUnboardingVC() {
+        let destinationVC: UnboardingController = UnboardingController.loadFromStoryboard()
+        navigateToUnboarding(source: viewController!, destination: destinationVC)
+    }
 
     // MARK: - Navigation
     
     func navigateToViewContact(source: MapController, destination: CityController) {
+        source.navigationController?.pushViewController(destination, animated: true)
+    }
+    
+    // Открыть онбординг
+    func navigateToUnboarding(source: MapController!, destination: UnboardingController) {
         source.navigationController?.pushViewController(destination, animated: true)
     }
 }

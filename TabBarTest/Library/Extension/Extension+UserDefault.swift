@@ -19,6 +19,9 @@ extension UserDefaults {
     // текущий город для экрана дом инфа по городу
     static var currentCity: String { "currentCity" }
     
+    // Первый раз запускаем прилу
+    static var firstOpenApp: String { "firstOpenApp" }
+    
     // текущее местоположение
     static var currentLongitude: String { "currentLongitude" }
     static var currentLatitude: String { "currentLatitude" }
