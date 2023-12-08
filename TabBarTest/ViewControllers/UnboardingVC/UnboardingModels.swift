@@ -10,6 +10,15 @@ import UIKit
 
 enum UnboardingModels {
     
+    struct OnboardingModel {
+        let id: Int
+        let backgroundColor: String
+        let mainImage: UIImage
+        let title: String
+        let subTitle: String
+        let nextButtonTitle: String
+    }
+    
     enum Unboarding {
 
         struct Request { }
@@ -17,8 +26,7 @@ enum UnboardingModels {
         struct Response { }
         
         struct ViewModel {
-            var description: [String]
-            var images: [UIImage]
+            var model: [OnboardingModel]
         }
     }
 }

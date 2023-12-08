@@ -6,5 +6,6 @@ target 'TabBarTest' do
   use_frameworks!
 
   pod 'GoogleMaps'
+  pod 'SnapKit', '~> 5.0.0'
 
 end

@@ -15,12 +15,16 @@
 
 #import "GoogleMapsDemos/Samples/AnimatedUIViewMarkerViewController.h"
 
+#if __has_feature(modules)
+@import GoogleMaps;
+#else
 #import <GoogleMaps/GoogleMaps.h>
+#endif
 
-// Returns a random value from 0-1.0f.
+/** Returns a random value from 0-1.0f. */
 static CGFloat randf() { return (((float)arc4random() / 0x100000000) * 1.0f); }
 
-@interface AnimatedUIViewMarkerViewController ()<GMSMapViewDelegate>
+@interface AnimatedUIViewMarkerViewController () <GMSMapViewDelegate>
 @end
 
 @implementation AnimatedUIViewMarkerViewController {
@@ -30,8 +34,9 @@ static CGFloat randf() { return (((float)arc4random() / 0x100000000) * 1.0f); }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  GMSCameraPosition *camera =
-      [GMSCameraPosition cameraWithLatitude:-33.8683 longitude:151.2086 zoom:5];
+  GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.8683
+                                                          longitude:151.2086
+                                                               zoom:5];
   _mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
   _mapView.delegate = self;
 

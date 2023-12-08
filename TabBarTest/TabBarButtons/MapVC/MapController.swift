@@ -111,6 +111,8 @@ class MapController: UIViewController {
                                                                     width: UIScreen.main.bounds.width,
                                                                     height: 60))
     
+    private var openUnboarding: Bool = true
+    
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -135,6 +137,7 @@ class MapController: UIViewController {
         openUnboardingScreen()
         UserDefaults.standard.setValue(false, forKey: UserDefaults.firstOpenApp)
         navigationController?.navigationBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -185,7 +188,8 @@ class MapController: UIViewController {
     
     private func openUnboardingScreen() {
         let showUnboarding = userDefault.bool(forKey: UserDefaults.firstOpenApp)
-        if !showUnboarding {
+        if openUnboarding {
+            openUnboarding = false
             router?.routeToUnboardingVC()
         }
     }

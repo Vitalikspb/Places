@@ -15,7 +15,11 @@
 
 #import "GoogleMapsDemos/Samples/GradientPolylinesViewController.h"
 
+#if __has_feature(modules)
+@import GoogleMaps;
+#else
 #import <GoogleMaps/GoogleMaps.h>
+#endif
 
 @implementation GradientPolylinesViewController {
   GMSMapView *_mapView;
@@ -45,7 +49,7 @@
     NSDictionary *dict = [_trackData objectAtIndex:i];
     double elevation = [[dict objectForKey:@"elevation"] doubleValue];
 
-    UIColor *toColor = [UIColor colorWithHue:(float)elevation/700
+    UIColor *toColor = [UIColor colorWithHue:(float)elevation / 700
                                   saturation:1.f
                                   brightness:.9f
                                        alpha:1.f];
@@ -75,7 +79,7 @@
     CLLocationDegrees lat = [[info objectForKey:@"lat"] doubleValue];
     CLLocationDegrees lng = [[info objectForKey:@"lng"] doubleValue];
     CLLocation *loc = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
-    [_trackData addObject:@{@"loc": loc, @"elevation": elevation}];
+    [_trackData addObject:@{@"loc" : loc, @"elevation" : elevation}];
     [path addLatitude:lat longitude:lng];
   }
 

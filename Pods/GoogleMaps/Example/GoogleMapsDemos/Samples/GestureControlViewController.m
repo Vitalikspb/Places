@@ -15,7 +15,11 @@
 
 #import "GoogleMapsDemos/Samples/GestureControlViewController.h"
 
+#if __has_feature(modules)
+@import GoogleMaps;
+#else
 #import <GoogleMaps/GoogleMaps.h>
+#endif
 
 @implementation GestureControlViewController {
   GMSMapView *_mapView;
@@ -29,8 +33,8 @@
                                                                zoom:3];
 
   _mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-  _mapView.autoresizingMask =
-      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _mapView.accessibilityIdentifier = @"gestureControlDemoMapView";
 
   self.view = [[UIView alloc] initWithFrame:CGRectZero];
   [self.view addSubview:_mapView];

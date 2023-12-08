@@ -15,7 +15,11 @@
 
 #import "GoogleMapsDemos/Samples/DoubleMapViewController.h"
 
+#if __has_feature(modules)
+@import GoogleMaps;
+#else
 #import <GoogleMaps/GoogleMaps.h>
+#endif
 
 @interface DoubleMapViewController () <GMSMapViewDelegate>
 @end
@@ -26,9 +30,7 @@
 }
 
 + (GMSCameraPosition *)defaultCamera {
-  return [GMSCameraPosition cameraWithLatitude:37.7847
-                                     longitude:-122.41
-                                          zoom:5];
+  return [GMSCameraPosition cameraWithLatitude:37.7847 longitude:-122.41 zoom:5];
 }
 
 - (void)viewDidLoad {
@@ -38,8 +40,7 @@
   CGRect frame = self.view.bounds;
   frame.size.height = frame.size.height / 2;
   _mapView = [GMSMapView mapWithFrame:frame camera:[DoubleMapViewController defaultCamera]];
-  _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
-                              UIViewAutoresizingFlexibleHeight |
+  _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight |
                               UIViewAutoresizingFlexibleBottomMargin;
 
   _mapView.delegate = self;
@@ -48,8 +49,7 @@
   frame = self.view.bounds;
   frame.size.height = frame.size.height / 2;
   frame.origin.y = frame.size.height;
-  _boundMapView =
-      [GMSMapView mapWithFrame:frame camera:[DoubleMapViewController defaultCamera]];
+  _boundMapView = [GMSMapView mapWithFrame:frame camera:[DoubleMapViewController defaultCamera]];
   _boundMapView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
                                    UIViewAutoresizingFlexibleHeight |
                                    UIViewAutoresizingFlexibleTopMargin;

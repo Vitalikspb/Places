@@ -35,7 +35,6 @@
 		533D8DD8270394890006B0EE /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D8DD7270394890006B0EE /* WeatherView.swift */; };
 		53403D68275FF1B5004087F7 /* FavouritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D67275FF1B4004087F7 /* FavouritesTableViewCell.swift */; };
 		53403D6B275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D6A275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift */; };
-		53403D6D2763C402004087F7 /* FavouritesTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D6C2763C402004087F7 /* FavouritesTopView.swift */; };
 		53403D6F2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D6E2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift */; };
 		53403D712763E0FC004087F7 /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53403D702763E0FC004087F7 /* Extension+String.swift */; };
 		5345E2892718B2D400FCD554 /* SettingsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */; };
@@ -201,7 +200,6 @@
 		533D8DD7270394890006B0EE /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		53403D67275FF1B4004087F7 /* FavouritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTableViewCell.swift; sourceTree = "<group>"; };
 		53403D6A275FF321004087F7 /* FavouritesTableViewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTableViewCollectionViewCell.swift; sourceTree = "<group>"; };
-		53403D6C2763C402004087F7 /* FavouritesTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTopView.swift; sourceTree = "<group>"; };
 		53403D6E2763D07B004087F7 /* FavouritesTopCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTopCollectionViewCell.swift; sourceTree = "<group>"; };
 		53403D702763E0FC004087F7 /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 		5345E2882718B2D400FCD554 /* SettingsStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsStoryboard.storyboard; sourceTree = "<group>"; };
@@ -634,7 +632,6 @@
 				C2588FAA270364180014CCDC /* TopSearchView.swift */,
 				C254487D27070753000B9439 /* FloatingView.swift */,
 				C2A6D2F1271D824300DD9DF4 /* MainFloatingView.swift */,
-				53403D6C2763C402004087F7 /* FavouritesTopView.swift */,
 				532A231E276E37DF001CFAEC /* ImageScrollView.swift */,
 				C24A7EA52771F5F000D4751F /* HeaderFullWeather.swift */,
 				C24A7EB12773590300D4751F /* BottomCollectionView.swift */,
@@ -810,6 +807,7 @@
 				C2CA35CD26FDCDAF00795EF6 /* Frameworks */,
 				C2CA35CE26FDCDAF00795EF6 /* Resources */,
 				ABD588BAE41B427E584FEEF8 /* [CP] Copy Pods Resources */,
+				4B73BD3380B63D360B8C7B67 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -916,6 +914,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4B73BD3380B63D360B8C7B67 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TabBarTest/Pods-TabBarTest-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TabBarTest/Pods-TabBarTest-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TabBarTest/Pods-TabBarTest-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ABD588BAE41B427E584FEEF8 /* [CP] Copy Pods Resources */ = {
@@ -1048,7 +1063,6 @@
 				53F3E2FE273FDD4D004B278E /* CurrentCityRouter.swift in Sources */,
 				C2A6D2F2271D824300DD9DF4 /* MainFloatingView.swift in Sources */,
 				C259AA1127204DA600B03921 /* Extension+UserDefault.swift in Sources */,
-				53403D6D2763C402004087F7 /* FavouritesTopView.swift in Sources */,
 				C259AA1E2721710800B03921 /* Extension+UIImageView.swift in Sources */,
 				5323BA1C274D82CC00F6BA5E /* WeatherCollectionViewCell.swift in Sources */,
 				5396A4932706377C0044D759 /* InternetConnection.swift in Sources */,

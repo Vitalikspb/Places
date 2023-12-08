@@ -15,13 +15,16 @@
 
 #import "GoogleMapsDemos/Samples/AnimatedCurrentLocationViewController.h"
 
+#if __has_feature(modules)
+@import GoogleMaps;
+#else
 #import <GoogleMaps/GoogleMaps.h>
+#endif
 
 @implementation AnimatedCurrentLocationViewController {
   CLLocationManager *_manager;
-  GMSMapView        *_mapView;
-  GMSMarker         *_locationMarker;
-
+  GMSMapView *_mapView;
+  GMSMarker *_locationMarker;
 }
 
 - (void)viewDidLoad {
@@ -55,7 +58,6 @@
   _manager.desiredAccuracy = kCLLocationAccuracyBest;
   _manager.distanceFilter = 5.0f;
   [_manager startUpdatingLocation];
-
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -77,20 +79,17 @@
     _locationMarker = [[GMSMarker alloc] init];
     _locationMarker.position = location.coordinate;
 
-    // Animated walker images derived from an www.angryanimator.com tutorial.
+    // Animated walker images derived from a www.angryanimator.com tutorial.
     // See: http://www.angryanimator.com/word/2010/11/26/tutorial-2-walk-cycle/
 
-    NSArray *frames = @[[UIImage imageNamed:@"step1"],
-                        [UIImage imageNamed:@"step2"],
-                        [UIImage imageNamed:@"step3"],
-                        [UIImage imageNamed:@"step4"],
-                        [UIImage imageNamed:@"step5"],
-                        [UIImage imageNamed:@"step6"],
-                        [UIImage imageNamed:@"step7"],
-                        [UIImage imageNamed:@"step8"]];
+    NSArray *frames = @[
+      [UIImage imageNamed:@"step1"], [UIImage imageNamed:@"step2"], [UIImage imageNamed:@"step3"],
+      [UIImage imageNamed:@"step4"], [UIImage imageNamed:@"step5"], [UIImage imageNamed:@"step6"],
+      [UIImage imageNamed:@"step7"], [UIImage imageNamed:@"step8"]
+    ];
 
     _locationMarker.icon = [UIImage animatedImageWithImages:frames duration:0.8];
-    _locationMarker.groundAnchor = CGPointMake(0.5f, 0.97f); // Taking into account walker's shadow
+    _locationMarker.groundAnchor = CGPointMake(0.5f, 0.97f);  // Taking into account walker's shadow
     _locationMarker.map = _mapView;
   } else {
     [CATransaction begin];
@@ -102,6 +101,5 @@
   GMSCameraUpdate *move = [GMSCameraUpdate setTarget:location.coordinate zoom:17];
   [_mapView animateWithCameraUpdate:move];
 }
-
 
 @end

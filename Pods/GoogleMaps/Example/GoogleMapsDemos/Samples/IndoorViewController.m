@@ -15,7 +15,11 @@
 
 #import "GoogleMapsDemos/Samples/IndoorViewController.h"
 
+#if __has_feature(modules)
+@import GoogleMaps;
+#else
 #import <GoogleMaps/GoogleMaps.h>
+#endif
 
 static NSString *const kNormalType = @"Normal";
 static NSString *const kRetroType = @"Retro";
@@ -51,7 +55,6 @@ static NSString *const kNightType = @"Night";
                                                                zoom:18];
 
   _mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-  _mapView.settings.myLocationButton = YES;
 
   UIBarButtonItem *styleButton = [[UIBarButtonItem alloc] initWithTitle:@"Style"
                                                                   style:UIBarButtonItemStylePlain

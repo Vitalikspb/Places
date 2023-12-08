@@ -15,7 +15,11 @@
 
 #import "GoogleMapsDemos/Samples/FixedPanoramaViewController.h"
 
+#if __has_feature(modules)
+@import GoogleMaps;
+#else
 #import <GoogleMaps/GoogleMaps.h>
+#endif
 
 static CLLocationCoordinate2D kPanoramaNear = {-33.732022, 150.312114};
 
@@ -29,11 +33,8 @@ static CLLocationCoordinate2D kPanoramaNear = {-33.732022, 150.312114};
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  _view = [GMSPanoramaView panoramaWithFrame:CGRectZero
-                              nearCoordinate:kPanoramaNear];
-  _view.camera = [GMSPanoramaCamera cameraWithHeading:180
-                                                pitch:-10
-                                                 zoom:0];
+  _view = [GMSPanoramaView panoramaWithFrame:CGRectZero nearCoordinate:kPanoramaNear];
+  _view.camera = [GMSPanoramaCamera cameraWithHeading:180 pitch:-10 zoom:0];
   _view.delegate = self;
   _view.orientationGestures = NO;
   _view.navigationGestures = NO;

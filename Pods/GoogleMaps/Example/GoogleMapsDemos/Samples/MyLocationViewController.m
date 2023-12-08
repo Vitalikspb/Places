@@ -15,7 +15,11 @@
 
 #import "GoogleMapsDemos/Samples/MyLocationViewController.h"
 
+#if __has_feature(modules)
+@import GoogleMaps;
+#else
 #import <GoogleMaps/GoogleMaps.h>
+#endif
 
 @implementation MyLocationViewController {
   GMSMapView *_mapView;
@@ -64,9 +68,7 @@
 }
 
 - (void)dealloc {
-  [_mapView removeObserver:self
-                forKeyPath:@"myLocation"
-                   context:NULL];
+  [_mapView removeObserver:self forKeyPath:@"myLocation" context:NULL];
 }
 
 #pragma mark - KVO updates
@@ -76,12 +78,10 @@
                         change:(NSDictionary *)change
                        context:(void *)context {
   if (!_firstLocationUpdate) {
-    // If the first location update has not yet been received, then jump to that
-    // location.
+    // If the first location update has not yet been received, then jump to that location.
     _firstLocationUpdate = YES;
     CLLocation *location = [change objectForKey:NSKeyValueChangeNewKey];
-    _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate
-                                                     zoom:14];
+    _mapView.camera = [GMSCameraPosition cameraWithTarget:location.coordinate zoom:14];
   }
 }
 
