@@ -23,6 +23,7 @@ class CountryPhotosTableViewCell: UITableViewCell {
     
     static let identifier = "CountryPhotosTableViewCell"
     private var imageArray = [String]()
+    private var firstImage = UIImage()
     
     // MARK: - Lifecycle
     
@@ -54,6 +55,7 @@ class CountryPhotosTableViewCell: UITableViewCell {
     
     func configureCell(cityImages: [String]) {
         imageArray = cityImages
+        firstImage = UIImage(named: cityImages[0]) ?? UIImage()
     }
     
     private func setupUI() {
@@ -95,15 +97,16 @@ extension CountryPhotosTableViewCell: UICollectionViewDelegate, UICollectionView
         pageControl.isHidden = !(count > 1)
         return count
     }
-    
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 1
-//    }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsPhotosCollectionViewCell.identifier, for: indexPath) as? CountryCellsPhotosCollectionViewCell else { return UICollectionViewCell() }
-        cell.image.image = UIImage(named: imageArray[indexPath.row])
-        cell.layer.cornerRadius = 12
+        if indexPath.row != 0 {
+            NetworkHelper.shared.downloadImage(from: imageArray[indexPath.row], cityPhoto: true) { image in
+                cell.configureCell(data: image)
+            }
+        } else {
+            cell.configureCell(data: firstImage)
+        }
         return cell
     }
     

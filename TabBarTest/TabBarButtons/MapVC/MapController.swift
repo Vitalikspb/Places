@@ -134,7 +134,8 @@ class MapController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        openUnboardingScreen()
+        // MARK: - TODO Доделать когда будут скрины онбординга
+//        openUnboardingScreen()
         UserDefaults.standard.setValue(false, forKey: UserDefaults.firstOpenApp)
         navigationController?.navigationBar.isHidden = true
         self.tabBarController?.tabBar.isHidden = false

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ko_lante.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

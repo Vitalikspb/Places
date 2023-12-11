@@ -159,8 +159,8 @@ extension WorldController: WorldCollectionViewCellDelegate {
         print("Переход на карту с выбранной страной:\(name)")
         // открываем выбранный город на карте
         let selectedCity = UserDefaults.standard.getSightDescription().first(where: { $0.name == name })
-        var latitude = selectedCity?.latitude ?? 0.0
-        var longitude = selectedCity?.longitude ?? 0.0
+        let latitude = selectedCity?.latitude ?? 0.0
+        let longitude = selectedCity?.longitude ?? 0.0
         showSelectedItemOnMap(city: name == "Россия" ? false : true,
                               latitude: name == "Россия" ? 61.237414 : latitude,
                               longitude: name == "Россия" ? 93.177739 : longitude)

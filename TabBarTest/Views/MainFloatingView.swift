@@ -183,7 +183,7 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
                                                      for: indexPath) as! FloatingViewFirstTableViewCell
             if let model = model {
                 cell.configCell(title: model.name,
-                                type: model.type.rawValue,
+                                type: model.type,
                                 showButtons: tableView.isScrollEnabled == true ? true : false,
                                 smallView: smallView, 
                                 rating: model.rating)

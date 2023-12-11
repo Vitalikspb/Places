@@ -41,7 +41,6 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: "vosklicanie")
         return imageView
     }()
     let typeLocationLabel: UILabel = {
@@ -107,9 +106,9 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(title: String, type: String, showButtons: Bool, smallView: Bool = true, rating: String) {
+    func configCell(title: String, type: TypeSight, showButtons: Bool, smallView: Bool = true, rating: String) {
         titleLabel.text = title
-        typeLocationLabel.text = type
+        typeLocationLabel.text = type.rawValue
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
             self.buttonsView.alpha = showButtons ? 0 : 1
@@ -119,6 +118,19 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         ratingLabel.text = rating
         let imagesCount = Int(rating.components(separatedBy: ".").first ?? "0") ?? 0
         starView.show(with: imagesCount)
+        
+        var iconName = UIImage()
+        switch type {
+        case .sightSeen:
+            iconName = UIImage(named: "museum") ?? UIImage()
+        case .museum:
+            iconName = UIImage(named: "museumSearch") ?? UIImage()
+        case .cultureObject:
+            iconName = UIImage(named: "museumSearch") ?? UIImage()
+        case .god:
+            iconName = UIImage(named: "temple") ?? UIImage()
+        }
+        typeSightImageView.image = iconName
     }
     
     private func setupUI() {

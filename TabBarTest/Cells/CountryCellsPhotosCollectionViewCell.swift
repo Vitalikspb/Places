@@ -28,11 +28,12 @@ class CountryCellsPhotosCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
+        self.layer.cornerRadius = 12
         image.contentMode = .scaleAspectFill
         image.layer.cornerRadius = 10
         image.layer.masksToBounds = true
         image.backgroundColor = .white
-
+        
         contentView.addSubview(image)
         image.addConstraintsToFillView(view: contentView)
     }

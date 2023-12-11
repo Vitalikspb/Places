@@ -21,7 +21,7 @@ enum CurrentCityViewModel {
         // посылаем все города для отображения на экране
         struct ViewModel {
             var titlesec: TitleSection
-            var model: [SightDescription]?
+            var model: [SightDescriptionResponce]?
         }
     }
     

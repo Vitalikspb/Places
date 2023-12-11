@@ -69,14 +69,18 @@ class ActionsButtonsCityView: UIScrollView {
     // MARK: - Helper Functions
     
     private func setupUI() {
-//        animateFavouriteButton.delegate = self
-//        animateFavouriteButton.setupId(id: 0)
+        let tapanimateFavouriteButton = UITapGestureRecognizer(target: self, action: #selector(handleFavouriteButton))
+        animateFavouriteButton.addGestureRecognizer(tapanimateFavouriteButton)
+        animateFavouriteButton.isUserInteractionEnabled = true
         
-//        animateInterestingButton.delegate = self
-//        animateInterestingButton.setupId(id: 1)
+        let tapanimateInterestingButton = UITapGestureRecognizer(target: self, action: #selector(handleInterestingButton))
+        animateInterestingButton.addGestureRecognizer(tapanimateInterestingButton)
+        animateInterestingButton.isUserInteractionEnabled = true
         
-//        animateFaqButton.delegate = self
-//        animateFaqButton.setupId(id: 2)
+        let tapaanimateFaqButton = UITapGestureRecognizer(target: self, action: #selector(handleFaqButton))
+        animateFaqButton.addGestureRecognizer(tapaanimateFaqButton)
+        animateFaqButton.isUserInteractionEnabled = true
+    
         
         self.backgroundColor = .setCustomColor(color: .filterbuttonFloatingScreen)
         self.isScrollEnabled = true
@@ -132,30 +136,9 @@ class ActionsButtonsCityView: UIScrollView {
         self.contentSize = CGSize(width: routeButtonWidth + addToFavouritesButtonWidth + callButtonWidth  + 52,
                                   height: self.frame.height)
     }
+    
+
 }
 
-// MARK: - CustomAnimatedButtonDelegate
-
-extension ActionsButtonsCityView: CustomAnimatedButtonDelegate {
-    
-    func continueButton() {
-//        switch model.id {
-//            
-//        case 0:
-//            handleFavouriteButton()
-//            
-//        case 1:
-//            handleInterestingButton()
-//            
-//        case 2:
-//            handleFaqButton()
-//            
-//        default:
-//            break
-//        }
-    }
-    
-    
-}
 
 

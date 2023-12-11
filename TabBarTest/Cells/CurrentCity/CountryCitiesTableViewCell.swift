@@ -29,7 +29,7 @@ class CountryCitiesTableViewCell: UITableViewCell {
     
     weak var delegate: CountryCitiesTableViewCellDelegate?
     static let identifier = "CountryCitiesTableViewCell"
-    private var model: [SightDescription] = []
+    private var model: [SightDescriptionResponce] = []
     
     // MARK: - Private properties
     
@@ -62,7 +62,7 @@ class CountryCitiesTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(model: [SightDescription]) {
+    func configCell(model: [SightDescriptionResponce]) {
         self.model = model
     }
     

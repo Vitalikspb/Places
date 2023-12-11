@@ -42,7 +42,7 @@ class CountryCitiesCollectionView: UIView {
     
     // MARK: - Private propertiesx
     
-    private var model: [SightDescription] = []
+    private var model: [SightDescriptionResponce] = []
     private var availabel: Bool = false
     
     
@@ -71,7 +71,7 @@ class CountryCitiesCollectionView: UIView {
         collectionView.addConstraintsToFillView(view: containerView)
     }
     
-    public func configureCells(availabel: Bool, model: [SightDescription]) {
+    public func configureCells(availabel: Bool, model: [SightDescriptionResponce]) {
         self.model = model
         self.availabel = availabel
         DispatchQueue.main.async {

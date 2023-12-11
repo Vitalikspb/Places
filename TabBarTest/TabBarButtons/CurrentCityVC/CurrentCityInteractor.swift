@@ -61,8 +61,8 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
     
     func showCity(named: String) {
         let cities = UserDefaults.standard.getSightDescription()
-        var otherCityData = [SightDescription]()
-        var country: SightDescription?
+        var otherCityData = [SightDescriptionResponce]()
+        var country: SightDescriptionResponce?
         let viewModelWeather = CurrentCityViewModel.CurrentCity.ViewModel(city: currentCity, weather: currentWeather)
 
         // оставляем только текущий город
@@ -84,7 +84,7 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
                                         longitude: 0.0,
                                         available: true,
                                         iconName: "")
-        let curCityModelData = SightDescription(id: country.id,
+        let curCityModelData = SightDescriptionResponce(id: country.id,
                                                 name: country.name,
                                                 description: country.description,
                                                 price: country.price,

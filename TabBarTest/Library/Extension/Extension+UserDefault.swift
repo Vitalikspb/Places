@@ -43,31 +43,26 @@ extension UserDefaults {
     /// Сохранение Sight
     func saveSight(value: [Sight?], data: Data) {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "Sight")
-        UserDefaults.standard.set(data.count, forKey: "SightData")
     }
     
     /// Сохранение saveAllCity
-    func saveAllCity(value: [SightDescription?], data: Data) {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "SightDescription")
-        UserDefaults.standard.set(data.count, forKey: "CityAllData")
+    func saveAllCity(value: [SightDescriptionResponce?], data: Data) {
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "SightDescriptionResponce")
     }
     
     /// Сохранение saveAllCity
     func saveCityCountryInfo(value: [CountryCityInfo?], data: Data) {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "CountryCityInfo")
-        UserDefaults.standard.set(data.count, forKey: "CityCountryInfoData")
     }
     
     /// Сохранение events
     func saveEvents(value: [Events?], data: Data) {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "events")
-        UserDefaults.standard.set(data.count, forKey: "eventsData")
     }
     
     /// Сохранение FAQCity
     func saveFAQCity(value: [FAQCity?], data: Data) {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(value), forKey: "FAQCity")
-        UserDefaults.standard.set(data.count, forKey: "FAQCityData")
     }
     
     /// Сохранение Избранного
@@ -87,9 +82,9 @@ extension UserDefaults {
     }
     
     /// Запрос описании города для стране
-    func getSightDescription() -> [SightDescription] {
-        if let data = UserDefaults.standard.value(forKey: "SightDescription") as? Data {
-            let cellUnwrapped = try? PropertyListDecoder().decode(Array<SightDescription>.self, from: data)
+    func getSightDescription() -> [SightDescriptionResponce] {
+        if let data = UserDefaults.standard.value(forKey: "SightDescriptionResponce") as? Data {
+            let cellUnwrapped = try? PropertyListDecoder().decode(Array<SightDescriptionResponce>.self, from: data)
             return cellUnwrapped ?? []
         }
         return []

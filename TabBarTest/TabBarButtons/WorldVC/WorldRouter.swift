@@ -55,7 +55,7 @@ class WorldRouter: NSObject, WorldRoutingLogic, WorldDataPassing {
                                                 longitude: dataModel?.longitude ?? 0.0,
                                                 available: dataModel?.available ?? true,
                                                 iconName: dataModel?.iconName ?? "")
-                let tempModel = SightDescription(id: val.id,
+                let tempModel = SightDescriptionResponce(id: val.id,
                                                  name: val.name,
                                                  description: val.description,
                                                  price: val.price,

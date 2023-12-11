@@ -61,7 +61,7 @@ class WorldCollectionViewCell: UITableViewCell {
     // MARK: - Private properties
     
     private var modelHeader: TitleSection!
-    private var modelCities: [SightDescription] = []
+    private var modelCities: [SightDescriptionResponce] = []
     
     // MARK: - Lifecycle
     
@@ -97,7 +97,7 @@ class WorldCollectionViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configureHeaderCell(header: TitleSection, cities: [SightDescription], alpha: CGFloat, available: Bool) {
+    func configureHeaderCell(header: TitleSection, cities: [SightDescriptionResponce], alpha: CGFloat, available: Bool) {
         modelHeader = header
         modelCities = cities
         
