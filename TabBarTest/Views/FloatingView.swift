@@ -56,7 +56,7 @@ class FloatingView: UIView {
     
     // MARK: - Selectors
     
-    @objc func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
+    @objc private func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
         switch sender.direction {
         case .up:
             if expansionState == .NotExpanded {
@@ -121,7 +121,7 @@ class FloatingView: UIView {
         }
     }
     
-    func cornerRadii(with radii: Int) {
+    private func cornerRadii(with radii: Int) {
         let layer = CAShapeLayer()
         let cornerPath = UIBezierPath(roundedRect: self.bounds,
                                       byRoundingCorners: [.topLeft, .topRight],
@@ -132,7 +132,7 @@ class FloatingView: UIView {
         layoutIfNeeded()
     }
     
-    func animateInputView(targetPosition: CGFloat, state: ExpansionState) {
+    private func animateInputView(targetPosition: CGFloat, state: ExpansionState) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
@@ -148,7 +148,7 @@ class FloatingView: UIView {
         self.expansionState = state
     }
     
-    func configureUI() {
+    private func configureUI() {
         mainView.delegate = self
         backgroundColor = .clear
         addSubview(mainView)
@@ -167,7 +167,7 @@ class FloatingView: UIView {
     }
     
     
-    func configureGestureRecognizer() {
+    private func configureGestureRecognizer() {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
         swipeUp.direction = .up
         addGestureRecognizer(swipeUp)

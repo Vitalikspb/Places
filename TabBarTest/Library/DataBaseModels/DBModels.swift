@@ -162,6 +162,8 @@ enum TypeSight: String, Codable {
     case cultureObject = "Культурный объект"
     /// Богослужение
     case god = "Богослужение"
+    /// Избранное
+    case favorite = "Избранное"
 }
 
 // категория достопримечательности

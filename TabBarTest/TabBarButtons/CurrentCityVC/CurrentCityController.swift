@@ -391,7 +391,6 @@ extension CurrentCityController: SightTableViewCellDelegate {
     
     // открываем выбранную достопримечательность на карте
     func handleSelectedSight(_ name: String) {
-        print("переход на карту и выбор достопримечательности: \(name)")
         userDefault.set(true, forKey: UserDefaults.showSelectedSight)
         userDefault.set(name, forKey: UserDefaults.showSelectedSightName)
         tabBarController?.selectedIndex = 0
@@ -419,18 +418,21 @@ extension CurrentCityController: WeatherCollectionViewCellDelegate {
 // MARK: - ActionsButtonsCityViewDelegate
 
 extension CurrentCityController: ActionsButtonsCityViewDelegate {
+    
+    // Открытие избранного
     func favouriteButtonTapped() {
         router?.routeToFavouritesVC()
     }
     
+    // Открытие интересных событий
     func interestingButtonTapped() {
         router?.routeToInterestingEventsVC()
     }
     
+    // Открытие вопросы и ответы
     func faqButtonTapped() {
         router?.routeToFAQVC()
     }
-    
     
 }
 

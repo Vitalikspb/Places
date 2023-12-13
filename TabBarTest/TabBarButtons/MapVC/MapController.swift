@@ -75,6 +75,10 @@ class MapController: UIViewController {
     
     // показ нижнего скролл из достопримечательностей внизу
     private var showBottomCollectionSight: Bool = true
+    // было ли открытие онбординга
+    private var openUnboarding: Bool = true
+    // тип выбранного фильтра
+    private var selectedScrollFilterType: TypeSight?
     
     // MARK: - UI Properties
     
@@ -110,8 +114,6 @@ class MapController: UIViewController {
                                                                     y: 0,
                                                                     width: UIScreen.main.bounds.width,
                                                                     height: 60))
-    
-    private var openUnboarding: Bool = true
     
     // MARK: - LifeCycle
     
@@ -544,11 +546,23 @@ extension MapController: GMSMapViewDelegate {
             floatingView.hideFloatingView()
             showScrollAndWeatherView()
             if selectMark || selectMarkFromBottomView {
-                addDefaultMarkers()
                 selectMark = false
                 selectMarkFromBottomView = false
             }
             enableMapInteractive = false
+        }
+        
+        if let selectedScrollFilterType = selectedScrollFilterType{
+            if selectedScrollFilterType == .favorite {
+                // Фильтрация по избранным
+                interactor?.fetchAllFavorites(selected: true)
+            } else {
+                interactor?.fetchAllTestMarkers(request: selectedScrollFilterType)
+            }
+        } else {
+            if enableMapInteractive {
+                addDefaultMarkers()
+            }
         }
     }
     
@@ -582,17 +596,22 @@ extension MapController: GMSMapViewDelegate {
 
 // MARK: - ScrollViewOnMapDelegate
 extension MapController: ScrollViewOnMapDelegate {
-    
-    // Фильтрация по избранным
-    func chooseFavorites(selected: Bool) {
-        interactor?.fetchAllFavorites(selected: selected)
-    }
-    
+
     // Фильтрация маркеров
     func chooseSightSelected(selected: Bool, request: TypeSight) {
-        selected
-        ? interactor?.appendAllMarkers()
-        : interactor?.fetchAllTestMarkers(request: request)
+        if selectedScrollFilterType == nil {
+            selectedScrollFilterType = request
+        } else {
+            selectedScrollFilterType = nil
+        }
+        if request == .favorite {
+            // Фильтрация по избранным
+            interactor?.fetchAllFavorites(selected: selected)
+        } else {
+            selected
+            ? interactor?.appendAllMarkers()
+            : interactor?.fetchAllTestMarkers(request: request)
+        }
     }
 
     // Отображение поисковой строки и сокрытие строки с фильтрами
@@ -775,12 +794,24 @@ extension MapController: FloatingViewDelegate {
                 self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
             }
         }
-        if selectMark {
-            addDefaultMarkers()
-            selectMark = false
-        }
         mapView.settings.myLocationButton = true
         showScrollAndWeatherView()
+        if selectMark {
+            selectMark = false
+        }
+        
+        if let selectedScrollFilterType = selectedScrollFilterType {
+            if selectedScrollFilterType == .favorite {
+                // Фильтрация по избранным
+                interactor?.fetchAllFavorites(selected: true)
+            } else {
+                // Фильтрация
+                interactor?.fetchAllTestMarkers(request: selectedScrollFilterType)
+            }
+        } else {
+            // показ всех маркеров
+                addDefaultMarkers()
+        }
     }
 }
 

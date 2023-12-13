@@ -23,11 +23,7 @@ class InterestingEventsCollectionViewCell: UICollectionViewCell {
     // MARK: - Public properties
     
     static let identifier = "InterestingEventsCollectionViewCell"
-    var cellImage: UIImage = UIImage() {
-        didSet {
-            mainImageView.image = cellImage
-        }
-    }
+
     
     // MARK: - LifeCycle
     
@@ -53,12 +49,13 @@ class InterestingEventsCollectionViewCell: UICollectionViewCell {
         self.clipsToBounds = true
         
         contentView.addSubview(mainImageView)
-        
         mainImageView.addConstraintsToFillView(view: contentView)
     }
     
     func conigureCell(image: String) {
-        self.cellImage = UIImage(named: image) ?? UIImage()
+        NetworkHelper.shared.downloadImage(from: image) { image in
+            self.mainImageView.image = image
+        }
     }
     
 }

@@ -29,11 +29,10 @@ class FAQInteractor: FAQBussinessLogic, FAQDataStore {
     }
     
     func showFAQ() {
-        if country == "" {
-            country = "Россия"
-        }
+        country = "Россия"
         FAQWorker.updateFAQCity(model: ModelForRequest(country: country, city: city)) {
             let faqCity = UserDefaults.standard.getFAQCity()
+            print("faqCity:\(faqCity)")
             self.presenter?.presentFAQ(response: faqCity)
         }
         

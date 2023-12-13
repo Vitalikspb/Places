@@ -101,7 +101,7 @@ extension CountryPhotosTableViewCell: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsPhotosCollectionViewCell.identifier, for: indexPath) as? CountryCellsPhotosCollectionViewCell else { return UICollectionViewCell() }
         if indexPath.row != 0 {
-            NetworkHelper.shared.downloadImage(from: imageArray[indexPath.row], cityPhoto: true) { image in
+            NetworkHelper.shared.downloadImage(from: imageArray[indexPath.row]) { image in
                 cell.configureCell(data: image)
             }
         } else {

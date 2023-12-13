@@ -42,9 +42,8 @@ class FloatingCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Helper functions
     
-    func configureCell(imageName: String) {
-        let name = imageName.components(separatedBy: ".").first ?? ""
-        sightImageView.image = UIImage(named: name)
+    func configureCell(imageName: UIImage) {
+        sightImageView.image = imageName
     }
     
     private func setupUI() {

@@ -12,8 +12,8 @@ class FAQWorker {
     // Запрос на интересные события
     static func updateFAQCity(model: ModelForRequest, completion: @escaping()->()) {
         NetworkHelper.shared.makeRequest(type: .faq, model: model) {
-            completion()
         }
+        completion()
     }
     
 }

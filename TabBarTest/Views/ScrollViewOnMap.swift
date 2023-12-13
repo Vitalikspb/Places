@@ -9,7 +9,6 @@ import UIKit
 
 protocol ScrollViewOnMapDelegate: AnyObject {
     func showSearchView()
-    func chooseFavorites(selected: Bool)
     func chooseSightSelected(selected: Bool, request: TypeSight)
 }
 
@@ -222,7 +221,7 @@ class ScrollViewOnMap: UIScrollView {
     
     // Избранное
     @objc func handleFavoritesFilter() {
-        onMapdelegate?.chooseFavorites(selected: isSelected)
+        onMapdelegate?.chooseSightSelected(selected: isSelected, request: .favorite)
         setupAnimate(filterView: favoriteFilter)
     }
     

@@ -129,6 +129,8 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
             iconName = UIImage(named: "museumSearch") ?? UIImage()
         case .god:
             iconName = UIImage(named: "temple") ?? UIImage()
+        case .favorite:
+            break
         }
         typeSightImageView.image = iconName
     }

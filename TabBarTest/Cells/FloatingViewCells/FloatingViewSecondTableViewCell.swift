@@ -86,7 +86,9 @@ extension FloatingViewSecondTableViewCell: UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FloatingCollectionViewCell.identifier, 
                                                             for: indexPath) as? FloatingCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureCell(imageName: model[indexPath.row])
+        NetworkHelper.shared.downloadImage(from: model[indexPath.row]) { image in
+            cell.configureCell(imageName: image)
+        }
         return cell
     }
     

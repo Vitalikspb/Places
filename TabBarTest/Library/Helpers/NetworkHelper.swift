@@ -84,20 +84,20 @@ class NetworkHelper {
         switch model.typeRequest! {
             
         case .sight, .cityAll:
-            queryItems = [URLQueryItem(name: "country", value: "\(model.country)"),
+            queryItems = [URLQueryItem(name: "country", value: "Россия"),
                           URLQueryItem(name: "city", value: "\(model.city ?? "")"),
                           URLQueryItem(name: "availableCountry", value: "true"),
                           URLQueryItem(name: "availableCity", value: "true")]
             
         case .cityCountryInfo:
-            queryItems = [URLQueryItem(name: "country", value: "\(model.country)")]
+            queryItems = [URLQueryItem(name: "country", value: "Россия")]
             
         case .events:
-            queryItems = [URLQueryItem(name: "country", value: "\(model.country)"),
+            queryItems = [URLQueryItem(name: "country", value: "Россия"),
                           URLQueryItem(name: "city", value: "\(model.city ?? "")")]
             
         case .faq:
-            queryItems = [URLQueryItem(name: "country", value: "\(model.country)"),
+            queryItems = [URLQueryItem(name: "country", value: "Россия"),
                           URLQueryItem(name: "city", value: "\(model.city ?? "")")]
         }
         
@@ -224,7 +224,7 @@ class NetworkHelper {
     // Преобразование словаря картинок в массив картинок
     private func decodeImages(images: [ImagesArray]?) -> [String] {
         var imgArray = [String]()
-        print("images:\(images)")
+//        print("images:\(images)")
         images?.forEach { imagesItem in
             var imageName = ""
             for (_,val) in imagesItem.photo.reversed().enumerated() {
@@ -257,20 +257,12 @@ class NetworkHelper {
     }
     
     // подготовка к загрузке фото
-    func downloadImage(from url: String, cityPhoto: Bool = false, completion: @escaping(UIImage)->()) {
+    func downloadImage(from url: String, completion: @escaping(UIImage)->()) {
         var urlString = "http://api.apptravel.ru/media/photogallery/\(url)"
-        // фотки городов в папке 2023-10
-        if cityPhoto {
-           urlString = "http://api.apptravel.ru/media/photogallery/2023-10/\(url)"
-        }
-        
-        print("urlString:\(urlString)")
         guard let URL = URL(string: urlString) else { return }
-        print("URL:\(URL)")
         getData(from: URL) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
-                print("data:\(data)")
                 completion(UIImage(data: data) ?? UIImage())
             }
         }
