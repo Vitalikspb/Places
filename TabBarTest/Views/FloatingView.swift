@@ -7,6 +7,7 @@
 
 
 import UIKit
+import CoreLocation
 
 // MARK: - FloatingViewDelegate
 
@@ -16,15 +17,16 @@ protocol FloatingViewDelegate: AnyObject {
     func floatingPanelPatriallyScreen()
     func makeCall(withNumber: String)
     func openUrl(name: String)
+    func addToFavorite(name: String)
+    func routeTo(location: CLLocationCoordinate2D)
 }
-
 // Бэк для всплывающей вьюхи с подробностями достопримечательности
 
 class FloatingView: UIView {
     
     // MARK: - Public properties
     
-    var delegate: FloatingViewDelegate?
+    weak var delegate: FloatingViewDelegate?
     enum ExpansionState {
         case NotExpanded
         case PatriallyExpanded
@@ -182,6 +184,15 @@ class FloatingView: UIView {
 // MARK: - MainFloatingViewDelegate
 
 extension FloatingView: MainFloatingViewDelegate {
+    
+    func addToFavorite(name: String) {
+        delegate?.addToFavorite(name: name)
+    }
+    
+    func routeTo(location: CLLocationCoordinate2D) {
+        delegate?.routeTo(location: location)
+    }
+    
     
     // Делаем вызов номера телефона
     func makeCall(toNumber: String) {

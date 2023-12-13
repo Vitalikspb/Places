@@ -51,11 +51,8 @@ class ActionButtonsScrollView: UIScrollView {
         return button
     }()
     
-    private var favoriteName: String = ""
-    private var phone: String = ""
-    private var url: String = ""
-    private var currentLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0,
-                                                                                 longitude: 0.0)
+    private var sight: Sight?
+    
     
     // MARK: - Life cycle
     
@@ -70,13 +67,8 @@ class ActionButtonsScrollView: UIScrollView {
     
     // MARK: - Helper Functions
     
-    func setupFavoriteName(name: String, phone: String, url: String, location: CLLocationCoordinate2D) {
-        favoriteName = name
-        self.phone = phone
-        self.url = url
-        print("000 currentLocation:\(currentLocation)")
-        currentLocation = location
-        print("111 currentLocation:\(currentLocation)")
+    func setupFavoriteName(sight: Sight) {
+        self.sight = sight
     }
     
     private func setupUI() {
@@ -163,26 +155,35 @@ class ActionButtonsScrollView: UIScrollView {
     
     // Поиск
     @objc func handleRouteButton() {
-        print("currentLocation:\(currentLocation)")
-        actionButtonDelegate?.routeButtonTapped(location: currentLocation)
+        if let sight = sight {
+            let location = CLLocationCoordinate2D(latitude: sight.latitude, longitude: sight.latitude)
+            print("currentLocation:\(location)")
+            actionButtonDelegate?.routeButtonTapped(location: location)
+        }
     }
     
     // Избранное
     @objc func handleAddToFavouritesButton() {
-        print("favoriteName:\(favoriteName)")
-        actionButtonDelegate?.addToFavouritesButtonTapped(name: favoriteName)
+        if let name = sight?.name {
+            print("favoriteName:\(name)")
+            actionButtonDelegate?.addToFavouritesButtonTapped(name: name)
+        }
     }
     
     // Достопримечательность
     @objc func handleCallButton() {
-        print("phone:\(phone)")
-        actionButtonDelegate?.callButtonTapped(withNumber: phone)
+        if let phone = sight?.main_phone {
+            print("phone:\(phone)")
+            actionButtonDelegate?.callButtonTapped(withNumber: phone)
+        }
     }
     
     // Музей
     @objc func handleSiteButton() {
-        print("url:\(url)")
-        actionButtonDelegate?.siteButtonTapped(urlString: url)
+        if let site = sight?.site {
+            print("url:\(site)")
+            actionButtonDelegate?.siteButtonTapped(urlString: site)
+        }
     }
 }
 

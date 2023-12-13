@@ -216,8 +216,9 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
             //            когда нашли нужное место с его данными - передаем в перентер
             //            изменить модель response для дальнейшего отображения
             //            для теста пока нету кор даты пока что только название
-            presenter?.presentChoosenDestinationView(response: returnAllTextSelectedMarkers(selectedMarkerName: val.name), 
-                                                     selectedSight: val)
+            presenter?.presentChoosenDestinationView(
+                response: returnAllTextSelectedMarkers(selectedMarkerName: val.name),
+                selectedSight: val)
         }
     }
     

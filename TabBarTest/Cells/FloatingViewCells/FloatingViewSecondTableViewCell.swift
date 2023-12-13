@@ -50,6 +50,9 @@ class FloatingViewSecondTableViewCell: UITableViewCell {
     
     func configCell(model: [String]) {
         self.model = model
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     private func setupUI() {

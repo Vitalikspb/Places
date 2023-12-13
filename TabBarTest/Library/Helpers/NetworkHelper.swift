@@ -127,25 +127,37 @@ class NetworkHelper {
                     case .sight:
                         self.sight = try JSONDecoder().decode([SightResponse].self, from: data)
                         if let _sight = self.sight {
-//                            print("sight:\(_sight)")
+                            print("sight:\(_sight)")
                             var tempAllCountry = [Sight?]()
                             _sight.forEach {
                                 tempAllCountry.append(Sight(id: $0?.id ?? 0,
                                                             name: $0?.name ?? "",
-                                                            country: $0?.country ?? "",
-                                                            city: $0?.city ?? "",
-                                                            type: $0?.type ?? .sightSeen,
-                                                            category: $0?.category ?? .mustSee,
-                                                            rating: $0?.rating ?? "",
-                                                            latitude: $0?.latitude ?? 0.0,
-                                                            longitude: $0?.longitude ?? 0.0,
-                                                            address: $0?.address ?? "",
-                                                            test: $0?.test ?? false,
-                                                            big_image: self.decodeImage(image: $0?.big_image ?? ""),
-                                                            small_image: self.decodeImage(image: $0?.small_image ?? ""),
-                                                            images: self.decodeImages(images: $0?.images?["image"]), 
-                                                            favorite: "AddtofavoritesUnselected"))
-                            }
+                                                             country: $0?.country ?? "",
+                                                             city: $0?.city ?? "",
+                                                             type: $0?.type ?? .sightSeen,
+                                                             category: $0?.category ?? .mustSee,
+                                                             rating: $0?.rating ?? "",
+                                                            price: $0?.price ?? 0,
+                                                             latitude: $0?.latitude ?? 0.0,
+                                                             longitude: $0?.longitude ?? 0.0,
+                                                             address: $0?.address ?? "",
+                                                             main_phone: $0?.main_phone ?? "",
+                                                             additional_phone: $0?.additional_phone ?? "",
+                                                             test: $0?.test ?? false,
+                                                             site: $0?.site ?? "",
+                                                             vk: $0?.vk ?? "",
+                                                             facebook: $0?.facebook ?? "",
+                                                             instagram: $0?.instagram ?? "",
+                                                            youtube: $0?.youtube ?? "",
+                                                             workmode: nil,
+                                                             big_image: self.decodeImage(image: $0?.big_image ?? ""),
+                                                             small_image: self.decodeImage(image: $0?.small_image ?? ""),
+                                                             images: self.decodeImages(images: $0?.images?["image"]),
+                                                             favorite: "AddtofavoritesUnselected"))
+                                                      }
+                                                      print("===========")
+                            print("tempAllCountry:\(tempAllCountry)")
+                            print("===========")
                             UserDefaults.standard.saveSight(value: tempAllCountry, data: data)
                         }
                         
@@ -241,7 +253,6 @@ class NetworkHelper {
     // Из полного пути от сервара оставляет только название фотки
     private func decodeImage(image: String) -> String {
         var imageName = ""
-        print("image:\(image)")
         for (_,val) in image.reversed().enumerated() {
             if val == "/" {
                 break

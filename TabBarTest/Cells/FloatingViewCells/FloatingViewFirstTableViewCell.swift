@@ -11,7 +11,6 @@ protocol FloatingViewFirstTableViewCellDelegate: AnyObject {
     func routeButtonTapped(location: CLLocationCoordinate2D)
     func addToFavouritesButtonTapped(name: String)
     func callButtonTapped(withNumber: String)
-    func shareButtonTapped()
     func siteButtonTapped(urlString: String)
 }
 
@@ -74,6 +73,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     // MARK: - Private properties
     
     private var smallView: Bool = true
+    private var model: Sight?
     
     // MARK: - Lifecycle
     
@@ -106,21 +106,25 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
     
     // MARK: - Helper functions
     
-    func configCell(title: String, type: TypeSight, showButtons: Bool, smallView: Bool = true, rating: String) {
-        titleLabel.text = title
-        typeLocationLabel.text = type.rawValue
+    func configCell(model: Sight, showButtons: Bool, smallView: Bool = true) {
+        self.model = model
+        titleLabel.text = model.name
+        typeLocationLabel.text = model.type.rawValue
         UIView.animate(withDuration: 0.5) { [weak self] in
             guard let self = self else { return }
             self.buttonsView.alpha = showButtons ? 0 : 1
             self.buttonsView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            self.buttonsView.setupFavoriteName(sight: model)
+            self.buttonsView.actionButtonDelegate = self
         }
+        
         self.smallView = smallView
-        ratingLabel.text = rating
-        let imagesCount = Int(rating.components(separatedBy: ".").first ?? "0") ?? 0
+        ratingLabel.text = model.rating
+        let imagesCount = Int(model.rating.components(separatedBy: ".").first ?? "0") ?? 0
         starView.show(with: imagesCount)
         
         var iconName = UIImage()
-        switch type {
+        switch model.type {
         case .sightSeen:
             iconName = UIImage(named: "museum") ?? UIImage()
         case .museum:
@@ -224,14 +228,11 @@ extension FloatingViewFirstTableViewCell: ActionButtonsScrollViewDelegate {
         delegate?.callButtonTapped(withNumber: withNumber)
     }
     
-    func shareButtonTapped() {
-        delegate?.shareButtonTapped()
-    }
-    
     func siteButtonTapped(urlString: String) {
         delegate?.siteButtonTapped(urlString: urlString)
     }
     
 
 }
+
 

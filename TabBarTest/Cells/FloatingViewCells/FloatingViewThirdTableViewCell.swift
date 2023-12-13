@@ -5,9 +5,9 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol FloatingViewThirdTableViewCellDelegate: AnyObject {
-    func makeCall(withNumber: String)
     func openUrl(name: String)
 }
 
@@ -35,7 +35,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
-        label.text = "Адрес"
+        label.text = "Адрес:"
         label.font = .setCustomFont(name: .semibold, andSize: 16)
         return label
     }()
@@ -44,7 +44,8 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         label.textColor = .setCustomColor(color: .subTitleText)
         label.textAlignment = .left
         label.font = .setCustomFont(name: .regular, andSize: 16)
-        label.text = "Невский проспект д.48"
+        label.text = ""
+        label.numberOfLines = 0
         return label
     }()
     
@@ -69,7 +70,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         label.textColor = .setCustomColor(color: .titleText)
         label.textAlignment = .left
         label.font = .setCustomFont(name: .semibold, andSize: 16)
-        label.text = "Контакты"
+        label.text = "Контакты:"
         return label
     }()
     let contactsDescriptionLabel: UILabel = {
@@ -82,16 +83,11 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
     }()
     let contactsPhoneLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .setCustomColor(color: .weatherBlueBackground)
+        label.textColor = .setCustomColor(color: .subTitleText)
         label.textAlignment = .left
         label.font = .setCustomFont(name: .regular, andSize: 16)
         label.text = "+7(123)-456-78-90"
         return label
-    }()
-    private let animateContactsPhone: CustomAnimatedButton = {
-       let button = CustomAnimatedButton()
-        button.setupId(id: 5)
-        return button
     }()
     
     let buttonsStackView: UIStackView = {
@@ -100,20 +96,6 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
         stack.spacing = 12
         stack.axis = .horizontal
         return stack
-    }()
-    
-    let siteButton: UIImageView = {
-        let ImageView = UIImageView()
-        ImageView.backgroundColor = .setCustomColor(color: .tabBarIconBackground)
-        ImageView.layer.cornerRadius = 4
-        ImageView.image = UIImage(named: "site")
-        ImageView.contentMode = .center
-        return ImageView
-    }()
-    private let animateSiteButton: CustomAnimatedButton = {
-       let button = CustomAnimatedButton()
-        button.setupId(id: 0)
-        return button
     }()
     
     let vkButton: UIImageView = {
@@ -180,12 +162,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
     
     // MARK: - Private properties
     
-    private var siteUrl: String? = nil
-    private var vkUrl: String? = nil
-    private var fbUrl: String? = nil
-    private var instUrl: String? = nil
-    private var ytUrl: String? = nil
-    private var phoneNumber: String? = nil
+    private var sight: Sight?
     
     // MARK: - Lifecycle
     
@@ -214,70 +191,53 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
     
     // MARK: - Selectors
     
-    @objc func makeCall() {
-        delegate?.makeCall(withNumber: phoneNumber ?? "")
-    }
-    
-    struct modelThirdCell {
-        let address: String
-        let phone: String?
-        let siteUrl: String?
-        let vkUrl: String?
-        let fbUrl: String?
-        let instUrl: String?
-        let ytUrl: String?
+    @objc func openUrl(id: Int) {
+        if let sight = sight {
+            switch id {
+            case 1:
+                delegate?.openUrl(name: sight.vk ?? "")
+            case 2:
+                delegate?.openUrl(name: sight.facebook ?? "")
+            case 3:
+                delegate?.openUrl(name: sight.instagram ?? "")
+            case 4:
+                delegate?.openUrl(name: sight.youtube ?? "")
+            default: break
+            }
+        }
     }
     
     // MARK: - Helper functions
     
-    func configCell(model: modelThirdCell) {
+    func configCell(model: Sight) {
         addressDescriptionLabel.text = model.address
-        contactsPhoneLabel.text = model.phone
-        phoneNumber = model.phone
-        siteUrl = model.siteUrl
-        vkUrl = model.vkUrl
-        fbUrl = model.fbUrl
-        instUrl = model.instUrl
-        ytUrl = model.ytUrl
+        contactsPhoneLabel.text = model.main_phone
+        sight = model
         
-        if siteUrl != nil {
-            animateSiteButton.isHidden = false
-        }
-        if vkUrl != nil {
+        if sight?.vk != nil {
             animateVKButton.isHidden = false
         }
-        if fbUrl != nil {
+        if sight?.facebook != nil {
             animateFBButton.isHidden = false
         }
-        if instUrl != nil {
+        if sight?.instagram != nil {
             animateInstButton.isHidden = false
         }
-        if ytUrl != nil {
+        if sight?.youtube != nil {
             animateYOUButton.isHidden = false
-        }
-        if phoneNumber != nil, phoneNumber != "" {
-            contactsDescriptionLabel.isUserInteractionEnabled = false
         }
     }
 
     private func setupUI() {
-        [animateSiteButton, animateVKButton, animateFBButton,
-         animateInstButton, animateYOUButton, animateContactsPhone].forEach {
-            $0.delegate = self
+        [animateVKButton, animateFBButton, animateInstButton, animateYOUButton].forEach {
             $0.isHidden = true
         }
                 
         contentView.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
         contentView.addSubviews(addresView, contactsView)
         addresView.addSubviews(addressImage, addressLabel, addressDescriptionLabel)
-        contactsView.addSubviews(contactsImage, contactsLabel, contactsDescriptionLabel, animateContactsPhone, buttonsStackView)
-        
-        animateContactsPhone.addSubviews(contactsPhoneLabel)
-        contactsPhoneLabel.addConstraintsToFillView(view: animateContactsPhone)
-        
-        animateSiteButton.addSubviews(siteButton)
-        siteButton.addConstraintsToFillView(view: animateSiteButton)
-        buttonsStackView.addArrangedSubview(animateSiteButton)
+        contactsView.addSubviews(contactsImage, contactsLabel, contactsDescriptionLabel, 
+                                 contactsPhoneLabel, buttonsStackView)
         
         animateVKButton.addSubviews(vkButton)
         vkButton.addConstraintsToFillView(view: animateVKButton)
@@ -300,9 +260,21 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
     }
     
     private func setupButtons() {
-        let tapCall = UITapGestureRecognizer(target: self, action: #selector(makeCall))
-        contactsDescriptionLabel.addGestureRecognizer(tapCall)
-        contactsDescriptionLabel.isUserInteractionEnabled = true
+        let tapRoute = UITapGestureRecognizer(target: self, action: #selector(openUrl(id:)))
+        animateVKButton.addGestureRecognizer(tapRoute)
+        animateVKButton.isUserInteractionEnabled = true
+        
+        let tapFavorite = UITapGestureRecognizer(target: self, action: #selector(openUrl(id:)))
+        animateFBButton.addGestureRecognizer(tapFavorite)
+        animateFBButton.isUserInteractionEnabled = true
+        
+        let tapCall = UITapGestureRecognizer(target: self, action: #selector(openUrl(id:)))
+        animateInstButton.addGestureRecognizer(tapCall)
+        animateInstButton.isUserInteractionEnabled = true
+        
+        let tapSite = UITapGestureRecognizer(target: self, action: #selector(openUrl(id:)))
+        animateYOUButton.addGestureRecognizer(tapSite)
+        animateYOUButton.isUserInteractionEnabled = true
     }
     
     private func setupConstraints() {
@@ -314,7 +286,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
                           paddingLeft: 16,
                           paddingBottom: 0,
                           paddingRight: 16,
-                          width: 0, height: 72)
+                          width: 0, height: 0)
         
         
         
@@ -336,14 +308,14 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
                             paddingLeft: 8,
                             paddingBottom: 0,
                             paddingRight: 8,
-                            width: 0, height: 0)
+                            width: 0, height: 14)
         addressDescriptionLabel.anchor(top: addressLabel.bottomAnchor,
                                        left: addressImage.rightAnchor,
-                                       bottom: nil,
+                                       bottom: addresView.bottomAnchor,
                                        right: addresView.rightAnchor,
                                        paddingTop: 10,
                                        paddingLeft: 8,
-                                       paddingBottom: 0,
+                                       paddingBottom: 14,
                                        paddingRight: 8,
                                        width: 0, height: 0)
         
@@ -405,33 +377,4 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
 
     }
 
-}
-
-// MARK: - CustomAnimatedButtonDelegate
- 
-extension FloatingViewThirdTableViewCell: CustomAnimatedButtonDelegate {
-    
-    func continueButton() {
-//        switch model.id {
-//        case 0:
-//            delegate?.openUrl(name: siteUrl ?? "")
-//            
-//        case 1:
-//            delegate?.openUrl(name: vkUrl ?? "")
-//            
-//        case 2:
-//            delegate?.openUrl(name: fbUrl ?? "")
-//            
-//        case 3:
-//            delegate?.openUrl(name: instUrl ?? "")
-//            
-//        case 4:
-//            delegate?.openUrl(name: ytUrl ?? "")
-//            
-//        default:
-//            break
-//        }
-    }
-    
-    
 }

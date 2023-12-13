@@ -212,7 +212,6 @@ class MapController: UIViewController {
         
         floatingView.delegate = self
         buttonsView.actionButtonDelegate = self
-        
         bottomCollectionView.delegate = self
         
         mapView.delegate = self
@@ -318,11 +317,8 @@ class MapController: UIViewController {
                     let sight = UserDefaults.standard.getSight()
                     let filteredSights = sight.filter( { $0.city == curCity })
                     
-                    print("curCity:\(curCity)")
-                    print("filteredSights:\(filteredSights)")
                     self.bottomCollectionViewhide()
                     self.bottomCollectionView.clearModel()
-                    print("curCity:\(curCity)")
                     
                     if curCity == "Город" || curCity == "" {
                         self.bottomCollectionView.setupModel(model: sight)
@@ -449,19 +445,18 @@ class MapController: UIViewController {
         // делаем запрос на данные для floatinView
         if let nameLocation = marker.title {
             let sights = UserDefaults.standard.getSight()
-            if let currentSight = sights.first(where: { $0.name == nameLocation }) {
-                let location = CLLocationCoordinate2D(latitude: currentSight.latitude,
-                                                      longitude: currentSight.longitude)
-                buttonsView.setupFavoriteName(name: nameLocation,
-                                              phone: currentSight.main_phone ?? "",
-                                              url: currentSight.site ?? "",
-                                              location: location)
+            
+            for (_,val) in sights.enumerated() where val.name == nameLocation {
+                buttonsView.setupFavoriteName(sight: val)
                 interactor?.showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request(marker: nameLocation))
                 animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
                                      longitude: marker.position.longitude,
                                      from: .mapViewZoom)
+                floatingView.configureCell(model: val)
+                floatingView.showFloatingView()
                 selectMark = showFloatingViewMark
             }
+            
         }
     }
     
@@ -735,25 +730,21 @@ extension MapController: CLLocationManagerDelegate {
 // MARK: - FloatingViewDelegate
 extension MapController: FloatingViewDelegate {
     
-    // Делаем вызов номера телефона достопримечательности из всплывающей подробностей
     func makeCall(withNumber: String) {
-        print("makeCall:\(withNumber)")
-        var uc = URLComponents()
-        uc.scheme = "tel"
-        uc.path = withNumber
-        if let phoneURL = uc.url {
-            let application = UIApplication.shared
-            if application.canOpenURL(phoneURL) {
-                application.open(phoneURL, options: [:], completionHandler: nil)
-            } else {
-                debugPrint("[DEBUGSSS]: \(#function) Ошибка: не возможно сделать вызов на устройстве")
-            }
-        }
+        callButtonTapped(withNumber: withNumber)
     }
+    
+    func addToFavorite(name: String) {
+        interactor?.updateFavorites(name: name)
+    }
+    
+    func routeTo(location: CLLocationCoordinate2D) {
+        routeButtonTapped(location: location)
+    }
+    
     
     // Открываем сайт/соц сеть или др достопримечательности из всплывающей подробностей
     func openUrl(name: String) {
-        print("openUrl:\(name)")
         guard let openUrl = URL(string: name) else { return }
         UIApplication.shared.open(openUrl)
     }
@@ -821,13 +812,21 @@ extension MapController: ActionButtonsScrollViewDelegate {
     
     // Вызов номера из меню в низу во всплывающей вьюхе
     func callButtonTapped(withNumber: String) {
-        print("Позвонить если есть номер")
-        makeCall(withNumber: withNumber)
+        var uc = URLComponents()
+        uc.scheme = "tel"
+        uc.path = withNumber
+        if let phoneURL = uc.url {
+            let application = UIApplication.shared
+            if application.canOpenURL(phoneURL) {
+                application.open(phoneURL, options: [:], completionHandler: nil)
+            } else {
+                debugPrint("[DEBUGSSS]: \(#function) Ошибка: не возможно сделать вызов на устройстве")
+            }
+        }
     }
     
     // Открыть Url сайт/соц сеть или др из меню в низу во всплывающей вьюхе
     func siteButtonTapped(urlString: String) {
-        print("Открыть сайт если есть")
         openUrl(name: urlString)
     }
     
@@ -895,7 +894,6 @@ extension MapController: MapDisplayLogic {
         }
         let sight = UserDefaults.standard.getSight()
         let cityName = userDefault.string(forKey: UserDefaults.currentCity)
-        print("cityName:\(cityName)")
         if cityName == "Город" || cityName == "" || cityName == nil {
             bottomCollectionView.setupModel(model: sight)
         } else {
@@ -925,8 +923,7 @@ extension MapController: MapDisplayLogic {
                 self.tabBarController?.tabBar.alpha = 0
                 self.mapView.settings.myLocationButton = false
             } completion: { _ in
-                self.floatingView.configureCell(model: selectedSight)
-                self.floatingView.showFloatingView()
+                print("")
             }
             UIView.animate(withDuration: 0.5) {
                 self.bottomCollectionView.alpha = 0

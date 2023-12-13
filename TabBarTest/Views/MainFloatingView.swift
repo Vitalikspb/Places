@@ -5,15 +5,18 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol MainFloatingViewDelegate: AnyObject {
     func makeCall(toNumber: String)
     func openUrl(name: String)
+    func addToFavorite(name: String)
+    func routeTo(location: CLLocationCoordinate2D)
 }
 
 // Вьюха с подробностями достопримечательности
 
-class MainFloatingView: UIView {
+class MainFloatingView: UIView, FloatingViewFirstTableViewCellDelegate {
     
     // MARK: - Public properties
     
@@ -182,11 +185,10 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewFirstTableViewCell.identifier, 
                                                      for: indexPath) as! FloatingViewFirstTableViewCell
             if let model = model {
-                cell.configCell(title: model.name,
-                                type: model.type,
+                cell.configCell(model: model, 
                                 showButtons: tableView.isScrollEnabled == true ? true : false,
-                                smallView: smallView, 
-                                rating: model.rating)
+                                smallView: smallView)
+                cell.delegate = self
                 return cell
             }
             return UITableViewCell()
@@ -203,29 +205,15 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: FloatingViewThirdTableViewCell.identifier, 
                                                      for: indexPath) as! FloatingViewThirdTableViewCell
-            cell.delegate = self
+            
             if let model = model {
-                var phone: String?
-                if model.main_phone != nil{
-                    phone = model.main_phone
-                } else if model.additional_phone != nil{
-                    phone = model.additional_phone
-                }
-                
-                let modelCell = FloatingViewThirdTableViewCell.modelThirdCell(address: model.address,
-                                                                              phone: phone,
-                                                                              siteUrl: model.site,
-                                                                              vkUrl: model.vk,
-                                                                              fbUrl: model.facebook,
-                                                                              instUrl: model.instagram,
-                                                                              ytUrl: model.youtube)
-                cell.configCell(model: modelCell)
+                cell.configCell(model: model)
+                cell.delegate = self
                 return cell
             }
             return UITableViewCell()
             
         default:
-            print("default return cell")
             return UITableViewCell()
         }
     }
@@ -243,7 +231,7 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
         case 1: return 204
             
         // ячейка с контактами
-        case 2: return 244
+        case 2: return 260
             
         default:
             return 200
@@ -254,14 +242,41 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
 // MARK: - FloatingViewThirdTableViewCellDelegate
 
 extension MainFloatingView: FloatingViewThirdTableViewCellDelegate {
+    func routeButtonTapped(location: CLLocationCoordinate2D) {
+        delegate?.routeTo(location: location)
+    }
     
-    // Открываем сайт, соц сеть или другое
+    func addToFavouritesButtonTapped(name: String) {
+        delegate?.addToFavorite(name: name)
+    }
+    
+    func callButtonTapped(withNumber: String) {
+        delegate?.makeCall(toNumber: withNumber)
+    }
+   
+    func siteButtonTapped(urlString: String) {
+        delegate?.openUrl(name: urlString)
+    }
+    
     func openUrl(name: String) {
         delegate?.openUrl(name: name)
     }
     
-    // Делаем вызов по номеру
     func makeCall(withNumber: String) {
         delegate?.makeCall(toNumber: withNumber)
     }
+    
+    func makeRoute(toLocation: CLLocationCoordinate2D) {
+        delegate?.routeTo(location: toLocation)
+    }
+    
+    func makeFavorite(name: String) {
+        delegate?.addToFavorite(name: name)
+    }
+    
+    func makeSite(urlString: String) {
+        delegate?.openUrl(name: urlString)
+    }
+
 }
+
