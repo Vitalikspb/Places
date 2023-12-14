@@ -32,7 +32,7 @@ class MapController: UIViewController {
     
     var interactor: MapBussinessLogic?
     var router: (NSObjectProtocol & MapRoutingLogic)?
-    var citiesAvailable = ["Москва", "Санкт-Петербург", "Екатеринбург", "Казань"]
+//    var citiesAvailable = ["Москва", "Санкт-Петербург", "Екатеринбург", "Казань"]
     
     // MARK: - Private Properties
     
@@ -50,6 +50,26 @@ class MapController: UIViewController {
         let camera = GMSCameraPosition(latitude: myCurrentLatitude, longitude: myCurrentLongitude, zoom: cameraZoom)
         return GMSMapView(frame: .zero, camera: camera)
     }()
+    
+    struct BoxLocation {
+        let city: String
+        let locationTopLeft: CLLocationCoordinate2D
+        let locationBottomRight: CLLocationCoordinate2D
+    }
+    
+    private let boxCoordinates: [BoxLocation] = [
+        BoxLocation(city: "Санкт-Петербург",
+                    locationTopLeft: CLLocationCoordinate2D(latitude: 60.31961681279438, longitude: 29.585249237716198),
+                    locationBottomRight: CLLocationCoordinate2D(latitude: 59.57383080890553, longitude: 30.90297561138868)),
+        BoxLocation(city: "Москва",
+                    locationTopLeft: CLLocationCoordinate2D(latitude: 55.955849789458455, longitude: 37.26121544837952),
+                    locationBottomRight: CLLocationCoordinate2D(latitude: 55.54466329428275, longitude: 37.997560277581215)),
+        BoxLocation(city: "Казань",
+                    locationTopLeft: CLLocationCoordinate2D(latitude: 56.02572240735774, longitude: 48.57145484536886),
+                    locationBottomRight: CLLocationCoordinate2D(latitude: 55.57000451930346, longitude: 49.41308006644249)),
+        BoxLocation(city: "Екатеринбург",
+                    locationTopLeft: CLLocationCoordinate2D(latitude: 57.07664797854804, longitude: 60.24093154817819),
+                    locationBottomRight: CLLocationCoordinate2D(latitude: 56.50053613115544, longitude: 61.167368553578854))]
     
     // для определения местоположения и погоды
     private var observation: NSKeyValueObservation?
@@ -299,43 +319,44 @@ class MapController: UIViewController {
     }
     
     // сохраняем текущее местоположение в виде Страны и Города
-    private func setCurrentLocation(hiden: Bool) {
-        let location = CLLocation(latitude: cameraLatitude, longitude: cameraLongitude)
-        location.fetchCityAndCountry { [weak self] (city, country, error) in
-            guard let self = self,
-                  let curCity = city,
-                  let country = country,
-                  error == nil
-            else { return }
-            self.userDefault.set("\(country)", forKey: UserDefaults.currentLocation)
-            // MARK: - TODO - сделать сравнение текущего города если в структуре у этого города есть метки тогда отображаем кнопку на карте - переход на достопримечательности текущего города, если нету меток тогда не записываем в юзер дефолт и не показываем кнопку перехода.
-            self.citiesAvailable.forEach {
-                if $0 == curCity, self.currentCity != curCity {
-                    self.userDefault.set(curCity, forKey: UserDefaults.currentCity)
-                    self.tabBarController?.tabBar.items?[1].title = curCity
-                    
-                    let sight = UserDefaults.standard.getSight()
-                    let filteredSights = sight.filter( { $0.city == curCity })
-                    
-                    self.bottomCollectionViewhide()
-                    self.bottomCollectionView.clearModel()
-                    
-                    if curCity == "Город" || curCity == "" {
-                        self.bottomCollectionView.setupModel(model: sight)
-                    } else {
-                        self.bottomCollectionView.setupModel(model: filteredSights)
-                    }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                        self.bottomCollectionView.collectionView.reloadData()
-                        if hiden {
-                            self.bottomCollectionViewShow()
-                        }
-                    }
-                    self.currentCity = curCity
+    private func setCurrentLocation(location: CLLocationCoordinate2D, hiden: Bool) {
+        // Первый релиз все по России
+        self.userDefault.set("Россия", forKey: UserDefaults.currentLocation)
+        var findCity: Bool = false
+        for (_,val) in boxCoordinates.enumerated() where
+        location.latitude < val.locationTopLeft.latitude &&
+        location.latitude > val.locationBottomRight.latitude &&
+        location.longitude > val.locationTopLeft.longitude &&
+        location.longitude < val.locationBottomRight.longitude {
+            print("город в квадрате:\(val.city)")
+            self.userDefault.set(val.city, forKey: UserDefaults.currentCity)
+            self.tabBarController?.tabBar.items?[1].title = val.city
+            self.currentCity = val.city
+            let sight = UserDefaults.standard.getSight()
+            let filteredSights = sight.filter( { $0.city == val.city })
+            
+            self.bottomCollectionViewhide()
+            self.bottomCollectionView.clearModel()
+            self.bottomCollectionView.setupModel(model: filteredSights)
+            // сюда добавить показ маркеров только для текущего города
+            interactor?.showMarkersOnCity(name: val.city)
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                self.bottomCollectionView.collectionView.reloadData()
+                if hiden {
+                    self.bottomCollectionViewShow()
                 }
             }
-            
+            findCity = true
+        }
+        if !findCity {
+            print("город не в квадрате")
+            let sight = UserDefaults.standard.getSight()
+            self.bottomCollectionView.setupModel(model: sight)
+            // сюда добавить показ всех маркеров
+            self.currentCity = "Город"
+            self.userDefault.set("Город", forKey: UserDefaults.currentCity)
+            self.tabBarController?.tabBar.items?[1].title = "Город"
+            interactor?.showMarkersOnCity(name: "Город")
         }
     }
     
@@ -569,7 +590,7 @@ extension MapController: GMSMapViewDelegate {
     // Вызывается когда камера перестала двигатся
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
         updateBottomCollectionView(zoom: mapView.camera.zoom)
-        setCurrentLocation(hiden: showBottomCollectionSight)
+        setCurrentLocation(location: position.target, hiden: showBottomCollectionSight)
     }
     
     // Построение маршрута
@@ -902,10 +923,6 @@ extension MapController: MapDisplayLogic {
         DispatchQueue.main.async {
             self.bottomCollectionView.collectionView.reloadData()
         }
-    }
-    
-    func displayAllReleaseMarkers(filler: TypeSight) {
-        print("displayAllReleaseMarkers:\(filler)")
     }
     
     // при нажатии на маркер на экране

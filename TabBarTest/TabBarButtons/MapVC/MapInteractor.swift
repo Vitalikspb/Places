@@ -9,14 +9,15 @@ import Foundation
 import GoogleMaps
 
 protocol MapBussinessLogic: AnyObject {
+    func showMarkersOnCity(name: String)
     func showCurrentMarker(request: MapViewModel.ChoosenDestinationView.Request)
     func showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request)
     func fetchAllTestMarkers(request: TypeSight)
     func fetchSelectedSightWithAllMarkers(withName name: String) -> GMSMarker?
+    func fetchAllFavorites(selected: Bool)
     func appendAllMarkers()
     func updateFavorites(name: String)
     func searchWithCaracter(character: String)
-    func fetchAllFavorites(selected: Bool)
 }
 
 protocol MapDataStore: AnyObject {
@@ -57,6 +58,22 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
     func fetchAllTestMarkers(request: TypeSight) {
         let model = returnAllTestFilterMarkers(request: request)
         presenter?.presentAllMarkers(response: model)
+    }
+    
+    // Фильтрация по текущему города
+    func showMarkersOnCity(name: String) {
+        let allSight = UserDefaults.standard.getSight()
+        let resultSight = name == "Город" ? allSight : allSight.filter( { $0.city == name} )
+        var mapMarkersAll = [GMSMarker]()
+        
+        for (_, val) in resultSight.enumerated() {
+            let marker = setMarker(name: val.name,
+                                   location: CLLocation(latitude: val.latitude, 
+                                                        longitude: val.longitude),
+                                   imageName: val.big_image)
+            mapMarkersAll.append(marker)
+        }
+        presenter?.presentAllMarkers(response: mapMarkersAll)
     }
     
     // Инициализация стандартного маркера
