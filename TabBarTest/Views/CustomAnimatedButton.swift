@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 
 protocol CustomAnimatedButtonDelegate: AnyObject {
-    func continueButton()
+    func continueButton(id: Int)
 }
 
 final class CustomAnimatedButton: UIButton {
@@ -70,7 +70,7 @@ final class CustomAnimatedButton: UIButton {
             // Выполняем делегат и восстанавливаем цвет кнопки в начальный
             if success {
                 if self.buttonBounds.contains((touches.first?.location(in: self))!) {
-                    self.delegate?.continueButton()
+                    self.delegate?.continueButton(id: idButton)
                 }
             }
         }

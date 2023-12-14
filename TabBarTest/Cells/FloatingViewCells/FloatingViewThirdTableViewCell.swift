@@ -373,7 +373,7 @@ class FloatingViewThirdTableViewCell: UITableViewCell {
                                 paddingLeft: 8,
                                 paddingBottom: 12,
                                 paddingRight: 0,
-                                width: 233, height: 56)
+                                width: 0, height: 56)
 
     }
 

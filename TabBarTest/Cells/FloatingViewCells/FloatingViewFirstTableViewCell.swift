@@ -127,12 +127,16 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         switch model.type {
         case .sightSeen:
             iconName = UIImage(named: "museum") ?? UIImage()
+            
         case .museum:
             iconName = UIImage(named: "museumSearch") ?? UIImage()
+            
         case .cultureObject:
             iconName = UIImage(named: "museumSearch") ?? UIImage()
+            
         case .god:
             iconName = UIImage(named: "temple") ?? UIImage()
+            
         case .favorite:
             break
         }

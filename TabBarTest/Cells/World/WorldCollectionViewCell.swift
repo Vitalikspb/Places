@@ -213,9 +213,9 @@ extension WorldCollectionViewCell: CountryCitiesCollectionViewDelegate {
 
 extension WorldCollectionViewCell: CustomAnimatedButtonDelegate {
     
-    func continueButton() {
+    func continueButton(id: Int) {
         print("showCountryOnMapTapped: \(modelHeader.country)")
         delegate?.showOnMap(name: modelHeader.country)
     }
-    
+
 }

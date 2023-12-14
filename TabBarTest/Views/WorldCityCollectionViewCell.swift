@@ -171,10 +171,9 @@ class WorldCityCollectionViewCell: UICollectionViewCell, Reusable {
 
 extension WorldCityCollectionViewCell: CustomAnimatedButtonDelegate {
     
-    func continueButton() {
+    func continueButton(id: Int) {
         print("переход на город на карте")
         delegate?.showCityOnMap(name: titleLabel.text ?? "")
     }
-    
     
 }

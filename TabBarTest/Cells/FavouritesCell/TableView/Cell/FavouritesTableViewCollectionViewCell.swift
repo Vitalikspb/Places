@@ -177,10 +177,10 @@ class FavouritesTableViewCollectionViewCell: UICollectionViewCell, Reusable {
 // MARK: - CustomAnimatedButtonDelegate
 
 extension FavouritesTableViewCollectionViewCell: CustomAnimatedButtonDelegate {
-
-    func continueButton() {
+    
+    func continueButton(id: Int) {
         delegate?.tapFavouriteButton(name: titleLabel.text ?? "")
     }
-    
+
 }
 

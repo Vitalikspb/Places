@@ -234,7 +234,8 @@ class CountryCellsCitiesCollectionViewCell: UICollectionViewCell {
 // MARK: - CustomAnimatedButtonDelegate
 
 extension CountryCellsCitiesCollectionViewCell: CustomAnimatedButtonDelegate {
-    func continueButton() {
+    
+    func continueButton(id: Int) {
         moveToMapViewHandle()
     }
 }

@@ -92,7 +92,7 @@ class MapController: UIViewController {
     private var selectedFilter: Bool = false
     private var selectMarkFromBottomView: Bool = false
     private var enableMapInteractive: Bool = false
-    
+    private var choosenCity: Bool = false
     // показ нижнего скролл из достопримечательностей внизу
     private var showBottomCollectionSight: Bool = true
     // было ли открытие онбординга
@@ -332,23 +332,30 @@ class MapController: UIViewController {
             self.userDefault.set(val.city, forKey: UserDefaults.currentCity)
             self.tabBarController?.tabBar.items?[1].title = val.city
             self.currentCity = val.city
-            let sight = UserDefaults.standard.getSight()
-            let filteredSights = sight.filter( { $0.city == val.city })
-            
-            self.bottomCollectionViewhide()
-            self.bottomCollectionView.clearModel()
-            self.bottomCollectionView.setupModel(model: filteredSights)
-            // сюда добавить показ маркеров только для текущего города
-            interactor?.showMarkersOnCity(name: val.city)
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                self.bottomCollectionView.collectionView.reloadData()
-                if hiden {
-                    self.bottomCollectionViewShow()
-                }
+            if !choosenCity {
+                
+                    let sight = UserDefaults.standard.getSight()
+                    let filteredSights = sight.filter( { $0.city == val.city })
+                    
+                    self.bottomCollectionViewhide()
+                    self.bottomCollectionView.clearModel()
+                    self.bottomCollectionView.setupModel(model: filteredSights)
+                    
+                    // сюда добавить показ маркеров только для текущего города
+                    interactor?.showMarkersOnCity(name: val.city)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                        self.bottomCollectionView.collectionView.reloadData()
+                        if hiden {
+                            self.bottomCollectionViewShow()
+                        }
+                    }
+                choosenCity = true
             }
             findCity = true
         }
         if !findCity {
+            
             print("город не в квадрате")
             let sight = UserDefaults.standard.getSight()
             self.bottomCollectionView.setupModel(model: sight)
@@ -356,7 +363,10 @@ class MapController: UIViewController {
             self.currentCity = "Город"
             self.userDefault.set("Город", forKey: UserDefaults.currentCity)
             self.tabBarController?.tabBar.items?[1].title = "Город"
-            interactor?.showMarkersOnCity(name: "Город")
+            if choosenCity {
+                interactor?.showMarkersOnCity(name: "Город")
+                choosenCity = false
+            }
         }
     }
     
@@ -505,6 +515,7 @@ class MapController: UIViewController {
             // Скрыаем нижний скролл с достопримечательностями
             if showBottomCollectionSight {
                 bottomCollectionViewhide()
+                tapOnMap()
                 showBottomCollectionSight = false
             }
         } else {
@@ -512,6 +523,34 @@ class MapController: UIViewController {
             if !showBottomCollectionSight {
                 bottomCollectionViewShow()
                 showBottomCollectionSight = true
+            }
+        }
+    }
+    
+    private func tapOnMap() {
+        hideTopSearchView()
+        if enableMapInteractive {
+            selectMark = true
+            hideTopSearchView()
+            floatingView.hideFloatingView()
+            showScrollAndWeatherView()
+            if selectMark || selectMarkFromBottomView {
+                selectMark = false
+                selectMarkFromBottomView = false
+            }
+            enableMapInteractive = false
+        }
+        
+        if let selectedScrollFilterType = selectedScrollFilterType{
+            if selectedScrollFilterType == .favorite {
+                // Фильтрация по избранным
+                interactor?.fetchAllFavorites(selected: true)
+            } else {
+                interactor?.fetchAllTestMarkers(request: selectedScrollFilterType)
+            }
+        } else {
+            if enableMapInteractive {
+                addDefaultMarkers()
             }
         }
     }
@@ -555,31 +594,7 @@ extension MapController: GMSMapViewDelegate {
     
     // вызывается при нажатии на карту
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-        hideTopSearchView()
-        if enableMapInteractive {
-            selectMark = true
-            hideTopSearchView()
-            floatingView.hideFloatingView()
-            showScrollAndWeatherView()
-            if selectMark || selectMarkFromBottomView {
-                selectMark = false
-                selectMarkFromBottomView = false
-            }
-            enableMapInteractive = false
-        }
-        
-        if let selectedScrollFilterType = selectedScrollFilterType{
-            if selectedScrollFilterType == .favorite {
-                // Фильтрация по избранным
-                interactor?.fetchAllFavorites(selected: true)
-            } else {
-                interactor?.fetchAllTestMarkers(request: selectedScrollFilterType)
-            }
-        } else {
-            if enableMapInteractive {
-                addDefaultMarkers()
-            }
-        }
+        tapOnMap()
     }
     
     // вызывается когда начинается передвижение карты

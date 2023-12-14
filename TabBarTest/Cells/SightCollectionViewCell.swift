@@ -175,9 +175,9 @@ class SightCollectionViewCell: UICollectionViewCell, Reusable {
 
 extension SightCollectionViewCell: CustomAnimatedButtonDelegate {
     
-    func continueButton() {
+    func continueButton(id: Int) {
         tapFavouriteHandle()
     }
-    
+
 }
 

@@ -28,18 +28,21 @@ class ActionsButtonsCityView: UIScrollView {
     let favouriteButton = FilterView(withName: Constants.Views.favourite)
     private let animateFavouriteButton: CustomAnimatedButton = {
        let button = CustomAnimatedButton()
+        button.setupId(id: 0)
         return button
     }()
     
     let interestingButton = FilterView(withName: Constants.Views.interesting)
     private let animateInterestingButton: CustomAnimatedButton = {
        let button = CustomAnimatedButton()
+        button.setupId(id: 1)
         return button
     }()
     
     let faqButton = FilterView(withName: Constants.Views.faq)
     private let animateFaqButton: CustomAnimatedButton = {
        let button = CustomAnimatedButton()
+        button.setupId(id: 2)
         return button
     }()
     
@@ -56,31 +59,59 @@ class ActionsButtonsCityView: UIScrollView {
     
     // MARK: - Selectors
     
-    @objc func handleFavouriteButton() {
-        actionButtonDelegate?.favouriteButtonTapped()
-    }
-    @objc func handleInterestingButton() {
-        actionButtonDelegate?.interestingButtonTapped()
-    }
-    @objc func handleFaqButton() {
-        actionButtonDelegate?.faqButtonTapped()
-    }
+//    @objc func handleFavouriteButton() {
+//        animateButton() {
+//            print("tap")
+////            self.actionButtonDelegate?.favouriteButtonTapped()
+//        }
+//    }
+//    @objc func handleInterestingButton() {
+//        animateButton() {
+//            self.actionButtonDelegate?.interestingButtonTapped()
+//        }
+//    }
+//    @objc func handleFaqButton() {
+//        animateButton() {
+//            self.actionButtonDelegate?.faqButtonTapped()
+//        }
+//    }
 
     // MARK: - Helper Functions
     
-    private func setupUI() {
-        let tapanimateFavouriteButton = UITapGestureRecognizer(target: self, action: #selector(handleFavouriteButton))
-        animateFavouriteButton.addGestureRecognizer(tapanimateFavouriteButton)
-        animateFavouriteButton.isUserInteractionEnabled = true
-        
-        let tapanimateInterestingButton = UITapGestureRecognizer(target: self, action: #selector(handleInterestingButton))
-        animateInterestingButton.addGestureRecognizer(tapanimateInterestingButton)
-        animateInterestingButton.isUserInteractionEnabled = true
-        
-        let tapaanimateFaqButton = UITapGestureRecognizer(target: self, action: #selector(handleFaqButton))
-        animateFaqButton.addGestureRecognizer(tapaanimateFaqButton)
-        animateFaqButton.isUserInteractionEnabled = true
+    private func animateButton(completion: @escaping ()->()) {
+        // анимация уменьшения
+        UIView.animate(withDuration: 0.25) {
+            self.transform = CGAffineTransform(scaleX: 0.93, y: 0.93)
+        } completion: { success in
+            if success {
+                // по окончанию анимация увелицения
+                UIView.animate(withDuration: 0.25) {
+                    self.transform = CGAffineTransform(scaleX: 0.93, y: 0.93)
+                } completion: { success in
+                    if success {
+                        // по окончанию выполнение нажатия
+                        completion()
+                    }
+                }
+                
+            }
+        }
+
+    }
     
+    private func setupUI() {
+//        let tapanimateFavouriteButton = UITapGestureRecognizer(target: self, action: #selector(handleFavouriteButton))
+//        animateFavouriteButton.addGestureRecognizer(tapanimateFavouriteButton)
+//        animateFavouriteButton.isUserInteractionEnabled = true
+        animateFavouriteButton.delegate = self
+//        let tapanimateInterestingButton = UITapGestureRecognizer(target: self, action: #selector(handleInterestingButton))
+//        animateInterestingButton.addGestureRecognizer(tapanimateInterestingButton)
+//        animateInterestingButton.isUserInteractionEnabled = true
+        animateInterestingButton.delegate = self
+//        let tapaanimateFaqButton = UITapGestureRecognizer(target: self, action: #selector(handleFaqButton))
+//        animateFaqButton.addGestureRecognizer(tapaanimateFaqButton)
+//        animateFaqButton.isUserInteractionEnabled = true
+        animateFaqButton.delegate = self
         
         self.backgroundColor = .setCustomColor(color: .filterbuttonFloatingScreen)
         self.isScrollEnabled = true
@@ -138,6 +169,29 @@ class ActionsButtonsCityView: UIScrollView {
     }
     
 
+}
+
+// MARK: - CustomAnimatedButtonDelegate
+
+extension ActionsButtonsCityView: CustomAnimatedButtonDelegate {
+    
+    func continueButton(id: Int) {
+        switch id {
+        case 0:
+            self.actionButtonDelegate?.favouriteButtonTapped()
+            
+        case 1:
+            self.actionButtonDelegate?.interestingButtonTapped()
+            
+        case 2:
+            self.actionButtonDelegate?.faqButtonTapped()
+            
+        default: break
+            
+        }
+    }
+    
+    
 }
 
 

@@ -28,31 +28,34 @@ class ActionButtonsScrollView: UIScrollView {
     // MARK: - UI properties
     
     let routeButton = FilterView(withName: Constants.Views.travelGuide)
-    private let animateRouteButton: UIView = {
-        let button = UIView()
+    private let animateRouteButton: CustomAnimatedButton = {
+        let button = CustomAnimatedButton()
+        button.setupId(id: 0)
         return button
     }()
     
     let addToFavouritesButton = FilterView(withName: Constants.Views.toFeatures)
-    private let animateAddToFavouritesButton: UIView = {
-        let button = UIView()
+    private let animateAddToFavouritesButton: CustomAnimatedButton = {
+        let button = CustomAnimatedButton()
+        button.setupId(id: 1)
         return button
     }()
     
     let callButton = FilterView(withName: Constants.Views.makeCall)
-    private let animateCallButton: UIView = {
-        let button = UIView()
+    private let animateCallButton: CustomAnimatedButton = {
+        let button = CustomAnimatedButton()
+        button.setupId(id: 2)
         return button
     }()
     
     let siteButton = FilterView(withName: Constants.Views.toSite)
-    private let animateSiteButton: UIView = {
-        let button = UIView()
+    private let animateSiteButton: CustomAnimatedButton = {
+        let button = CustomAnimatedButton()
+        button.setupId(id: 3)
         return button
     }()
     
     private var sight: Sight?
-    
     
     // MARK: - Life cycle
     
@@ -72,6 +75,11 @@ class ActionButtonsScrollView: UIScrollView {
     }
     
     private func setupUI() {
+        [animateRouteButton, animateAddToFavouritesButton,
+         animateCallButton, animateSiteButton].forEach {
+            $0.delegate = self
+        }
+        
         self.backgroundColor = .setCustomColor(color: .filterbuttonFloatingScreen)
         self.isScrollEnabled = true
         self.isDirectionalLockEnabled = true
@@ -96,20 +104,7 @@ class ActionButtonsScrollView: UIScrollView {
         animateSiteButton.addSubviews(siteButton)
         siteButton.addConstraintsToFillView(view: animateSiteButton)
         addSubview(animateSiteButton)
-        
-        let tapSearch = UITapGestureRecognizer(target: self, action: #selector(handleRouteButton))
-        routeButton.addGestureRecognizer(tapSearch)
-        
-        let tapFavorites = UITapGestureRecognizer(target: self, action: #selector(handleAddToFavouritesButton))
-        addToFavouritesButton.addGestureRecognizer(tapFavorites)
-        
-        let tapSearchSight = UITapGestureRecognizer(target: self, action: #selector(handleCallButton))
-        callButton.addGestureRecognizer(tapSearchSight)
-        
-        let tapMuseum = UITapGestureRecognizer(target: self, action: #selector(handleSiteButton))
-        siteButton.addGestureRecognizer(tapMuseum)
-        
-        
+ 
         updateFullWidth()
     }
     
@@ -157,7 +152,6 @@ class ActionButtonsScrollView: UIScrollView {
     @objc func handleRouteButton() {
         if let sight = sight {
             let location = CLLocationCoordinate2D(latitude: sight.latitude, longitude: sight.latitude)
-            print("currentLocation:\(location)")
             actionButtonDelegate?.routeButtonTapped(location: location)
         }
     }
@@ -165,7 +159,6 @@ class ActionButtonsScrollView: UIScrollView {
     // Избранное
     @objc func handleAddToFavouritesButton() {
         if let name = sight?.name {
-            print("favoriteName:\(name)")
             actionButtonDelegate?.addToFavouritesButtonTapped(name: name)
         }
     }
@@ -173,7 +166,6 @@ class ActionButtonsScrollView: UIScrollView {
     // Достопримечательность
     @objc func handleCallButton() {
         if let phone = sight?.main_phone {
-            print("phone:\(phone)")
             actionButtonDelegate?.callButtonTapped(withNumber: phone)
         }
     }
@@ -181,9 +173,32 @@ class ActionButtonsScrollView: UIScrollView {
     // Музей
     @objc func handleSiteButton() {
         if let site = sight?.site {
-            print("url:\(site)")
             actionButtonDelegate?.siteButtonTapped(urlString: site)
         }
     }
+}
+
+// MARK: - CustomAnimatedButtonDelegate
+
+extension ActionButtonsScrollView: CustomAnimatedButtonDelegate {
+    
+    func continueButton(id: Int) {
+        switch id {
+        case 0:
+            handleRouteButton()
+            
+        case 1:
+            handleAddToFavouritesButton()
+            
+        case 2:
+            handleCallButton()
+            
+        case 3:
+            handleSiteButton()
+            
+        default: break
+        }
+    }
+    
 }
 
