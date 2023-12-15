@@ -21,19 +21,19 @@ class SettingsController: UIViewController {
     
     private let shareButton: SettingsShareView = {
        let button = SettingsShareView()
-        button.configute(data: SettingCellModel(image: "museumSearch", name: "Поделиться"))
+        button.configute(data: SettingCellModel(image: "square.and.arrow.up", name: "Поделиться"))
         return button
     }()
     
     private let rateButton: SettingsShareView = {
        let button = SettingsShareView()
-        button.configute(data: SettingCellModel(image: "museumSearch", name: "Оценить"))
+        button.configute(data: SettingCellModel(image: "star", name: "Оценить"))
         return button
     }()
     
     private let helpButton: SettingsShareView = {
        let button = SettingsShareView()
-        button.configute(data: SettingCellModel(image: "museumSearch", name: "Поддержка"))
+        button.configute(data: SettingCellModel(image: "envelope.fill", name: "Поддержка"))
         return button
     }()
     

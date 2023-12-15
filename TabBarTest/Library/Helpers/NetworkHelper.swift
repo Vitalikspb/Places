@@ -127,7 +127,7 @@ class NetworkHelper {
                     case .sight:
                         self.sight = try JSONDecoder().decode([SightResponse].self, from: data)
                         if let _sight = self.sight {
-                            print("sight:\(_sight)")
+//                            print("sight:\(_sight)")
                             var tempAllCountry = [Sight?]()
                             _sight.forEach {
                                 tempAllCountry.append(Sight(id: $0?.id ?? 0,
@@ -155,9 +155,6 @@ class NetworkHelper {
                                                              images: self.decodeImages(images: $0?.images?["image"]),
                                                              favorite: "AddtofavoritesUnselected"))
                                                       }
-                                                      print("===========")
-                            print("tempAllCountry:\(tempAllCountry)")
-                            print("===========")
                             UserDefaults.standard.saveSight(value: tempAllCountry, data: data)
                         }
                         

@@ -37,6 +37,7 @@ class SettingsShareView: UIView {
     }()
     let titleImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.tintColor = .setCustomColor(color: .titleText)
         return imageView
     }()
     let titleLabel: UILabel = {
@@ -82,7 +83,6 @@ class SettingsShareView: UIView {
         }
         titleImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(8)
-            $0.height.width.equalTo(22)
             $0.centerX.equalToSuperview()
         }
         titleLabel.snp.makeConstraints {
@@ -96,7 +96,7 @@ class SettingsShareView: UIView {
     
     func configute(data: SettingCellModel) {
         titleLabel.text = data.name
-        titleImageView.image = UIImage(named: data.image)
+        titleImageView.image = UIImage(systemName: data.image)
     }
     
     func returnWidthView() -> CGFloat {
