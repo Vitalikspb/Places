@@ -12,6 +12,7 @@ protocol MapPresentationLogic: AnyObject {
     func presentChoosenDestinationView(response: [GMSMarker], selectedSight: Sight)
     func presentSelectedDestinationView(response: [GMSMarker])
     func presentAllMarkers(response: [GMSMarker])
+    func presentEmptyCityMarkers(response: [GMSMarker])
 }
 
 final class MapPresenter: MapPresentationLogic {
@@ -28,6 +29,10 @@ final class MapPresenter: MapPresentationLogic {
     
     func presentAllMarkers(response: [GMSMarker]) {
         mapController?.displayMarkers(filter: response)
+    }
+    
+    func presentEmptyCityMarkers(response: [GMSMarker]) {
+        mapController?.displayEmptyMarkers(markers: response)
     }
     
 }

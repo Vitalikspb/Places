@@ -97,17 +97,6 @@ struct SightDescriptionResponce: Codable {
     var images: [String]
 }
 
-//struct SightDescription {
-//    var id: Int
-//    var name: String
-//    var description: String
-//    var price: Int
-//    var sight_count: Int
-//    var latitude: Double
-//    var longitude: Double
-//    var images: [UIImage]
-//}
-
 // MARK: - Запрос на интересные события
 // events
 struct EventsResponce: Codable {

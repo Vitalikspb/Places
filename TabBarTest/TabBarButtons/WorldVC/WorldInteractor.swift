@@ -6,8 +6,6 @@
 
 import UIKit
 
-
-
 protocol WorldBussinessLogic: AnyObject {
     func showCity()
 }
@@ -39,26 +37,20 @@ class WorldInteractor: WorldBussinessLogic, WorldDataStore {
         tempWorldCountry.forEach {
             sightCount += $0.sight_count
         }
-        
         worldsCountry = [WorldViewModels.AllCountriesInTheWorld.ViewModel(
-            titlesec: TitleSection(
-                country: "Россия",
-                subTitle: "\(tempWorldCountry.count) городов, \(sightCount) мест",
-                latitude: 55.755863,
-                longitude: 37.617700,
-                available: true,
-                iconName: "iconRussia"),
+            titlesec: TitleSection(country: "Россия",
+                                   subTitle: "\(tempWorldCountry.count) городов, \(sightCount) мест",
+                                   latitude: 55.755863,
+                                   longitude: 37.617700,
+                                   available: true,
+                                   iconName: "iconRussia"),
             model: tempWorldCountry)]
-        
-        
 
         if var _worldsCountry = self.worldsCountry {
             WorldWorker.addTestCountries(&_worldsCountry)
             self.presenter?.presentAllMarkers(response: _worldsCountry)
         }
     }
-    
-    
-    
+
 }
 

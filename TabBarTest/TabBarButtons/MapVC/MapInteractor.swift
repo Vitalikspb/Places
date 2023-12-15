@@ -7,6 +7,7 @@
 
 import Foundation
 import GoogleMaps
+import SnapKit
 
 protocol MapBussinessLogic: AnyObject {
     func showMarkersOnCity(name: String)
@@ -18,6 +19,7 @@ protocol MapBussinessLogic: AnyObject {
     func appendAllMarkers()
     func updateFavorites(name: String)
     func searchWithCaracter(character: String)
+    func markerWithCountOfCityMarkers()
 }
 
 protocol MapDataStore: AnyObject {
@@ -34,6 +36,22 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
     // Показать все начальные маркеры
     func appendAllMarkers() {
         presenter?.presentAllMarkers(response: returnAllTestMarkers())
+    }
+    
+    // Установка всем городам маркеров с количеством маркеров по городам
+    func markerWithCountOfCityMarkers() {
+        var resultMarkers = [GMSMarker]()
+        
+        // Все города для определения локации
+        let tempWorldCountry = UserDefaults.standard.getSightDescription()
+        for (_,val) in tempWorldCountry.enumerated() {
+            let marker = setEmptyMarker(cityName: val.name,
+                                        location: CLLocation(latitude: val.latitude,
+                                                             longitude: val.longitude),
+                                        countSights: val.sight_count)
+            resultMarkers.append(marker)
+        }
+        presenter?.presentEmptyCityMarkers(response: resultMarkers)
     }
     
     // Фильтрация по избранным достопримечательностям
@@ -101,6 +119,46 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
         border.center = australiaMarker.iconView!.center
         australiaMarker.iconView?.addSubview(border)
         
+        return australiaMarker
+    }
+    
+    // Инициализация стандартного маркера
+    func setEmptyMarker(cityName: String, location: CLLocation, countSights: Int) -> GMSMarker {
+        let australiaMarker = GMSMarker(
+            position: CLLocationCoordinate2D(latitude: location.coordinate.latitude,
+                                             longitude: location.coordinate.longitude))
+        australiaMarker.title = cityName
+        australiaMarker.appearAnimation = .pop
+        australiaMarker.isFlat = true
+        australiaMarker.isDraggable = true
+        australiaMarker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
+        australiaMarker.iconView =  UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        australiaMarker.iconView?.backgroundColor = .setCustomColor(color: .weatherTableViewBackground)
+        australiaMarker.iconView?.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        australiaMarker.iconView?.contentMode = .scaleAspectFill
+        australiaMarker.iconView?.layer.cornerRadius = 25
+        australiaMarker.iconView?.clipsToBounds = true
+        
+        let border = UIView()
+        border.backgroundColor = .clear
+        border.layer.borderColor = UIColor.white.cgColor
+        border.layer.borderWidth = 2
+        border.layer.cornerRadius = (australiaMarker.iconView?.frame.width)! / 2
+        border.frame = australiaMarker.iconView!.frame
+        border.center = australiaMarker.iconView!.center
+        
+        let countLabel = UILabel()
+        countLabel.text = "\(countSights)"
+        countLabel.textColor = .black
+        countLabel.font = .setCustomFont(name: .regular, andSize: 16)
+        countLabel.backgroundColor = .clear
+        countLabel.contentMode = .center
+        
+        border.addSubview(countLabel)
+        countLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        australiaMarker.iconView?.addSubview(border)
         return australiaMarker
     }
     

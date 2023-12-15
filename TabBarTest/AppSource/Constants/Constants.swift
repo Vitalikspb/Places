@@ -37,7 +37,10 @@ enum Constants {
     static let BaseURLSevenDays = "https://api.openweathermap.org/data/2.5/onecall?"
     static let weatherIconUrl = "https://openweathermap.org/img/wn/"
     static let weatherIconUrlEnd = "@2x.png"
-    static let shareLink = "www.apple-appStore.com/awesomeapp"
+    /// Ссылка на прилу в магазине
+    static let shareLink = "https://apps.apple.com/ru/app/apple-store/id6446242555?mt=8"
+    /// Ссылка на гуг форму для связи с поддержкой
+    static var support = "https://forms.gle/VdEqUx6z7bLUW8gC8"
     
     /// "°"
     static let unitCelcium = "°"

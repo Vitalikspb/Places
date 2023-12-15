@@ -18,6 +18,8 @@ protocol MapDisplayLogic: AnyObject {
     func displayMarkers(filter: [GMSMarker])
     // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String)
+    // Показать пустые марекры по всем городам
+    func displayEmptyMarkers(markers: [GMSMarker])
 }
 
 class MapController: UIViewController {
@@ -87,12 +89,16 @@ class MapController: UIViewController {
     private var showCountry: Bool = false
     private var timer = Timer()
     private var currentCountry: String = ""
-    private var currentCity: String = ""
+    private var currentCity: String = "Город"
     private var selectMark: Bool = false
     private var selectedFilter: Bool = false
     private var selectMarkFromBottomView: Bool = false
     private var enableMapInteractive: Bool = false
     private var choosenCity: Bool = false
+    // Скрытие всех маркеров когда не зоны города
+    private var alreadyIsOutOfBoxCity: Bool = false
+    // зум карты
+    private var mapZoom: Float = 0
     // показ нижнего скролл из достопримечательностей внизу
     private var showBottomCollectionSight: Bool = true
     // было ли открытие онбординга
@@ -167,7 +173,7 @@ class MapController: UIViewController {
         super.viewDidAppear(animated)
         let cityName = userDefault.string(forKey: UserDefaults.currentCity)
         tabBarController?.tabBar.items?[1].title = cityName
-        currentCity = cityName ?? ""
+        currentCity = cityName ?? "Город"
         // проверяем было ли нажатие на кнопку "карты" на экране Страны и делаем анимацию камеры и переход на нужные координаты
         
         
@@ -328,15 +334,12 @@ class MapController: UIViewController {
         location.latitude > val.locationBottomRight.latitude &&
         location.longitude > val.locationTopLeft.longitude &&
         location.longitude < val.locationBottomRight.longitude {
-            print("город в квадрате:\(val.city)")
             self.userDefault.set(val.city, forKey: UserDefaults.currentCity)
             self.tabBarController?.tabBar.items?[1].title = val.city
             self.currentCity = val.city
-            if !choosenCity {
-                
+            if !choosenCity, mapZoom > 9.0 {
                     let sight = UserDefaults.standard.getSight()
                     let filteredSights = sight.filter( { $0.city == val.city })
-                    
                     self.bottomCollectionViewhide()
                     self.bottomCollectionView.clearModel()
                     self.bottomCollectionView.setupModel(model: filteredSights)
@@ -351,21 +354,28 @@ class MapController: UIViewController {
                         }
                     }
                 choosenCity = true
+                alreadyIsOutOfBoxCity = false
             }
             findCity = true
         }
         if !findCity {
-            
-            print("город не в квадрате")
-            let sight = UserDefaults.standard.getSight()
-            self.bottomCollectionView.setupModel(model: sight)
-            // сюда добавить показ всех маркеров
-            self.currentCity = "Город"
-            self.userDefault.set("Город", forKey: UserDefaults.currentCity)
-            self.tabBarController?.tabBar.items?[1].title = "Город"
-            if choosenCity {
-                interactor?.showMarkersOnCity(name: "Город")
-                choosenCity = false
+            if !alreadyIsOutOfBoxCity {
+                let sight = UserDefaults.standard.getSight()
+                self.bottomCollectionView.setupModel(model: sight)
+                // сюда добавить показ всех маркеров
+                self.currentCity = "Город"
+                self.userDefault.set("Город", forKey: UserDefaults.currentCity)
+                self.tabBarController?.tabBar.items?[1].title = "Город"
+                if choosenCity {
+                    interactor?.markerWithCountOfCityMarkers()
+                    choosenCity = false
+                }
+                // скрываем нижкиюю коллекцию достопримечательностей
+                bottomCollectionViewhide()
+                tapOnMap()
+                showBottomCollectionSight = false
+                interactor?.markerWithCountOfCityMarkers()
+                alreadyIsOutOfBoxCity = true
             }
         }
     }
@@ -517,14 +527,19 @@ class MapController: UIViewController {
                 bottomCollectionViewhide()
                 tapOnMap()
                 showBottomCollectionSight = false
+                interactor?.markerWithCountOfCityMarkers()
             }
         } else {
             // Показываем нижний скролл с достопримечательностями
             if !showBottomCollectionSight {
-                bottomCollectionViewShow()
+                if currentCity != "Город" {
+                    bottomCollectionViewShow()
+                    interactor?.showMarkersOnCity(name: currentCity)
+                }
                 showBottomCollectionSight = true
             }
         }
+        mapZoom = zoom
     }
     
     private func tapOnMap() {
@@ -876,44 +891,23 @@ extension MapController: ActionButtonsScrollViewDelegate {
     
     // Добавление или удаление избранного из меню в низу во всплывающей вьюхе
     func addToFavouritesButtonTapped(name: String) {
-        print("Добавление в избранное")
         interactor?.updateFavorites(name: name)
     }
-    
-    // MARK: - TODO оставить для экрана настроек
-    
-//    // из меню в низу во всплывающей вьюхе
-//    func shareButtonTapped() {
-//        let firstActivityItem = "Пригласить друзей"
-//        let secondActivityItem = Constants.shareLink
-//        let image: UIImage = UIImage(named: "AppIcon") ?? UIImage()
-//        let activityViewController: UIActivityViewController = UIActivityViewController(
-//            activityItems: [firstActivityItem, secondActivityItem, image], applicationActivities: nil)
-//        activityViewController.activityItemsConfiguration = [UIActivity.ActivityType.message] as? UIActivityItemsConfigurationReading
-//        
-//        // Убираем не нужные кнопки
-//        activityViewController.excludedActivityTypes = [
-//            UIActivity.ActivityType.postToWeibo,
-//            UIActivity.ActivityType.print,
-//            UIActivity.ActivityType.addToReadingList,
-//            UIActivity.ActivityType.postToFlickr,
-//            UIActivity.ActivityType.postToVimeo,
-//            UIActivity.ActivityType.postToTencentWeibo,
-//            UIActivity.ActivityType.postToFacebook
-//        ]
-//        activityViewController.completionWithItemsHandler = { activity, success, items, error in
-//            if success {
-//                self.dismiss(animated: true)
-//            }
-//        }
-//        activityViewController.isModalInPresentation = true
-//        self.present(activityViewController, animated: true, completion: nil)
-//    }
 }
 
 // MARK: - MapDisplayLogic
 
 extension MapController: MapDisplayLogic {
+    
+    // Показ маркеров над городами с количеством достопримечательностей
+    func displayEmptyMarkers(markers: [GMSMarker]) {
+        DispatchQueue.main.async {
+            self.mapView.clear()
+            markers.forEach {
+                $0.map = self.mapView
+            }
+        }
+    }
     
     // Отображаем маркеры при вводе текста из поиска в ScrollView (TopViewSearch)
     func displayFetchedMarkersFromSearchView(withString: String) {
@@ -954,8 +948,6 @@ extension MapController: MapDisplayLogic {
             UIView.animate(withDuration: 0.35) {
                 self.tabBarController?.tabBar.alpha = 0
                 self.mapView.settings.myLocationButton = false
-            } completion: { _ in
-                print("")
             }
             UIView.animate(withDuration: 0.5) {
                 self.bottomCollectionView.alpha = 0
