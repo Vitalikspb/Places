@@ -22,6 +22,12 @@ extension UserDefaults {
     // Первый раз запускаем прилу
     static var firstOpenApp: String { "firstOpenApp" }
     
+    // Выбор отображения темы
+    static var themeAppSelected: String { "Системная" }
+    
+    // Выбор построения маршрута
+    static var defaultNaviRoute: String { "Google" }
+    
     // текущее местоположение
     static var currentLongitude: String { "currentLongitude" }
     static var currentLatitude: String { "currentLatitude" }

@@ -70,6 +70,8 @@ class WorldController: UIViewController {
     }
     
     private func setupUI() {
+        let themeName = UserDefaults.standard.string(forKey: UserDefaults.themeAppSelected) ?? "Системная"
+        updateSelectedTheme(name: themeName)
         // другие города
         tableView.register(WorldCollectionViewCell.self,
                            forCellReuseIdentifier: WorldCollectionViewCell.identifier)
@@ -104,6 +106,23 @@ class WorldController: UIViewController {
                         ? UserDefaults.showSelectedCity
                         : UserDefaults.showSelectedCountry)
         tabBarController?.selectedIndex = 0
+    }
+    
+    private func updateSelectedTheme(name: String) {
+        guard #available(iOS 13.0, *) else { return }
+        switch name {
+        case "Светлая":
+            UIApplication.shared.windows.forEach { window in
+                window.overrideUserInterfaceStyle = .light }
+            
+        case "Темная":
+            UIApplication.shared.windows.forEach { window in
+                window.overrideUserInterfaceStyle = .dark }
+            
+        default:
+            UIApplication.shared.windows.forEach { window in
+                window.overrideUserInterfaceStyle = .unspecified }
+        }
     }
 }
 

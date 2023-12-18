@@ -149,7 +149,7 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
         
         let countLabel = UILabel()
         countLabel.text = "\(countSights)"
-        countLabel.textColor = .black
+        countLabel.textColor = .setCustomColor(color: .titleText)
         countLabel.font = .setCustomFont(name: .regular, andSize: 16)
         countLabel.backgroundColor = .clear
         countLabel.contentMode = .center

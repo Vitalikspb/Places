@@ -15,6 +15,8 @@
 		1F771FB22ACD8801005C5BB7 /* FavouritesCitiesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F771FB12ACD8801005C5BB7 /* FavouritesCitiesCollectionView.swift */; };
 		1F8E4B222B0CEBDA00A7EC61 /* ManagesFavorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8E4B212B0CEBDA00A7EC61 /* ManagesFavorites.swift */; };
 		1F9D9D1B2ADFBE2900A74AEC /* CustomAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9D9D1A2ADFBE2900A74AEC /* CustomAnimatedButton.swift */; };
+		1FA284322B2DDAD8000A8225 /* ThemeLightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA284312B2DDAD8000A8225 /* ThemeLightView.swift */; };
+		1FA284342B302F1C000A8225 /* NaviCheckRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA284332B302F1C000A8225 /* NaviCheckRouteView.swift */; };
 		1FB214372B21B0300078A014 /* UnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB214362B21B0300078A014 /* UnboardingController.swift */; };
 		1FB214392B21B03D0078A014 /* UnboardingController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FB214382B21B03D0078A014 /* UnboardingController.storyboard */; };
 		1FB2143B2B21B04A0078A014 /* UnboardingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB2143A2B21B04A0078A014 /* UnboardingInteractor.swift */; };
@@ -179,6 +181,8 @@
 		1F771FB12ACD8801005C5BB7 /* FavouritesCitiesCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesCitiesCollectionView.swift; sourceTree = "<group>"; };
 		1F8E4B212B0CEBDA00A7EC61 /* ManagesFavorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagesFavorites.swift; sourceTree = "<group>"; };
 		1F9D9D1A2ADFBE2900A74AEC /* CustomAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnimatedButton.swift; sourceTree = "<group>"; };
+		1FA284312B2DDAD8000A8225 /* ThemeLightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeLightView.swift; sourceTree = "<group>"; };
+		1FA284332B302F1C000A8225 /* NaviCheckRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaviCheckRouteView.swift; sourceTree = "<group>"; };
 		1FB214362B21B0300078A014 /* UnboardingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnboardingController.swift; sourceTree = "<group>"; };
 		1FB214382B21B03D0078A014 /* UnboardingController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UnboardingController.storyboard; sourceTree = "<group>"; };
 		1FB2143A2B21B04A0078A014 /* UnboardingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnboardingInteractor.swift; sourceTree = "<group>"; };
@@ -620,6 +624,8 @@
 			isa = PBXGroup;
 			children = (
 				1FD4EFDF2B2C518900000608 /* SettingsShareView.swift */,
+				1FA284312B2DDAD8000A8225 /* ThemeLightView.swift */,
+				1FA284332B302F1C000A8225 /* NaviCheckRouteView.swift */,
 				C2588FA427030D6E0014CCDC /* FilterView.swift */,
 				538AF82F27341AAB00D02ECA /* StackViewStars.swift */,
 				C259AA1F272180FB00B03921 /* GradientView.swift */,
@@ -1005,6 +1011,7 @@
 				C24A7EB027733BBC00D4751F /* HelperMapsTableViewCell.swift in Sources */,
 				53EF4D22270E2A7B008CB1B2 /* MapModels.swift in Sources */,
 				C24A7EA22771DCFB00D4751F /* WeatherModels.swift in Sources */,
+				1FA284322B2DDAD8000A8225 /* ThemeLightView.swift in Sources */,
 				53D9BB1C272B39CE00CC14A8 /* ActionButtonsScrollView.swift in Sources */,
 				C254487E27070753000B9439 /* FloatingView.swift in Sources */,
 				C26BFE492768A02F00ABD119 /* WorldRouter.swift in Sources */,
@@ -1086,6 +1093,7 @@
 				538AF83027341AAB00D02ECA /* StackViewStars.swift in Sources */,
 				538AF832273422C500D02ECA /* FloatingViewSecondTableViewCell.swift in Sources */,
 				1F46547A2AC6CC2200B29CDA /* Extension+UIStackView.swift in Sources */,
+				1FA284342B302F1C000A8225 /* NaviCheckRouteView.swift in Sources */,
 				53F3E2FA273FD803004B278E /* CityModels.swift in Sources */,
 				1F73AC652AD940B100AB359A /* NetworkHelper.swift in Sources */,
 				C26BFE5B2768D7EA00ABD119 /* IntrestingEventsModels.swift in Sources */,
