@@ -11,8 +11,7 @@ class IntrestingEventsWorker {
     
     // Запрос на интересные события
     static func updateInterestingEvents(model: ModelForRequest, completion: @escaping()->()) {
-        NetworkHelper.shared.makeRequest(type: .events, model: model) {
-        }
+        NetworkHelper.shared.makeRequest(type: .events, model: model) 
         completion()
     }
 }

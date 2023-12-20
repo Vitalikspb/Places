@@ -48,6 +48,9 @@ class BottomCollectionView: UIView {
         dataModel.removeAll()
     }
     func setupModel(model: [Sight]) {
+        if dataModel.count != 0 {
+            dataModel.removeAll()
+        }
         model.forEach {
             let tempModel = BottomCollectionViewModel(type: $0.type.rawValue,
                                                       image: $0.big_image,

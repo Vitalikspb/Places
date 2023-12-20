@@ -34,7 +34,6 @@ class MapController: UIViewController {
     
     var interactor: MapBussinessLogic?
     var router: (NSObjectProtocol & MapRoutingLogic)?
-//    var citiesAvailable = ["Москва", "Санкт-Петербург", "Екатеринбург", "Казань"]
     
     // MARK: - Private Properties
     
@@ -148,7 +147,7 @@ class MapController: UIViewController {
         super.viewDidLoad()
         setupClean()
         setupUI()
-        interactor?.appendAllMarkers()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -160,6 +159,7 @@ class MapController: UIViewController {
         if showUnboarding {
             // не в первый раз тогда запускаем поиск локации иначе ошибка треда
             setupLocation()
+            interactor?.appendAllMarkers()
         } else {
             // если в первый раз тогда онбординг
             openUnboardingScreen()
@@ -189,7 +189,7 @@ class MapController: UIViewController {
         showCity = userDefault.bool(forKey: UserDefaults.showSelectedCity)
         showCountry = userDefault.bool(forKey: UserDefaults.showSelectedCountry)
         showSight = userDefault.bool(forKey: UserDefaults.showSelectedSight)
-
+        
         if showCity {
             let latitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLatitude)
             let longitude = userDefault.double(forKey: UserDefaults.showSelectedCityWithLongitude)
@@ -344,21 +344,21 @@ class MapController: UIViewController {
             self.tabBarController?.tabBar.items?[1].title = val.city
             self.currentCity = val.city
             if !choosenCity, mapZoom > 9.0 {
-                    let sight = UserDefaults.standard.getSight()
-                    let filteredSights = sight.filter( { $0.city == val.city })
-                    self.bottomCollectionViewhide()
-                    self.bottomCollectionView.clearModel()
-                    self.bottomCollectionView.setupModel(model: filteredSights)
-                    
-                    // сюда добавить показ маркеров только для текущего города
-                    interactor?.showMarkersOnCity(name: val.city)
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                        self.bottomCollectionView.collectionView.reloadData()
-                        if hiden {
-                            self.bottomCollectionViewShow()
-                        }
+                let sight = UserDefaults.standard.getSight()
+                let filteredSights = sight.filter( { $0.city == val.city })
+                self.bottomCollectionViewhide()
+                self.bottomCollectionView.clearModel()
+                self.bottomCollectionView.setupModel(model: filteredSights)
+                
+                // сюда добавить показ маркеров только для текущего города
+                interactor?.showMarkersOnCity(name: val.city)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                    self.bottomCollectionView.collectionView.reloadData()
+                    if hiden {
+                        self.bottomCollectionViewShow()
                     }
+                }
                 choosenCity = true
                 alreadyIsOutOfBoxCity = false
             }
@@ -367,7 +367,7 @@ class MapController: UIViewController {
         if !findCity {
             if !alreadyIsOutOfBoxCity {
                 let sight = UserDefaults.standard.getSight()
-                self.bottomCollectionView.setupModel(model: sight)
+                print("1sight:\(sight.count)")
                 // сюда добавить показ всех маркеров
                 self.currentCity = "Город"
                 self.userDefault.set("Город", forKey: UserDefaults.currentCity)
@@ -532,7 +532,7 @@ class MapController: UIViewController {
             if sights.first(where: { $0.name == nameLocation }) != nil {
                 if animateMarkers {
                     interactor?.showSelectedMarker(request: MapViewModel.ChoosenDestinationView.Request(
-                            marker: nameLocation))
+                        marker: nameLocation))
                 }
                 animateCameraToPoint(latitude: marker.position.latitude - 0.0036,
                                      longitude: marker.position.longitude,
@@ -607,15 +607,15 @@ extension MapController: GMSMapViewDelegate {
     
     // Вызывается по нажатию на свое местоположение
     // MARK: - TODO УДАЛИТЬ
-//    func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
-//        
-//        let alert = UIAlertController(
-//            title: "Location Tapped",
-//            message: "Current location: <\(location.latitude), \(location.longitude)>",
-//            preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default))
-//        present(alert, animated: true)
-//    }
+    //    func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
+    //
+    //        let alert = UIAlertController(
+    //            title: "Location Tapped",
+    //            message: "Current location: <\(location.latitude), \(location.longitude)>",
+    //            preferredStyle: .alert)
+    //        alert.addAction(UIAlertAction(title: "OK", style: .default))
+    //        present(alert, animated: true)
+    //    }
     
     // вызывается при нажатии на маркер
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
@@ -636,9 +636,9 @@ extension MapController: GMSMapViewDelegate {
     }
     
     // вызывается когда начинается передвижение карты
-//    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
-//        hideTopSearchView()
-//    }
+    //    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
+    //        hideTopSearchView()
+    //    }
     
     // Вызывается когда камера перестала двигатся
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
@@ -648,24 +648,66 @@ extension MapController: GMSMapViewDelegate {
     
     // Построение маршрута
     func fetchRoute(from source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D) {
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            let stringUrl = "comgooglemaps-x-callback://?saddr=&daddr=\(destination.latitude),\(destination.longitude)&directionsmode=driving"
-            if let url = URL(string: stringUrl) {
-                UIApplication.shared.open(url, options: [:])
-            }}
-        else {
-            //Open in browser
-            let stringUrl = "https://www.google.co.in/maps/dir/?saddr=&daddr=\(destination.latitude),\(destination.longitude)&directionsmode=driving"
-            if let urlDestination = URL.init(string: stringUrl) {
-                UIApplication.shared.open(urlDestination)
+        let defaultNavi = UserDefaults.standard.string(forKey: UserDefaults.defaultNaviRoute)
+
+        // дефолтный адрес открытия в поисковике гугла
+        let firsheaderYandex = URL(string: "yandexnavi://")!
+        let firsheaderGoogle = URL(string: "comgooglemaps://")!
+        let stringUrlYandex = "yandexnavi://build_route_on_map?lat_to=\(destination.latitude)&lon_to=\(destination.longitude)"
+        let stringUrlGoogle = "comgooglemaps://comgooglemaps-x-callback://?saddr=&daddr=\(destination.latitude),\(destination.longitude)&directionsmode=driving"
+        let stringUrlWeb = "comgooglemaps://?saddr=&daddr=\(destination.latitude),\(destination.longitude)&directionsmode=driving"
+        
+        
+        switch defaultNavi {
+            
+            // Яндекс дефолтный
+        case "Яндекс":
+            if UIApplication.shared.canOpenURL(firsheaderYandex) {
+                // open with yandex
+                openUrl(urlString: stringUrlYandex)
+                
+            } else if UIApplication.shared.canOpenURL(firsheaderGoogle) {
+                // open with google
+                openUrl(urlString: stringUrlGoogle)
+                
+            } else {
+                // open with web
+                openUrl(urlString: stringUrlWeb)
             }
+            
+            // Гугл дефолтный
+        case "Google":
+            if UIApplication.shared.canOpenURL(firsheaderGoogle) {
+                // open with google
+                openUrl(urlString: stringUrlGoogle)
+                
+            } else if UIApplication.shared.canOpenURL(firsheaderYandex) {
+                // open with yandex
+                openUrl(urlString: stringUrlYandex)
+                
+            } else {
+                // open with web
+                openUrl(urlString: stringUrlWeb)
+            }
+            
+            // В любых других случаях открываем с помощью веба
+        default:
+            // open with web
+            openUrl(urlString: stringUrlWeb)
         }
     }
+    
+    private func openUrl(urlString: String) {
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
+    
 }
 
 // MARK: - ScrollViewOnMapDelegate
 extension MapController: ScrollViewOnMapDelegate {
-
+    
     // Фильтрация маркеров
     func chooseSightSelected(selected: Bool, request: TypeSight) {
         if selectedScrollFilterType == nil {
@@ -682,7 +724,7 @@ extension MapController: ScrollViewOnMapDelegate {
             : interactor?.fetchAllTestMarkers(request: request)
         }
     }
-
+    
     // Отображение поисковой строки и сокрытие строки с фильтрами
     func showSearchView() {
         UIView.animate(withDuration: 0.25) { [weak self] in
@@ -875,7 +917,7 @@ extension MapController: FloatingViewDelegate {
             }
         } else {
             // показ всех маркеров
-                addDefaultMarkers()
+            addDefaultMarkers()
         }
     }
 }
@@ -1007,7 +1049,10 @@ extension MapController: BottomCollectionViewDelegate {
     
     // Выбор достопримечательности из скролл коллекции снизу экрана
     func showSight(nameSight: String) {
+        print("nameSightnameSight:\(nameSight)")
+        
         guard let marker = interactor?.fetchSelectedSightWithAllMarkers(withName: nameSight) else { return }
+        print("marker:\(marker)")
         enableMapInteractive = true
         if !selectMark {
             selectMark = true

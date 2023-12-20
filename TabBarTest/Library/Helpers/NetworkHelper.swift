@@ -59,19 +59,14 @@ class NetworkHelper {
     
     
     func downloadAllRequest() {
-        makeRequest(type: .cityAll, model: .init(country: "Россия")) {
-            print("download .cityAll")
+        DispatchQueue.main.async {
+            self.makeRequest(type: .cityAll, model: .init(country: "Россия"))
+            self.makeRequest(type: .cityCountryInfo, model: .init(country: "Россия"))
+            self.makeRequest(type: .sight, model: .init(country: "Россия"))
         }
-        makeRequest(type: .cityCountryInfo, model: .init(country: "Россия")) {
-            print("download .cityCountryInfo")
-        }
-        makeRequest(type: .sight, model: .init(country: "Россия")) {
-            print("download .sight")
-        }
-        
     }
     
-    func makeRequest(type: TypeRequest, model: ModelForRequest, completion: @escaping()->()) {
+    func makeRequest(type: TypeRequest, model: ModelForRequest) {
         var reqModel = model
         reqModel.typeRequest = type
         sendRequestToServer(model: reqModel)

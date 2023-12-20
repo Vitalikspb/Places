@@ -88,6 +88,7 @@
     <array>
         <string>comgooglemaps</string>
         <string>comgooglemaps-x-callback</string>
+        <string>yandexnavi</string>
     </array>
 </dict>
 </plist>

@@ -151,7 +151,7 @@ class ActionButtonsScrollView: UIScrollView {
     // Поиск
     @objc func handleRouteButton() {
         if let sight = sight {
-            let location = CLLocationCoordinate2D(latitude: sight.latitude, longitude: sight.latitude)
+            let location = CLLocationCoordinate2D(latitude: sight.latitude, longitude: sight.longitude)
             actionButtonDelegate?.routeButtonTapped(location: location)
         }
     }
