@@ -40,7 +40,7 @@ enum Constants {
     /// Ссылка на прилу в магазине
     static let shareLink = "https://apps.apple.com/ru/app/apple-store/id6446242555?mt=8"
     /// Ссылка на гуг форму для связи с поддержкой
-    static var support = "https://forms.gle/VdEqUx6z7bLUW8gC8"
+    static var support = "https://forms.gle/qBraaNAt4nUAEBcL7"
     
     /// "°"
     static let unitCelcium = "°"

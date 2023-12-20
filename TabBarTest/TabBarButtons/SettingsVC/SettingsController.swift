@@ -61,10 +61,6 @@ class SettingsController: UIViewController {
     
     // MARK: - Helper functions
     
-    
-    @objc func asd() {
-        print("asd")
-    }
     private func setupUI() {
         let themeName = UserDefaults.standard.string(forKey: UserDefaults.themeAppSelected) ?? "Системная"
         updateSelectedTheme(name: themeName)
