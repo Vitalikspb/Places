@@ -141,8 +141,6 @@ class UnboardingController: UIViewController {
     // MARK: - Helper functions
     
     private func setupUI() {
-        UserDefaults.standard.setValue(true, forKey: UserDefaults.firstOpenApp)
-        
         // Включение показа предыдущего экрана по свайпу
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         navigationController?.navigationBar.isHidden = true

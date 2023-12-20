@@ -95,6 +95,7 @@ class MapController: UIViewController {
     private var selectMarkFromBottomView: Bool = false
     private var enableMapInteractive: Bool = false
     private var choosenCity: Bool = false
+    private var unboardingIsNotPrecees: Bool = false
     // Скрытие всех маркеров когда не зоны города
     private var alreadyIsOutOfBoxCity: Bool = false
     // зум карты
@@ -102,7 +103,7 @@ class MapController: UIViewController {
     // показ нижнего скролл из достопримечательностей внизу
     private var showBottomCollectionSight: Bool = true
     // было ли открытие онбординга
-    private var openUnboarding: Bool = true
+    private var openUnboarding: Bool = false
     // тип выбранного фильтра
     private var selectedScrollFilterType: TypeSight?
     
@@ -146,11 +147,28 @@ class MapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupClean()
-        
         setupUI()
-        // вызываем только 1 раз для заполнения массива маркерами
-        setupLang()
         interactor?.appendAllMarkers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if openUnboarding {
+            setupLocation()
+        }
+        let showUnboarding = userDefault.bool(forKey: UserDefaults.firstOpenApp)
+        if showUnboarding {
+            // не в первый раз тогда запускаем поиск локации иначе ошибка треда
+            setupLocation()
+        } else {
+            // если в первый раз тогда онбординг
+            openUnboardingScreen()
+        }
+        navigationController?.navigationBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    private func setupLocation() {
         setupLocationManager()
         // обновление погоды каждые 60 сек
         timer = Timer.scheduledTimer(timeInterval: 60.0,
@@ -158,15 +176,6 @@ class MapController: UIViewController {
                                      selector: #selector(setupLocationManager),
                                      userInfo: nil,
                                      repeats: true)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // MARK: - TODO Доделать когда будут скрины онбординга
-//        openUnboardingScreen()
-        UserDefaults.standard.setValue(false, forKey: UserDefaults.firstOpenApp)
-        navigationController?.navigationBar.isHidden = true
-        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -217,16 +226,11 @@ class MapController: UIViewController {
     
     private func openUnboardingScreen() {
         let showUnboarding = userDefault.bool(forKey: UserDefaults.firstOpenApp)
-        if openUnboarding {
-            openUnboarding = false
+        if !showUnboarding {
+            openUnboarding = true
             router?.routeToUnboardingVC()
+            UserDefaults.standard.setValue(!showUnboarding, forKey: UserDefaults.firstOpenApp)
         }
-    }
-    
-    // Определение текущего языка приложения
-    private func setupLang() {
-        let langStr = Locale.current.languageCode
-        userDefault.set(langStr, forKey: UserDefaults.currentLang)
     }
     
     private func setupUI() {
