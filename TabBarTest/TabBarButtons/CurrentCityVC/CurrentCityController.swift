@@ -11,6 +11,7 @@ import CoreLocation
 protocol CurrentCityDisplayLogic: AnyObject {
     func displayCurrentCity(viewModelWeather: CurrentCityViewModel.CurrentCity.ViewModel, viewModelCityData: CurrentCityViewModel.AllCountriesInTheWorld.ViewModel, viewModelSightData: [Sight], otherCityData: [SightDescriptionResponce])
     func updateWeather(viewModel: CurrentCityViewModel.CurrentCity.ViewModel)
+    func showSelectCity()
 }
 
 class CurrentCityController: UIViewController {
@@ -23,6 +24,11 @@ class CurrentCityController: UIViewController {
                                                                               width: UIScreen.main.bounds.width,
                                                                               height: 60))
     private let tableView = UITableView(frame: CGRect.zero, style: .plain)
+    private let whiteView: UIView = {
+       let view = UIView()
+        view.backgroundColor = .setCustomColor(color: .mainView)
+        return view
+    }()
     
     
     // MARK: - Public properties
@@ -79,7 +85,8 @@ class CurrentCityController: UIViewController {
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
     private var descriptionHeightCell: CGFloat = 0
-    
+    // возможные города с достопримечательностями
+    private let cities = ["Санкт-Петербург", "Москва", "Екатеринбург", "Казань", "Новосибирск", "Нижний новгород"]
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -89,10 +96,17 @@ class CurrentCityController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        titleName = userDefault.string(forKey: UserDefaults.currentCity) ?? ""
+        title = titleName
         currentCity = titleName
-        interactor?.showCity(named: currentCity)
-        router?.dataStore?.currentCity = currentCity
+
+        if cities.contains(titleName) {
+            interactor?.showCity(named: currentCity)
+            router?.dataStore?.currentCity = currentCity
+        } else {
+            whiteView.isHidden = false
+            interactor?.showSelectCity()
+        }
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -130,8 +144,7 @@ class CurrentCityController: UIViewController {
         updateSelectedTheme(name: themeName)
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .setCustomColor(color: .mainView)
-        titleName = userDefault.string(forKey: UserDefaults.currentCity) ?? ""
-        title = titleName
+        
         actionsButtonsCityView.actionButtonDelegate = self
         // скролл картинок
         tableView.register(CountryPhotosTableViewCell.self,
@@ -166,7 +179,7 @@ class CurrentCityController: UIViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         
-        view.addSubviews(actionsButtonsCityView, tableView)
+        view.addSubviews(actionsButtonsCityView, tableView, whiteView)
         
         actionsButtonsCityView.anchor(top: view.layoutMarginsGuide.topAnchor,
                                       left: view.leftAnchor,
@@ -180,6 +193,15 @@ class CurrentCityController: UIViewController {
         tableView.anchor(top: actionsButtonsCityView.bottomAnchor,
                          left: view.leftAnchor,
                          bottom: view.layoutMarginsGuide.bottomAnchor,
+                         right: view.rightAnchor,
+                         paddingTop: 0,
+                         paddingLeft: 0,
+                         paddingBottom: 0,
+                         paddingRight: 0,
+                         width: 0, height: 0)
+        whiteView.anchor(top: view.topAnchor,
+                         left: view.leftAnchor,
+                         bottom: view.bottomAnchor,
                          right: view.rightAnchor,
                          paddingTop: 0,
                          paddingLeft: 0,
@@ -209,7 +231,11 @@ class CurrentCityController: UIViewController {
 
 extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 9
+        if cities.contains(titleName) {
+            return 9
+        } else {
+            return 0
+        }
     }
     
     // MARK: - заполнение каждой ячейки
@@ -330,6 +356,30 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - CountryDisplayLogic
 extension CurrentCityController: CurrentCityDisplayLogic {
     
+    func showSelectCity() {
+        var cityName = "Город"
+        if let title = title {
+            cityName = title
+        }
+        let alertView = UIAlertController(title: "\(cityName) еще не добавлен в приложение!",
+                                          message: "Выберите город из списка ниже",
+                                          preferredStyle: .actionSheet)
+        
+        cities.forEach { city in
+            let action = UIAlertAction(title: city, style: .default, handler: { [weak self] (alert: UIAlertAction!) -> Void in
+                guard let self = self else { return }
+                title = city
+                self.titleName = city
+                self.currentCity = city
+                self.interactor?.showCity(named: city)
+                self.router?.dataStore?.currentCity = city
+            })
+            alertView.addAction(action)
+        }
+        self.present(alertView, animated: true, completion: nil)
+    }
+    
+    
     // показ информации о текущем городе
     func displayCurrentCity(viewModelWeather: CurrentCityViewModel.CurrentCity.ViewModel, viewModelCityData: CurrentCityViewModel.AllCountriesInTheWorld.ViewModel, viewModelSightData: [Sight], otherCityData: [SightDescriptionResponce]) {
         self.viewModelWeather = viewModelWeather
@@ -341,7 +391,7 @@ extension CurrentCityController: CurrentCityDisplayLogic {
         sightsMustSeeArray = sightsArray.filter({ $0.category == .mustSee })
         sightsChooseRedactionArray = sightsArray.filter({ $0.category == .selection })
         sightsInterestingArray = sightsArray.filter({ $0.category == .interesting })
-        
+        whiteView.isHidden = true
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.tableView.reloadData()

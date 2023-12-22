@@ -12,6 +12,7 @@ protocol CurrentCityBussinessLogic: AnyObject {
     func showCity(named: String)
     func openTicketSite()
     func updateFavorites(withName name: String)
+    func showSelectCity()
 }
 
 protocol CurrentCityDataStore: AnyObject {
@@ -59,12 +60,15 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
     var currentCountry: String = ""
     var presenter: CurrentCityPresenterLogic?
     
+    func showSelectCity() {
+        presenter?.showSelectCity()
+    }
+    
     func showCity(named: String) {
         let cities = UserDefaults.standard.getSightDescription()
         var otherCityData = [SightDescriptionResponce]()
         var country: SightDescriptionResponce?
         let viewModelWeather = CurrentCityViewModel.CurrentCity.ViewModel(city: currentCity, weather: currentWeather)
-
         // оставляем только текущий город
         cities.forEach {
             if $0.name == named {

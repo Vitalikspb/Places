@@ -261,7 +261,6 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
         
         var mapMarkersAll = [GMSMarker]()
         let allSights = UserDefaults.standard.getSight()
-        print("allSights:\(allSights.count)")
         for (_, val) in allSights.enumerated() {
             let marker = setMarker(name: val.name,
                       location: CLLocation(latitude: val.latitude,
@@ -271,14 +270,11 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
             mapMarkersAll.append(marker)
         }
         mapMarkers = mapMarkersAll
-        print("mapMarkers:\(mapMarkers.count)")
-        
         return mapMarkersAll
     }
     
     // Выбираем конкретную достопримечательность из коллекциии сниу экрана
     func fetchSelectedSightWithAllMarkers(withName name: String) -> GMSMarker? {
-        print("mapMarkers:\(mapMarkers.count)")
         var marker: GMSMarker? = nil
         for (_, value) in mapMarkers.enumerated() where value.title == name {
                 marker = value

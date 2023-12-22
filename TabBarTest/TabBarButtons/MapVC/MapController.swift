@@ -94,6 +94,8 @@ class MapController: UIViewController {
     private var selectMarkFromBottomView: Bool = false
     private var enableMapInteractive: Bool = false
     private var choosenCity: Bool = false
+    // название города/деревни когда не определен город
+    private var unknownCity = ""
     private var unboardingIsNotPrecees: Bool = false
     // Скрытие всех маркеров когда не зоны города
     private var alreadyIsOutOfBoxCity: Bool = false
@@ -332,6 +334,22 @@ class MapController: UIViewController {
     
     // сохраняем текущее местоположение в виде Страны и Города
     private func setCurrentLocation(location: CLLocationCoordinate2D, hiden: Bool) {
+        
+        let cityLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+        cityLocation.fetchCity { [weak self] city, error in
+            guard let city = city, error == nil, let self = self else { return }
+            let arrLocality = city.components(separatedBy: " ")
+            self.unknownCity = city
+            if arrLocality.contains("район") {
+                self.unknownCity = "Город"
+            }
+            if arrLocality.contains("деревня") {
+                self.unknownCity = arrLocality.last ?? "Город"
+            }
+            if arrLocality.contains("посёлок") {
+                self.unknownCity = arrLocality.last ?? "Город"
+            }
+        }
         // Первый релиз все по России
         self.userDefault.set("Россия", forKey: UserDefaults.currentLocation)
         var findCity: Bool = false
@@ -352,7 +370,6 @@ class MapController: UIViewController {
                 
                 // сюда добавить показ маркеров только для текущего города
                 interactor?.showMarkersOnCity(name: val.city)
-                
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
                     self.bottomCollectionView.collectionView.reloadData()
                     if hiden {
@@ -365,13 +382,12 @@ class MapController: UIViewController {
             findCity = true
         }
         if !findCity {
+            self.currentCity = unknownCity
+            self.userDefault.set(unknownCity, forKey: UserDefaults.currentCity)
+            self.tabBarController?.tabBar.items?[1].title = unknownCity
             if !alreadyIsOutOfBoxCity {
                 let sight = UserDefaults.standard.getSight()
-                print("1sight:\(sight.count)")
                 // сюда добавить показ всех маркеров
-                self.currentCity = "Город"
-                self.userDefault.set("Город", forKey: UserDefaults.currentCity)
-                self.tabBarController?.tabBar.items?[1].title = "Город"
                 if choosenCity {
                     interactor?.markerWithCountOfCityMarkers()
                     choosenCity = false
@@ -594,6 +610,8 @@ class MapController: UIViewController {
     }
 }
 
+
+
 // MARK: - GMSMapViewDelegate
 extension MapController: GMSMapViewDelegate {
     
@@ -607,15 +625,16 @@ extension MapController: GMSMapViewDelegate {
     
     // Вызывается по нажатию на свое местоположение
     // MARK: - TODO УДАЛИТЬ
-    //    func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
-    //
-    //        let alert = UIAlertController(
-    //            title: "Location Tapped",
-    //            message: "Current location: <\(location.latitude), \(location.longitude)>",
-    //            preferredStyle: .alert)
-    //        alert.addAction(UIAlertAction(title: "OK", style: .default))
-    //        present(alert, animated: true)
-    //    }
+        func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
+    
+//            let alert = UIAlertController(
+//                title: "Location Tapped",
+//                message: "Current location: <\(location.latitude), \(location.longitude)>",
+//                preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(alert, animated: true)
+            
+        }
     
     // вызывается при нажатии на маркер
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {

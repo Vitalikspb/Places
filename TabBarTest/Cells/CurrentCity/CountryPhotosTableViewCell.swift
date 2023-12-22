@@ -40,11 +40,11 @@ class CountryPhotosTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
-        
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        firstImage = UIImage()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -56,6 +56,9 @@ class CountryPhotosTableViewCell: UITableViewCell {
     func configureCell(cityImages: [String]) {
         imageArray = cityImages
         firstImage = UIImage(named: cityImages[0]) ?? UIImage()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     private func setupUI() {
@@ -92,19 +95,23 @@ class CountryPhotosTableViewCell: UITableViewCell {
 extension CountryPhotosTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("imageArray.count:\(imageArray.count)")
         let count = imageArray.count
         pageControl.numberOfPages = count
         pageControl.isHidden = !(count > 1)
+        print("count:\(count)")
         return count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsPhotosCollectionViewCell.identifier, for: indexPath) as? CountryCellsPhotosCollectionViewCell else { return UICollectionViewCell() }
+        
         if indexPath.row != 0 {
             NetworkHelper.shared.downloadImage(from: imageArray[indexPath.row]) { image in
                 cell.configureCell(data: image)
             }
         } else {
+            print("firstImage:\(firstImage)")
             cell.configureCell(data: firstImage)
         }
         return cell

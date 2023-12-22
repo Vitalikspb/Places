@@ -12,11 +12,23 @@ class CountryCellsPhotosCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "CountryCellsPhotosCollectionViewCell"
     
-    // MARK: - Private properties
+    // MARK: - UI properties
     
-    let image = UIImageView()
+    private let mainImageView : UIImageView = {
+       let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 10
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .white
+        return imageView
+    }()
     
     // MARK: - LifeCycle
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        mainImageView.image = nil
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,19 +39,16 @@ class CountryCellsPhotosCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helper functions
+    
     private func setupUI() {
         self.layer.cornerRadius = 12
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 10
-        image.layer.masksToBounds = true
-        image.backgroundColor = .white
-        
-        contentView.addSubview(image)
-        image.addConstraintsToFillView(view: contentView)
+        contentView.addSubview(mainImageView)
+        mainImageView.addConstraintsToFillView(view: contentView)
     }
     
     func configureCell(data: UIImage) {
-        image.image = data
+        mainImageView.image = data
     }
     
 }

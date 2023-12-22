@@ -11,6 +11,7 @@ protocol CurrentCityPresenterLogic: AnyObject {
                      viewModelCityData: CurrentCityViewModel.AllCountriesInTheWorld.ViewModel,
                      viewModelSightData: [Sight], otherCityData: [SightDescriptionResponce])
     func updateWeather(response: CurrentCityViewModel.CurrentCity.ViewModel)
+    func showSelectCity()
 }
 
 final class CurrentCityPresenter: CurrentCityPresenterLogic {
@@ -27,5 +28,9 @@ final class CurrentCityPresenter: CurrentCityPresenterLogic {
     
     func updateWeather(response: CurrentCityViewModel.CurrentCity.ViewModel) {
         сurrentCityController?.updateWeather(viewModel: response)
+    }
+    
+    func showSelectCity() {
+        сurrentCityController?.showSelectCity()
     }
 }
