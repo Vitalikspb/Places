@@ -58,6 +58,8 @@ class FAQTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        questionLabel.text = nil
+        answerLabel.text = nil
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

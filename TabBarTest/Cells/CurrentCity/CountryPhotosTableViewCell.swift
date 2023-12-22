@@ -95,23 +95,19 @@ class CountryPhotosTableViewCell: UITableViewCell {
 extension CountryPhotosTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("imageArray.count:\(imageArray.count)")
         let count = imageArray.count
         pageControl.numberOfPages = count
         pageControl.isHidden = !(count > 1)
-        print("count:\(count)")
         return count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CountryCellsPhotosCollectionViewCell.identifier, for: indexPath) as? CountryCellsPhotosCollectionViewCell else { return UICollectionViewCell() }
-        
         if indexPath.row != 0 {
             NetworkHelper.shared.downloadImage(from: imageArray[indexPath.row]) { image in
                 cell.configureCell(data: image)
             }
         } else {
-            print("firstImage:\(firstImage)")
             cell.configureCell(data: firstImage)
         }
         return cell

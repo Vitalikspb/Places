@@ -108,9 +108,9 @@ extension FAQController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - CountryDisplayLogic
 
 extension FAQController: FAQDisplayLogic {
+    
     // показ информации о текущем городе
     // отображение обновленной таблицы после заполнения в интеракторе данными модели
-    // пока что не работает т.к нету модели
     func displayFAQ(viewModel: [FAQCity]) {
         self.viewModel = viewModel
         DispatchQueue.main.async { [weak self] in

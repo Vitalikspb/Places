@@ -49,7 +49,9 @@ class NetworkHelper {
     private let apiKey = "1Mpz0qVaff832vVAqrLVvz4H"
     private let httpMethod = "GET"
     private let session = URLSession(configuration: .default)
+    
     private let urlParent = "http://api.apptravel.ru/data/"
+    private let urlImages = "http://api.apptravel.ru/media/photogallery/"
     
     private var sight: [SightResponse?]?
     private var allCity: [SightDescriptionResponse?]?
@@ -65,19 +67,19 @@ class NetworkHelper {
             self.makeRequest(type: .sight, model: .init(country: "Россия"))
         }
     }
-    
+
+    // Выполняем в начале загрузки приложения и записываем все в юзер дефолт
     func makeRequest(type: TypeRequest, model: ModelForRequest) {
         var reqModel = model
         reqModel.typeRequest = type
         sendRequestToServer(model: reqModel)
     }
     
+
     private func sendRequestToServer(model: ModelForRequest) {
-        
         var queryItems: [URLQueryItem]!
         
         switch model.typeRequest! {
-            
         case .sight, .cityAll:
             queryItems = [URLQueryItem(name: "country", value: "Россия"),
                           URLQueryItem(name: "city", value: "\(model.city ?? "")"),
@@ -87,27 +89,19 @@ class NetworkHelper {
         case .cityCountryInfo:
             queryItems = [URLQueryItem(name: "country", value: "Россия")]
             
-        case .events:
-            queryItems = [URLQueryItem(name: "country", value: "Россия"),
-                          URLQueryItem(name: "city", value: "\(model.city ?? "")")]
+        case .events, .faq: 
+            break
             
-        case .faq:
-            queryItems = [URLQueryItem(name: "country", value: "Россия"),
-                          URLQueryItem(name: "city", value: "\(model.city ?? "")")]
         }
-        
-        
         var urlComps = URLComponents(string: urlParent + model.typeRequest!.rawValue)!
-        
         urlComps.queryItems = queryItems
         var result = urlComps.url!
         result.removeAllCachedResourceValues()
         let request = NSMutableURLRequest(url: result)
         request.httpMethod = httpMethod
-        
         request.setValue(apiKey, forHTTPHeaderField: "Authorization")
+        
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
-            
             if let error = error {
                 print("Error took place \(error)")
                 return
@@ -125,31 +119,32 @@ class NetworkHelper {
 //                            print("sight:\(_sight)")
                             var tempAllCountry = [Sight?]()
                             _sight.forEach {
-                                tempAllCountry.append(Sight(id: $0?.id ?? 0,
-                                                            name: $0?.name ?? "",
-                                                             country: $0?.country ?? "",
-                                                             city: $0?.city ?? "",
-                                                             type: $0?.type ?? .sightSeen,
-                                                             category: $0?.category ?? .mustSee,
-                                                             rating: $0?.rating ?? "",
-                                                            price: $0?.price ?? 0,
-                                                             latitude: $0?.latitude ?? 0.0,
-                                                             longitude: $0?.longitude ?? 0.0,
-                                                             address: $0?.address ?? "",
-                                                             main_phone: $0?.main_phone ?? "",
-                                                             additional_phone: $0?.additional_phone ?? "",
-                                                             test: $0?.test ?? false,
-                                                             site: $0?.site ?? "",
-                                                             vk: $0?.vk ?? "",
-                                                             facebook: $0?.facebook ?? "",
-                                                             instagram: $0?.instagram ?? "",
-                                                            youtube: $0?.youtube ?? "",
-                                                             workmode: nil,
-                                                             big_image: self.decodeImage(image: $0?.big_image ?? ""),
-                                                             small_image: self.decodeImage(image: $0?.small_image ?? ""),
-                                                             images: self.decodeImages(images: $0?.images?["image"]),
-                                                             favorite: "AddtofavoritesUnselected"))
-                                                      }
+                                let curSight = Sight(id: $0?.id ?? 0,
+                                                     name: $0?.name ?? "",
+                                                     country: $0?.country ?? "",
+                                                     city: $0?.city ?? "",
+                                                     type: $0?.type ?? .sightSeen,
+                                                     category: $0?.category ?? .mustSee,
+                                                     rating: $0?.rating ?? "",
+                                                     price: $0?.price ?? 0,
+                                                     latitude: $0?.latitude ?? 0.0,
+                                                     longitude: $0?.longitude ?? 0.0,
+                                                     address: $0?.address ?? "",
+                                                     main_phone: $0?.main_phone ?? "",
+                                                     additional_phone: $0?.additional_phone ?? "",
+                                                     test: $0?.test ?? false,
+                                                     site: $0?.site ?? "",
+                                                     vk: $0?.vk ?? "",
+                                                     facebook: $0?.facebook ?? "",
+                                                     instagram: $0?.instagram ?? "",
+                                                     youtube: $0?.youtube ?? "",
+                                                     workmode: nil,
+                                                     big_image: self.decodeImage(image: $0?.big_image ?? ""),
+                                                     small_image: self.decodeImage(image: $0?.small_image ?? ""),
+                                                     images: self.decodeImages(images: $0?.images?["image"]),
+                                                     favorite: "AddtofavoritesUnselected")
+                                tempAllCountry.append(curSight)
+                            }
                             UserDefaults.standard.saveSight(value: tempAllCountry, data: data)
                         }
                         
@@ -159,18 +154,18 @@ class NetworkHelper {
                     case .cityAll:
                         self.allCity = try JSONDecoder().decode([SightDescriptionResponse].self, from: data)
                         if let _allCountry = self.allCity {
-//                            print("allCity:\(_allCountry)")
+                            //                            print("allCity:\(_allCountry)")
                             var tempAllCountry = [SightDescriptionResponce?]()
                             _allCountry.forEach {
-                                tempAllCountry.append(SightDescriptionResponce(
-                                    id: $0?.id ?? 0,
-                                    name: $0?.name ?? "",
-                                    description: $0?.description ?? "",
-                                    price: $0?.price  ?? 0,
-                                    sight_count: $0?.sight_count ?? 0,
-                                    latitude: $0?.latitude ?? 0.0,
-                                    longitude: $0?.longitude ?? 0.0,
-                                    images: self.decodeImages(images: $0?.images?["image"])))
+                                let curSightDescr = SightDescriptionResponce(id: $0?.id ?? 0,
+                                                                             name: $0?.name ?? "",
+                                                                             description: $0?.description ?? "",
+                                                                             price: $0?.price  ?? 0,
+                                                                             sight_count: $0?.sight_count ?? 0,
+                                                                             latitude: $0?.latitude ?? 0.0,
+                                                                             longitude: $0?.longitude ?? 0.0,
+                                                                             images: self.decodeImages(images: $0?.images?["image"]))
+                                tempAllCountry.append(curSightDescr)
                             }
                             UserDefaults.standard.saveAllCity(value: tempAllCountry, data: data)
                         }
@@ -187,33 +182,8 @@ class NetworkHelper {
                         
                         // MARK: - загрузка интересныз событий
                         
-                    case .events:
-                        self.events = try JSONDecoder().decode([EventsResponce].self, from: data)
-                        if let _events = self.events {
-//                            print("_events:\(_events)")
-                            var tempEvents = [Events?]()
-                            _events.forEach { itemEvent in
-                                let tempStringImages = self.decodeImages(images: itemEvent?.images?["image"])
-                                tempEvents.append(Events(id: itemEvent?.id ?? 0,
-                                                         name: itemEvent?.name ?? "",
-                                                         description: itemEvent?.description ?? "",
-                                                         country: itemEvent?.country ?? "",
-                                                         images: tempStringImages,
-                                                         city: itemEvent?.city ?? "",
-                                                         date: itemEvent?.date ?? ""))
-                                UserDefaults.standard.saveEvents(value: tempEvents, data: data)
-                            }
-                        }
+                    case .events, .faq: break
                         
-                        
-                        // MARK: - Вопросов и ответов
-                        
-                    case .faq:
-                        self.faqCity = try JSONDecoder().decode([FAQCity].self, from: data)
-                        if let _faqCity = self.faqCity {
-//                            print("_faqCity:\(_faqCity)")
-                            UserDefaults.standard.saveFAQCity(value: _faqCity, data: data)
-                        }
                     }
                     
                     
@@ -225,10 +195,97 @@ class NetworkHelper {
         task.resume()
     }
     
+    // Выполняется при запросе при заходе на экран интересные события и фак и нужен комплишн
+    func makeRequestWithCompletion(type: TypeRequest, model: ModelForRequest, completion: @escaping()->()) {
+        var reqModel = model
+        reqModel.typeRequest = type
+        sendRequestToServerWithCompletion(model: reqModel) {
+            completion()
+        }
+    }
+    
+    
+    private func sendRequestToServerWithCompletion(model: ModelForRequest, completion: @escaping()->()) {
+        var queryItems: [URLQueryItem]!
+        
+        switch model.typeRequest! {
+        case .events:
+            queryItems = [URLQueryItem(name: "country", value: "Россия"),
+                          URLQueryItem(name: "city", value: "\(model.city ?? "")")]
+            
+        case .faq:
+            queryItems = [URLQueryItem(name: "country", value: "Россия"),
+                          URLQueryItem(name: "city", value: "\(model.city ?? "")")]
+            
+        case .sight, .cityAll, .cityCountryInfo:
+            break
+        }
+        
+        var urlComps = URLComponents(string: urlParent + model.typeRequest!.rawValue)!
+        urlComps.queryItems = queryItems
+        var result = urlComps.url!
+        result.removeAllCachedResourceValues()
+        let request = NSMutableURLRequest(url: result)
+        request.httpMethod = httpMethod
+        
+        request.setValue(apiKey, forHTTPHeaderField: "Authorization")
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+
+            if let data = data {
+                do {
+                    switch model.typeRequest! {
+                        
+                        // MARK: - Загрузка достопримечательностей
+                    case .sight, .cityAll, .cityCountryInfo: break
+
+                        // MARK: - загрузка интересныз событий
+                    case .events:
+                        self.events = try JSONDecoder().decode([EventsResponce].self, from: data)
+                        if let _events = self.events {
+//                            print("_events:\(_events)")
+                            var tempEvents = [Events?]()
+                            _events.forEach { itemEvent in
+                                let tempStringImages = self.decodeImages(images: itemEvent?.images?["image"])
+                                let curEvent = Events(id: itemEvent?.id ?? 0,
+                                                      name: itemEvent?.name ?? "",
+                                                      description: itemEvent?.description ?? "",
+                                                      country: itemEvent?.country ?? "",
+                                                      images: tempStringImages,
+                                                      city: itemEvent?.city ?? "",
+                                                      date: itemEvent?.date ?? "")
+                                tempEvents.append(curEvent)
+                                UserDefaults.standard.saveEvents(value: tempEvents, data: data)
+                                completion()
+                            }
+                        }
+                        
+                        
+                        // MARK: - Вопросов и ответов
+                        
+                    case .faq:
+                        self.faqCity = try JSONDecoder().decode([FAQCity].self, from: data)
+                        if let _faqCity = self.faqCity {
+//                            print("_faqCity:\(_faqCity)")
+                            UserDefaults.standard.saveFAQCity(value: _faqCity, data: data)
+                            completion()
+                        }
+                    }
+
+                } catch let error {
+                    print("request type:\(String(describing: model.typeRequest!.rawValue)), \(String(describing: error))")
+                }
+            }
+        }
+        task.resume()
+    }
+
     // Преобразование словаря картинок в массив картинок
     private func decodeImages(images: [ImagesArray]?) -> [String] {
         var imgArray = [String]()
-//        print("images:\(images)")
         images?.forEach { imagesItem in
             var imageName = ""
             for (_,val) in imagesItem.photo.reversed().enumerated() {
@@ -261,7 +318,7 @@ class NetworkHelper {
     
     // подготовка к загрузке фото
     func downloadImage(from url: String, completion: @escaping(UIImage)->()) {
-        var urlString = "http://api.apptravel.ru/media/photogallery/\(url)"
+        var urlString = "\(urlImages)\(url)"
         guard let URL = URL(string: urlString) else { return }
         getData(from: URL) { data, response, error in
             guard let data = data, error == nil else { return }

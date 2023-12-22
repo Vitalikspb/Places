@@ -187,7 +187,6 @@ extension WorldController: WorldCollectionViewCellDelegate {
     
     // Переход на выбранный город подробней
     func showSelectedCityDescription(name: String) {
-        print("Переход на выбранный город подробней:\(name)")
         router?.dataStore?.currentCountry = name
         router?.routeToCityVC()
     }
