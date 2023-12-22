@@ -87,6 +87,7 @@ class CurrentCityController: UIViewController {
     private var descriptionHeightCell: CGFloat = 0
     // возможные города с достопримечательностями
     private let cities = ["Санкт-Петербург", "Москва", "Екатеринбург", "Казань", "Новосибирск", "Нижний новгород"]
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -133,10 +134,6 @@ class CurrentCityController: UIViewController {
         presenter.сurrentCityController = viewController
         router.viewController = viewController
         router.dataStore = interactor
-    }
-    
-    private func setupUserDefault() {
-        
     }
     
     private func setupUI() {
@@ -209,6 +206,7 @@ class CurrentCityController: UIViewController {
                          paddingRight: 0,
                          width: 0, height: 0)
     }
+    
     private func updateSelectedTheme(name: String) {
         guard #available(iOS 13.0, *) else { return }
         switch name {
@@ -231,11 +229,7 @@ class CurrentCityController: UIViewController {
 
 extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if cities.contains(titleName) {
-            return 9
-        } else {
-            return 0
-        }
+        return cities.contains(titleName) ? 9 : 0
     }
     
     // MARK: - заполнение каждой ячейки
@@ -373,10 +367,13 @@ extension CurrentCityController: CurrentCityDisplayLogic {
                 self.currentCity = city
                 self.interactor?.showCity(named: city)
                 self.router?.dataStore?.currentCity = city
+                UserDefaults.standard.set(city, forKey: UserDefaults.currentCity)
             })
             alertView.addAction(action)
         }
+        DispatchQueue.main.async {
         self.present(alertView, animated: true, completion: nil)
+        }
     }
     
     

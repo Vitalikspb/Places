@@ -36,7 +36,6 @@ class IntrestingEventsInteractor: IntrestingEventsBussinessLogic, IntrestingEven
                                     city: city)
         IntrestingEventsWorker.updateInterestingEvents(model: model) {
             let interestingEvent = UserDefaults.standard.getEvents()
-            print("interestingEvent:\(interestingEvent)")
             let viewModel = IntrestingEventsModels.IntrestingEvents.ViewModel(events: interestingEvent)
             self.presenter?.presentIntrestingEvents(response: viewModel)
         }

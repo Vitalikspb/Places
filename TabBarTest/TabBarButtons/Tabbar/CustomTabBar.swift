@@ -21,18 +21,18 @@ class CustomTaBarVC: UITabBarController, UITabBarControllerDelegate {
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        switch item.tag {
-        case 0:
-            print("map button")
-        case 1:
-            print("country button")
-        case 2: 
-            print("World button")
-        case 3:
-            print("Settigns button")
-        default:
-            break
-        }
+//        switch item.tag {
+//        case 0:
+//            print("map button")
+//        case 1:
+//            print("country button")
+//        case 2: 
+//            print("World button")
+//        case 3:
+//            print("Settigns button")
+//        default:
+//            break
+//        }
     }
 }
 

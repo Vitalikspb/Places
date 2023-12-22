@@ -107,6 +107,8 @@ class MapController: UIViewController {
     private var openUnboarding: Bool = false
     // тип выбранного фильтра
     private var selectedScrollFilterType: TypeSight?
+    // доступные достопримеательности
+    private let cities = ["Санкт-Петербург", "Москва", "Екатеринбург", "Казань", "Новосибирск", "Нижний новгород"]
     
     // MARK: - UI Properties
     
@@ -165,6 +167,9 @@ class MapController: UIViewController {
         } else {
             // если в первый раз тогда онбординг
             openUnboardingScreen()
+        }
+        if mapZoom < 9 {
+            interactor?.markerWithCountOfCityMarkers()
         }
         navigationController?.navigationBar.isHidden = true
         self.tabBarController?.tabBar.isHidden = false
@@ -386,7 +391,6 @@ class MapController: UIViewController {
             self.userDefault.set(unknownCity, forKey: UserDefaults.currentCity)
             self.tabBarController?.tabBar.items?[1].title = unknownCity
             if !alreadyIsOutOfBoxCity {
-                let sight = UserDefaults.standard.getSight()
                 // сюда добавить показ всех маркеров
                 if choosenCity {
                     interactor?.markerWithCountOfCityMarkers()
@@ -571,7 +575,7 @@ class MapController: UIViewController {
         } else {
             // Показываем нижний скролл с достопримечательностями
             if !showBottomCollectionSight {
-                if currentCity != "Город" {
+                if cities.contains(currentCity) {
                     bottomCollectionViewShow()
                     interactor?.showMarkersOnCity(name: currentCity)
                 }
