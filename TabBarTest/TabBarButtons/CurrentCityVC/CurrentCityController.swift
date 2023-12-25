@@ -86,7 +86,7 @@ class CurrentCityController: UIViewController {
     private var selectedDescriptionCell: Bool = false
     private var descriptionHeightCell: CGFloat = 0
     // возможные города с достопримечательностями
-    private let cities = ["Санкт-Петербург", "Москва", "Екатеринбург", "Казань", "Новосибирск", "Нижний новгород"]
+    private let cities = ["Санкт-Петербург", "Москва", "Екатеринбург", "Казань", "Новосибирск", "Нижний Новгород"]
     
     // MARK: - Lifecycle
     

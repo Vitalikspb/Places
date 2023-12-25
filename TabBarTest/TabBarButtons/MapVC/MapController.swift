@@ -70,7 +70,13 @@ class MapController: UIViewController {
                     locationBottomRight: CLLocationCoordinate2D(latitude: 55.57000451930346, longitude: 49.41308006644249)),
         BoxLocation(city: "Екатеринбург",
                     locationTopLeft: CLLocationCoordinate2D(latitude: 57.07664797854804, longitude: 60.24093154817819),
-                    locationBottomRight: CLLocationCoordinate2D(latitude: 56.50053613115544, longitude: 61.167368553578854))]
+                    locationBottomRight: CLLocationCoordinate2D(latitude: 56.50053613115544, longitude: 61.167368553578854)),
+        BoxLocation(city: "Нижний Новгород",
+                    locationTopLeft: CLLocationCoordinate2D(latitude: 56.47673492166995, longitude: 43.732723295688636),
+                    locationBottomRight: CLLocationCoordinate2D(latitude: 56.16222099006549, longitude: 44.3244719132781)),
+        BoxLocation(city: "Новосибирск",
+                    locationTopLeft: CLLocationCoordinate2D(latitude: 55.114609766088186, longitude: 82.68754318356514),
+                    locationBottomRight: CLLocationCoordinate2D(latitude: 54.83800211864689, longitude: 83.21393709629774))]
     
     // для определения местоположения и погоды
     private var observation: NSKeyValueObservation?
@@ -108,7 +114,7 @@ class MapController: UIViewController {
     // тип выбранного фильтра
     private var selectedScrollFilterType: TypeSight?
     // доступные достопримеательности
-    private let cities = ["Санкт-Петербург", "Москва", "Екатеринбург", "Казань", "Новосибирск", "Нижний новгород"]
+    private let cities = ["Санкт-Петербург", "Москва", "Екатеринбург", "Казань", "Новосибирск", "Нижний Новгород"]
     
     // MARK: - UI Properties
     
@@ -339,7 +345,6 @@ class MapController: UIViewController {
     
     // сохраняем текущее местоположение в виде Страны и Города
     private func setCurrentLocation(location: CLLocationCoordinate2D, hiden: Bool) {
-        
         let cityLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
         cityLocation.fetchCity { [weak self] city, error in
             guard let city = city, error == nil, let self = self else { return }
@@ -372,7 +377,8 @@ class MapController: UIViewController {
                 self.bottomCollectionViewhide()
                 self.bottomCollectionView.clearModel()
                 self.bottomCollectionView.setupModel(model: filteredSights)
-                
+                topScrollView.isHidden = false
+                weatherView.isHidden = false
                 // сюда добавить показ маркеров только для текущего города
                 interactor?.showMarkersOnCity(name: val.city)
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
@@ -397,6 +403,8 @@ class MapController: UIViewController {
                     choosenCity = false
                 }
                 // скрываем нижкиюю коллекцию достопримечательностей
+                topScrollView.isHidden = true
+                weatherView.isHidden = true
                 bottomCollectionViewhide()
                 tapOnMap()
                 showBottomCollectionSight = false
@@ -570,6 +578,8 @@ class MapController: UIViewController {
                 bottomCollectionViewhide()
                 tapOnMap()
                 showBottomCollectionSight = false
+                topScrollView.isHidden = true
+                weatherView.isHidden = true
                 interactor?.markerWithCountOfCityMarkers()
             }
         } else {
@@ -577,6 +587,8 @@ class MapController: UIViewController {
             if !showBottomCollectionSight {
                 if cities.contains(currentCity) {
                     bottomCollectionViewShow()
+                    topScrollView.isHidden = false
+                    weatherView.isHidden = false
                     interactor?.showMarkersOnCity(name: currentCity)
                 }
                 showBottomCollectionSight = true

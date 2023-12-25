@@ -81,7 +81,14 @@ class MapInteractor: MapBussinessLogic, MapDataStore {
     // Фильтрация по текущему города
     func showMarkersOnCity(name: String) {
         let allSight = UserDefaults.standard.getSight()
-        let resultSight = name == "Город" ? allSight : allSight.filter( { $0.city == name} )
+
+        var resultSight = [Sight]()
+        
+        if name == "Город" && name == "посёлок" && name == "деревня" && name == "район" {
+            resultSight = allSight
+        } else {
+            resultSight = allSight.filter( { $0.city == name} )
+        }
         var mapMarkersAll = [GMSMarker]()
         
         for (_, val) in resultSight.enumerated() {

@@ -301,6 +301,7 @@ class NetworkHelper {
     
     // Из полного пути от сервара оставляет только название фотки
     private func decodeImage(image: String) -> String {
+//        print("image:\(image)")
         var imageName = ""
         for (_,val) in image.reversed().enumerated() {
             if val == "/" {
@@ -318,7 +319,8 @@ class NetworkHelper {
     
     // подготовка к загрузке фото
     func downloadImage(from url: String, completion: @escaping(UIImage)->()) {
-        var urlString = "\(urlImages)\(url)"
+//        print("url:\(url)")
+        let urlString = "\(urlImages)\(url)"
         guard let URL = URL(string: urlString) else { return }
         getData(from: URL) { data, response, error in
             guard let data = data, error == nil else { return }
