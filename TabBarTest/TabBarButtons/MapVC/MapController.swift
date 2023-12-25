@@ -76,7 +76,7 @@ class MapController: UIViewController {
                     locationBottomRight: CLLocationCoordinate2D(latitude: 56.16222099006549, longitude: 44.3244719132781)),
         BoxLocation(city: "Новосибирск",
                     locationTopLeft: CLLocationCoordinate2D(latitude: 55.114609766088186, longitude: 82.68754318356514),
-                    locationBottomRight: CLLocationCoordinate2D(latitude: 54.83800211864689, longitude: 83.21393709629774))]
+                    locationBottomRight: CLLocationCoordinate2D(latitude: 54.94406906602763, longitude: 83.0907827988267))]
     
     // для определения местоположения и погоды
     private var observation: NSKeyValueObservation?
