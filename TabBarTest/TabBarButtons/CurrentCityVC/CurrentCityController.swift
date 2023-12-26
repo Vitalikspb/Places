@@ -460,8 +460,9 @@ extension CurrentCityController: TicketCollectionViewCellDelegate {
     
     // открыть страницу всех билетов
     func lookAllTickets(url: String) {
-        // MARK: - TODO
-        print("open url:\(url)")
+        guard let currentURL = URL(string: url) else { return }
+        // Открытие конфиденциальности
+        UIApplication.shared.open(currentURL)
     }
 }
 
