@@ -7,7 +7,7 @@
 import UIKit
 
 protocol TicketCollectionViewCellDelegate: AnyObject {
-    func lookAllTickets()
+    func lookAllTickets(url: String)
 }
 
 class TicketCollectionViewCell: UITableViewCell {
@@ -40,7 +40,7 @@ class TicketCollectionViewCell: UITableViewCell {
     
     // MARK: - Private properties
     
-    var model: [GuideSightsModel] = []
+    var model: CityGuideSightsModel?
     
     // MARK: - Lifecycle
     
@@ -66,6 +66,10 @@ class TicketCollectionViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func configureCell(model: CityGuideSightsModel?) {
+        self.model = model
     }
     
     // MARK: - Helper functions
@@ -124,7 +128,7 @@ class TicketCollectionViewCell: UITableViewCell {
                           height: 0)
     }
     @objc private func lookAllTapped() {
-        delegate?.lookAllTickets()
+        delegate?.lookAllTickets(url: model?.cityUrl ?? "")
     }
 }
 
@@ -133,7 +137,7 @@ class TicketCollectionViewCell: UITableViewCell {
 extension TicketCollectionViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return model.count
+        return model?.guides.count ?? 0
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -142,15 +146,27 @@ extension TicketCollectionViewCell: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TicketsCellsCitiesCollectionViewCell.identifier, for: indexPath) as? TicketsCellsCitiesCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureCell(title: model[indexPath.row].name,
-                          image: model[indexPath.row].image,
-                          price: model[indexPath.row].price,
-                          rating: model[indexPath.row].rating,
-                          reviews: model[indexPath.row].reviews)
+        guard let model = model?.guides[indexPath.row] else { return UICollectionViewCell() }
+        cell.configureCell(title: model.name,
+                          image: model.image,
+                          price: model.price,
+                          rating: model.rating,
+                           reviews: model.reviews, url: model.guideUrl)
+        cell.delegate = self
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
+}
+
+// MARK: - CountryCellsCitiesCollectionViewCellDelegate
+
+extension TicketCollectionViewCell: TicketsCellsCitiesCollectionViewCellDelegate {
+    func openGuidesUrl(url: String) {
+        delegate?.lookAllTickets(url: url)
+    }
+    
+    
 }

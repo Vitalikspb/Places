@@ -13,10 +13,17 @@ struct CityArray {
     var image: UIImage
 }
 
+struct CityGuideSightsModel {
+    var city: String
+    var cityUrl: String
+    var guides: [GuideSightsModel]
+}
+
 struct GuideSightsModel {
     var image: UIImage
     var name: String
     var price: Int
     var rating: Double
     var reviews: Int
+    var guideUrl: String
 }

@@ -10,7 +10,6 @@ import CoreLocation
 
 protocol CurrentCityBussinessLogic: AnyObject {
     func showCity(named: String)
-    func openTicketSite()
     func updateFavorites(withName name: String)
     func showSelectCity()
 }
@@ -106,11 +105,6 @@ class CurrentCityInteractor: CurrentCityBussinessLogic, CurrentCityDataStore {
                                viewModelCityData: cityInfo,
                                viewModelSightData: sights, 
                                otherCityData: otherCityData)
-    }
-    
-    // Открываем сайт с дилетами для текущего города
-    func openTicketSite() {
-        print("открыть сайт с билетами для города \(currentCity)")
     }
     
     // Обновляем список избранного

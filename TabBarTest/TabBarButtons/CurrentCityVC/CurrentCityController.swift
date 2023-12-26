@@ -73,14 +73,6 @@ class CurrentCityController: UIViewController {
     private var sightsInterestingArray = [Sight]()
     private var cityArray = [SightDescriptionResponce]()
     
-    // Модель Билетов на экскурсии
-    private var guidesArray: [GuideSightsModel] = [
-        GuideSightsModel(image: UIImage(named: "hermitage2")!, name: "Эрмитаж", price: 1060, rating: 4.5, reviews: 79),
-        GuideSightsModel(image: UIImage(named: "exhbgrandmaket")!, name: "Гранд Макет Россия", price: 6500, rating: 4.5, reviews: 1231),
-        GuideSightsModel(image: UIImage(named: "exhbroof")!, name: "Экскурсия по крышам", price: 5305, rating: 0, reviews: 53),
-        GuideSightsModel(image: UIImage(named: "exhbrusmuseum")!, name: "Государственный Русский музей", price: 928, rating: 4.1, reviews: 11),
-        GuideSightsModel(image: UIImage(named: "exhblebed")!, name: "Лебединое озеро", price: 2341, rating: 4.2, reviews: 46)]
-    
     private let userDefault = UserDefaults.standard
     // выбранной ячейки для тапа по описанию, для увеличения высоты ячейки
     private var selectedDescriptionCell: Bool = false
@@ -279,7 +271,7 @@ extension CurrentCityController: UITableViewDelegate, UITableViewDataSource {
         case 4:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TicketCollectionViewCell.identifier,
                                                            for: indexPath) as? TicketCollectionViewCell else { return UITableViewCell() }
-            cell.model = guidesArray
+            cell.model = Constants.guidesArray.first( where: { $0.city == titleName } )
             cell.delegate = self
             return cell
             
@@ -467,8 +459,9 @@ extension CurrentCityController: SightTableViewCellDelegate {
 extension CurrentCityController: TicketCollectionViewCellDelegate {
     
     // открыть страницу всех билетов
-    func lookAllTickets() {
-        interactor?.openTicketSite()
+    func lookAllTickets(url: String) {
+        // MARK: - TODO
+        print("open url:\(url)")
     }
 }
 
