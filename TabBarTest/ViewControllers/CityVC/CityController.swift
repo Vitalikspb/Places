@@ -221,7 +221,8 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
         case 4:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TicketCollectionViewCell.identifier,
                                                            for: indexPath) as? TicketCollectionViewCell else { return UITableViewCell() }
-            let model = Constants.guidesArray.first( where: { $0.city == titleName } )
+            let curCityName = title ?? ""
+            let model = Constants.guidesArray.first( where: { $0.city == curCityName } )
             cell.configureCell(model: model)
             cell.delegate = self
             return cell

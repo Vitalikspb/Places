@@ -580,6 +580,7 @@ class MapController: UIViewController {
                 showBottomCollectionSight = false
                 topScrollView.isHidden = true
                 weatherView.isHidden = true
+                topScrollView.updateFilterView()
                 interactor?.markerWithCountOfCityMarkers()
             }
         } else {
@@ -641,16 +642,14 @@ extension MapController: GMSMapViewDelegate {
     
     // Вызывается по нажатию на свое местоположение
     // MARK: - TODO УДАЛИТЬ
-        func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
-    
+//        func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
 //            let alert = UIAlertController(
 //                title: "Location Tapped",
 //                message: "Current location: <\(location.latitude), \(location.longitude)>",
 //                preferredStyle: .alert)
 //            alert.addAction(UIAlertAction(title: "OK", style: .default))
 //            present(alert, animated: true)
-            
-        }
+//        }
     
     // вызывается при нажатии на маркер
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
@@ -750,6 +749,7 @@ extension MapController: ScrollViewOnMapDelegate {
         } else {
             selectedScrollFilterType = nil
         }
+        
         if request == .favorite {
             // Фильтрация по избранным
             interactor?.fetchAllFavorites(selected: selected)
@@ -758,6 +758,7 @@ extension MapController: ScrollViewOnMapDelegate {
             ? interactor?.appendAllMarkers()
             : interactor?.fetchAllTestMarkers(request: request)
         }
+        
     }
     
     // Отображение поисковой строки и сокрытие строки с фильтрами

@@ -21,24 +21,19 @@ class ScrollViewOnMap: UIScrollView {
     // поиск
     private let searchFilter = FilterView(withName: Constants.Views.search, 
                                           andImage: UIImage(named: "search")!)
-    
     // избранное
     private let favoriteFilter = FilterView(withName: Constants.Views.features,
                                              andImage: UIImage(systemName: "heart.fill")!)
-    
-    // Достопримечательность (замок, заповедник, водопад, пещеры, Смотровая площадка, Транспорт, Парки, скверы, Рынок, еда
+    // Достопримечательность
     private let sightFilter = FilterView(withName: Constants.Views.sights, 
                                          andImage: UIImage(named: "museum")!)
-    
-    // Музей (выставка, зоопарк)
+    // Музей
     private let transportFilter = FilterView(withName: Constants.Views.museum, 
                                              andImage: UIImage(named: "museumSearch")!)
-    
-    // Культурный объект (Статуя, памятник (дом писателя, мост, оперы, )
+    // Культурный объект
     private let leisureFilter = FilterView(withName: Constants.Views.cultureObject, 
                                            andImage: UIImage(named: "sight")!)
-    
-    // Богослужение (церкви, храмы, мечети и тд)
+    // Богослужение
     private let worshipFilter = FilterView(withName: Constants.Views.worship, 
                                            andImage: UIImage(named: "temple")!)
     
@@ -49,6 +44,7 @@ class ScrollViewOnMap: UIScrollView {
     // MARK: - Private properties
     
     private var isSelected: Bool = false
+    private var currentFilter: FilterView?
     
     // MARK: - Life cycle
     
@@ -190,7 +186,13 @@ class ScrollViewOnMap: UIScrollView {
         }
     }
     
-    func setupAnimate(filterView: FilterView) {
+    func updateFilterView() {
+        isSelected = true
+        guard let currentFilter = currentFilter else { return }
+        setupAnimate(filterView: currentFilter)
+    }
+    
+    private func setupAnimate(filterView: FilterView) {
         [searchFilter, favoriteFilter, sightFilter, transportFilter,
          leisureFilter, worshipFilter].forEach { currentView in
             
@@ -222,30 +224,35 @@ class ScrollViewOnMap: UIScrollView {
     // Избранное
     @objc func handleFavoritesFilter() {
         onMapdelegate?.chooseSightSelected(selected: isSelected, request: .favorite)
+        currentFilter = favoriteFilter
         setupAnimate(filterView: favoriteFilter)
     }
     
     // Достопримечательность
     @objc func handleSightFilter() {
         onMapdelegate?.chooseSightSelected(selected: isSelected, request: .sightSeen)
+        currentFilter = sightFilter
         setupAnimate(filterView: sightFilter)
     }
     
     // Музей
     @objc func handleMuseumFilter() {
         onMapdelegate?.chooseSightSelected(selected: isSelected, request: .museum)
+        currentFilter = transportFilter
         setupAnimate(filterView: transportFilter)
     }
     
     // Культурный объект
     @objc func handleCultureObjectFilter() {
         onMapdelegate?.chooseSightSelected(selected: isSelected, request: .cultureObject)
+        currentFilter = leisureFilter
         setupAnimate(filterView: leisureFilter)
     }
     
     // Богослужение
     @objc func handleGodFilter() {
         onMapdelegate?.chooseSightSelected(selected: isSelected, request: .god)
+        currentFilter = worshipFilter
         setupAnimate(filterView: worshipFilter)
     }
     
