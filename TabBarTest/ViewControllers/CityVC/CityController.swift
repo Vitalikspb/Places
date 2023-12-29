@@ -232,7 +232,8 @@ extension CityController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: WeatherCollectionViewCell.identifier,
                                                            for: indexPath) as? WeatherCollectionViewCell else { return UITableViewCell() }
             let weatherData = viewModelWeather.weather.currentWeather
-            cell.configureCell(city: titleName,
+            let curCityName = title ?? ""
+            cell.configureCell(city: curCityName,
                                curTemp: Int(weatherData.todayTemp),
                                curImage: weatherData.imageWeather,
                                description: weatherData.description,

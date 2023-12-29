@@ -12,7 +12,7 @@ class FullWeatherTableViewCell: UITableViewCell {
     // MARK: - UI Properties
     
     private let mainContainerView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.backgroundColor = .setCustomColor(color: .weatherCellBackground)
         view.layer.cornerRadius = 12
         return view
@@ -97,58 +97,58 @@ class FullWeatherTableViewCell: UITableViewCell {
                                       curImageImageView, descriptionLabel)
         
         mainContainerView.anchor(top: contentView.topAnchor,
-                                  left: contentView.leftAnchor,
-                                  bottom: contentView.bottomAnchor,
-                                  right: contentView.rightAnchor,
-                                  paddingTop: 4,
-                                  paddingLeft: 16,
-                                  paddingBottom: 4,
-                                  paddingRight: 16,
-                                  width: 0, height: 0)
+                                 left: contentView.leftAnchor,
+                                 bottom: contentView.bottomAnchor,
+                                 right: contentView.rightAnchor,
+                                 paddingTop: 4,
+                                 paddingLeft: 16,
+                                 paddingBottom: 4,
+                                 paddingRight: 16,
+                                 width: 0, height: 0)
         
         currentDayLabel.centerY(inView: mainContainerView)
         currentDayLabel.anchor(top: nil,
-                          left: mainContainerView.leftAnchor,
-                          bottom: nil,
-                          right: nil,
-                          paddingTop: 0,
-                          paddingLeft: 16,
-                          paddingBottom: 0,
-                          paddingRight: 0,
-                          width: 100, height: 18)
+                               left: mainContainerView.leftAnchor,
+                               bottom: nil,
+                               right: nil,
+                               paddingTop: 0,
+                               paddingLeft: 16,
+                               paddingBottom: 0,
+                               paddingRight: 0,
+                               width: 100, height: 18)
         
         curImageImageView.centerY(inView: mainContainerView)
         curImageImageView.anchor(top: nil,
-                             left: nil,
-                             bottom: nil,
-                             right: nil,
-                             paddingTop: 0,
-                             paddingLeft: 0,
-                             paddingBottom: 0,
-                             paddingRight: 0,
-                             width: 28, height: 28)
+                                 left: currentDayLabel.rightAnchor,
+                                 bottom: nil,
+                                 right: nil,
+                                 paddingTop: 0,
+                                 paddingLeft: 18,
+                                 paddingBottom: 0,
+                                 paddingRight: 0,
+                                 width: 28, height: 28)
         
         descriptionLabel.centerY(inView: mainContainerView)
         descriptionLabel.anchor(top: nil,
-                            left: curImageImageView.rightAnchor,
-                            bottom: nil,
-                            right: minTempLabel.leftAnchor,
-                            paddingTop: 0,
-                            paddingLeft: 8,
-                            paddingBottom: 0,
-                            paddingRight: 16,
-                            width: 110, height: 0)
+                                left: curImageImageView.rightAnchor,
+                                bottom: nil,
+                                right: nil,
+                                paddingTop: 0,
+                                paddingLeft: 8,
+                                paddingBottom: 0,
+                                paddingRight: 0,
+                                width: 110, height: 0)
         
         minTempLabel.centerY(inView: mainContainerView)
         minTempLabel.anchor(top: nil,
-                             left: nil,
-                             bottom: nil,
-                             right: maxTempLabel.leftAnchor,
-                             paddingTop: 0,
-                             paddingLeft: 0,
-                             paddingBottom: 0,
-                             paddingRight: 0,
-                             width: 0, height: 18)
+                            left: nil,
+                            bottom: nil,
+                            right: maxTempLabel.leftAnchor,
+                            paddingTop: 0,
+                            paddingLeft: 0,
+                            paddingBottom: 0,
+                            paddingRight: 0,
+                            width: 0, height: 18)
         
         maxTempLabel.centerY(inView: mainContainerView)
         maxTempLabel.anchor(top: nil,
@@ -172,5 +172,5 @@ class FullWeatherTableViewCell: UITableViewCell {
         curImageImageView.image = image
         descriptionLabel.text = description.capitalizedSentence
     }
-
+    
 }

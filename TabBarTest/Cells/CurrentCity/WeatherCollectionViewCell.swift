@@ -272,7 +272,7 @@ class WeatherCollectionViewCell: UITableViewCell {
     }
     
     func configureCell(city: String, curTemp: Int, curImage: UIImage, description: String, feelLike: Int, sunrise: Int,  sunset: Int) {
-        todayLabel.text = "\(city) \(TimeFormatter.todayDayLetterFullFormat())"
+        todayLabel.text = "\(city), \(TimeFormatter.todayDayLetterFullFormat())"
         curTempLabel.text = "\(curTemp)ºC"
         curImageLabel.image = curImage
         descriptionLabel.text = "\(description)"

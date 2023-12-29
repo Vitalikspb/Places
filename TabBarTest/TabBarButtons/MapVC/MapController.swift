@@ -640,17 +640,6 @@ extension MapController: GMSMapViewDelegate {
         updateBottomCollectionView(zoom: mapView.camera.zoom)
     }
     
-    // Вызывается по нажатию на свое местоположение
-    // MARK: - TODO УДАЛИТЬ
-//        func mapView(_ mapView: GMSMapView, didTapMyLocation location: CLLocationCoordinate2D) {
-//            let alert = UIAlertController(
-//                title: "Location Tapped",
-//                message: "Current location: <\(location.latitude), \(location.longitude)>",
-//                preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "OK", style: .default))
-//            present(alert, animated: true)
-//        }
-    
     // вызывается при нажатии на маркер
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         enableMapInteractive = true
