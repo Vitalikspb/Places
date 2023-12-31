@@ -119,7 +119,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
         }
         
         self.smallView = smallView
-        ratingLabel.text = model.rating
+        ratingLabel.text = String(model.rating.dropLast())
         let imagesCount = Int(model.rating.components(separatedBy: ".").first ?? "0") ?? 0
         starView.show(with: imagesCount)
         
@@ -132,7 +132,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
             iconName = UIImage(named: "museumSearch") ?? UIImage()
             
         case .cultureObject:
-            iconName = UIImage(named: "museumSearch") ?? UIImage()
+            iconName = UIImage(named: "sight") ?? UIImage()
             
         case .god:
             iconName = UIImage(named: "temple") ?? UIImage()
@@ -158,7 +158,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
                                  paddingLeft: 16,
                                  paddingBottom: 0,
                                  paddingRight: 16,
-                                 width: 0, height: 80)
+                                 width: 0, height: 108)
         titleLabel.anchor(top: mainContainerView.topAnchor,
                           left: mainContainerView.leftAnchor,
                           bottom: nil,
@@ -186,16 +186,16 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
                                  paddingBottom: 0,
                                  paddingRight: 10,
                                  width: typeLocationLabel.textWidth(), height: 0)
-        ratingLabel.anchor(top: titleLabel.bottomAnchor,
-                           left: typeLocationLabel.rightAnchor,
+        ratingLabel.anchor(top: typeLocationLabel.bottomAnchor,
+                           left: mainContainerView.leftAnchor,
                            bottom: nil,
                            right: nil,
                            paddingTop: 11,
-                           paddingLeft: 10,
+                           paddingLeft: 12,
                            paddingBottom: 0,
                            paddingRight: 0,
                            width: ratingLabel.textWidth(), height: 20)
-        starView.anchor(top: titleLabel.bottomAnchor,
+        starView.anchor(top: typeLocationLabel.bottomAnchor,
                         left: ratingLabel.rightAnchor,
                         bottom: nil,
                         right: nil,
@@ -208,7 +208,7 @@ class FloatingViewFirstTableViewCell: UITableViewCell {
                            left: leftAnchor,
                            bottom: nil,
                            right: rightAnchor,
-                           paddingTop: 28,
+                           paddingTop: 16,
                            paddingLeft: 0,
                            paddingBottom: 0,
                            paddingRight: 0,

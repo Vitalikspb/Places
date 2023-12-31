@@ -225,7 +225,7 @@ extension MainFloatingView: UITableViewDelegate, UITableViewDataSource {
         
         switch indexPath.row {
         // первая ячейка
-        case 0: return stateFloatingFullView ? 88 : 200
+        case 0: return stateFloatingFullView ? 116 : 228
             
         // ячейка с collectionView с картинками
         case 1: return 204
