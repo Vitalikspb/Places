@@ -30,13 +30,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>We use your location to show you the weather and your location</string>
+	<string>Мы используем Ваше местоположение только для определения погоды и ближайших достопримечательностей</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>We use your location to show you the weather and your location</string>
+	<string>Мы используем Ваше местоположение только для определения погоды и ближайших достопримечательностей</string>
 	<key>NSLocationUsageDescription</key>
-	<string>We use your location to show you the weather and your location</string>
+	<string>Мы используем Ваше местоположение только для определения погоды и ближайших достопримечательностей</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We use your location to show you the weather and your location</string>
+	<string>Мы используем Ваше местоположение только для определения погоды и ближайших достопримечательностей</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
