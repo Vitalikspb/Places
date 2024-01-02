@@ -78,7 +78,7 @@
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>CFBundleDisplayName</key>
-	<string>Awesome гид</string>
+	<string>Местный гид</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
